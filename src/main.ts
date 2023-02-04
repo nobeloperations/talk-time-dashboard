@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
-import { hbsConfig } from '../hbsConfig'
+import { hbsConfig } from '../hbs-config'
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 
 async function bootstrap() {

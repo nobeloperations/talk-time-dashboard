@@ -1,7 +1,7 @@
 import * as Handlebars from 'handlebars'
 import * as exphbs from 'express-handlebars'
 import { allowInsecurePrototypeAccess } from '@handlebars/allow-prototype-access';
-import { helpers } from './hbsHelpers/helplers'
+import { helpers } from './hbs-helpers/helplers'
 import { resolve } from 'path';
 
 export function hbsConfig(app) {
