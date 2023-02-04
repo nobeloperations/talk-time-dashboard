@@ -4,7 +4,7 @@ exports.hbsConfig = void 0;
 const Handlebars = require("handlebars");
 const exphbs = require("express-handlebars");
 const allow_prototype_access_1 = require("@handlebars/allow-prototype-access");
-const helplers_1 = require("./hbsHelpers/helplers");
+const helplers_1 = require("./hbs-helpers/helplers");
 const path_1 = require("path");
 function hbsConfig(app) {
     let hbs = exphbs.create({
@@ -22,4 +22,4 @@ function hbsConfig(app) {
     app.set('view engine', 'hbs');
 }
 exports.hbsConfig = hbsConfig;
-//# sourceMappingURL=hbsConfig.js.map
+//# sourceMappingURL=hbs-config.js.map
