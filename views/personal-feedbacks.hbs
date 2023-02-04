@@ -1,0 +1,39 @@
+<div class="personal__feedbacks">
+    {{#if currentUser}}
+    {{>header}}
+    <div class="personal__feedbacks__content">
+                <h1 class="personal__feedbacks__title animated fadeInRight">{{name}}(`s) feedbacks</h1>
+        {{#if feedbacks}}
+        {{#each feedbacks}}
+        <div class="personal__feedback animated fadeInLeft">
+            <div class="personal__feedback__sender">
+                <img class="personal__feedback__avatar" src={{senderImg}} alt="">
+                <h2 class="personal__feedback__sender__name">{{sender}}</h2>
+                <span class="personal__feedback__id">{{_id}}</span>
+            </div>
+            <div class="personal__feedback__text__wrapper">
+                <span class="personal__feedback__text">{{feedback}}</span>
+                <span class="personal__feedback__rating__date">⭐{{rating}} &nbsp; <b>{{date}}</b></span>
+                <div class="personal__feedback__buttons__wrapper">
+                    {{#if feedbackImg}}
+                    <button class="personal__feedback__view__image__button">View image</button>
+                    {{/if}}
+                    <a href="/comments/{{url}}/{{_id}}"><button class="personal__feedback__leave__comment">Leave
+                            Comment</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="personal__feedback__img__wrapper">
+            <img class="personal__feedback__img" src="/{{feedbackImg}}" alt="">
+            <button class="personal__feedback__close__img">Close</button>
+        </div>
+        {{/each}}
+        {{else}}
+        <span class="personal__feedback__empty__text">No feedbacks yet</span>
+        {{/if}}
+        {{else}}
+        <h1 class="invalid__url">Invalid Meeting url or username, make sure that your link is valid</h1>
+        {{/if}}
+    </div>
+</div>
+<script src="/js/personal-feedbacks.js"></script>

@@ -1,0 +1,27 @@
+<div class="user__badges__container">
+    {{#if currentUser}}
+    {{>header}}
+        <div class="user__badges__list__wrapper">
+        <h1 class="user__badges__title animated fadeInLeft">{{name}}`s badges</h1>
+        <div class="user__badges__wrapper">
+            {{#each badges}}
+            <div class="user__badge animated fadeInRight">
+                <img class="user__badge__image" src="/img/{{@key}}" alt="">
+                <div class="user__badge__info">
+                    <span class="user__badge__name">{{convert @key}}</span>
+                    <div class="user__badge__level__wrapper">
+                        <span class="user__badge__percents">{{checkFour this}}%</span>
+                        <div class="user__badge__level">
+                            <div class="user__badge__show__level" style="width: {{checkFour this}}%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+    {{else}}
+    <h1 class="invalid__url">Invalid Meeting url or username, make sure that your link is valid</h1>
+    {{/if}}
+</div>
+<script src="/js/feedback-badges.js"></script>

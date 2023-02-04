@@ -1,0 +1,36 @@
+<div class="feedbacks__container">
+    {{#if users}}
+    {{>header}}
+    <div class="feedbacks__content">
+        <input class="feedbacks__search animated fadeInLeft" type="text" placeholder="🔎︎ Seach participants">
+        {{#each users}}
+        <div class="feedbacks__users">
+            <div class="feedbacks__user animated fadeInRight">
+                <div class="feedbacks__user__info">
+                    <img class="feedbacks__user__avatar" src="{{avatar}}" alt="">
+                    <span class="feedbacks__user__name">{{name}}</span>
+                </div>
+                <div class="feedbacks__user__buttons">
+                    {{#if badges}}
+                    <button class="feedbacks__user__button feedbacks__see__badges">Badges</button>
+                    {{else}}
+                    <div class="feedbacks__empty" style="">
+                        <span>No badges yet</span>
+                    </div>
+                    {{/if}}
+                    <button class="feedbacks__user__button feedbacks__see__feedbacks">Feedbacks</button>
+                    <button class="feedbacks__user__button feedbacks__leave__feedback">Leave feedback</button>
+                </div>
+            </div>
+        </div>
+        {{/each}}
+        <div class="feedbacks__refresh__wrapper animated fadeInLeft">
+            <button class="feedbacks__refresh">Refresh</button>
+        </div>
+        {{else}}
+        <h1 class="invalid__url">Invalid Meeting url, make sure that your meeting url is valid</h1>
+        {{/if}}
+    </div>
+</div>
+
+<script src="/js/feedback.js"></script>

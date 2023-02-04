@@ -1,0 +1,21 @@
+<div class="activity__container">
+    {{#if users}}
+    {{>header}}
+    <div class="activity__wrapper">
+        {{#each users}}
+        <div class="user__activity animated fadeInRight">
+            <h3>{{name}}`s voice activity</h3>
+            <div class="peaks__wrapper">
+                {{#each peaks}}
+                <div class="peak" style="height: {{mult this 5}}px;"></div>
+                {{/each}}
+                <span class="user__activity__nodata">No data</span>
+            </div>
+        </div>
+        {{/each}}
+        {{else}}
+        <h1 class="invalid__url">Invalid Meeting url, make sure that your meeting url is valid</h1>
+        {{/if}}
+    </div>
+</div>
+<script src="/js/activity.js"></script>

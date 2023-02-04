@@ -1,0 +1,86 @@
+<div class="send__feedback__wrapper">
+    {{#if currentUser}}
+    <div class="form__wrapper">
+        <h1 class="send__feedback__title animated fadeInRight">Your feedback about {{name}}</h1>
+        <form action="/feedbacks/create/{{url}}/{{name}}" method="POST" enctype="multipart/form-data" class="send__feedback__form">
+            <select name="sender" class="sender__input send__feedback__select animated fadeInLeft" required>
+                <option hidden selected value="">Choose your name</option>
+                {{#each users}}
+                <option value="{{name}}">{{name}}</option>
+                {{/each}}
+                <option hidden value="Anonymous">Anomymous</option>
+            </select>
+            <span class="selected animated fadeInRight">Selected: </span>
+            <div class="anomymous__feedback__wrapper animated fadeInLeft">
+                <input type="checkbox" class="anonymous__checkbox">
+                <span class="anonymous__feedback__title">Anomymous feedback</span>
+            </div>
+            <textarea class="send__feedback__body animated fadeInRight" minlength="100" maxlength="400" required name="feedback"
+                placeholder="Enter your feedback"></textarea>
+            <span class="send__feedback__characters"></span>
+            <label class="send__feedback__label animated fadeInLeft" for="rating">Select rate from 0 to 5</label>
+            <input class="send__feedback__rating send__feedback__input animated fadeInLeft" required name="rating" type="number" value="0" max="5" min="0">
+            <label class="send__feedback__label animated fadeInRight" for="file">If you have some photo or video that can be useful it this feedback you can put it
+                here</label>
+            <input class="send__feedback__file send__feedback__input animated fadeInRight" name="file" type="file">
+            <select name="badge" id="select" class="select send__feedback__select animated fadeInLeft">
+                <option hidden selected>Choose the Badge (not necessarily)</option>
+                <option value="Active Listener">Active Listener</option>
+                <option value="Areas of Agreement">Areas of Agreement</option>
+                <option value="Ask for feedback">Ask for feedback</option>
+                <option value="Bee Brief">Bee Brief</option>
+                <option value="Brainstormer">Brainstormer</option>
+                <option value="Check for Understanding">Check for Understanding</option>
+                <option value="Clarifing Question">Clarifing Question</option>
+                <option value="Decide">Decide</option>
+                <option value="Define the Problem">Define the Problem</option>
+                <option value="Disagreement Solver">Disagreement Solver</option>
+                <option value="Encourageing Knowlege">Encourageing Knowlege</option>
+                <option value="Give Feedback">Give Feedback</option>
+                <option value="Helper">Helper</option>
+                <option value="Ideas Evaluation">Ideas Evaluation</option>
+                <option value="Info Shareer">Info Shareer</option>
+                <option value="Mic Earned">Mic Earned</option>
+                <option value="Muting Maestro">Muting Maestro</option>
+                <option value="Norms Meeting">Norms Meeting</option>
+                <option value="Notes Master">Notes Master</option>
+                <option value="Online Tools">Online Tools</option>
+                <option value="Problem Pauser">Problem Pauser</option>
+                <option value="Questions">Questions</option>
+                <option value="Ready Headset Go">Ready Headset Go</option>
+                <option value="Resource vs Impact">Resource vs Impact</option>
+                <option value="Screenshare">Screenshare</option>
+                <option value="Stay on Topic">Stay on Topic</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Time Earning">Time Earning</option>
+                <option value="To Do Tracker">To Do Tracker</option>
+                <option value="Zen Enviroment">Zen Enviroment</option>
+            </select>
+            <div class="send__feedback__techs__wrapper">
+                <select name="level" class="send__feedback__select animated fadeInRight" name="level">
+                    <option hidden selected>Select level</option>
+                    <option value="1">1 level</option>
+                    <option value="2">2 level</option>
+                    <option value="3">3 level</option>
+                    <option value="4">4 level</option>
+                </select>
+                <select name="tech" class="send__feedback__select animated fadeInRight">
+                    <option hidden selected>Select Technology</option>
+                    <option value="ml1_">Machine Learning</option>
+                    <option value="coding2_">Coding</option>
+                    <option value="wd3_">Web Development</option>
+                    <option value="py4_">Python</option>
+                    <option value="lead5_">Leadership</option>
+                    <option value="pm6_">Project Management</option>
+                    <option value="sales7_">Sales</option>
+                    <option value="coach8_">Coaching</option>
+                </select>
+            </div>
+            <button class="send__feedback__button animated fadeInRight" type="submit">Send</button>
+        </form>
+    </div>
+    {{else}}
+    <h1 class="invalid__url">Invalid Meeting url or username, make sure that your link is valid</h1>
+    {{/if}}
+</div>
+<script src="/js/new-feedback.js"></script>
