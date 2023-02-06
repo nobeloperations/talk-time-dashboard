@@ -8,7 +8,7 @@ export class MainController {
 
     constructor(private mainService: MainService){}
 
-    @Get('')
+    @Get()
     @Render('main')
     @HttpCode(200)
     getMain() {
