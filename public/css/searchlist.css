@@ -17,6 +17,7 @@ body {
 .generals {
     width: 100vw;
     height: calc(100vh - 70px);
+    padding: 0 15px 0 15px;
 }
 .searchlist__container {
     width: 100vw;

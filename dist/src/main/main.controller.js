@@ -40,7 +40,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getMain", null);
 __decorate([
-    (0, common_1.Get)('/searchlist/:url'),
+    (0, common_1.Get)('searchlist/:url'),
     (0, common_1.Render)('searchlist'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
@@ -49,7 +49,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getSearchlist", null);
 __decorate([
-    (0, common_1.Post)('/addgeneral'),
+    (0, common_1.Post)('addgeneral'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "addGeneral", null);
 MainController = __decorate([
-    (0, common_1.Controller)('main'),
+    (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [main_service_1.MainService])
 ], MainController);
 exports.MainController = MainController;
