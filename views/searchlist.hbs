@@ -5,19 +5,19 @@
     </header>
     <div class="generals">
         {{#if generals}}
-        {{#each generals}}
-        {{#each meetings}}
-        <div class="meeting__card animated fadeInLeft">
-            <div class="meeting__info">
-                <span class="card__url">{{url}}</span>
-                <span class="card__date">{{date}}</span>
-            </div>
-            <a class="dashboard__link" href="/dashboard/{{url}}">
-                <div class="link__button">Go to dashboard page</div>
-            </a>
-        </div>
-        {{/each}}
-        {{/each}}
+            {{#each generals}}
+                {{#each meetings}}
+                    <div class="meeting__card animated fadeInLeft">
+                        <div class="meeting__info">
+                            <span class="card__url">{{url}}</span>
+                            <span class="card__date">{{date}}</span>
+                        </div>
+                        <a class="dashboard__link" href="/dashboard/{{url}}">
+                            <div class="link__button">Go to dashboard page</div>
+                        </a>
+                    </div>
+                {{/each}}
+            {{/each}}
         {{else}}
         <h1 class="invalid__url">Invalid Meeting url, make sure that your meeting url is valid</h1>
         {{/if}}

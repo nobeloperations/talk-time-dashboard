@@ -41,10 +41,6 @@ body::-webkit-scrollbar {
   justify-content: flex-start;
   align-items: center;
   padding-left: 26px;
-  position: sticky;
-  left: 0;
-  top: 0;
-  z-index: 2;
 }
 .main__wrapper, .explore__wrapper {
   width: 100vw;
@@ -185,4 +181,21 @@ body::-webkit-scrollbar {
   height: auto;
   justify-content: space-between;
   align-items: center;
+}
+/* MOBILE */
+@media only screen and (max-width:900px) {
+  .main__poster, .main__explore, .explore__poster, .main__wrapper, .explore__question {
+    display: none;
+  }
+  .explore__content {
+    margin-right: 0;
+  }
+  .explore__title {
+    font-size: 32px;
+    text-align: center;
+  }
+  .question__wrapper {
+    background-repeat: no-repeat;
+    background-size: 100%;
+  }
 }

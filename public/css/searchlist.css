@@ -65,3 +65,13 @@ body {
     font-size: 20px;
     margin-bottom: 5px;
 }
+@media only screen and (max-width:900px) {
+    .meeting__card {
+        flex-direction: column;
+        height: fit-content;
+        text-align: center;
+    }
+    .card__url, .card__date {
+        margin-bottom: 5px;
+    }
+}
