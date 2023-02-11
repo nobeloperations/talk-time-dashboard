@@ -33,6 +33,8 @@ let DashboardService = class DashboardService {
                 name: user.name,
                 rating: [],
                 avatar: user.avatar,
+                percents: user.percents,
+                peaks: user.peaks
             };
         });
         feedbacks.forEach(feedback => {

@@ -1,16 +1,14 @@
 .send__feedback__wrapper {
     width: 100%;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 .form__wrapper {
-    height: auto;
+    height: calc(100vh - 70px);
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 .send__feedback__title {
     margin-bottom: 15px;

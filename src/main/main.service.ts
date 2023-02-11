@@ -9,9 +9,11 @@ export class MainService {
 
     async getMain() {
         const generals = await this.generalModel.find()
+        console.log(generals)
         return {message: 'hello', cssFileName: 'main', generals}
     }
 
+    
     async getSearchlist(params) {
         const { url } = params;
         const generals = await this.generalModel.find({name: url})

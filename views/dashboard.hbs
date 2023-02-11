@@ -2,6 +2,34 @@
     {{#if users}}
     {{>header}}
     <div class="dashboard__content">
+        <div class="dashboard__content__wrapper">
+            <div class="dashboard__card dashboard__users animated fadeInRight">
+                <h1 class="meeting__participants__title">Meeting participants and statistics</h1>
+                <div class="meeting__participants">
+                    {{#each feedbacksByName}}
+                    <div class="meeting__participant">
+                        <img class="participant__avatar" src={{avatar}} alt="avatar">
+                        <div class="meeting__participant__info__wrapper">
+                            <span class="participant__name">{{name}}</span>
+                            <div class="statistics__percents__wrapper">
+                                <div class="statistics__ratio"></div>
+                                <span class="statistics__percents"> {{percents}}&nbsp;&nbsp;</span>
+                                <span class="participant__rating">★ {{average rating}}</span>
+                            </div>
+                        </div>
+                        <div class="peaks__wrapper">
+                            {{#each peaks}}
+                            <div class="peak" style="height: {{this}}px;"></div>
+                            {{/each}}
+                            <span class="user__activity__nodata">No data</span>
+                        </div>
+                    </div>
+
+
+                    {{/each}}
+                </div>
+            </div>
+        </div>
         <div class="dashboard__content__wrapper dashboard__content__wrapper__left">
             <div class="dashboard__card dashboard__conclusions animated fadeInLeft">
                 <h1 class="conclusions__title">Meeting Conclusions</h1>
@@ -9,7 +37,7 @@
                     <input placeholder="Enter a meeting conclusion" class="conclusion__input" type="text"
                         name="meeting-conclusions">
                     <div class="tags__select__wrapper">
-                        
+
                         <div class="tags__select">
                             <span class="tags__select__text">Select tag(s)</span>
                             <span class="tags__select__arrow">▼</span>
@@ -35,58 +63,25 @@
                 <div class="conclusions">
                     {{#if conclusions}}
                     {{#each conclusions}}
-                        <div class="conclusion__wrapper">
-                                {{#each tags}}
-                                    <span class="conclusion__tag">{{this.tag}}</span>
-                                {{/each}}
-                            <span class="conclusion">- {{text}}</span>
-                            {{#if important}}
-                                <span class="conclusion__star">★</span>
-                            {{else}}
-                                <span class="conclusion__star">☆</span>
-                            {{/if}}
-                            <span class="conclusion__id">{{_id}}</span>
-                            <img class="conclusion__delete" src="/img/trash.png" alt="">
-                        </div>
+                    <div class="conclusion__wrapper">
+                        {{#each tags}}
+                        <span class="conclusion__tag">{{this.tag}}</span>
+                        {{/each}}
+                        <span class="conclusion">- {{text}}</span>
+                        {{#if important}}
+                        <span class="conclusion__star">★</span>
+                        {{else}}
+                        <span class="conclusion__star">☆</span>
+                        {{/if}}
+                        <span class="conclusion__id">{{_id}}</span>
+                        <img class="conclusion__delete" src="/img/trash.png" alt="">
+                    </div>
                     {{/each}}
                     {{else}}
                     <span class="empty__conclusions__warning">No conclusions ...Add a new one!</span>
                     {{/if}}
-                    <span class="empty__conclusions__warning" style="display: none;">No conclusions ...Add a new one!</span>
-                </div>
-            </div>
-            <div class="dashboard__card dashboard__info animated fadeInLeft">
-                <div class="info__cards">Number of feedbacks: {{feedbacksLength}}</div>
-                <div class="info__cards">Number of users: {{usersLength}}</div>
-                <div class="info__cards">Number of conclusions: {{conclusionsLength}}</div>
-                <div class="info__cards">Meet link: {{url}}</div>
-            </div>
-        </div>
-        <div class="dashboard__content__wrapper">
-            <div class="dashboard__card dashboard__users animated fadeInRight">
-                <h1 class="meeting__participants__title">Meeting participants</h1>
-                <div class="meeting__participants">
-                    {{#each feedbacksByName}}
-                    <div class="meeting__participant">
-                        <img class="participant__avatar" src="{{avatar}}" alt="avatar">
-                        <span class="participant__name">{{name}}</span>
-                        <span class="participant__rating">★ {{average rating}}</span>
-                    </div>
-                    {{/each}}
-                </div>
-            </div>
-            <div class="dashboard__card dashboard__statistic animated fadeInRight">
-                <div class="statistics__wrapper">
-                    <h1 class="statistics__title">Speaking Time</h1>
-                    {{#each users}}
-                    <div class="statistics__bar">
-                        <span class="statistics__name">{{name}}</span>
-                        <div class="statistics__percents__wrapper">
-                            <div class="statistics__ratio"></div>
-                            <div class="statistics__percents">{{percents}}</div>
-                        </div>
-                    </div>
-                    {{/each}}
+                    <span class="empty__conclusions__warning" style="display: none;">No conclusions ...Add a new
+                        one!</span>
                 </div>
             </div>
         </div>
@@ -94,6 +89,12 @@
     {{else}}
     <h1 class="invalid__url">Invalid Meeting url, make sure that your meeting url is valid</h1>
     {{/if}}
+    <footer class="dashboard__footer">
+        <div class="info__cards">Number of feedbacks: {{feedbacksLength}}</div>
+        <div class="info__cards">Number of users: {{usersLength}}</div>
+        <div class="info__cards">Number of conclusions: {{conclusionsLength}}</div>
+        <div class="info__cards">Meet link: {{url}}</div>
+    </footer>
 </div>
 
 <script src="/js/dashboard.js"></script>

@@ -25,8 +25,11 @@ export class DashboardService {
                 name: user.name,
                 rating: [],
                 avatar: user.avatar,
+                percents: user.percents,
+                peaks: user.peaks
             }
         })
+        
 
         feedbacks.forEach(feedback => {
             feedbacksByName[feedback.receiver].rating.push(feedback.rating)

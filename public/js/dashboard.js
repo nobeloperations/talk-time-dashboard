@@ -12,6 +12,27 @@ window.onload = function () {
     let _tagsSelectClose = document.querySelector('.tags__select__close')
     let _tagElements = document.querySelectorAll('.tag__element')
     let _allChecked = document.querySelectorAll('.is__checked')
+    let _peaksToDelete = document.querySelectorAll('.peaks__wrapper div:nth-child(-n + 3)')
+    let _peaks = document.querySelectorAll('.peak')
+    let _peaksWrappers = document.querySelectorAll('.peaks__wrapper')
+
+    // _peaks.forEach(_peak => {
+    //     if(_peak.style.height == '0px') _peak.parentElement.removeChild(_peak)
+    // })
+
+    _peaks.forEach(_peak => {
+        if(+_peak.style.height.slice(0, -2) < 3) _peak.style.height = _peak.style.height.slice(0, -2) * 4 + 'px'
+    })
+
+    _peaksToDelete.forEach(_peakToDelete => {
+        _peakToDelete.parentNode.removeChild(_peakToDelete)
+    })
+
+    _peaksWrappers.forEach(_peaksWrapper => {
+        if(_peaksWrapper.children.length === 1 && _peaksWrapper.children[0].tagName == 'SPAN') {
+            _peaksWrapper.querySelector('.user__activity__nodata').style.display = 'inline'
+        }
+    })
 
     let _tags = []
 
@@ -141,9 +162,9 @@ window.onload = function () {
     }
 
     _statisticsRatios.forEach(_statisticRatio => {
-        let _percentValue = +_statisticRatio.parentElement.querySelector('.statistics__percents').textContent.slice(0, -1)
+        let _percentValue = _statisticRatio.parentElement.querySelector('.statistics__percents').textContent.trim().slice(0, -1)
         let _readyPercentValue = _percentValue < 10 ? _percentValue / 10 : _percentValue / 100
-        _statisticRatio.style.setProperty('--before__prop', `conic-gradient(#662afd 0 calc(${_readyPercentValue} * 360deg), #ede1ff calc(${_readyPercentValue} * 360deg) 360deg)`)
+        _statisticRatio.style.setProperty('--before__prop', `conic-gradient(white 0 calc(${_readyPercentValue} * 361deg), #7249db calc(${_readyPercentValue} * 360deg) 360deg)`)
     })
 
 }

@@ -1,5 +1,6 @@
 <div class="send__feedback__wrapper">
     {{#if currentUser}}
+    {{>header}}
     <div class="form__wrapper">
         <h1 class="send__feedback__title animated fadeInRight">Your feedback about {{name}}</h1>
         <form action="/feedbacks/create/{{url}}/{{name}}" method="POST" enctype="multipart/form-data" class="send__feedback__form">
@@ -56,7 +57,7 @@
                 <option value="To Do Tracker">To Do Tracker</option>
                 <option value="Zen Enviroment">Zen Enviroment</option>
             </select>
-            <div class="send__feedback__techs__wrapper">
+            {{!-- <div class="send__feedback__techs__wrapper">
                 <select name="level" class="send__feedback__select animated fadeInRight" name="level">
                     <option hidden selected>Select level</option>
                     <option value="1">1 level</option>
@@ -75,7 +76,7 @@
                     <option value="sales7_">Sales</option>
                     <option value="coach8_">Coaching</option>
                 </select>
-            </div>
+            </div> --}}
             <button class="send__feedback__button animated fadeInRight" type="submit">Send</button>
         </form>
     </div>

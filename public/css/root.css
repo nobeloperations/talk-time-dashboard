@@ -25,10 +25,11 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 15px 0 10px;
+    padding: 0 40px 0 20px;
+    /* border-bottom: 1px solid rgb(192, 115, 255); */
 }
 .header__menu {
-    width: 45%;
+    width: 35%;
     height: 100%;
     display: flex;
     justify-content: space-between;
