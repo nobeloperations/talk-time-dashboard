@@ -4,6 +4,7 @@ export declare const ConclusionSchema: mongoose.Schema<any, mongoose.Model<any, 
     url: string;
     important: boolean;
     tags: any[];
+    importanceCount: number;
 }>;
 export interface Conclusion {
     text: string;

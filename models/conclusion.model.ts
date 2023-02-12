@@ -16,6 +16,10 @@ export const ConclusionSchema = new mongoose.Schema({
     tags: {
         type: Array,
         default: []
+    },
+    importanceCount: {
+        type: Number,
+        default: 0
     }
 })
 

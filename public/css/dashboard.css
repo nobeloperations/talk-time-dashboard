@@ -184,8 +184,12 @@ body {
     height: fit-content;
     width: fit-content;
     align-items: center;
-    margin-bottom: 10px;
     padding-left: 5px;
+}
+.conclusion__importance__count {
+    margin-bottom: 10px;
+    font-size: 12px;
+    color: white;
 }
 .conclusion {
     color: white;
