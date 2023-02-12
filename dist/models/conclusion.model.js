@@ -19,9 +19,5 @@ exports.ConclusionSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
-    importanceCount: {
-        type: Number,
-        default: 0
-    }
 });
 //# sourceMappingURL=conclusion.model.js.map

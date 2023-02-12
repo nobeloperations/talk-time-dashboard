@@ -68,6 +68,5 @@ export class DashboardService {
     async importantConclusion(importantConclusionBodyDto) {
         const { id } = importantConclusionBodyDto
         await this.conclusionModel.findOneAndUpdate({_id: id}, {important: true})
-        await this.conclusionModel.findOneAndUpdate({_id: id}, {$inc: { importanceCount: 1 }})
     }
 }
