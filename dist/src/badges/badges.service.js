@@ -17,29 +17,44 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let BadgesService = class BadgesService {
-    constructor(userModel) {
+    constructor(userModel, badgeModel) {
         this.userModel = userModel;
+        this.badgeModel = badgeModel;
     }
     async newBadge(params, newBadgeBodyDto) {
-        const { name, url } = params;
+        const { name } = params;
         const { badge } = newBadgeBodyDto;
-        await this.userModel.findOneAndUpdate({ name, url }, { $push: { badges: badge } });
+        const userBadges = await this.badgeModel.findOne({ name });
+        if (userBadges) {
+            await this.badgeModel.updateMany({ name }, { $push: { badges: { badge } } });
+        }
+        else {
+            const newBadge = new this.badgeModel({
+                name,
+                badges: [{ badge: badge }]
+            });
+            await newBadge.save();
+        }
     }
     async getFeedbackBadges(params) {
-        const { url, name } = params;
+        const { url, name, date } = params;
         const currentUser = await this.userModel.findOne({ name, url });
-        let user = await this.userModel.findOne({ name, url });
-        let badges = {};
-        user.badges.forEach(function (badgesObject) {
-            badges[badgesObject['badge']] = (badges[badgesObject['badge']] || 0) + 1;
+        let badges = await this.badgeModel.findOne({ name });
+        let convertedBadges = [];
+        badges === null || badges === void 0 ? void 0 : badges.badges.forEach(o => {
+            convertedBadges[o['badge']] ? convertedBadges[o['badge']] += 1 : convertedBadges[o['badge']] = 1;
         });
-        return { cssFileName: 'feedback-badges', badges, currentUser, url, name };
+        let objectBadges = Object.assign({}, convertedBadges);
+        let isBadges = !!Object.keys(objectBadges).length;
+        return { cssFileName: 'feedback-badges', badges: objectBadges, isBadges, currentUser, url, name, date };
     }
 };
 BadgesService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('User')),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)('Badge')),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], BadgesService);
 exports.BadgesService = BadgesService;
 //# sourceMappingURL=badges.service.js.map

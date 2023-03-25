@@ -3,5 +3,6 @@ export class IdDto {
 }
 
 export class UrlDto {
-    readonly url: string
+    readonly url: string;
+    readonly date: string;
 }

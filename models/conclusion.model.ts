@@ -17,6 +17,10 @@ export const ConclusionSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    date: {
+        type: String,
+        required: true
+    }
 })
 
 export interface Conclusion {

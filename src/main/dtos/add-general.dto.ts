@@ -1,7 +1,5 @@
 export class AddGeneralDto {
     readonly name: string;
-    readonly meetingObject: {
-        date,
-        url
-    };
+    readonly url: string;
+    readonly date: string;
 }

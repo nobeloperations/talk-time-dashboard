@@ -39,7 +39,7 @@ let DashboardController = class DashboardController {
     }
 };
 __decorate([
-    (0, common_1.Get)('dashboard/:url'),
+    (0, common_1.Get)('dashboard/:url/:date'),
     (0, common_1.Render)('dashboard'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
@@ -48,7 +48,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DashboardController.prototype, "getDashboard", null);
 __decorate([
-    (0, common_1.Post)('/percentage/:url'),
+    (0, common_1.Post)('/percentage/:url/:date'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], DashboardController.prototype, "postPercents", null);
 __decorate([
-    (0, common_1.Post)('/newconclusion/:url'),
+    (0, common_1.Post)('/newconclusion/:url/:date'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),

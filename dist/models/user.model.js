@@ -15,10 +15,6 @@ exports.UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    badges: {
-        type: Array,
-        default: []
-    },
     peaks: {
         type: Array,
         default: []
@@ -27,13 +23,13 @@ exports.UserSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    age: {
+    count: {
+        type: Number,
+        default: 0
+    },
+    date: {
         type: String,
-        default: ''
-    },
-    techs: {
-        type: Array,
-        default: []
-    },
+        required: true
+    }
 });
 //# sourceMappingURL=user.model.js.map

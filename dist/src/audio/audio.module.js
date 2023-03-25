@@ -11,12 +11,13 @@ const common_1 = require("@nestjs/common");
 const audio_controller_1 = require("./audio.controller");
 const audio_service_1 = require("./audio.service");
 const mongoose_1 = require("@nestjs/mongoose");
+const meeting_model_1 = require("../../models/meeting.model");
 const user_model_1 = require("../../models/user.model");
 let AudioModule = class AudioModule {
 };
 AudioModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_model_1.UserSchema }])],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'Meeting', schema: meeting_model_1.MeetingSchema }, { name: 'User', schema: user_model_1.UserSchema }])],
         controllers: [audio_controller_1.AudioController],
         providers: [audio_service_1.AudioService]
     })

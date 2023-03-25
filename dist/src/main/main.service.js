@@ -17,36 +17,46 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let MainService = class MainService {
-    constructor(generalModel) {
-        this.generalModel = generalModel;
+    constructor(meetingModel) {
+        this.meetingModel = meetingModel;
+    }
+    test(body) {
+        console.log(body);
     }
     async getMain() {
-        const generals = await this.generalModel.find();
-        console.log(generals);
-        return { message: 'hello', cssFileName: 'main', generals };
+        let meetings = await this.meetingModel.find();
+        return { message: 'hello', cssFileName: 'main', meetings };
     }
     async getSearchlist(params) {
         const { url } = params;
-        const generals = await this.generalModel.find({ name: url });
-        return { generals, cssFileName: 'searchlist' };
+        const meetingsResult = await this.meetingModel.find({ name: url });
+        return { meetingsResult, cssFileName: 'searchlist' };
     }
-    async addGeneral(addGeneralBodyDto) {
-        const { name, meetingObject } = addGeneralBodyDto;
-        const general = await this.generalModel.findOne({ name });
-        if (!general) {
-            const newGeneral = new this.generalModel({
+    async addMeeting(addGeneralBodyDto) {
+        const { name, url, date } = addGeneralBodyDto;
+        const meeting = await this.meetingModel.findOne({ name });
+        if (!meeting && name !== 'Meeting Details') {
+            const newMeeting = new this.meetingModel({
                 name,
-                meetings: [meetingObject],
+                meetings: [{
+                        url,
+                        date
+                    }]
             });
-            await newGeneral.save();
-            return;
+            await newMeeting.save();
         }
-        await this.generalModel.updateOne({ name }, { $addToSet: { meetings: meetingObject } });
+        else {
+            const currentMeet = await this.meetingModel.findOne({ name });
+            let meetPresented = currentMeet === null || currentMeet === void 0 ? void 0 : currentMeet.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length;
+            if (!meetPresented) {
+                await this.meetingModel.updateOne({ name }, { $push: { meetings: { url, date } } });
+            }
+        }
     }
 };
 MainService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('General')),
+    __param(0, (0, mongoose_1.InjectModel)('Meeting')),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], MainService);
 exports.MainService = MainService;

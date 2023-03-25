@@ -19,6 +19,7 @@ export const MessageSchema = new mongoose.Schema({
     }
 })
 
+
 export interface Message {
     text: string,
     from: string,

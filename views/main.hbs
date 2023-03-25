@@ -19,7 +19,7 @@
             journey</h1>
         <div class="explore__buttons wow fadeInRight">
             <div class="explore__question">
-                ?
+                <img class="explore__question__image" src="/img/information.png" />
             </div>
             <div class="explore__select">
                 <div class="select">
@@ -31,8 +31,8 @@
                     <span class="close__input">✕</span>
                 </div>
                 <div class="select__items">
-                    {{#each generals}}
-                        <div class="select__item"><a class="select__item__link" href="/main/searchlist/{{name}}">{{name}}</a></div>
+                    {{#each meetings}}
+                        <div class="select__item" data-name="{{name}}"><a class="select__item__link" href="/main/searchlist/{{name}}">{{name}}</a></div>
                     {{/each}}
                 </div>
             </div>
@@ -45,3 +45,4 @@
 </div>
 <script src="/js/main.js"></script>
 <script src="/js/wow.min.js"></script>
+<script src="/js/helpers/search.js"></script>

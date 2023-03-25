@@ -17,34 +17,26 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let AudioService = class AudioService {
-    constructor(userModel) {
+    constructor(meetingModel, userModel) {
+        this.meetingModel = meetingModel;
         this.userModel = userModel;
     }
-    async getAudioActivity(params) {
-        const { url } = params;
-        const currentUsers = await this.userModel.find({ url });
-        currentUsers.forEach(currentUser => {
-            currentUser.peaks.forEach(peak => {
-                if (!peak)
-                    peak += 1;
-            });
-        });
-        return { users: currentUsers, url, cssFileName: 'activity' };
-    }
     async postPeaks(params, postPeaksBodyDto) {
-        const { name, url } = params;
+        const { name, url, date } = params;
         const { array } = postPeaksBodyDto;
-        this.userModel.updateOne({ name, url }, { peaks: array }, { multi: true }, function (err, nums) { });
+        this.userModel.updateOne({ name, url, date }, { peaks: array }, { multi: true }, function (err, nums) { });
     }
     getVad(params) {
-        const { url, name } = params;
-        return { cssFileName: 'vad', name, url };
+        const { url, name, date } = params;
+        return { cssFileName: 'vad', name, url, date };
     }
 };
 AudioService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('User')),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(0, (0, mongoose_1.InjectModel)('Meeting')),
+    __param(1, (0, mongoose_1.InjectModel)('User')),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], AudioService);
 exports.AudioService = AudioService;
 //# sourceMappingURL=audio.service.js.map

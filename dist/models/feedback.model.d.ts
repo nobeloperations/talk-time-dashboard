@@ -7,6 +7,7 @@ export declare const FeedbackSchema: mongoose.Schema<any, mongoose.Model<any, an
     feedback: string;
     rating: number;
     senderImg: string;
+    postDate: string;
     comments: any[];
     file?: string;
     feedbackImg?: string;

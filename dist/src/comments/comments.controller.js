@@ -29,7 +29,7 @@ let CommentsController = class CommentsController {
     }
 };
 __decorate([
-    (0, common_1.Get)('/:url/:id'),
+    (0, common_1.Get)('/:url/:id/:date'),
     (0, common_1.Render)('comments'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),

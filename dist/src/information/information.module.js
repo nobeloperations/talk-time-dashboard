@@ -11,12 +11,12 @@ const common_1 = require("@nestjs/common");
 const information_service_1 = require("./information.service");
 const information_controller_1 = require("./information.controller");
 const mongoose_1 = require("@nestjs/mongoose");
-const general_model_1 = require("../../models/general.model");
+const meeting_model_1 = require("../../models/meeting.model");
 let StaticPagesModule = class StaticPagesModule {
 };
 StaticPagesModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'General', schema: general_model_1.GeneralSchema }])],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'Meeting', schema: meeting_model_1.MeetingSchema }])],
         providers: [information_service_1.InformationService],
         controllers: [information_controller_1.InformationController]
     })

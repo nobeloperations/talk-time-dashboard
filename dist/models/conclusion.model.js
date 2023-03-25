@@ -19,5 +19,9 @@ exports.ConclusionSchema = new mongoose.Schema({
         type: Array,
         default: []
     },
+    date: {
+        type: String,
+        required: true
+    }
 });
 //# sourceMappingURL=conclusion.model.js.map

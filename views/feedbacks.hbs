@@ -5,20 +5,16 @@
         <input class="feedbacks__search animated fadeInLeft" type="text" placeholder="🔎︎ Seach participants">
         {{#each users}}
         <div class="feedbacks__users">
-            <div class="feedbacks__user animated fadeInRight">
+            <div class="feedbacks__user animated fadeInRight" data-name="{{name}}">
                 <div class="feedbacks__user__info">
                     <img class="feedbacks__user__avatar" src="{{avatar}}" alt="">
                     <span class="feedbacks__user__name">{{name}}</span>
                 </div>
                 <div class="feedbacks__user__buttons">
-                    {{#if badges}}
                     <button class="feedbacks__user__button feedbacks__see__badges">Badges</button>
-                    {{else}}
-                    <div class="feedbacks__empty" style="">
-                        <span>No badges yet</span>
-                    </div>
-                    {{/if}}
+                    <span style="display: none;">{{name}}</span>
                     <button class="feedbacks__user__button feedbacks__see__feedbacks">Feedbacks</button>
+                    <span style="display: none;">{{name}}</span>
                     <button class="feedbacks__user__button feedbacks__leave__feedback">Leave feedback</button>
                 </div>
             </div>
@@ -34,3 +30,4 @@
 </div>
 
 <script src="/js/feedback.js"></script>
+<script src="/js/helpers/search.js"></script>

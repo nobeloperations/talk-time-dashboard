@@ -1,5 +1,10 @@
 window.onload = function () {
-    let url = window.location.href.split('/').at(-1);
+    const URL = window.location.href.split('/').at(-2);
+    const DATE = window.location.href.split('/').at(-1);
+    const X_COEF = 1.5;
+    const Y_COEF = 7;
+    const CENTER_COEF = 40;
+    const CANVAS_HEIGHT = 150;
     let _conclusionInputWrapper = document.querySelector('.conclusion__input__wrapper')
     let _addConclusionButton = document.querySelector('.add__conclusion')
     let _addConclusionInput = document.querySelector('.conclusion__input')
@@ -8,93 +13,59 @@ window.onload = function () {
     let _meetingParticipants = document.querySelectorAll('.meeting__participant')
     let _statisticsRatios = document.querySelectorAll('.statistics__ratio')
     let _tagsList = document.querySelector('.tags__list')
-    let _tagsSelectArrow = document.querySelector('.tags__select__arrow')
-    let _tagsSelectClose = document.querySelector('.tags__select__close')
-    let _tagElements = document.querySelectorAll('.tag__element')
-    let _allChecked = document.querySelectorAll('.is__checked')
-    let _peaksToDelete = document.querySelectorAll('.peaks__wrapper div:nth-child(-n + 3)')
-    let _peaks = document.querySelectorAll('.peak')
-    let _peaksWrappers = document.querySelectorAll('.peaks__wrapper')
+    let _tagsInput = document.querySelector('.tags__input')
+    let _plusTag = document.querySelector('.plus__tag')
+    let _audioActivities = document.querySelectorAll(".audio__activity");
 
-    // _peaks.forEach(_peak => {
-    //     if(_peak.style.height == '0px') _peak.parentElement.removeChild(_peak)
-    // })
-
-    _peaks.forEach(_peak => {
-        if(+_peak.style.height.slice(0, -2) < 3) _peak.style.height = _peak.style.height.slice(0, -2) * 4 + 'px'
-    })
-
-    _peaksToDelete.forEach(_peakToDelete => {
-        _peakToDelete.parentNode.removeChild(_peakToDelete)
-    })
-
-    _peaksWrappers.forEach(_peaksWrapper => {
-        if(_peaksWrapper.children.length === 1 && _peaksWrapper.children[0].tagName == 'SPAN') {
-            _peaksWrapper.querySelector('.user__activity__nodata').style.display = 'inline'
-        }
+    _audioActivities.forEach(_audioActivity => {
+        let _ctx = _audioActivity.getContext('2d')
+        let _data = _audioActivity.dataset.peaks.split(',').map(e => +e).filter(i => i != 1)
+        _data.slice(5, _data.length).forEach((_e, _idx) => {
+            let _x = _idx * X_COEF
+            let _y = (CANVAS_HEIGHT - (_e * Y_COEF)) - CENTER_COEF
+            _ctx.lineTo(_x, _y);
+        })
+        _ctx.strokeStyle = 'white'
+        _ctx.stroke()
     })
 
     let _tags = []
 
-    _tagElements.forEach(_tagElement => {
-        _tagElement.onclick = function () {
-            _isChecked = this.querySelector('.is__checked')
-            if (_isChecked.textContent == '✓') {
-                _isChecked.innerHTML = ''
-                _tags = _tags.filter(_tag => {
-                    return _tag.tag !== this.textContent.slice(0, -1).trim()
-                })
-            }
-            else {
-                _tags.push({ tag: this.querySelector('.tag__name').textContent })
-                _isChecked.innerHTML = '✓'
-            }
-
-        }
-    })
-
-    let _tagsOptions = {
-        _openTags: () => {
-            _tagsList.style.visibility = 'visible'
-            _tagsList.style.opacity = '1'
-            _tagsSelectArrow.style.display = 'none'
-            _tagsSelectClose.style.display = 'inline'
-        },
-        _closeTags: () => {
-            _tagsList.style.visibility = 'hidden'
-            _tagsList.style.opacity = '0'
-            _tagsSelectArrow.style.display = 'inline'
-            _tagsSelectClose.style.display = 'none'
+    _plusTag.onclick = function () {
+        let _tag = _tagsInput.value;
+        if (_tag.trim()) {
+            let _tagElem = document.createElement('div')
+            _tagElem.className = "tag"
+            _tagElem.innerHTML = `× ${_tag}`
+            _tagsList.appendChild(_tagElem)
+            _tags.push(_tag)
+            _tagsInput.value = ''
         }
     }
 
-    _tagsSelectArrow.onclick = function () {
-        _tagsOptions._openTags()
-    }
-
-    _tagsSelectClose.onclick = function () {
-        _tagsOptions._closeTags()
+    _tagsList.onclick = e => {
+        let target = e.target;
+        if(target.className === 'tag') {
+            _tagsList.removeChild(target)
+            _tags = _tags.filter(_tag => _tag != target.textContent.slice(2))
+        }
     }
 
     _meetingParticipants.forEach(_meetingParticipant => {
         _meetingParticipant.onclick = function () {
-            window.location = `/feedbacks/${url}/${this.querySelector('.participant__name').textContent}`
+            window.location = `/feedbacks/${URL}/${this.querySelector('.participant__name').textContent}/${DATE}`
         }
     })
 
-    _addConclusionButton.onclick = function () {
-        _tagsList.style.visibility = 'hidden'
-        _tagsList.style.opacity = '0'
-        _tagsSelectClose.style.display = 'none'
-        _tagsSelectArrow.style.display = 'inline'
+    _addConclusionButton.onclick = async function () {
         let value = _addConclusionInput.value;
         if (!value.trim()) {
             _conclusionInputWrapper.classList.toggle('wrong__conclusion')
             return;
         }
         let _conclusionHTML = `
-        ${Object.values(_tags).map(_tag => {
-            return `<span class="conclusion__tag">${_tag.tag}</span>`
+        ${_tags.map(_tag => {
+            return `<span class="conclusion__tag">${_tag}</span>`
         }).join('')}
         <span class="conclusion">${'- ' + value}</span>
         <span class="conclusion__star">☆</span>
@@ -106,14 +77,14 @@ window.onload = function () {
         _conclusionWrapper.innerHTML = _conclusionHTML
         _conclusions.prepend(_conclusionWrapper)
 
-        fetch(`/newconclusion/${url}`, {
+        await fetch(`/newconclusion/${URL}/${DATE}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 text: _addConclusionInput.value,
-                url,
+                URL,
                 tags: _tags
             })
         })
@@ -122,11 +93,9 @@ window.onload = function () {
                 _conclusionWrapper.querySelector('.conclusion__id').innerHTML = res._id
             })
         _tags = []
-        _allChecked.forEach(_checked => {
-            _checked.innerHTML = ''
-        })
         _addConclusionInput.value = ''
         _emptyConclusionsWarning.style.display = 'none'
+        _tagsList.innerHTML = ''           
     }
 
     _conclusions.onclick = function (e) {
@@ -164,7 +133,7 @@ window.onload = function () {
     _statisticsRatios.forEach(_statisticRatio => {
         let _percentValue = _statisticRatio.parentElement.querySelector('.statistics__percents').textContent.trim().slice(0, -1)
         let _readyPercentValue = _percentValue < 10 ? _percentValue / 10 : _percentValue / 100
-        _statisticRatio.style.setProperty('--before__prop', `conic-gradient(white 0 calc(${_readyPercentValue} * 361deg), #7249db calc(${_readyPercentValue} * 360deg) 360deg)`)
+        _statisticRatio.style.setProperty('--before__prop', `conic-gradient(white 0 calc(${_readyPercentValue} * 361deg), #7352c6 calc(${_readyPercentValue} * 360deg) 360deg)`)
     })
 
 }

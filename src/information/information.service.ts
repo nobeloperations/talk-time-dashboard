@@ -1,17 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { General } from 'models/general.model';
+import { Meeting } from 'models/meeting.model';
 import { Model } from 'mongoose';
 
 @Injectable()
 export class InformationService {
 
-    constructor(@InjectModel('General') private readonly generalModel: Model<General>){}
+    constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>) { }
 
     async getInformation(params) {
-        const { url } = params;
-        const currentMeeting = await this.generalModel.findOne({name: url})
-        return { cssFileName: 'information', currentMeeting, url }
-        
+        const { url, date } = params;
+        const meetings = await this.meetingModel.find()
+        let meets = []
+        meetings.forEach(meeting => {
+            meets.push(...meeting.meetings)
+        })
+        let isMeetPresent = meets.filter(meet => meet.url === url && meet.date === date)
+        return { cssFileName: 'information', isMeetPresent, url, date }
+
     }
 }

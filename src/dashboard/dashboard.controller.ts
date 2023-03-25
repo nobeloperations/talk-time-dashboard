@@ -9,7 +9,7 @@ export class DashboardController {
 
     constructor(private dashboardService: DashboardService){}
 
-    @Get('dashboard/:url')
+    @Get('dashboard/:url/:date')
     @Render('dashboard')
     @HttpCode(200)
     getDashboard(@Param() params: UrlDto) {
@@ -17,13 +17,13 @@ export class DashboardController {
          
     }   
     
-    @Post('/percentage/:url')
+    @Post('/percentage/:url/:date')
     @HttpCode(200)
     postPercents(@Param() params: UrlDto, @Body() postPercentsBodyDto: postPercentsDto) {
         return this.dashboardService.postPercents(params, postPercentsBodyDto)
     }
 
-    @Post('/newconclusion/:url')
+    @Post('/newconclusion/:url/:date')
     @HttpCode(200)
     newConclusion(@Param() params: UrlDto, @Body() createConclusionBodyDto: CreateConclusionDto) {
         return this.dashboardService.newConclusion(params, createConclusionBodyDto)

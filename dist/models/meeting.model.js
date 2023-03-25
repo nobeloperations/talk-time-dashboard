@@ -1,15 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.GeneralSchema = void 0;
+exports.MeetingSchema = void 0;
 const mongoose = require("mongoose");
-exports.GeneralSchema = new mongoose.Schema({
+exports.MeetingSchema = new mongoose.Schema({
     name: {
-        type: String,
-        required: true
+        type: String
     },
     meetings: {
         type: Array,
         required: true
-    },
+    }
 });
-//# sourceMappingURL=general.model.js.map
+//# sourceMappingURL=meeting.model.js.map

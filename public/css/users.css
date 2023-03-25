@@ -1,0 +1,177 @@
+.users__container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+.users__list {
+    padding: 0 25px 0 25px;
+    height: calc(100vh - 135px);
+    width: 100%;
+    overflow-y: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 10px;
+    align-content: flex-start;
+}
+.users__list::-webkit-scrollbar {
+    width: 3px;
+}
+.users__list::-webkit-scrollbar-thumb {
+    background: #ab76ff;
+}
+.user__info {
+    width: 70%;
+    display: flex;
+    align-items: center;
+    height: fit-content;
+}
+.username__participated {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.user__avatar {
+    width: 42px;
+    border-radius: 100px;
+    margin-right: 10px;
+}
+.user {
+    width: calc((100% / 3) - 10px);
+    height: 70px;
+    display: flex;
+    padding: 10px;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 5px 34px -28px rgba(0,0,0,0.75);
+    background: #9067f8;
+    border-radius: 10px;
+    color: white;
+}
+.user__badges__button {
+    width: 30%;
+    height: 40px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background: #734bd6;
+    color: white;
+    cursor: pointer;
+}
+.users__search {
+    height: 45px;
+    margin: 0 25px 0 25px;
+    margin-bottom: 20px;
+    padding: 0px 10px 0 15px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    background: transparent;
+    color: white;
+    font-size: 16px;
+    border: 1px solid rgb(169, 123, 255);
+}
+.users__search::placeholder {
+    color: white;
+    opacity: .7;
+}
+.badges__modal {
+    width: 300px;
+    height: 300px;
+    background: white;
+    border-radius: 10px;
+    visibility: hidden;
+    opacity: 0;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .3s all ease;
+    z-index: 111111;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+.badges__modal__title {
+    height: 45px;
+    width: 100%;
+    border-bottom: 1px solid gray;
+    border-radius: 10px 10px 0 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal__shadow {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    opacity: 0;
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: .3s ease all;
+}
+.close__badges__button {
+    width: 100%;
+    height: 40px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-radius: 0 0 10px 10px;
+    background: #aea0ff;
+    color: white;
+}
+.user__badges {
+    height: 210px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    overflow-y: scroll;
+}
+.user__badge {
+    width: 50%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding-top: 15px;
+}
+.user__badges::-webkit-scrollbar {
+    width: 3px;
+}
+.user__badges::-webkit-scrollbar-thumb {
+    background: #ab76ff;
+}
+.user__badge__img {
+    width: 48px;
+    margin-bottom: 5px;
+}
+.user__badge__name {
+    font-size: 14px;
+}
+@media only screen and (max-width:450px) {
+    .users__container {
+        width: 100vw;
+    }
+    .users__list {
+        flex-direction: column;
+        padding: 0 10px 0 10px;
+    } 
+    .user {
+        width: 100%;
+    }
+    .users__search {
+        width: 100%;
+        margin: 0 10px 10px 10px;
+    }
+    .user__name, .meeting__participated {
+        font-size: 14px;
+    }
+}

@@ -106,20 +106,6 @@ option {
     width: 100%;
     margin-bottom: 5px;
 }
-.send__feedback__techs__wrapper {
-    width: 100%;
-    height: 32px;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 20px;
-}
-.send__feedback__techs__wrapper > .send__feedback__select{
-    width: 50%;
-    height: 100%;
-}
-.send__feedback__techs__wrapper > .send__feedback__select:not(:last-child) {
-    margin-right: 10px;
-}
 .send__feedback__button {
     border: none;
     outline: none;

@@ -13,10 +13,6 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    badges: {
-        type: Array,
-        default: []
-    },
     peaks: {
         type: Array,
         default: []
@@ -25,23 +21,21 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    age: {
+    count: {
+        type: Number,
+        default: 0
+    },
+    date: {
         type: String,
-        default: ''
-    },
-    techs: {
-        type: Array,
-        default: []
-    },
+        required: true
+    }
 })
 
 export interface User {
     name: string,
     url: string,
     avatar: string,
-    badges: string[],
+    badges: string,
     peaks: number[],
     percents: string,
-    age: string,
-    techs: string[],
 }

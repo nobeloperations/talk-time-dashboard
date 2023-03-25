@@ -6,7 +6,7 @@ import { UrlDto } from 'global.dto';
 export class InformationController {
     constructor(private informationService: InformationService) {}
 
-    @Get('/:url')
+    @Get('/:url/:date')
     @Render('information')
     @HttpCode(200)
     getBadges(@Param() params: UrlDto) {

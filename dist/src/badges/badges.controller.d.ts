@@ -32,11 +32,13 @@ export declare class BadgesController {
     newBadge(params: NewBadgeParamDto, newBadgeBodyDto: NewBadgeBodyDto): Promise<void>;
     getFeedbackBadges(params: FeedbackBadgesDto): Promise<{
         cssFileName: string;
-        badges: {};
+        badges: any[];
+        isBadges: boolean;
         currentUser: import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
             _id: import("mongoose").Types.ObjectId;
         };
         url: any;
         name: any;
+        date: any;
     }>;
 }

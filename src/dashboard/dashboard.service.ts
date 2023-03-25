@@ -14,12 +14,12 @@ export class DashboardService {
         @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>) { }
 
     async getDashboard(params) {
-        const { url } = params;
-        const users = await this.userModel.find({ url })
-        const conclusions = await this.conclusionModel.find({ url })
-        const feedbacks = await this.feedbackModel.find({ url })
+        const { url,date } = params;
+        const users = await this.userModel.find({ url,date })
+        const conclusions = await this.conclusionModel.find({ url,date })
+        const feedbacks = await this.feedbackModel.find({ url, date })
         let feedbacksByName = {}
-
+        
         users.forEach(user => {
             feedbacksByName[user.name] = {
                 name: user.name,
@@ -35,29 +35,32 @@ export class DashboardService {
             feedbacksByName[feedback.receiver].rating.push(feedback.rating)
         })
 
-        return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName }
+        return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName, date }
 
     }
 
     async postPercents(params, postPercentsBodyDto) {
         const { percents } = postPercentsBodyDto
-        const { url } = params
+        const { url, date } = params
         percents.forEach(async percent => {
-            await this.userModel.findOneAndUpdate({name: percent.name, url}, {percents: percent.percent})
+            await this.userModel.findOneAndUpdate({name: percent.name, url, date}, {percents: percent.percent})
         })
     }
 
     async newConclusion(params, createConclusionBodyDto) {
-        const { url } = params;
+        const { url, date } = params;
         const { text, tags } = createConclusionBodyDto
         const newConclusion = new this.conclusionModel({
             text,
             url,
-            tags
+            tags,
+            date
         })
 
         await newConclusion.save()
         return JSON.stringify(newConclusion)
+        
+        
     }
 
     async deleteConclusion(deleteConclusionBodyDto) {

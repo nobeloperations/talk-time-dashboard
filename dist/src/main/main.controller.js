@@ -21,6 +21,9 @@ let MainController = class MainController {
     constructor(mainService) {
         this.mainService = mainService;
     }
+    test(body) {
+        return this.mainService.test(body);
+    }
     getMain() {
         return this.mainService.getMain();
     }
@@ -28,9 +31,16 @@ let MainController = class MainController {
         return this.mainService.getSearchlist(params);
     }
     addGeneral(addGeneralBodyDto) {
-        return this.mainService.addGeneral(addGeneralBodyDto);
+        return this.mainService.addMeeting(addGeneralBodyDto);
     }
 };
+__decorate([
+    (0, common_1.Post)('/test'),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], MainController.prototype, "test", null);
 __decorate([
     (0, common_1.Get)(),
     (0, common_1.Render)('main'),
@@ -49,7 +59,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getSearchlist", null);
 __decorate([
-    (0, common_1.Post)('/addgeneral'),
+    (0, common_1.Post)('/addmeeting'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),

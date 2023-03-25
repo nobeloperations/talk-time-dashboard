@@ -22,23 +22,24 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { General } from 'models/general.model';
+import { Meeting } from 'models/meeting.model';
 import { Model } from 'mongoose';
 export declare class MainService {
-    private readonly generalModel;
-    constructor(generalModel: Model<General>);
+    private readonly meetingModel;
+    constructor(meetingModel: Model<Meeting>);
+    test(body: any): void;
     getMain(): Promise<{
         message: string;
         cssFileName: string;
-        generals: (import("mongoose").Document<unknown, any, General> & General & {
+        meetings: (import("mongoose").Document<unknown, any, Meeting> & Meeting & {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
     getSearchlist(params: any): Promise<{
-        generals: (import("mongoose").Document<unknown, any, General> & General & {
+        meetingsResult: (import("mongoose").Document<unknown, any, Meeting> & Meeting & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         cssFileName: string;
     }>;
-    addGeneral(addGeneralBodyDto: any): Promise<void>;
+    addMeeting(addGeneralBodyDto: any): Promise<void>;
 }

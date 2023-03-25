@@ -17,55 +17,40 @@
                                 <span class="participant__rating">★ {{average rating}}</span>
                             </div>
                         </div>
-                        <div class="peaks__wrapper">
-                            {{#each peaks}}
-                            <div class="peak" style="height: {{this}}px;"></div>
-                            {{/each}}
-                            <span class="user__activity__nodata">No data</span>
-                        </div>
+                        {{#if peaks}}
+                        <canvas class="audio__activity" data-peaks="{{peaks}}"></canvas>
+                        {{else}}   
+                        <span>No audio data</span>
+                        {{/if}}
                     </div>
-
-
                     {{/each}}
                 </div>
             </div>
         </div>
         <div class="dashboard__content__wrapper dashboard__content__wrapper__left">
             <div class="dashboard__card dashboard__conclusions animated fadeInLeft">
-                <h1 class="conclusions__title">Meeting Conclusions</h1>
+                <h1 class="conclusions__title">Meeting Notes</h1>
                 <div class="conclusion__input__wrapper">
-                    <input placeholder="Enter a meeting conclusion" class="conclusion__input" type="text"
+                    <input placeholder="Enter a note" class="conclusion__input" type="text"
                         name="meeting-conclusions">
                     <div class="tags__select__wrapper">
-
-                        <div class="tags__select">
-                            <span class="tags__select__text">Select tag(s)</span>
-                            <span class="tags__select__arrow">▼</span>
-                            <span class="tags__select__close">✕</span>
+                        <div class="tag__input__wrapper">
+                            <div class="tag__input__container">
+                                <input type="text" class="tags__input" placeholder="Enter a tag(s)">
+                                <div class="plus__tag">+</div>
+                            </div>
                         </div>
                         <div class="tags__list">
-                            <div class="tag__element">
-                                <span class="tag__name">Question</span>
-                                <span class="is__checked"></span>
-                            </div>
-                            <div class="tag__element">
-                                <span class="tag__name">Problem</span>
-                                <span class="is__checked"></span>
-                            </div>
-                            <div class="tag__element">
-                                <span class="tag__name">Task</span>
-                                <span class="is__checked"></span>
-                            </div>
                         </div>
                     </div>
-                    <button class="add__conclusion">Add</button>
+                    <button class="add__conclusion">Add Note</button>
                 </div>
                 <div class="conclusions">
                     {{#if conclusions}}
                     {{#each conclusions}}
                     <div class="conclusion__wrapper">
                         {{#each tags}}
-                        <span class="conclusion__tag">{{this.tag}}</span>
+                        <span class="conclusion__tag">{{this}}</span>
                         {{/each}}
                         <span class="conclusion">- {{text}}</span>
                         {{#if important}}

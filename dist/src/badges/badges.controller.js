@@ -29,7 +29,7 @@ let BadgesController = class BadgesController {
     }
 };
 __decorate([
-    (0, common_1.Post)('/givebadge/:url/:name'),
+    (0, common_1.Post)('/givebadge/:url/:name/:date'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], BadgesController.prototype, "newBadge", null);
 __decorate([
-    (0, common_1.Get)('/:url/:name'),
+    (0, common_1.Get)('/:url/:name/:date'),
     (0, common_1.Render)('feedback-badges'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),

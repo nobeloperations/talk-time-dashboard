@@ -18,7 +18,7 @@
                     {{#if feedbackImg}}
                     <button class="personal__feedback__view__image__button">View image</button>
                     {{/if}}
-                    <a href="/comments/{{url}}/{{_id}}"><button class="personal__feedback__leave__comment">Leave
+                    <a href="/comments/{{url}}/{{_id}}/{{date}}"><button class="personal__feedback__leave__comment">Leave
                             Comment</button></a>
                 </div>
             </div>
@@ -36,4 +36,5 @@
         {{/if}}
     </div>
 </div>
+<div class="modal__shadow"></div>
 <script src="/js/personal-feedbacks.js"></script>

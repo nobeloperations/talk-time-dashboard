@@ -1,7 +1,7 @@
 <div class="information__container">
     {{>header}}
     <div class="information__content">
-        {{#if currentMeeting}}
+        {{#if isMeetPresent}}
         <div class="badges">
             <h1 class="badges__title animated fadeInLeft">What is Badges?</h1>
             <span class="badges__info animated fadeInRight">Every badge is mean some soft-skill and
@@ -61,12 +61,12 @@
                 </div>
             </div>
         </div>
-        {{else}}
-        <h1 class="invalid__url">Invalid Meeting url, make sure that your meeting url is valid</h1>
-        {{/if}}
     </div>
     <div class="information__controlls">
         <button class="information__next" data-current="extension">Next</button>
     </div>
+    {{else}}
+    <h1 class="invalid__url">Invalid Meeting url, make sure that your meeting url is valid</h1>
+    {{/if}}
 </div>
 <script src="/js/information.js"></script>

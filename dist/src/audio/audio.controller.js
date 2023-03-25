@@ -16,7 +16,6 @@ exports.AudioController = void 0;
 const common_1 = require("@nestjs/common");
 const audio_service_1 = require("./audio.service");
 const vad_dto_1 = require("./dtos/vad.dto");
-const global_dto_1 = require("../../global.dto");
 let AudioController = class AudioController {
     constructor(audioService) {
         this.audioService = audioService;
@@ -27,21 +26,18 @@ let AudioController = class AudioController {
     postPeaks(params, postPeaksBodyDto) {
         return this.audioService.postPeaks(params, postPeaksBodyDto);
     }
-    getAudioActivity(params) {
-        return this.audioService.getAudioActivity(params);
-    }
 };
 __decorate([
-    (0, common_1.Get)('/vad/:url/:name'),
+    (0, common_1.Get)('/vad/:url/:name/:date'),
     (0, common_1.Render)('vad'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [vad_dto_1.VadDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AudioController.prototype, "getVad", null);
 __decorate([
-    (0, common_1.Post)('/vad/:url/:name'),
+    (0, common_1.Post)('/vad/:url/:name/:date'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
@@ -49,15 +45,6 @@ __decorate([
     __metadata("design:paramtypes", [Object, vad_dto_1.VadDto]),
     __metadata("design:returntype", void 0)
 ], AudioController.prototype, "postPeaks", null);
-__decorate([
-    (0, common_1.Get)('/activity/:url'),
-    (0, common_1.Render)('activity'),
-    (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Param)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [global_dto_1.UrlDto]),
-    __metadata("design:returntype", void 0)
-], AudioController.prototype, "getAudioActivity", null);
 AudioController = __decorate([
     (0, common_1.Controller)('audio'),
     __metadata("design:paramtypes", [audio_service_1.AudioService])

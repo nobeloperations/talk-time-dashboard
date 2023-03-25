@@ -29,15 +29,16 @@ import { AddGeneralDto } from 'src/main/dtos/add-general.dto';
 export declare class MainController {
     private mainService;
     constructor(mainService: MainService);
+    test(body: any): void;
     getMain(): Promise<{
         message: string;
         cssFileName: string;
-        generals: (import("mongoose").Document<unknown, any, import("../../models/general.model").General> & import("../../models/general.model").General & {
+        meetings: (import("mongoose").Document<unknown, any, import("../../models/meeting.model").Meeting> & import("../../models/meeting.model").Meeting & {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
     getSearchlist(params: UrlDto): Promise<{
-        generals: (import("mongoose").Document<unknown, any, import("../../models/general.model").General> & import("../../models/general.model").General & {
+        meetingsResult: (import("mongoose").Document<unknown, any, import("../../models/meeting.model").Meeting> & import("../../models/meeting.model").Meeting & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         cssFileName: string;

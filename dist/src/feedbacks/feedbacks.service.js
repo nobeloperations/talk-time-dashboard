@@ -18,45 +18,49 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const config_1 = require("../../badge-config/config");
 const DEFAULT_BADGE = 'Choose the Badge (not necessarily)';
-const DEFAULT_TECH_BADGE = 'Select Technology';
 let FeedbacksService = class FeedbacksService {
-    constructor(feedbackModel, userModel) {
+    constructor(feedbackModel, userModel, badgeModel) {
         this.feedbackModel = feedbackModel;
         this.userModel = userModel;
+        this.badgeModel = badgeModel;
     }
     async getFeedbacks(params) {
-        const { url } = params;
-        const users = await this.userModel.find({ url });
-        return { cssFileName: 'feedback', users, url };
+        const { url, date } = params;
+        const users = await this.userModel.find({ url, date });
+        return { cssFileName: 'feedback', users, url, date };
     }
     async getPersonalFeedbacks(params) {
-        const { url, name } = params;
-        const feedbacks = await this.feedbackModel.find({ receiver: name, url });
-        const currentUser = await this.userModel.findOne({ name, url });
-        return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url };
+        const { url, name, date } = params;
+        const feedbacks = await this.feedbackModel.find({ receiver: name, url, date });
+        const currentUser = await this.userModel.findOne({ name, url, date });
+        return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date };
     }
     async getNewFeedback(params) {
-        const { url, name } = params;
-        const currentUser = await this.userModel.findOne({ name, url });
-        const users = await this.userModel.find({ url });
-        return { cssFileName: 'new-feedback', name, currentUser, url, users };
+        const { url, name, date } = params;
+        const currentUser = await this.userModel.findOne({ name, url, date });
+        const users = await this.userModel.find({ url, date });
+        return { cssFileName: 'new-feedback', name, currentUser, url, users, date };
     }
     async createFeedback(files, createFeedbackBodyDto, params, res) {
         var _a;
-        let { sender, rating, feedback, badge, tech, level } = createFeedbackBodyDto;
-        let { url, name } = params;
+        let { sender, rating, feedback, badge } = createFeedbackBodyDto;
+        let { url, name, date } = params;
         let receiver = name;
         let sendUser = await this.userModel.findOne({ name: sender });
         if (badge !== DEFAULT_BADGE) {
             let key = `${badge.toLowerCase().split(' ').join('_')}`;
             let value = config_1.config[key];
             badge = `${key}${value}.png`;
-            await this.userModel.findOneAndUpdate({ name: receiver, url }, { $push: { badges: { badge } } });
-        }
-        if (level || tech) {
-            if (tech !== DEFAULT_TECH_BADGE && tech !== undefined) {
-                let techBadge = `${tech}${level}`;
-                await this.userModel.updateMany({ name: receiver }, { $push: { techs: { badge: techBadge } } });
+            const currentBadge = await this.badgeModel.findOne({ name: receiver });
+            if (currentBadge) {
+                await this.badgeModel.updateOne({ name: receiver }, { $push: { badges: { badge } } });
+            }
+            else {
+                const newBadge = new this.badgeModel({
+                    name,
+                    badges: [{ badge: badge }]
+                });
+                await newBadge.save();
             }
         }
         let newFeedback = new this.feedbackModel({
@@ -67,17 +71,20 @@ let FeedbacksService = class FeedbacksService {
             url,
             senderImg: sendUser ? sendUser.avatar : 'https://cdn-icons-png.flaticon.com/512/1177/1177568.png',
             feedbackImg: (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename,
-            date: new Date().toLocaleDateString()
+            postDate: new Date().toLocaleDateString(),
+            date
         });
         await newFeedback.save();
-        res.redirect(`/dashboard/${url}`);
+        res.redirect(`/dashboard/${url}/${date}`);
     }
 };
 FeedbacksService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('Feedback')),
     __param(1, (0, mongoose_1.InjectModel)('User')),
+    __param(2, (0, mongoose_1.InjectModel)('Badge')),
     __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model,
         mongoose_2.Model])
 ], FeedbacksService);
 exports.FeedbacksService = FeedbacksService;

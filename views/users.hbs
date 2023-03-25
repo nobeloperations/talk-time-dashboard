@@ -1,0 +1,35 @@
+<div class="users__container">
+    {{>header}}
+    <input type="text" class="users__search" placeholder="🔎︎ Seach users">
+    <div class="users__list">
+        {{#each users}}
+            <div class="user" data-name="{{name}}">
+                <div class="user__info">
+                    <img class="user__avatar" src="{{avatar}}" alt="">
+                    <div class="username__participated">
+                        <span class="user__name">{{name}}</span>
+                        <span class="meeting__participated">Participated in {{count}} meeting(s)</span>
+                    </div>
+                </div>
+                <button class="user__badges__button">Open All Badges</button>
+            </div>
+            <div class="badges__modal">
+                <div class="badges__modal__title">
+                    <span>{{name}}`s badges</span>
+                </div>
+                <div class="user__badges">
+                    {{#each badges}}
+                        <div class="user__badge">
+                            <img class="user__badge__img" src="/img/{{badge}}" alt="">
+                            <span class="user__badge__name">{{convert badge}}</span>
+                        </div>
+                    {{/each}}
+                </div>
+                <button class="close__badges__button">Close</button>
+            </div>
+        {{/each}}
+    </div>
+</div>
+<div class="modal__shadow"></div>
+<script src="/js/users.js"></script>
+<script src="/js/helpers/search.js"></script>

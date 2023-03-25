@@ -4,40 +4,41 @@ import { Feedback } from 'models/feedback.model';
 import { User } from 'models/user.model';
 import { Model } from 'mongoose';
 import { config } from '../../badge-config/config'
+import { Badge } from 'models/badges.model';
 
 const DEFAULT_BADGE = 'Choose the Badge (not necessarily)'
-const DEFAULT_TECH_BADGE = 'Select Technology'
 
 @Injectable()
 export class FeedbacksService {
 
     constructor(@InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>,
-                @InjectModel('User') private readonly userModel: Model<User>){}
+                @InjectModel('User') private readonly userModel: Model<User>,
+                @InjectModel('Badge') private readonly badgeModel: Model<Badge>){}
 
     async getFeedbacks(params) {
-        const { url } = params;
-        const users = await this.userModel.find({ url })
-        return { cssFileName: 'feedback', users, url }
+        const { url,date } = params;
+        const users = await this.userModel.find({ url,date })
+        return { cssFileName: 'feedback', users, url, date }
     }
 
 
     async getPersonalFeedbacks(params) {
-        const { url, name } = params;
-        const feedbacks = await this.feedbackModel.find({ receiver: name, url })
-        const currentUser = await this.userModel.findOne({name, url})
-        return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url }
+        const { url, name, date } = params;
+        const feedbacks = await this.feedbackModel.find({ receiver: name, url, date })
+        const currentUser = await this.userModel.findOne({name, url, date})
+        return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date }
     }
 
     async getNewFeedback(params) {
-        const { url, name } = params;
-        const currentUser = await this.userModel.findOne({name, url})
-        const users = await this.userModel.find({ url })
-        return { cssFileName: 'new-feedback', name, currentUser, url, users }
+        const { url, name,date } = params;
+        const currentUser = await this.userModel.findOne({name, url, date})
+        const users = await this.userModel.find({ url, date })
+        return { cssFileName: 'new-feedback', name, currentUser, url, users, date }
     }
 
     async createFeedback(files, createFeedbackBodyDto, params, res) {
-        let { sender, rating, feedback, badge, tech, level } = createFeedbackBodyDto;
-        let { url, name } = params;
+        let { sender, rating, feedback, badge } = createFeedbackBodyDto;
+        let { url, name, date } = params;
         let receiver = name
         let sendUser = await this.userModel.findOne({ name: sender })
 
@@ -46,15 +47,19 @@ export class FeedbacksService {
             let key = `${badge.toLowerCase().split(' ').join('_')}`;
             let value = config[key]
             badge = `${key}${value}.png`
-            await this.userModel.findOneAndUpdate({ name: receiver, url }, { $push: { badges: { badge } } })
-
-        }
-
-        if(level || tech) {
-            if(tech !== DEFAULT_TECH_BADGE && tech !== undefined) {
-                let techBadge = `${tech}${level}`
-                await this.userModel.updateMany({name: receiver}, { $push: { techs: {badge: techBadge} } })
+            const currentBadge = await this.badgeModel.findOne({name: receiver})
+            if(currentBadge) {
+                await this.badgeModel.updateOne({ name: receiver }, { $push: { badges: { badge } } })
             }
+            else {
+                const newBadge = new this.badgeModel({
+                    name,
+                    badges: [{badge: badge}]
+                })
+
+                await newBadge.save()
+            }
+
         }
         let newFeedback = new this.feedbackModel({
             sender,
@@ -64,11 +69,12 @@ export class FeedbacksService {
             url,
             senderImg: sendUser ? sendUser.avatar : 'https://cdn-icons-png.flaticon.com/512/1177/1177568.png',
             feedbackImg: files[0]?.filename,
-            date: new Date().toLocaleDateString()
+            postDate: new Date().toLocaleDateString(),
+            date
         })
 
         await newFeedback.save()
-        res.redirect(`/dashboard/${url}`)
+        res.redirect(`/dashboard/${url}/${date}`)
     }
 
 }

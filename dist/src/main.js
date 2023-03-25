@@ -4,8 +4,10 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 const hbs_config_1 = require("../hbs-config");
 const http_exception_filter_1 = require("./filters/http-exception.filter");
+const startup_1 = require("./sockets/startup");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
+    (0, startup_1.default)();
     app.enableCors();
     app.useGlobalFilters(new http_exception_filter_1.HttpExceptionFilter);
     (0, hbs_config_1.hbsConfig)(app);

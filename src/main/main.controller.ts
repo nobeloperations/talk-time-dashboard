@@ -8,6 +8,11 @@ export class MainController {
 
     constructor(private mainService: MainService){}
 
+    @Post('/test')
+    test(@Body() body) {
+        return this.mainService.test(body)
+    }
+
     @Get()
     @Render('main')
     @HttpCode(200)
@@ -22,9 +27,9 @@ export class MainController {
         return this.mainService.getSearchlist(params)
     }
 
-    @Post('/addgeneral')
+    @Post('/addmeeting')
     @HttpCode(200)
     addGeneral(@Body() addGeneralBodyDto: AddGeneralDto) {
-        return this.mainService.addGeneral(addGeneralBodyDto)
+        return this.mainService.addMeeting(addGeneralBodyDto)
     }
 }

@@ -31,6 +31,10 @@ export const FeedbackSchema = new mongoose.Schema({
     feedbackImg: {
         type: String
     },
+    postDate: {
+        type: String,
+        required: true
+    },
     date: {
         type: String,
         required: true

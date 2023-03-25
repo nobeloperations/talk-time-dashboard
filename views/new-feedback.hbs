@@ -3,7 +3,7 @@
     {{>header}}
     <div class="form__wrapper">
         <h1 class="send__feedback__title animated fadeInRight">Your feedback about {{name}}</h1>
-        <form action="/feedbacks/create/{{url}}/{{name}}" method="POST" enctype="multipart/form-data" class="send__feedback__form">
+        <form action="/feedbacks/create/{{url}}/{{name}}/{{date}}" method="POST" enctype="multipart/form-data" class="send__feedback__form">
             <select name="sender" class="sender__input send__feedback__select animated fadeInLeft" required>
                 <option hidden selected value="">Choose your name</option>
                 {{#each users}}
@@ -57,26 +57,6 @@
                 <option value="To Do Tracker">To Do Tracker</option>
                 <option value="Zen Enviroment">Zen Enviroment</option>
             </select>
-            {{!-- <div class="send__feedback__techs__wrapper">
-                <select name="level" class="send__feedback__select animated fadeInRight" name="level">
-                    <option hidden selected>Select level</option>
-                    <option value="1">1 level</option>
-                    <option value="2">2 level</option>
-                    <option value="3">3 level</option>
-                    <option value="4">4 level</option>
-                </select>
-                <select name="tech" class="send__feedback__select animated fadeInRight">
-                    <option hidden selected>Select Technology</option>
-                    <option value="ml1_">Machine Learning</option>
-                    <option value="coding2_">Coding</option>
-                    <option value="wd3_">Web Development</option>
-                    <option value="py4_">Python</option>
-                    <option value="lead5_">Leadership</option>
-                    <option value="pm6_">Project Management</option>
-                    <option value="sales7_">Sales</option>
-                    <option value="coach8_">Coaching</option>
-                </select>
-            </div> --}}
             <button class="send__feedback__button animated fadeInRight" type="submit">Send</button>
         </form>
     </div>

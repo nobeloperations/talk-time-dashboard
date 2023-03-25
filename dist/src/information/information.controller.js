@@ -25,7 +25,7 @@ let InformationController = class InformationController {
     }
 };
 __decorate([
-    (0, common_1.Get)('/:url'),
+    (0, common_1.Get)('/:url/:date'),
     (0, common_1.Render)('information'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),

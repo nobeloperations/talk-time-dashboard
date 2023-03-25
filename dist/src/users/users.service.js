@@ -17,37 +17,57 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let UsersService = class UsersService {
-    constructor(userModel) {
+    constructor(userModel, badgeModel) {
         this.userModel = userModel;
+        this.badgeModel = badgeModel;
     }
     async newUser(params, newUserBodyDto, headers) {
         if (headers['token'] === process.env.HEADER) {
             const { url } = params;
-            const { users } = newUserBodyDto;
-            if (users.length) {
-                for (let i = 0; i < users.length; i++) {
-                    const user = await this.userModel.findOne({ name: users[i].name, url });
-                    if (!user) {
-                        const newUser = new this.userModel({
-                            name: users[i].name,
-                            url,
-                            avatar: users[i].img,
-                            badges: []
-                        });
-                        await newUser.save();
-                    }
-                }
+            const { name, avatar, date } = newUserBodyDto;
+            const isUser = await this.userModel.findOne({ name, url, date });
+            if (!isUser) {
+                const newUser = new this.userModel({
+                    name,
+                    avatar,
+                    url,
+                    peaks: [],
+                    percents: '',
+                    date
+                });
+                await newUser.save();
+            }
+            else {
+                console.log('User already created');
             }
         }
         else {
             throw new common_1.HttpException('Invalid headers', 404);
         }
     }
+    async getUsers(params) {
+        const { url, date } = params;
+        let dbUsers = await this.userModel.find({}).select('name avatar count');
+        let users = [];
+        dbUsers.forEach(async (user) => {
+            this.userModel.countDocuments({ name: user.name }, async (_, count) => {
+                await this.userModel.updateMany({ name: user.name }, { count });
+            });
+            users.push(user.toObject());
+        });
+        for (let user of users) {
+            let currentBadges = await this.badgeModel.findOne({ name: user.name });
+            user.badges = (currentBadges === null || currentBadges === void 0 ? void 0 : currentBadges.badges) || [];
+        }
+        return { cssFileName: 'users', users, url, date };
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('User')),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)('Badge')),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], UsersService);
 exports.UsersService = UsersService;
 //# sourceMappingURL=users.service.js.map

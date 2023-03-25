@@ -4,10 +4,11 @@ import { FeedbacksController } from './feedbacks.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FeedbackSchema } from 'models/feedback.model';
 import { UserSchema } from 'models/user.model';
+import { BadgeSchema } from 'models/badges.model';
 
 @Module({
   providers: [FeedbacksService],
   controllers: [FeedbacksController],
-  imports: [MongooseModule.forFeature([{name: 'Feedback', schema: FeedbackSchema}, {name: 'User', schema: UserSchema}])]
+  imports: [MongooseModule.forFeature([{name: 'Feedback', schema: FeedbackSchema}, {name: 'User', schema: UserSchema}, {name: 'Badge', schema: BadgeSchema}])]
 })
 export class FeedbacksModule {}

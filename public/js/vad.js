@@ -1,9 +1,14 @@
 window.onload = async function () {
-    const nameEl = document.querySelector('.username')
-    const name = nameEl.textContent;
-    
-    const urlEl = document.querySelector('.url')
-    const url = urlEl.textContent;
+
+
+    let nameEl = document.querySelector('.username')
+    let name = nameEl.textContent;
+
+    let urlEl = document.querySelector('.url')
+    let url = urlEl.textContent;
+
+    let dateEl = document.querySelector('.date')
+    let date = dateEl.textContent;
 
     function groupAverage(arr) {
         let result = [];
@@ -54,7 +59,7 @@ window.onload = async function () {
                 document.querySelector('.ending__meet__button').onclick = function () {
                     this.disabled = true;
                     let averageArray = groupAverage(av)
-                    fetch(`/audio/vad/${url}/${name}`, {
+                    fetch(`/audio/vad/${url}/${name}/${date}`, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'

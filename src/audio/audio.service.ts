@@ -1,34 +1,27 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { Meeting } from 'models/meeting.model';
 import { User } from 'models/user.model';
 import { Model } from 'mongoose';
 
 @Injectable()
 export class AudioService {
 
-    constructor(@InjectModel('User') private readonly userModel: Model<User>) {}
+    constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>,
+        @InjectModel('User') private readonly userModel: Model<User>) { }
 
-    async getAudioActivity(params) {
-        const { url } = params;
-        const currentUsers = await this.userModel.find({ url })
-        currentUsers.forEach(currentUser => {
-            currentUser.peaks.forEach(peak => {
-                if (!peak) peak += 1
-            })
-        })
-        return { users: currentUsers, url, cssFileName: 'activity' }
-    }
 
     async postPeaks(params, postPeaksBodyDto) {
-        const { name, url } = params;
+        const { name, url, date } = params;
         const { array } = postPeaksBodyDto;
-        
-        this.userModel.updateOne({ name, url }, { peaks: array }, { multi: true }, function (err, nums) { })
-        
+        this.userModel.updateOne({ name, url, date }, { peaks: array }, { multi: true }, function (err, nums) { })
+
     }
 
     getVad(params) {
-        const { url, name } = params;
-        return { cssFileName: 'vad', name, url }
+
+        const { url, name, date } = params;
+
+        return { cssFileName: 'vad', name, url, date }
     }
 }

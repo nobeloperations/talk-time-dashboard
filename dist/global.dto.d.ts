@@ -3,4 +3,5 @@ export declare class IdDto {
 }
 export declare class UrlDto {
     readonly url: string;
+    readonly date: string;
 }

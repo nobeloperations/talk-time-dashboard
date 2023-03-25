@@ -13,7 +13,6 @@ const mongoose_1 = require("@nestjs/mongoose");
 const config_1 = require("@nestjs/config");
 const dashboard_module_1 = require("./dashboard/dashboard.module");
 const feedbacks_module_1 = require("./feedbacks/feedbacks.module");
-const messages_module_1 = require("./messages/messages.module");
 const platform_express_1 = require("@nestjs/platform-express");
 const information_module_1 = require("./information/information.module");
 const audio_module_1 = require("./audio/audio.module");
@@ -33,7 +32,6 @@ AppModule = __decorate([
             main_module_1.MainModule,
             dashboard_module_1.DashboardModule,
             feedbacks_module_1.FeedbacksModule,
-            messages_module_1.MessagesModule,
             information_module_1.StaticPagesModule,
             audio_module_1.AudioModule,
             comments_module_1.CommentsModule,

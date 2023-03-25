@@ -8,7 +8,7 @@ import { NewCommentBodyDto } from './dtos/new-comment.dto';
 export class CommentsController {    
     constructor(private commentsService: CommentsService){}
 
-    @Get('/:url/:id')
+    @Get('/:url/:id/:date')
     @Render('comments')
     @HttpCode(200)
     getComments(@Param() params: CommentsParamsDto) {        

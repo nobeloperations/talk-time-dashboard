@@ -12,9 +12,9 @@ export class CommentsService {
     @InjectModel('User') private readonly userModel: Model<User>){}
 
     async getComments(params) {
-        const { id, url } = params;
+        const { id, url, date } = params;
         let feedback = await this.feedbackModel.findOne({ _id: id, url })
-        let users = await this.userModel.find({ url })
+        let users = await this.userModel.find({ url, date })
 
         return { cssFileName: 'comments', url, users, feedback }
     }

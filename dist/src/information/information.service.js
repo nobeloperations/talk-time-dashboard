@@ -17,18 +17,23 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let InformationService = class InformationService {
-    constructor(generalModel) {
-        this.generalModel = generalModel;
+    constructor(meetingModel) {
+        this.meetingModel = meetingModel;
     }
     async getInformation(params) {
-        const { url } = params;
-        const currentMeeting = await this.generalModel.findOne({ name: url });
-        return { cssFileName: 'information', currentMeeting, url };
+        const { url, date } = params;
+        const meetings = await this.meetingModel.find();
+        let meets = [];
+        meetings.forEach(meeting => {
+            meets.push(...meeting.meetings);
+        });
+        let isMeetPresent = meets.filter(meet => meet.url === url && meet.date === date);
+        return { cssFileName: 'information', isMeetPresent, url, date };
     }
 };
 InformationService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('General')),
+    __param(0, (0, mongoose_1.InjectModel)('Meeting')),
     __metadata("design:paramtypes", [mongoose_2.Model])
 ], InformationService);
 exports.InformationService = InformationService;

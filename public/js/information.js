@@ -1,7 +1,7 @@
 window.onload = function () {
-    const _controllNext = document.querySelector('.information__next')
-    const _aboutExtension = document.querySelector('.extension')
-    const _aboutBadges = document.querySelector('.badges')
+    let _controllNext = document.querySelector('.information__next')
+    let _aboutExtension = document.querySelector('.extension')
+    let _aboutBadges = document.querySelector('.badges')
 
     _controllNext.onclick = function () {
         let current = this.dataset.current

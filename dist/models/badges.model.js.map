@@ -1,0 +1,1 @@
+{"version":3,"file":"badges.model.js","sourceRoot":"","sources":["../../models/badges.model.ts"],"names":[],"mappings":";;;AAAA,qCAAoC;AAEvB,QAAA,WAAW,GAAG,IAAI,QAAQ,CAAC,MAAM,CAAC;IAC3C,MAAM,EAAE;QACJ,IAAI,EAAE,KAAK;QACX,OAAO,EAAE,EAAE;KACd;IACD,IAAI,EAAE;QACF,IAAI,EAAE,MAAM;QACZ,QAAQ,EAAE,IAAI;KACjB;CACJ,CAAC,CAAA"}
