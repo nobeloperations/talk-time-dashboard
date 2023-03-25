@@ -4,4 +4,4 @@ services:
     build: .
     command: npm run start:prod
     ports:
-      - "3001":"3001"
+      - "3001:3001"
