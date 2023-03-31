@@ -7,6 +7,7 @@ export declare const UserSchema: mongoose.Schema<any, mongoose.Model<any, any, a
     avatar: string;
     peaks: any[];
     percents: string;
+    status: string;
 }>;
 export interface User {
     name: string;

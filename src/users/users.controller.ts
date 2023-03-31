@@ -21,4 +21,16 @@ export class UsersController {
     getUsers(@Param() params: UrlDto) {
         return this.usersService.getUsers(params)
     }
+
+    @Post('/updatestatus')
+    @HttpCode(200)
+    updateStatus(@Body() updateStatusBodyDto) {
+        return this.usersService.updateStatus(updateStatusBodyDto)
+    }
+
+    @Get('/getstatuses/:url/:date')
+    @HttpCode(200)
+    getStatuses(@Param() params) {
+        return this.usersService.getStatuses(params)
+    }
 }

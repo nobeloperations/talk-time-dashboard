@@ -61,6 +61,15 @@ let UsersService = class UsersService {
         }
         return { cssFileName: 'users', users, url, date };
     }
+    async updateStatus(updateStatusBodyDto) {
+        const { date, name, url, status } = updateStatusBodyDto;
+        await this.userModel.updateOne({ name, url, date }, { status });
+    }
+    async getStatuses(params) {
+        const { date, url } = params;
+        const statuses = await this.userModel.find({ date, url }).select('name status avatar');
+        return JSON.stringify(statuses);
+    }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),

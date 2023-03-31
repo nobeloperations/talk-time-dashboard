@@ -30,6 +30,10 @@ exports.UserSchema = new mongoose.Schema({
     date: {
         type: String,
         required: true
+    },
+    status: {
+        type: String,
+        default: ''
     }
 });
 //# sourceMappingURL=user.model.js.map

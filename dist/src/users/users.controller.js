@@ -26,6 +26,12 @@ let UsersController = class UsersController {
     getUsers(params) {
         return this.usersService.getUsers(params);
     }
+    updateStatus(updateStatusBodyDto) {
+        return this.usersService.updateStatus(updateStatusBodyDto);
+    }
+    getStatuses(params) {
+        return this.usersService.getStatuses(params);
+    }
 };
 __decorate([
     (0, common_1.Post)('/create/:url/:date'),
@@ -46,6 +52,22 @@ __decorate([
     __metadata("design:paramtypes", [global_dto_1.UrlDto]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsers", null);
+__decorate([
+    (0, common_1.Post)('/updatestatus'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "updateStatus", null);
+__decorate([
+    (0, common_1.Get)('/getstatuses/:url/:date'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getStatuses", null);
 UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

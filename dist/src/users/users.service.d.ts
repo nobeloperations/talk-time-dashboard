@@ -12,4 +12,6 @@ export declare class UsersService {
         url: any;
         date: any;
     }>;
+    updateStatus(updateStatusBodyDto: any): Promise<void>;
+    getStatuses(params: any): Promise<string>;
 }
