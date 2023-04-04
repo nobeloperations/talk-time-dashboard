@@ -36,7 +36,7 @@ export class FeedbacksController {
     @UseInterceptors(
         FilesInterceptor('file', 20, {
           storage: diskStorage({
-            destination: '/tmp',
+            destination: './uploads',
             filename: function (req, file, done) {
               done(null, Date.now() + extname(file.originalname));
           }
