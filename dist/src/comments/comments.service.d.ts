@@ -22,8 +22,8 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Feedback } from 'models/feedback.model';
-import { User } from 'models/user.model';
+import { Feedback } from '../../models/feedback.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 export declare class CommentsService {
     private readonly feedbackModel;

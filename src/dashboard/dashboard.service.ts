@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Conclusion } from 'models/conclusion.model';
-import { Feedback } from 'models/feedback.model';
-import { User } from 'models/user.model';
+import { Conclusion } from '../../models/conclusion.model';
+import { Feedback } from '../../models/feedback.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 
 

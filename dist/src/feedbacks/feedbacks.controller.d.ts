@@ -24,14 +24,11 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { FeedbacksService } from './feedbacks.service';
-import { UrlDto } from 'global.dto';
-import { PersonalFeedbacksDto } from './dtos/personal-feedbacks.dto';
 import { Response } from 'express';
-import { GetNewFeedbackParamDto, createFeedbackBodyDto } from 'src/feedbacks/dtos/new-feedback.dto';
 export declare class FeedbacksController {
     private feedbacksService;
     constructor(feedbacksService: FeedbacksService);
-    getFeedbacks(params: UrlDto): Promise<{
+    getFeedbacks(params: any): Promise<{
         cssFileName: string;
         users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
             _id: import("mongoose").Types.ObjectId;
@@ -39,7 +36,7 @@ export declare class FeedbacksController {
         url: any;
         date: any;
     }>;
-    getPersonalFeedbacks(params: PersonalFeedbacksDto): Promise<{
+    getPersonalFeedbacks(params: any): Promise<{
         cssFileName: string;
         name: any;
         currentUser: import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
@@ -51,7 +48,7 @@ export declare class FeedbacksController {
         url: any;
         date: any;
     }>;
-    getNewFeedback(params: GetNewFeedbackParamDto): Promise<{
+    getNewFeedback(params: any): Promise<{
         cssFileName: string;
         name: any;
         currentUser: import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
@@ -63,5 +60,5 @@ export declare class FeedbacksController {
         })[];
         date: any;
     }>;
-    createFeedback(files: any, createFeedbackBodyDto: createFeedbackBodyDto, params: GetNewFeedbackParamDto, res: Response): Promise<void>;
+    createFeedback(files: any, createFeedbackBodyDto: any, params: any, res: Response): Promise<void>;
 }

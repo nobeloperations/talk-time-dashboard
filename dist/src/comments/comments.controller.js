@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommentsController = void 0;
 const common_1 = require("@nestjs/common");
 const comments_service_1 = require("./comments.service");
-const comments_dto_1 = require("./dtos/comments.dto");
-const new_comment_dto_1 = require("./dtos/new-comment.dto");
 let CommentsController = class CommentsController {
     constructor(commentsService) {
         this.commentsService = commentsService;
@@ -34,7 +32,7 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [comments_dto_1.CommentsParamsDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], CommentsController.prototype, "getComments", null);
 __decorate([
@@ -44,7 +42,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [comments_dto_1.CommentsParamsDto, new_comment_dto_1.NewCommentBodyDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], CommentsController.prototype, "newComment", null);
 CommentsController = __decorate([

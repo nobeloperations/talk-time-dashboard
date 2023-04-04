@@ -1,4 +1,4 @@
-import { Meeting } from 'models/meeting.model';
+import { Meeting } from '../../models/meeting.model';
 import { Model } from 'mongoose';
 export declare class InformationService {
     private readonly meetingModel;

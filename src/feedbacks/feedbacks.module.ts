@@ -3,8 +3,8 @@ import { FeedbacksService } from './feedbacks.service';
 import { FeedbacksController } from './feedbacks.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { FeedbackSchema } from 'models/feedback.model';
-import { UserSchema } from 'models/user.model';
-import { BadgeSchema } from 'models/badges.model';
+import { UserSchema } from '../../models/user.model';
+import { BadgeSchema } from '../../models/badges.model';
 
 @Module({
   providers: [FeedbacksService],

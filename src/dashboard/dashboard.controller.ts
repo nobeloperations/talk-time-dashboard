@@ -1,8 +1,5 @@
 import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
-import { postPercentsDto } from './dtos/post-percents.dto';
-import { CreateConclusionDto } from './dtos/create-conclusion.dto';
-import { IdDto, UrlDto } from '../../global.dto';
 
 @Controller('')
 export class DashboardController {
@@ -12,32 +9,32 @@ export class DashboardController {
     @Get('dashboard/:url/:date')
     @Render('dashboard')
     @HttpCode(200)
-    getDashboard(@Param() params: UrlDto) {
+    getDashboard(@Param() params) {
         return this.dashboardService.getDashboard(params)   
          
     }   
     
     @Post('/percentage/:url/:date')
     @HttpCode(200)
-    postPercents(@Param() params: UrlDto, @Body() postPercentsBodyDto: postPercentsDto) {
+    postPercents(@Param() params, @Body() postPercentsBodyDto) {
         return this.dashboardService.postPercents(params, postPercentsBodyDto)
     }
 
     @Post('/newconclusion/:url/:date')
     @HttpCode(200)
-    newConclusion(@Param() params: UrlDto, @Body() createConclusionBodyDto: CreateConclusionDto) {
+    newConclusion(@Param() params, @Body() createConclusionBodyDto) {
         return this.dashboardService.newConclusion(params, createConclusionBodyDto)
     }
 
     @Delete('/deleteconclusion')
     @HttpCode(200)
-    deleteConclusion(@Body() deleteConclusionBodyDto: IdDto) {
+    deleteConclusion(@Body() deleteConclusionBodyDto) {
         return this.dashboardService.deleteConclusion(deleteConclusionBodyDto)
     } 
 
     @Post('/importantconclusion')
     @HttpCode(200)
-    importantConclusion(@Body() importantConclusionBodyDto: IdDto) {
+    importantConclusion(@Body() importantConclusionBodyDto) {
         return this.dashboardService.importantConclusion(importantConclusionBodyDto)
     }
 }

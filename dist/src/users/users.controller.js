@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UsersController = void 0;
 const common_1 = require("@nestjs/common");
 const users_service_1 = require("./users.service");
-const global_dto_1 = require("../../global.dto");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -49,7 +48,7 @@ __decorate([
     (0, common_1.Render)('users'),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [global_dto_1.UrlDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsers", null);
 __decorate([

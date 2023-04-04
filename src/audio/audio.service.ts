@@ -1,14 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Meeting } from 'models/meeting.model';
-import { User } from 'models/user.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 
 @Injectable()
 export class AudioService {
 
-    constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>,
-        @InjectModel('User') private readonly userModel: Model<User>) { }
+    constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
 
 
     async postPeaks(params, postPeaksBodyDto) {

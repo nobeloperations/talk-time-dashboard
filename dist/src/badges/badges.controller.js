@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BadgesController = void 0;
 const common_1 = require("@nestjs/common");
 const badges_service_1 = require("./badges.service");
-const new_badge_dto_1 = require("./dtos/new-badge.dto");
-const feedback_badges_dto_1 = require("./dtos/feedback-badges.dto");
 let BadgesController = class BadgesController {
     constructor(badgesService) {
         this.badgesService = badgesService;
@@ -34,7 +32,7 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [new_badge_dto_1.NewBadgeParamDto, new_badge_dto_1.NewBadgeBodyDto]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], BadgesController.prototype, "newBadge", null);
 __decorate([
@@ -43,7 +41,7 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [feedback_badges_dto_1.FeedbackBadgesDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], BadgesController.prototype, "getFeedbackBadges", null);
 BadgesController = __decorate([

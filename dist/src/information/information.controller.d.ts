@@ -1,9 +1,8 @@
 import { InformationService } from './information.service';
-import { UrlDto } from 'global.dto';
 export declare class InformationController {
     private informationService;
     constructor(informationService: InformationService);
-    getBadges(params: UrlDto): Promise<{
+    getBadges(params: any): Promise<{
         cssFileName: string;
         isMeetPresent: any[];
         url: any;

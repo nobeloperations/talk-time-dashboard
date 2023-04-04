@@ -24,13 +24,11 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { BadgesService } from './badges.service';
-import { NewBadgeBodyDto, NewBadgeParamDto } from './dtos/new-badge.dto';
-import { FeedbackBadgesDto } from './dtos/feedback-badges.dto';
 export declare class BadgesController {
     private badgesService;
     constructor(badgesService: BadgesService);
-    newBadge(params: NewBadgeParamDto, newBadgeBodyDto: NewBadgeBodyDto): Promise<void>;
-    getFeedbackBadges(params: FeedbackBadgesDto): Promise<{
+    newBadge(params: any, newBadgeBodyDto: any): Promise<void>;
+    getFeedbackBadges(params: any): Promise<{
         cssFileName: string;
         badges: any[];
         isBadges: boolean;

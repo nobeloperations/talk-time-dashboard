@@ -17,8 +17,7 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let AudioService = class AudioService {
-    constructor(meetingModel, userModel) {
-        this.meetingModel = meetingModel;
+    constructor(userModel) {
         this.userModel = userModel;
     }
     async postPeaks(params, postPeaksBodyDto) {
@@ -33,10 +32,8 @@ let AudioService = class AudioService {
 };
 AudioService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('Meeting')),
-    __param(1, (0, mongoose_1.InjectModel)('User')),
-    __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model])
+    __param(0, (0, mongoose_1.InjectModel)('User')),
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], AudioService);
 exports.AudioService = AudioService;
 //# sourceMappingURL=audio.service.js.map

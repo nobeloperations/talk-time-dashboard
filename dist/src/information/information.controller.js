@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.InformationController = void 0;
 const common_1 = require("@nestjs/common");
 const information_service_1 = require("./information.service");
-const global_dto_1 = require("../../global.dto");
 let InformationController = class InformationController {
     constructor(informationService) {
         this.informationService = informationService;
@@ -30,7 +29,7 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [global_dto_1.UrlDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], InformationController.prototype, "getBadges", null);
 InformationController = __decorate([

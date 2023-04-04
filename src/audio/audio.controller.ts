@@ -1,6 +1,5 @@
 import { Controller, Get, Post, Body, Render, HttpCode, Param } from '@nestjs/common';
 import { AudioService } from './audio.service';
-import { VadDto } from './dtos/vad.dto';
 
 @Controller('audio')
 export class AudioController {
@@ -16,7 +15,7 @@ export class AudioController {
 
     @Post('/vad/:url/:name/:date')
     @HttpCode(200)
-    postPeaks(@Param() params, @Body() postPeaksBodyDto: VadDto) {
+    postPeaks(@Param() params, @Body() postPeaksBodyDto) {
         return this.audioService.postPeaks(params, postPeaksBodyDto)
     }
 }

@@ -25,12 +25,10 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { CommentsService } from './comments.service';
 import { Response } from 'express';
-import { CommentsParamsDto } from './dtos/comments.dto';
-import { NewCommentBodyDto } from './dtos/new-comment.dto';
 export declare class CommentsController {
     private commentsService;
     constructor(commentsService: CommentsService);
-    getComments(params: CommentsParamsDto): Promise<{
+    getComments(params: any): Promise<{
         cssFileName: string;
         url: any;
         users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
@@ -40,5 +38,5 @@ export declare class CommentsController {
             _id: import("mongoose").Types.ObjectId;
         };
     }>;
-    newComment(params: CommentsParamsDto, newCommentBodyDto: NewCommentBodyDto, res: Response): Promise<void>;
+    newComment(params: any, newCommentBodyDto: any, res: Response): Promise<void>;
 }

@@ -22,7 +22,7 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Meeting } from 'models/meeting.model';
+import { Meeting } from '../../models/meeting.model';
 import { Model } from 'mongoose';
 export declare class MainService {
     private readonly meetingModel;

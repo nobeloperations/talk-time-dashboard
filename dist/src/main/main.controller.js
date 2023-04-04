@@ -15,8 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.MainController = void 0;
 const common_1 = require("@nestjs/common");
 const main_service_1 = require("./main.service");
-const global_dto_1 = require("../../global.dto");
-const add_general_dto_1 = require("./dtos/add-general.dto");
 let MainController = class MainController {
     constructor(mainService) {
         this.mainService = mainService;
@@ -55,7 +53,7 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [global_dto_1.UrlDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getSearchlist", null);
 __decorate([
@@ -63,7 +61,7 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [add_general_dto_1.AddGeneralDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "addGeneral", null);
 MainController = __decorate([

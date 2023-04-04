@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Feedback } from 'models/feedback.model';
-import { User } from 'models/user.model';
+import { Feedback } from '../../models/feedback.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 import { config } from '../../badge-config/config'
-import { Badge } from 'models/badges.model';
+import { Badge } from '../../models/badges.model';
 
 const DEFAULT_BADGE = 'Choose the Badge (not necessarily)'
 

@@ -22,10 +22,10 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Feedback } from 'models/feedback.model';
-import { User } from 'models/user.model';
+import { Feedback } from '../../models/feedback.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
-import { Badge } from 'models/badges.model';
+import { Badge } from '../../models/badges.model';
 export declare class FeedbacksService {
     private readonly feedbackModel;
     private readonly userModel;

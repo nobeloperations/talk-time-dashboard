@@ -22,9 +22,9 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Conclusion } from 'models/conclusion.model';
-import { Feedback } from 'models/feedback.model';
-import { User } from 'models/user.model';
+import { Conclusion } from '../../models/conclusion.model';
+import { Feedback } from '../../models/feedback.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 export declare class DashboardService {
     private readonly userModel;

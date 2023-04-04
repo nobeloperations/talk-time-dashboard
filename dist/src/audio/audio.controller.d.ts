@@ -1,5 +1,4 @@
 import { AudioService } from './audio.service';
-import { VadDto } from './dtos/vad.dto';
 export declare class AudioController {
     private audioService;
     constructor(audioService: AudioService);
@@ -9,5 +8,5 @@ export declare class AudioController {
         url: any;
         date: any;
     };
-    postPeaks(params: any, postPeaksBodyDto: VadDto): Promise<void>;
+    postPeaks(params: any, postPeaksBodyDto: any): Promise<void>;
 }

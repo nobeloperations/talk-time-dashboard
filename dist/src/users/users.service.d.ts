@@ -1,5 +1,5 @@
-import { Badge } from 'models/badges.model';
-import { User } from 'models/user.model';
+import { Badge } from '../../models/badges.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 export declare class UsersService {
     private readonly userModel;

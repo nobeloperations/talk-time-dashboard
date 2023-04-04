@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Badge } from 'models/badges.model';
-import { User } from 'models/user.model';
+import { Badge } from '../../models/badges.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 
 @Injectable()

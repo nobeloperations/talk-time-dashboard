@@ -1,7 +1,5 @@
 import { Controller, Get, Post, Render, Body, HttpCode, Param } from '@nestjs/common';
 import { MainService } from './main.service';
-import { UrlDto } from 'global.dto';
-import { AddGeneralDto } from 'src/main/dtos/add-general.dto';
 
 @Controller('main')
 export class MainController {
@@ -23,13 +21,13 @@ export class MainController {
     @Get('/searchlist/:url')
     @Render('searchlist')
     @HttpCode(200)
-    getSearchlist(@Param() params: UrlDto) {
+    getSearchlist(@Param() params) {
         return this.mainService.getSearchlist(params)
     }
 
     @Post('/addmeeting')
     @HttpCode(200)
-    addGeneral(@Body() addGeneralBodyDto: AddGeneralDto) {
+    addGeneral(@Body() addGeneralBodyDto) {
         return this.mainService.addMeeting(addGeneralBodyDto)
     }
 }

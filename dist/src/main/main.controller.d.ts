@@ -24,8 +24,6 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { MainService } from './main.service';
-import { UrlDto } from 'global.dto';
-import { AddGeneralDto } from 'src/main/dtos/add-general.dto';
 export declare class MainController {
     private mainService;
     constructor(mainService: MainService);
@@ -37,11 +35,11 @@ export declare class MainController {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
-    getSearchlist(params: UrlDto): Promise<{
+    getSearchlist(params: any): Promise<{
         meetingsResult: (import("mongoose").Document<unknown, any, import("../../models/meeting.model").Meeting> & import("../../models/meeting.model").Meeting & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         cssFileName: string;
     }>;
-    addGeneral(addGeneralBodyDto: AddGeneralDto): Promise<void>;
+    addGeneral(addGeneralBodyDto: any): Promise<void>;
 }

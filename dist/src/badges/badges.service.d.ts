@@ -22,8 +22,8 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Badge } from 'models/badges.model';
-import { User } from 'models/user.model';
+import { Badge } from '../../models/badges.model';
+import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 export declare class BadgesService {
     private readonly userModel;

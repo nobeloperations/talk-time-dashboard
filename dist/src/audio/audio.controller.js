@@ -15,7 +15,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AudioController = void 0;
 const common_1 = require("@nestjs/common");
 const audio_service_1 = require("./audio.service");
-const vad_dto_1 = require("./dtos/vad.dto");
 let AudioController = class AudioController {
     constructor(audioService) {
         this.audioService = audioService;
@@ -42,7 +41,7 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, vad_dto_1.VadDto]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], AudioController.prototype, "postPeaks", null);
 AudioController = __decorate([

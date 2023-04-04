@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Meeting } from 'models/meeting.model';
+import { Meeting } from '../../models/meeting.model';
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose';
 

@@ -15,12 +15,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.FeedbacksController = void 0;
 const common_1 = require("@nestjs/common");
 const feedbacks_service_1 = require("./feedbacks.service");
-const global_dto_1 = require("../../global.dto");
-const personal_feedbacks_dto_1 = require("./dtos/personal-feedbacks.dto");
 const path_1 = require("path");
 const multer_1 = require("multer");
 const platform_express_1 = require("@nestjs/platform-express");
-const new_feedback_dto_1 = require("./dtos/new-feedback.dto");
 let FeedbacksController = class FeedbacksController {
     constructor(feedbacksService) {
         this.feedbacksService = feedbacksService;
@@ -44,7 +41,7 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [global_dto_1.UrlDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getFeedbacks", null);
 __decorate([
@@ -53,7 +50,7 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [personal_feedbacks_dto_1.PersonalFeedbacksDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getPersonalFeedbacks", null);
 __decorate([
@@ -62,7 +59,7 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [new_feedback_dto_1.GetNewFeedbackParamDto]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getNewFeedback", null);
 __decorate([
@@ -81,7 +78,7 @@ __decorate([
     __param(2, (0, common_1.Param)()),
     __param(3, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, new_feedback_dto_1.createFeedbackBodyDto, new_feedback_dto_1.GetNewFeedbackParamDto, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "createFeedback", null);
 FeedbacksController = __decorate([
