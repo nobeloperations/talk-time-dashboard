@@ -27,9 +27,10 @@ import { Model } from 'mongoose';
 export declare class MainService {
     private readonly meetingModel;
     constructor(meetingModel: Model<Meeting>);
-    test(body: any): void;
+    getWelcome(): {
+        cssFileName: string;
+    };
     getMain(): Promise<{
-        message: string;
         cssFileName: string;
         meetings: (import("mongoose").Document<unknown, any, Meeting> & Meeting & {
             _id: import("mongoose").Types.ObjectId;

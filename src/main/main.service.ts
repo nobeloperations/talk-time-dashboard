@@ -7,14 +7,14 @@ import { Model } from 'mongoose';
 export class MainService {
     constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>){}
 
-    test(body) {
-        console.log(body)
+    getWelcome() {
+        return {cssFileName: 'welcome'}
     }
 
     async getMain() {
         let meetings = await this.meetingModel.find()
 
-        return {message: 'hello', cssFileName: 'main', meetings}
+        return {cssFileName: 'main', meetings}
     }
 
     async getSearchlist(params) {

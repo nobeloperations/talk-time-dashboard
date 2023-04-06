@@ -27,9 +27,10 @@ import { MainService } from './main.service';
 export declare class MainController {
     private mainService;
     constructor(mainService: MainService);
-    test(body: any): void;
+    getWelcome(): {
+        cssFileName: string;
+    };
     getMain(): Promise<{
-        message: string;
         cssFileName: string;
         meetings: (import("mongoose").Document<unknown, any, import("../../models/meeting.model").Meeting> & import("../../models/meeting.model").Meeting & {
             _id: import("mongoose").Types.ObjectId;
