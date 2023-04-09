@@ -10,6 +10,7 @@ import { AudioModule } from './audio/audio.module';
 import { CommentsModule } from './comments/comments.module';
 import { UsersModule } from './users/users.module';
 import { BadgesModule } from './badges/badges.module';
+import { ContactsModule } from './contacts/contacts.module';
 
 
 @Module({
@@ -26,7 +27,8 @@ import { BadgesModule } from './badges/badges.module';
     AudioModule,
     CommentsModule,
     UsersModule,
-    BadgesModule
+    BadgesModule,
+    ContactsModule
   ],
   controllers: [],
   providers: [],

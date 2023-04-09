@@ -1,0 +1,53 @@
+.contacts__container {
+    width: 100vw;
+    height: 100vh;
+}
+.contacts__content {
+    width: 100%;
+    height: calc(100vh - 70px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.contact {
+    width: 500px;
+    height: 80px;
+    background: #9576e4;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    color: white;
+}
+.contact__img {
+    width: 48px;
+    filter: invert(1) grayscale(0);
+    margin-right: 15px;
+}
+.contact__name  {
+    color: white;
+    font-size: 20px;
+}
+.contact__email {
+    color: white;
+}
+.contact__info {
+    width: 200px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+.contact__button {
+    width: 140px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    background: #b89efa;
+    color: white;
+    cursor: pointer;
+}

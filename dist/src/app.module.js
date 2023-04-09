@@ -19,6 +19,7 @@ const audio_module_1 = require("./audio/audio.module");
 const comments_module_1 = require("./comments/comments.module");
 const users_module_1 = require("./users/users.module");
 const badges_module_1 = require("./badges/badges.module");
+const contacts_module_1 = require("./contacts/contacts.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -36,7 +37,8 @@ AppModule = __decorate([
             audio_module_1.AudioModule,
             comments_module_1.CommentsModule,
             users_module_1.UsersModule,
-            badges_module_1.BadgesModule
+            badges_module_1.BadgesModule,
+            contacts_module_1.ContactsModule
         ],
         controllers: [],
         providers: [],
