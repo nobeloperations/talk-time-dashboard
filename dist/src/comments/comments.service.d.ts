@@ -38,6 +38,7 @@ export declare class CommentsService {
         feedback: import("mongoose").Document<unknown, any, Feedback> & Feedback & {
             _id: import("mongoose").Types.ObjectId;
         };
+        date: any;
     }>;
     newComment(params: any, newCommentBodyDto: any, res: any): Promise<void>;
 }

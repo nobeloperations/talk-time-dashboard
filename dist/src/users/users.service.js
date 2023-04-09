@@ -47,7 +47,7 @@ let UsersService = class UsersService {
     }
     async getUsers(params) {
         const { url, date } = params;
-        let dbUsers = await this.userModel.find({}).select('name avatar count');
+        let dbUsers = await this.userModel.find({}).select('name avatar count badges');
         let users = [];
         dbUsers.forEach(async (user) => {
             this.userModel.countDocuments({ name: user.name }, async (_, count) => {
@@ -55,10 +55,7 @@ let UsersService = class UsersService {
             });
             users.push(user.toObject());
         });
-        for (let user of users) {
-            let currentBadges = await this.badgeModel.findOne({ name: user.name });
-            user.badges = (currentBadges === null || currentBadges === void 0 ? void 0 : currentBadges.badges) || [];
-        }
+        users = users.filter((value, index, self) => index === self.findIndex((t) => (t.name === value.name)));
         return { cssFileName: 'users', users, url, date };
     }
     async updateStatus(updateStatusBodyDto) {

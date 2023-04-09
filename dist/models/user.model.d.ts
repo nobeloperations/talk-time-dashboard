@@ -1,5 +1,6 @@
 import * as mongoose from 'mongoose';
 export declare const UserSchema: mongoose.Schema<any, mongoose.Model<any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
+    badges: any[];
     date: string;
     count: number;
     name: string;

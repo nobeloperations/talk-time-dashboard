@@ -19,10 +19,9 @@ const mongoose_2 = require("mongoose");
 const config_1 = require("../../badge-config/config");
 const DEFAULT_BADGE = 'Choose the Badge (not necessarily)';
 let FeedbacksService = class FeedbacksService {
-    constructor(feedbackModel, userModel, badgeModel) {
+    constructor(feedbackModel, userModel) {
         this.feedbackModel = feedbackModel;
         this.userModel = userModel;
-        this.badgeModel = badgeModel;
     }
     async getFeedbacks(params) {
         const { url, date } = params;
@@ -51,17 +50,7 @@ let FeedbacksService = class FeedbacksService {
             let key = `${badge.toLowerCase().split(' ').join('_')}`;
             let value = config_1.config[key];
             badge = `${key}${value}.png`;
-            const currentBadge = await this.badgeModel.findOne({ name: receiver });
-            if (currentBadge) {
-                await this.badgeModel.updateOne({ name: receiver }, { $push: { badges: { badge } } });
-            }
-            else {
-                const newBadge = new this.badgeModel({
-                    name,
-                    badges: [{ badge: badge }]
-                });
-                await newBadge.save();
-            }
+            await this.userModel.updateMany({ name: receiver }, { $push: { badges: { badge } } });
         }
         let newFeedback = new this.feedbackModel({
             sender,
@@ -82,9 +71,7 @@ FeedbacksService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('Feedback')),
     __param(1, (0, mongoose_1.InjectModel)('User')),
-    __param(2, (0, mongoose_1.InjectModel)('Badge')),
     __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model,
         mongoose_2.Model])
 ], FeedbacksService);
 exports.FeedbacksService = FeedbacksService;

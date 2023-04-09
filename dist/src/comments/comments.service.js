@@ -25,7 +25,7 @@ let CommentsService = class CommentsService {
         const { id, url, date } = params;
         let feedback = await this.feedbackModel.findOne({ _id: id, url });
         let users = await this.userModel.find({ url, date });
-        return { cssFileName: 'comments', url, users, feedback };
+        return { cssFileName: 'comments', url, users, feedback, date };
     }
     async newComment(params, newCommentBodyDto, res) {
         const { id, url } = params;

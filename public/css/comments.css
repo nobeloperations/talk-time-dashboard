@@ -64,13 +64,19 @@
 .leave__comment__button {
     width: 150px;
     height: 35px;
-    background:  -webkit-linear-gradient(right, #7E51F0, #9e78ff);
+    background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
+    transition: .6s, background-position 0s;
+    background-size: 0 100%;
     color: white;
     outline: none;
-    border: none;
+    border: 3px solid white;
     cursor: pointer;
     margin-bottom: 10px;
     border-radius: 5px;
+}
+.leave__comment__button:hover, .leave__comment__cancel:hover, .leave__comment__send:hover {
+    background-size: 100% 100%;
+    color: #6E47D2;
 }
 .comment__section__wrapper {
     width: 750px;
@@ -86,7 +92,7 @@
     font-weight: bold;
 }
 .comment__body {
-    height: 200px;
+    height: 150px;
     resize: none;
     padding: 10px;
     outline: none;
@@ -107,18 +113,15 @@ option {
 .leave__comment__cancel, .leave__comment__send {
     width: 130px;
     height: 35px;
-    border: none;
+    border: 3px solid white;
     outline: none;
     color: white;
     cursor: pointer;
     margin-right: 5px;
     border-radius: 5px;
-}
-.leave__comment__cancel {
-    background: #8b61f6;
-}
-.leave__comment__send {
-    background: -webkit-linear-gradient(right, #7E51F0, #9e78ff);
+    background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
+    transition: .6s, background-position 0s;
+    background-size: 0 100%;
 }
 .comment__username {
     margin-bottom: 10px;

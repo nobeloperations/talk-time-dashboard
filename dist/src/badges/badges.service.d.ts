@@ -22,13 +22,11 @@
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose/types/inferschematype" />
-import { Badge } from '../../models/badges.model';
 import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 export declare class BadgesService {
     private readonly userModel;
-    private readonly badgeModel;
-    constructor(userModel: Model<User>, badgeModel: Model<Badge>);
+    constructor(userModel: Model<User>);
     newBadge(params: any, newBadgeBodyDto: any): Promise<void>;
     getFeedbackBadges(params: any): Promise<{
         cssFileName: string;

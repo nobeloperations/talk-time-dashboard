@@ -37,6 +37,7 @@ export declare class CommentsController {
         feedback: import("mongoose").Document<unknown, any, import("../../models/feedback.model").Feedback> & import("../../models/feedback.model").Feedback & {
             _id: import("mongoose").Types.ObjectId;
         };
+        date: any;
     }>;
     newComment(params: any, newCommentBodyDto: any, res: Response): Promise<void>;
 }

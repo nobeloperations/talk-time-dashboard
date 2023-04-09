@@ -7,32 +7,20 @@ import { Model } from 'mongoose';
 @Injectable()
 export class BadgesService {
 
-    constructor(@InjectModel('User') private readonly userModel: Model<User>,
-        @InjectModel('Badge') private readonly badgeModel: Model<Badge>,) { }
+    constructor(@InjectModel('User') private readonly userModel: Model<User>) { }
 
     async newBadge(params, newBadgeBodyDto) {
         const { name } = params;
         const { badge } = newBadgeBodyDto;
-        const userBadges = await this.badgeModel.findOne({ name })
-        if (userBadges) {
-            await this.badgeModel.updateMany({ name }, { $push: { badges: {badge} } })
-        }
-        else {
-            const newBadge = new this.badgeModel({
-                name,
-                badges: [{badge: badge}]
-            })
-
-            await newBadge.save()
-        }
+        await this.userModel.updateMany({ name }, { $push: { badges: {badge} } })
     }
 
     async getFeedbackBadges(params) {
         const { url, name, date } = params;
         const currentUser = await this.userModel.findOne({ name, url })
-        let badges = await this.badgeModel.findOne({ name })
+        let badges = await this.userModel.findOne({ name }).select('badges')
         let convertedBadges = []
-        badges?.badges.forEach(o => {
+        Array.from(badges.badges).forEach(o => {
             convertedBadges[o['badge']] ? convertedBadges[o['badge']] += 1 : convertedBadges[o['badge']] = 1
         })
 

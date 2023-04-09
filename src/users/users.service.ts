@@ -7,19 +7,19 @@ import { Model } from 'mongoose';
 @Injectable()
 export class UsersService {
     constructor(@InjectModel('User') private readonly userModel: Model<User>,
-                 @InjectModel('Badge') private readonly badgeModel: Model<Badge>) { }
+        @InjectModel('Badge') private readonly badgeModel: Model<Badge>) { }
 
     async newUser(params, newUserBodyDto, headers) {
         if (headers['token'] === process.env.HEADER) {
             const { url } = params;
             const { name, avatar, date } = newUserBodyDto;
-            
+
             const isUser = await this.userModel.findOne({ name, url, date })
-            if(!isUser) {
+            if (!isUser) {
                 const newUser = new this.userModel({
                     name,
                     avatar,
-                    url, 
+                    url,
                     peaks: [],
                     percents: '',
                     date
@@ -38,7 +38,7 @@ export class UsersService {
 
     async getUsers(params) {
         const { url, date } = params;
-        let dbUsers = await this.userModel.find({}).select('name avatar count')
+        let dbUsers = await this.userModel.find({}).select('name avatar count badges')
         let users = []
         dbUsers.forEach(async user => {
             this.userModel.countDocuments({ name: user.name }, async (_, count) => {
@@ -46,22 +46,24 @@ export class UsersService {
             })
             users.push(user.toObject())
         })
-        for(let user of users) {
-            let currentBadges = await this.badgeModel.findOne({ name: user.name })
-            user.badges = currentBadges?.badges || []
-        }
+
+        users = users.filter((value, index, self) =>
+            index === self.findIndex((t) => (
+                t.name === value.name
+            ))
+        )
         
         return { cssFileName: 'users', users, url, date }
     }
 
     async updateStatus(updateStatusBodyDto) {
         const { date, name, url, status } = updateStatusBodyDto
-        await this.userModel.updateOne({name, url, date}, {status})
+        await this.userModel.updateOne({ name, url, date }, { status })
     }
 
     async getStatuses(params) {
         const { date, url } = params
-        const statuses = await this.userModel.find({date, url}).select('name status avatar')
+        const statuses = await this.userModel.find({ date, url }).select('name status avatar')
         return JSON.stringify(statuses)
     }
 }

@@ -25,12 +25,10 @@
 import { Feedback } from '../../models/feedback.model';
 import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
-import { Badge } from '../../models/badges.model';
 export declare class FeedbacksService {
     private readonly feedbackModel;
     private readonly userModel;
-    private readonly badgeModel;
-    constructor(feedbackModel: Model<Feedback>, userModel: Model<User>, badgeModel: Model<Badge>);
+    constructor(feedbackModel: Model<Feedback>, userModel: Model<User>);
     getFeedbacks(params: any): Promise<{
         cssFileName: string;
         users: (import("mongoose").Document<unknown, any, User> & User & {

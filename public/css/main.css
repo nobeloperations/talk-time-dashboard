@@ -85,7 +85,7 @@ body::-webkit-scrollbar {
 .main__explore, .close__question {
   width: 150px;
   height: 45px;
-  background: -webkit-linear-gradient(right, #7E51F0, #bca2ff);
+  background: transparent;
   border-radius: 5px;
   color: #FDF4E0;
   cursor: pointer;
@@ -93,12 +93,26 @@ body::-webkit-scrollbar {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: 3px solid white;
+  background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
+  transition: .6s, background-position 0s;
+  background-size: 0 100%;
+}
+.main__explore:hover, .close__question:hover, .select:hover, .explore__question:hover {
+  background-size: 100% 100%;
+  color: #6E47D2;
+}
+.explore__question:hover .explore__question__image {
+  filter: invert(51%) sepia(76%) saturate(6288%) hue-rotate(241deg) brightness(84%) contrast(94%);
 }
 .select {
   width: 300px;
   height: 60px;
   border-radius: 10px;
-  background: -webkit-linear-gradient(right, #7E51F0, #bca2ff);
+  background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
+  transition: .6s, background-position 0s;
+  background-size: 0 100%;
+  border: 3px solid white;
   display: flex;
   justify-content: space-between;
   padding: 15px;
@@ -128,8 +142,8 @@ body::-webkit-scrollbar {
   cursor: pointer;
   margin-top: 10px;
   color: white;
-  background: -webkit-linear-gradient(right, #7E51F0, #bca2ff);
-  background-size: 100%; 
+  border: 3px solid white;
+  background: transparent;
 }
 .select__item__link {
   color: white;
@@ -141,7 +155,8 @@ body::-webkit-scrollbar {
   width: 300px;
   height: 60px;
   border-radius: 10px;
-  background: -webkit-linear-gradient(right, #7E51F0, #bca2ff);
+  background: transparent;
+  border: 3px solid white;
   display: none;
   color: white;
 }
@@ -169,11 +184,14 @@ body::-webkit-scrollbar {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: #bca2ff;
   border-radius: 10px;
   margin-right: 10px;
   color: white;
   cursor: pointer;
+  background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
+  transition: .6s, background-position 0s;
+  background-size: 0 100%;
+  border: 3px solid white;
 }
 .explore__question__image {
   width: 24px;
@@ -205,21 +223,4 @@ body::-webkit-scrollbar {
 .explore__select.close__select .select__items {
   visibility: hidden;
   opacity: 0;
-}
-/* MOBILE */
-@media only screen and (max-width:900px) {
-  .main__poster, .main__explore, .explore__poster, .main__wrapper, .explore__question {
-    display: none;
-  }
-  .explore__content {
-    margin-right: 0;
-  }
-  .explore__title {
-    font-size: 32px;
-    text-align: center;
-  }
-  .question__wrapper {
-    background-repeat: no-repeat;
-    background-size: 100%;
-  }
 }

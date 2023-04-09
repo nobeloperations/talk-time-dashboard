@@ -1,4 +1,6 @@
 window.onload = function() {
+    const DATE = window.location.href.split('/').at(-1);
+
     let _leaveCommentButton = document.querySelector('.leave__comment__button');
     let _cancelComment = document.querySelector('.leave__comment__cancel');
     let _commentWrapper = document.querySelector('.comments__wrapper');

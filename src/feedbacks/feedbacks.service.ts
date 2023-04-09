@@ -12,8 +12,7 @@ const DEFAULT_BADGE = 'Choose the Badge (not necessarily)'
 export class FeedbacksService {
 
     constructor(@InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>,
-                @InjectModel('User') private readonly userModel: Model<User>,
-                @InjectModel('Badge') private readonly badgeModel: Model<Badge>){}
+                @InjectModel('User') private readonly userModel: Model<User>){}
 
     async getFeedbacks(params) {
         const { url,date } = params;
@@ -47,18 +46,7 @@ export class FeedbacksService {
             let key = `${badge.toLowerCase().split(' ').join('_')}`;
             let value = config[key]
             badge = `${key}${value}.png`
-            const currentBadge = await this.badgeModel.findOne({name: receiver})
-            if(currentBadge) {
-                await this.badgeModel.updateOne({ name: receiver }, { $push: { badges: { badge } } })
-            }
-            else {
-                const newBadge = new this.badgeModel({
-                    name,
-                    badges: [{badge: badge}]
-                })
-
-                await newBadge.save()
-            }
+            await this.userModel.updateMany({ name: receiver }, { $push: { badges: { badge } } })
 
         }
         let newFeedback = new this.feedbackModel({

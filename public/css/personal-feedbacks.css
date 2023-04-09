@@ -81,11 +81,13 @@
     height: 35px;
     width: 120px;
     outline: none;
-    background: #cec6fe;
+    background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
+    transition: .6s, background-position 0s;
+    background-size: 0 100%;
     color: white;
     cursor: pointer;
     transition: .4s all ease;
-    border: none;
+    border: 3px solid white;
     border-radius: 5px;
     margin-right: 10px;
 }
@@ -126,12 +128,18 @@
 .personal__feedback__leave__comment {
     width: 130px;
     height: 35px;
-    border: none;
+    border: 3px solid white;
     outline: none;
     cursor: pointer;
-    background: #cec6fe;
+    background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
+    transition: .6s, background-position 0s;
+    background-size: 0 100%;
     color: white;
     border-radius: 5px;
+}
+.personal__feedback__view__image__button:hover, .personal__feedback__leave__comment:hover {
+    background-size: 100% 100%;
+    color: #6E47D2;
 }
 .personal__feedback__empty__text {
     color: white;
