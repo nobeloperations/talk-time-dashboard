@@ -14,12 +14,12 @@ const config_1 = require("@nestjs/config");
 const dashboard_module_1 = require("./dashboard/dashboard.module");
 const feedbacks_module_1 = require("./feedbacks/feedbacks.module");
 const platform_express_1 = require("@nestjs/platform-express");
-const information_module_1 = require("./information/information.module");
 const audio_module_1 = require("./audio/audio.module");
 const comments_module_1 = require("./comments/comments.module");
 const users_module_1 = require("./users/users.module");
 const badges_module_1 = require("./badges/badges.module");
 const contacts_module_1 = require("./contacts/contacts.module");
+const faq_module_1 = require("./faq/faq.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -33,12 +33,12 @@ AppModule = __decorate([
             main_module_1.MainModule,
             dashboard_module_1.DashboardModule,
             feedbacks_module_1.FeedbacksModule,
-            information_module_1.StaticPagesModule,
             audio_module_1.AudioModule,
             comments_module_1.CommentsModule,
             users_module_1.UsersModule,
             badges_module_1.BadgesModule,
-            contacts_module_1.ContactsModule
+            contacts_module_1.ContactsModule,
+            faq_module_1.FaqModule
         ],
         controllers: [],
         providers: [],
