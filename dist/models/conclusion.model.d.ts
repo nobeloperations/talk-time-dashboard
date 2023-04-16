@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 export declare const ConclusionSchema: mongoose.Schema<any, mongoose.Model<any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
-    date: string;
     text: string;
+    date: string;
     url: string;
     important: boolean;
     tags: any[];

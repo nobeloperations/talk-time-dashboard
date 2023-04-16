@@ -1,9 +1,9 @@
 <div class="users__container">
     {{>header}}
-    <input type="text" class="users__search" placeholder="🔎︎ Seach users">
+    <input type="text" class="users__search animated fadeInLeft" placeholder="🔎︎ Seach users">
     <div class="users__list">
         {{#each users}}
-            <div class="user" data-name="{{name}}">
+            <div class="user {{random}}" data-name="{{name}}">
                 <div class="user__info">
                     <img class="user__avatar" src="{{avatar}}" alt="">
                     <div class="username__participated">
@@ -11,7 +11,7 @@
                         <span class="meeting__participated">Participated in {{count}} meeting(s)</span>
                     </div>
                 </div>
-                <button class="user__badges__button">Open All Badges</button>
+                <button class="user__badges__button">View Badges</button>
             </div>
             <div class="badges__modal">
                 <div class="badges__modal__title">

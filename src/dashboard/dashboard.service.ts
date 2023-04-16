@@ -4,6 +4,7 @@ import { Conclusion } from '../../models/conclusion.model';
 import { Feedback } from '../../models/feedback.model';
 import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
+import { resolve } from 'path';
 
 
 @Injectable()
@@ -13,63 +14,93 @@ export class DashboardService {
         @InjectModel('Conclusion') private readonly conclusionModel: Model<Conclusion>,
         @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>) { }
 
-    async getDashboard(params) {
-        const { url,date } = params;
-        const users = await this.userModel.find({ url,date })
-        const conclusions = await this.conclusionModel.find({ url,date })
-        const feedbacks = await this.feedbackModel.find({ url, date })
-        let feedbacksByName = {}
-        
-        users.forEach(user => {
-            feedbacksByName[user.name] = {
-                name: user.name,
-                rating: [],
-                avatar: user.avatar,
-                percents: user.percents,
-                peaks: user.peaks
+    async getDashboard(params, res) {
+        try {
+            const { url, date } = params;
+            const users = await this.userModel.find({ url, date })
+            const conclusions = await this.conclusionModel.find({ url, date })
+            const feedbacks = await this.feedbackModel.find({ url, date })
+
+            if (!users.length) {
+                res.sendFile(resolve('views/notfound.html'))
+                return;
             }
-        })
-        
 
-        feedbacks.forEach(feedback => {
-            feedbacksByName[feedback.receiver].rating.push(feedback.rating)
-        })
+            let feedbacksByName = {}
 
-        return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName, date }
+            users.forEach(user => {
+                feedbacksByName[user.name] = {
+                    name: user.name,
+                    rating: [],
+                    avatar: user.avatar,
+                    percents: user.percents,
+                    peaks: user.peaks
+                }
+            })
+
+
+            feedbacks.forEach(feedback => {
+                feedbacksByName[feedback.receiver].rating.push(feedback.rating)
+            })
+
+            return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName, date }
+        }
+        catch (e) {
+            res.sendFile(resolve('views/notfound.html'))
+        }
 
     }
 
     async postPercents(params, postPercentsBodyDto) {
-        const { percents } = postPercentsBodyDto
-        const { url, date } = params
-        percents.forEach(async percent => {
-            await this.userModel.findOneAndUpdate({name: percent.name, url, date}, {percents: percent.percent})
-        })
+        try {
+            const { percents } = postPercentsBodyDto
+            const { url, date } = params
+            percents.forEach(async percent => {
+                await this.userModel.findOneAndUpdate({ name: percent.name, url, date }, { percents: percent.percent })
+            })
+        }
+        catch(e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e })
+        }
     }
 
     async newConclusion(params, createConclusionBodyDto) {
-        const { url, date } = params;
-        const { text, tags } = createConclusionBodyDto
-        const newConclusion = new this.conclusionModel({
-            text,
-            url,
-            tags,
-            date
-        })
+        try {
+            const { url, date } = params;
+            const { text, tags } = createConclusionBodyDto
+            const newConclusion = new this.conclusionModel({
+                text,
+                url,
+                tags,
+                date
+            })
+    
+            await newConclusion.save()
+            return JSON.stringify(newConclusion)
+        }
+        catch(e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e })
+        }
 
-        await newConclusion.save()
-        return JSON.stringify(newConclusion)
-        
-        
     }
 
     async deleteConclusion(deleteConclusionBodyDto) {
-        const { id } = deleteConclusionBodyDto;
-        await this.conclusionModel.deleteOne({_id: id})
+        try {
+            const { id } = deleteConclusionBodyDto;
+            await this.conclusionModel.deleteOne({ _id: id })
+        }
+        catch(e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e })
+        }
     }
 
     async importantConclusion(importantConclusionBodyDto) {
-        const { id } = importantConclusionBodyDto
-        await this.conclusionModel.findOneAndUpdate({_id: id}, {important: true})
+        try {
+            const { id } = importantConclusionBodyDto
+            await this.conclusionModel.findOneAndUpdate({ _id: id }, { important: true })
+        }
+        catch(e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e })
+        }
     }
 }

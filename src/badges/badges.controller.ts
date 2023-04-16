@@ -1,5 +1,6 @@
-import { Controller, Post, Param, HttpCode, Body, Render, Get } from '@nestjs/common';
+import { Controller, Post, Param, HttpCode, Body, Render, Get, Res } from '@nestjs/common';
 import { BadgesService } from './badges.service';
+import { Response } from 'express';
 
 @Controller('badges')
 export class BadgesController {
@@ -15,7 +16,7 @@ export class BadgesController {
     @Get('/:url/:name/:date')
     @Render('feedback-badges')
     @HttpCode(200)
-    getFeedbackBadges(@Param() params) {
-        return this.badgesService.getFeedbackBadges(params)
+    getFeedbackBadges(@Param() params, @Res() res: Response) {
+        return this.badgesService.getFeedbackBadges(params, res)
     }
 }

@@ -9,8 +9,8 @@ export class CommentsController {
     @Get('/:url/:id/:date')
     @Render('comments')
     @HttpCode(200)
-    getComments(@Param() params) {        
-      return this.commentsService.getComments(params)
+    getComments(@Param() params, @Res() res: Response) {        
+      return this.commentsService.getComments(params, res)
     }
 
     @Post('/create/:url/:id')

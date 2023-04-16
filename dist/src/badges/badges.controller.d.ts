@@ -24,11 +24,12 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { BadgesService } from './badges.service';
+import { Response } from 'express';
 export declare class BadgesController {
     private badgesService;
     constructor(badgesService: BadgesService);
-    newBadge(params: any, newBadgeBodyDto: any): Promise<void>;
-    getFeedbackBadges(params: any): Promise<{
+    newBadge(params: any, newBadgeBodyDto: any): Promise<string>;
+    getFeedbackBadges(params: any, res: Response): Promise<{
         cssFileName: string;
         badges: any[];
         isBadges: boolean;

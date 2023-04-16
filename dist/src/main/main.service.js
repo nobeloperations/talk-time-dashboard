@@ -16,6 +16,7 @@ exports.MainService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const path_1 = require("path");
 let MainService = class MainService {
     constructor(meetingModel) {
         this.meetingModel = meetingModel;
@@ -24,33 +25,52 @@ let MainService = class MainService {
         return { cssFileName: 'welcome' };
     }
     async getMain() {
-        let meetings = await this.meetingModel.find();
-        return { cssFileName: 'main', meetings };
+        try {
+            let meetings = await this.meetingModel.find();
+            return { cssFileName: 'main', meetings };
+        }
+        catch (e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e });
+        }
     }
-    async getSearchlist(params) {
-        const { url } = params;
-        const meetingsResult = await this.meetingModel.find({ name: url });
-        return { meetingsResult, cssFileName: 'searchlist' };
+    async getSearchlist(params, res) {
+        try {
+            const { url } = params;
+            const meetingsResult = await this.meetingModel.find({ name: url });
+            if (!meetingsResult.length) {
+                res.sendFile((0, path_1.resolve)('views/notfound.html'));
+                return;
+            }
+            return { meetingsResult, cssFileName: 'searchlist' };
+        }
+        catch (e) {
+            res.sendFile((0, path_1.resolve)('views/notfound.html'));
+        }
     }
     async addMeeting(addGeneralBodyDto) {
-        const { name, url, date } = addGeneralBodyDto;
-        const meeting = await this.meetingModel.findOne({ name });
-        if (!meeting && name !== 'Meeting Details') {
-            const newMeeting = new this.meetingModel({
-                name,
-                meetings: [{
-                        url,
-                        date
-                    }]
-            });
-            await newMeeting.save();
-        }
-        else {
-            const currentMeet = await this.meetingModel.findOne({ name });
-            let meetPresented = currentMeet === null || currentMeet === void 0 ? void 0 : currentMeet.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length;
-            if (!meetPresented) {
-                await this.meetingModel.updateOne({ name }, { $push: { meetings: { url, date } } });
+        try {
+            const { name, url, date } = addGeneralBodyDto;
+            const meeting = await this.meetingModel.findOne({ name });
+            if (!meeting && name !== 'Meeting Details') {
+                const newMeeting = new this.meetingModel({
+                    name,
+                    meetings: [{
+                            url,
+                            date
+                        }]
+                });
+                await newMeeting.save();
             }
+            else {
+                const currentMeet = await this.meetingModel.findOne({ name });
+                let meetPresented = currentMeet === null || currentMeet === void 0 ? void 0 : currentMeet.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length;
+                if (!meetPresented) {
+                    await this.meetingModel.updateOne({ name }, { $push: { meetings: { url, date } } });
+                }
+            }
+        }
+        catch (e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
 };

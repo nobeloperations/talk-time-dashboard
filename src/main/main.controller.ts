@@ -1,5 +1,6 @@
-import { Controller, Get, Post, Render, Body, HttpCode, Param } from '@nestjs/common';
+import { Controller, Get, Post, Render, Body, HttpCode, Param, Res } from '@nestjs/common';
 import { MainService } from './main.service';
+import { Response } from 'express';
 
 @Controller('')
 export class MainController {
@@ -23,8 +24,8 @@ export class MainController {
     @Get('/main/searchlist/:url')
     @Render('searchlist')
     @HttpCode(200)
-    getSearchlist(@Param() params) {
-        return this.mainService.getSearchlist(params)
+    getSearchlist(@Param() params, @Res() res: Response) {
+        return this.mainService.getSearchlist(params, res)
     }
 
     @Post('/main/addmeeting')

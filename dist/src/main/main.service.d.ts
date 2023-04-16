@@ -30,17 +30,17 @@ export declare class MainService {
     getWelcome(): {
         cssFileName: string;
     };
-    getMain(): Promise<{
+    getMain(): Promise<string | {
         cssFileName: string;
         meetings: (import("mongoose").Document<unknown, any, Meeting> & Meeting & {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
-    getSearchlist(params: any): Promise<{
+    getSearchlist(params: any, res: any): Promise<{
         meetingsResult: (import("mongoose").Document<unknown, any, Meeting> & Meeting & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         cssFileName: string;
     }>;
-    addMeeting(addGeneralBodyDto: any): Promise<void>;
+    addMeeting(addGeneralBodyDto: any): Promise<string>;
 }

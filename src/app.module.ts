@@ -9,8 +9,9 @@ import { AudioModule } from './audio/audio.module';
 import { CommentsModule } from './comments/comments.module';
 import { UsersModule } from './users/users.module';
 import { BadgesModule } from './badges/badges.module';
-import { ContactsModule } from './contacts/contacts.module';
-import { FaqModule } from './faq/faq.module';
+import { APP_FILTER } from '@nestjs/core';
+import { HttpExceptionFilter } from './filters/http-exception.filter';
+import { StaticModule } from './static/static.module';
 
 
 @Module({
@@ -27,10 +28,14 @@ import { FaqModule } from './faq/faq.module';
     CommentsModule,
     UsersModule,
     BadgesModule,
-    ContactsModule,
-    FaqModule
+    StaticModule
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+        provide: APP_FILTER,
+        useClass: HttpExceptionFilter
+    }
+  ],
 })
 export class AppModule { }

@@ -19,22 +19,10 @@ let AudioController = class AudioController {
     constructor(audioService) {
         this.audioService = audioService;
     }
-    getVad(params) {
-        return this.audioService.getVad(params);
-    }
     postPeaks(params, postPeaksBodyDto) {
         return this.audioService.postPeaks(params, postPeaksBodyDto);
     }
 };
-__decorate([
-    (0, common_1.Get)('/vad/:url/:name/:date'),
-    (0, common_1.Render)('vad'),
-    (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Param)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], AudioController.prototype, "getVad", null);
 __decorate([
     (0, common_1.Post)('/vad/:url/:name/:date'),
     (0, common_1.HttpCode)(200),

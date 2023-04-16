@@ -25,8 +25,8 @@ let MainController = class MainController {
     getMain() {
         return this.mainService.getMain();
     }
-    getSearchlist(params) {
-        return this.mainService.getSearchlist(params);
+    getSearchlist(params, res) {
+        return this.mainService.getSearchlist(params, res);
     }
     addGeneral(addGeneralBodyDto) {
         return this.mainService.addMeeting(addGeneralBodyDto);
@@ -53,8 +53,9 @@ __decorate([
     (0, common_1.Render)('searchlist'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getSearchlist", null);
 __decorate([

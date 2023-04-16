@@ -16,62 +16,89 @@ exports.UsersService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
+const path_1 = require("path");
 let UsersService = class UsersService {
-    constructor(userModel, badgeModel) {
+    constructor(userModel, meetingModel) {
         this.userModel = userModel;
-        this.badgeModel = badgeModel;
+        this.meetingModel = meetingModel;
     }
     async newUser(params, newUserBodyDto, headers) {
-        if (headers['token'] === process.env.HEADER) {
-            const { url } = params;
-            const { name, avatar, date } = newUserBodyDto;
-            const isUser = await this.userModel.findOne({ name, url, date });
-            if (!isUser) {
-                const newUser = new this.userModel({
-                    name,
-                    avatar,
-                    url,
-                    peaks: [],
-                    percents: '',
-                    date
-                });
-                await newUser.save();
+        try {
+            if (headers['token'] === process.env.HEADER) {
+                const { url } = params;
+                const { name, avatar, date } = newUserBodyDto;
+                const isUser = await this.userModel.findOne({ name, url, date });
+                if (!isUser) {
+                    const newUser = new this.userModel({
+                        name,
+                        avatar,
+                        url,
+                        peaks: [],
+                        percents: '',
+                        date
+                    });
+                    await newUser.save();
+                }
             }
             else {
-                console.log('User already created');
+                throw new common_1.HttpException('Invalid headers', 404);
             }
         }
-        else {
-            throw new common_1.HttpException('Invalid headers', 404);
+        catch (e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async getUsers(params) {
-        const { url, date } = params;
-        let dbUsers = await this.userModel.find({}).select('name avatar count badges');
-        let users = [];
-        dbUsers.forEach(async (user) => {
-            this.userModel.countDocuments({ name: user.name }, async (_, count) => {
-                await this.userModel.updateMany({ name: user.name }, { count });
+    async getUsers(params, res) {
+        try {
+            const { url, date } = params;
+            let meeting = await this.meetingModel.findOne({ name: url });
+            let currentMeeting = false;
+            meeting === null || meeting === void 0 ? void 0 : meeting.meetings.forEach(curr => {
+                if (curr['date'] == date)
+                    currentMeeting = true;
             });
-            users.push(user.toObject());
-        });
-        users = users.filter((value, index, self) => index === self.findIndex((t) => (t.name === value.name)));
-        return { cssFileName: 'users', users, url, date };
+            if (!meeting || !currentMeeting) {
+                res.sendFile((0, path_1.resolve)('views/notfound.html'));
+            }
+            let dbUsers = await this.userModel.find({}).select('name avatar count badges');
+            let users = [];
+            dbUsers.forEach(async (user) => {
+                this.userModel.countDocuments({ name: user.name }, async (_, count) => {
+                    await this.userModel.updateMany({ name: user.name }, { count });
+                });
+                users.push(user.toObject());
+            });
+            users = users.filter((value, index, self) => index === self.findIndex((t) => (t.name === value.name)));
+            return { cssFileName: 'users', users, url, date };
+        }
+        catch (e) {
+            res.sendFile((0, path_1.resolve)('views/notfound.html'));
+        }
     }
     async updateStatus(updateStatusBodyDto) {
-        const { date, name, url, status } = updateStatusBodyDto;
-        await this.userModel.updateOne({ name, url, date }, { status });
+        try {
+            const { date, name, url, status } = updateStatusBodyDto;
+            await this.userModel.updateOne({ name, url, date }, { status });
+        }
+        catch (e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e });
+        }
     }
     async getStatuses(params) {
-        const { date, url } = params;
-        const statuses = await this.userModel.find({ date, url }).select('name status avatar');
-        return JSON.stringify(statuses);
+        try {
+            const { date, url } = params;
+            const statuses = await this.userModel.find({ date, url }).select('name status avatar');
+            return JSON.stringify(statuses);
+        }
+        catch (e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e });
+        }
     }
 };
 UsersService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('User')),
-    __param(1, (0, mongoose_1.InjectModel)('Badge')),
+    __param(1, (0, mongoose_1.InjectModel)('Meeting')),
     __metadata("design:paramtypes", [mongoose_2.Model,
         mongoose_2.Model])
 ], UsersService);

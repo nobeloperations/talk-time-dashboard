@@ -25,11 +25,13 @@
 import { Feedback } from '../../models/feedback.model';
 import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
+import { Meeting } from 'models/meeting.model';
 export declare class CommentsService {
     private readonly feedbackModel;
     private readonly userModel;
-    constructor(feedbackModel: Model<Feedback>, userModel: Model<User>);
-    getComments(params: any): Promise<{
+    private readonly meetingModel;
+    constructor(feedbackModel: Model<Feedback>, userModel: Model<User>, meetingModel: Model<Meeting>);
+    getComments(params: any, res: any): Promise<{
         cssFileName: string;
         url: any;
         users: (import("mongoose").Document<unknown, any, User> & User & {
@@ -40,5 +42,5 @@ export declare class CommentsService {
         };
         date: any;
     }>;
-    newComment(params: any, newCommentBodyDto: any, res: any): Promise<void>;
+    newComment(params: any, newCommentBodyDto: any, res: any): Promise<string>;
 }

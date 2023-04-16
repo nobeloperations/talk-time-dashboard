@@ -13,22 +13,22 @@ export class FeedbacksController {
     @Get('/:url/:date')
     @Render('feedbacks')
     @HttpCode(200)
-    getFeedbacks(@Param() params) {
-        return this.feedbacksService.getFeedbacks(params)
+    getFeedbacks(@Param() params, @Res() res: Response) {
+        return this.feedbacksService.getFeedbacks(params, res)
     }
 
     @Get('/:url/:name/:date')
     @Render('personal-feedbacks')
     @HttpCode(200)
-    getPersonalFeedbacks(@Param() params) {
-        return this.feedbacksService.getPersonalFeedbacks(params)
+    getPersonalFeedbacks(@Param() params, @Res() res: Response) {
+        return this.feedbacksService.getPersonalFeedbacks(params, res)
     }
 
     @Get('/create/:url/:name/:date')
     @Render('new-feedback')
     @HttpCode(200)
-    getNewFeedback(@Param() params) {
-        return this.feedbacksService.getNewFeedback(params)
+    getNewFeedback(@Param() params, @Res() res: Response) {
+        return this.feedbacksService.getNewFeedback(params, res)
     }
 
     @Post('/create/:url/:name/:date')

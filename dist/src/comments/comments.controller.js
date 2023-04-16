@@ -19,8 +19,8 @@ let CommentsController = class CommentsController {
     constructor(commentsService) {
         this.commentsService = commentsService;
     }
-    getComments(params) {
-        return this.commentsService.getComments(params);
+    getComments(params, res) {
+        return this.commentsService.getComments(params, res);
     }
     newComment(params, newCommentBodyDto, res) {
         return this.commentsService.newComment(params, newCommentBodyDto, res);
@@ -31,8 +31,9 @@ __decorate([
     (0, common_1.Render)('comments'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], CommentsController.prototype, "getComments", null);
 __decorate([

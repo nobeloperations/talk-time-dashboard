@@ -18,8 +18,9 @@ const audio_module_1 = require("./audio/audio.module");
 const comments_module_1 = require("./comments/comments.module");
 const users_module_1 = require("./users/users.module");
 const badges_module_1 = require("./badges/badges.module");
-const contacts_module_1 = require("./contacts/contacts.module");
-const faq_module_1 = require("./faq/faq.module");
+const core_1 = require("@nestjs/core");
+const http_exception_filter_1 = require("./filters/http-exception.filter");
+const static_module_1 = require("./static/static.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -37,11 +38,15 @@ AppModule = __decorate([
             comments_module_1.CommentsModule,
             users_module_1.UsersModule,
             badges_module_1.BadgesModule,
-            contacts_module_1.ContactsModule,
-            faq_module_1.FaqModule
+            static_module_1.StaticModule
         ],
         controllers: [],
-        providers: [],
+        providers: [
+            {
+                provide: core_1.APP_FILTER,
+                useClass: http_exception_filter_1.HttpExceptionFilter
+            }
+        ],
     })
 ], AppModule);
 exports.AppModule = AppModule;

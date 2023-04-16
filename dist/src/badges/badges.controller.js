@@ -22,8 +22,8 @@ let BadgesController = class BadgesController {
     newBadge(params, newBadgeBodyDto) {
         return this.badgesService.newBadge(params, newBadgeBodyDto);
     }
-    getFeedbackBadges(params) {
-        return this.badgesService.getFeedbackBadges(params);
+    getFeedbackBadges(params, res) {
+        return this.badgesService.getFeedbackBadges(params, res);
     }
 };
 __decorate([
@@ -40,8 +40,9 @@ __decorate([
     (0, common_1.Render)('feedback-badges'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, Object]),
     __metadata("design:returntype", void 0)
 ], BadgesController.prototype, "getFeedbackBadges", null);
 BadgesController = __decorate([

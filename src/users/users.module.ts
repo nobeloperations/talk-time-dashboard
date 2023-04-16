@@ -3,10 +3,10 @@ import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserSchema } from '../../models/user.model';
-import { BadgeSchema } from '../../models/badges.model';
+import { MeetingSchema } from 'models/meeting.model';
 
 @Module({
-  imports: [MongooseModule.forFeature([{name: 'User', schema: UserSchema}, {name: 'Badge', schema: BadgeSchema}])],
+  imports: [MongooseModule.forFeature([{name: 'User', schema: UserSchema}, {name: 'Meeting', schema: MeetingSchema}])],
   providers: [UsersService],
   controllers: [UsersController]
 })

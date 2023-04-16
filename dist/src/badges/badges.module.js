@@ -12,12 +12,12 @@ const badges_service_1 = require("./badges.service");
 const badges_controller_1 = require("./badges.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_model_1 = require("../../models/user.model");
-const badges_model_1 = require("../../models/badges.model");
+const meeting_model_1 = require("../../models/meeting.model");
 let BadgesModule = class BadgesModule {
 };
 BadgesModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_model_1.UserSchema }, { name: 'Badge', schema: badges_model_1.BadgeSchema }])],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'User', schema: user_model_1.UserSchema }, { name: 'Meeting', schema: meeting_model_1.MeetingSchema }])],
         providers: [badges_service_1.BadgesService],
         controllers: [badges_controller_1.BadgesController]
     })

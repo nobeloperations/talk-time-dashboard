@@ -24,11 +24,13 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
+import { Meeting } from 'models/meeting.model';
 export declare class BadgesService {
     private readonly userModel;
-    constructor(userModel: Model<User>);
-    newBadge(params: any, newBadgeBodyDto: any): Promise<void>;
-    getFeedbackBadges(params: any): Promise<{
+    private readonly meetingModel;
+    constructor(userModel: Model<User>, meetingModel: Model<Meeting>);
+    newBadge(params: any, newBadgeBodyDto: any): Promise<string>;
+    getFeedbackBadges(params: any, res: any): Promise<{
         cssFileName: string;
         badges: any[];
         isBadges: boolean;

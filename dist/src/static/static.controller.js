@@ -9,28 +9,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ContactsController = void 0;
+exports.StaticController = void 0;
 const common_1 = require("@nestjs/common");
-const contacts_service_1 = require("./contacts.service");
-let ContactsController = class ContactsController {
-    constructor(contactsService) {
-        this.contactsService = contactsService;
+const static_service_1 = require("./static.service");
+let StaticController = class StaticController {
+    constructor(staticService) {
+        this.staticService = staticService;
+    }
+    getFAQ() {
+        return this.staticService.getFAQ();
     }
     getContacts() {
-        return this.contactsService.getContacts();
+        return this.staticService.getContacts();
     }
 };
 __decorate([
-    (0, common_1.Get)(''),
+    (0, common_1.Get)('/faq'),
+    (0, common_1.Render)('faq'),
+    (0, common_1.HttpCode)(200),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], StaticController.prototype, "getFAQ", null);
+__decorate([
+    (0, common_1.Get)('/contacts'),
     (0, common_1.Render)('contacts'),
     (0, common_1.HttpCode)(200),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], ContactsController.prototype, "getContacts", null);
-ContactsController = __decorate([
-    (0, common_1.Controller)('contacts'),
-    __metadata("design:paramtypes", [contacts_service_1.ContactsService])
-], ContactsController);
-exports.ContactsController = ContactsController;
-//# sourceMappingURL=contacts.controller.js.map
+], StaticController.prototype, "getContacts", null);
+StaticController = __decorate([
+    (0, common_1.Controller)(''),
+    __metadata("design:paramtypes", [static_service_1.StaticService])
+], StaticController);
+exports.StaticController = StaticController;
+//# sourceMappingURL=static.controller.js.map

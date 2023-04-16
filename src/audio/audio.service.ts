@@ -10,16 +10,14 @@ export class AudioService {
 
 
     async postPeaks(params, postPeaksBodyDto) {
-        const { name, url, date } = params;
-        const { array } = postPeaksBodyDto;
-        this.userModel.updateOne({ name, url, date }, { peaks: array }, { multi: true }, function (err, nums) { })
+        try {
+            const { name, url, date } = params;
+            const { array } = postPeaksBodyDto;
+            this.userModel.updateOne({ name, url, date }, { peaks: array }, { multi: true }, function (err, nums) { })
+        }
+        catch(e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e })
+        }
 
-    }
-
-    getVad(params) {
-
-        const { url, name, date } = params;
-
-        return { cssFileName: 'vad', name, url, date }
     }
 }

@@ -1,17 +1,17 @@
-import { Badge } from '../../models/badges.model';
 import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
+import { Meeting } from 'models/meeting.model';
 export declare class UsersService {
     private readonly userModel;
-    private readonly badgeModel;
-    constructor(userModel: Model<User>, badgeModel: Model<Badge>);
-    newUser(params: any, newUserBodyDto: any, headers: any): Promise<void>;
-    getUsers(params: any): Promise<{
+    private readonly meetingModel;
+    constructor(userModel: Model<User>, meetingModel: Model<Meeting>);
+    newUser(params: any, newUserBodyDto: any, headers: any): Promise<string>;
+    getUsers(params: any, res: any): Promise<{
         cssFileName: string;
         users: any[];
         url: any;
         date: any;
     }>;
-    updateStatus(updateStatusBodyDto: any): Promise<void>;
+    updateStatus(updateStatusBodyDto: any): Promise<string>;
     getStatuses(params: any): Promise<string>;
 }

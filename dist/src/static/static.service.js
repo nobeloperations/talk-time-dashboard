@@ -6,15 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.FaqService = void 0;
+exports.StaticService = void 0;
 const common_1 = require("@nestjs/common");
-let FaqService = class FaqService {
+let StaticService = class StaticService {
     getFAQ() {
         return { cssFileName: 'faq' };
     }
+    getContacts() {
+        return { cssFileName: 'contacts' };
+    }
 };
-FaqService = __decorate([
+StaticService = __decorate([
     (0, common_1.Injectable)()
-], FaqService);
-exports.FaqService = FaqService;
-//# sourceMappingURL=faq.service.js.map
+], StaticService);
+exports.StaticService = StaticService;
+//# sourceMappingURL=static.service.js.map

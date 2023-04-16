@@ -1,5 +1,6 @@
-import { Controller, Post, HttpCode, Param, Body, Headers, Get, Render } from '@nestjs/common';
+import { Controller, Post, HttpCode, Param, Body, Headers, Get, Render, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
+import { Response } from 'express';
 
 @Controller('users')
 export class UsersController {
@@ -16,8 +17,8 @@ export class UsersController {
     @Get('/:url/:date')
     @HttpCode(200)
     @Render('users')
-    getUsers(@Param() params) {
-        return this.usersService.getUsers(params)
+    getUsers(@Param() params, @Res() res: Response) {
+        return this.usersService.getUsers(params, res)
     }
 
     @Post('/updatestatus')

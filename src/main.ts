@@ -2,7 +2,6 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { hbsConfig } from '../hbs-config'
-import { HttpExceptionFilter } from './filters/http-exception.filter';
 import startUpSocket from './sockets/startup';
 
 async function bootstrap() {
@@ -11,7 +10,6 @@ async function bootstrap() {
   startUpSocket()
 
   app.enableCors();
-  app.useGlobalFilters(new HttpExceptionFilter)
 
   hbsConfig(app)
 

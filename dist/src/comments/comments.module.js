@@ -13,11 +13,12 @@ const comments_service_1 = require("./comments.service");
 const mongoose_1 = require("@nestjs/mongoose");
 const feedback_model_1 = require("../../models/feedback.model");
 const user_model_1 = require("../../models/user.model");
+const meeting_model_1 = require("../../models/meeting.model");
 let CommentsModule = class CommentsModule {
 };
 CommentsModule = __decorate([
     (0, common_1.Module)({
-        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'Feedback', schema: feedback_model_1.FeedbackSchema }, { name: 'User', schema: user_model_1.UserSchema }])],
+        imports: [mongoose_1.MongooseModule.forFeature([{ name: 'Feedback', schema: feedback_model_1.FeedbackSchema }, { name: 'User', schema: user_model_1.UserSchema }, { name: 'Meeting', schema: meeting_model_1.MeetingSchema }])],
         controllers: [comments_controller_1.CommentsController],
         providers: [comments_service_1.CommentsService]
     })

@@ -14,5 +14,9 @@ exports.helpers = {
         let sum = rate.reduce((a, b) => a + b, 0);
         return (sum / rate.length).toFixed(1);
     },
+    random() {
+        let num = Math.floor(Math.random() * (2 - 1 + 1) + 1);
+        return num === 1 ? 'animated fadeInLeft' : 'animated fadeInRight';
+    }
 };
 //# sourceMappingURL=helplers.js.map

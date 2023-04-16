@@ -28,7 +28,7 @@ import { Response } from 'express';
 export declare class CommentsController {
     private commentsService;
     constructor(commentsService: CommentsService);
-    getComments(params: any): Promise<{
+    getComments(params: any, res: Response): Promise<{
         cssFileName: string;
         url: any;
         users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
@@ -39,5 +39,5 @@ export declare class CommentsController {
         };
         date: any;
     }>;
-    newComment(params: any, newCommentBodyDto: any, res: Response): Promise<void>;
+    newComment(params: any, newCommentBodyDto: any, res: Response): Promise<string>;
 }

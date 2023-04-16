@@ -1,13 +1,12 @@
 <div class="searchlist__container">
-    <header class="main__header">
+    <header class="main__header animated fadeInLeft">
         <img class="header__logo" src="/img/menu-logo.png" alt="">
         <h2 class="header__title">Talk Time</h2>
     </header>
     <div class="generals">
-        {{#if meetingsResult}}
         {{#each meetingsResult}}
-            {{#each meetings}}
-            <div class="meeting__card animated fadeInLeft">
+        {{#each meetings}}
+        <div class="meeting__card animated fadeInLeft">
             <div class="meeting__info">
                 <span class="card__url">{{url}}</span>
                 <span class="card__date">{{date}}</span>
@@ -16,10 +15,7 @@
                 <div class="link__button">Go to dashboard page</div>
             </a>
         </div>
-            {{/each}}
         {{/each}}
-        {{else}}
-        <h1 class="invalid__url">Invalid Meeting url, make sure that your meeting url is valid</h1>
-        {{/if}}
+        {{/each}}
     </div>
 </div>

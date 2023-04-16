@@ -1,5 +1,4 @@
 <div class="dashboard__container">
-    {{#if users}}
     {{>header}}
     <div class="dashboard__content">
         <div class="dashboard__content__wrapper">
@@ -19,7 +18,7 @@
                         </div>
                         {{#if peaks}}
                         <canvas class="audio__activity" data-peaks="{{peaks}}"></canvas>
-                        {{else}}   
+                        {{else}}
                         <span>No audio data</span>
                         {{/if}}
                     </div>
@@ -31,8 +30,7 @@
             <div class="dashboard__card dashboard__conclusions animated fadeInLeft">
                 <h1 class="conclusions__title">Meeting Notes</h1>
                 <div class="conclusion__input__wrapper">
-                    <input placeholder="Enter a note" class="conclusion__input" type="text"
-                        name="meeting-conclusions">
+                    <input placeholder="Enter a note" class="conclusion__input" type="text" name="meeting-conclusions">
                     <div class="tags__select__wrapper">
                         <div class="tag__input__wrapper">
                             <div class="tag__input__container">
@@ -71,14 +69,12 @@
             </div>
         </div>
     </div>
-    {{else}}
-    <h1 class="invalid__url">Invalid Meeting url, make sure that your meeting url is valid</h1>
-    {{/if}}
     <footer class="dashboard__footer">
-        <div class="info__cards">Number of feedbacks: {{feedbacksLength}}</div>
-        <div class="info__cards">Number of users: {{usersLength}}</div>
-        <div class="info__cards">Number of conclusions: {{conclusionsLength}}</div>
-        <div class="info__cards">Meet link: {{url}}</div>
+        <div class="info__card animated fadeInLeft">Meet link: {{url}}</div>
+        <div class="info__card animated fadeInLeft">Meet date: {{date}}</div>
+        <div class="info__card animated fadeInLeft">Number of users: {{usersLength}}</div>
+        <div class="info__card animated fadeInLeft">Number of feedbacks: {{feedbacksLength}}</div>
+        <div class="info__card animated fadeInLeft">Number of notes: {{conclusionsLength}}</div>
     </footer>
 </div>
 

@@ -8,14 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.HttpExceptionFilter = void 0;
 const common_1 = require("@nestjs/common");
+const path_1 = require("path");
 let HttpExceptionFilter = class HttpExceptionFilter {
     catch(exception, host) {
-        host.switchToHttp().getResponse()
-            .status(exception.getStatus())
-            .json({
-            statusCode: exception.getStatus(),
-            message: 'Invalid Page URL'
-        });
+        const ctx = host.switchToHttp();
+        const response = ctx.getResponse();
+        response.sendFile((0, path_1.resolve)('views/notfound.html'));
     }
 };
 HttpExceptionFilter = __decorate([
