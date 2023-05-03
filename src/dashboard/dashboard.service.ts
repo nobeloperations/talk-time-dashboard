@@ -104,3 +104,11 @@ export class DashboardService {
         }
     }
 }
+
+//version: '3.0'
+// services:
+// app:
+//   build: .
+//   command: npm run start:prod
+//   ports:
+//     - "3001:3001"
