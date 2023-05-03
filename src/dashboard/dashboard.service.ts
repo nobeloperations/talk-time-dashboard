@@ -112,3 +112,15 @@ export class DashboardService {
 //   command: npm run start:prod
 //   ports:
 //     - "3001:3001"
+
+// FROM node:18.14.0
+
+// RUN mkdir /app
+
+// WORKDIR /app
+
+// COPY . /app/
+
+// COPY ./package.json /usr/src/package.json
+
+// RUN npm install
