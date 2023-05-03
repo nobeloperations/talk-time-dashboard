@@ -49,10 +49,12 @@ body {
 .dashboard__statistic {
     height: 35%;
 }
+
 .dashboard__users {
     height: calc(100vh - 170px);
     padding-left: 20px;
 }
+
 .dashboard__conclusions {
     display: flex;
     flex-direction: column;
@@ -61,7 +63,7 @@ body {
 
 .conclusions__title,
 .meeting__participants__title {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     color: white;
 }
 
@@ -87,21 +89,27 @@ body {
     padding: 15px;
     color: #5b3da9;
 }
-.conclusion__input, .tags__input {
+
+.conclusion__input,
+.tags__input {
     color: #5b3da9;
 }
+
 .conclusion__delete {
     width: 16px;
     filter: grayscale(0) invert(1);
     cursor: pointer;
 }
+
 .tags__select__wrapper {
     width: 30%;
     height: auto;
 }
-.conclusion__id  {
+
+.conclusion__id {
     display: none;
 }
+
 .tag__input_wrapper {
     width: 100%;
     height: 100%;
@@ -110,12 +118,14 @@ body {
     align-items: center;
     z-index: 9999;
 }
+
 .tag__input__container {
     display: flex;
     height: 100%;
     align-items: center;
     justify-content: space-around;
 }
+
 .plus__tag {
     width: 25px;
     height: 25px;
@@ -129,10 +139,12 @@ body {
     cursor: pointer;
     transition: .2s ease all;
 }
+
 .plus__tag:hover {
     background: #9072dd;
     color: white;
 }
+
 .tags__input {
     width: 80%;
     height: 100%;
@@ -144,6 +156,7 @@ body {
     align-items: center;
     padding: 5px;
 }
+
 .tags__list {
     height: fit-content;
     padding-top: 5px;
@@ -160,6 +173,7 @@ body {
     border-radius: 5px;
     padding-left: 5px;
 }
+
 .tag {
     font-size: 12px;
     width: fit-content;
@@ -172,11 +186,14 @@ body {
     border-radius: 5px;
     cursor: pointer;
 }
-.conclusion__input::placeholder, .tags__input::placeholder {
+
+.conclusion__input::placeholder,
+.tags__input::placeholder {
     font-size: 16px;
     color: #5b3da9;
     opacity: .7;
 }
+
 .add__conclusion {
     width: 25%;
     height: 100%;
@@ -212,6 +229,7 @@ body {
     background: #ccb9fd;
     border-radius: 10px;
 }
+
 .conclusion__wrapper {
     display: flex;
     height: fit-content;
@@ -219,16 +237,19 @@ body {
     align-items: center;
     padding-left: 5px;
 }
+
 .conclusion {
     color: white;
     margin-right: 5px;
 }
+
 .conclusion__star {
     font-size: 22px;
     color: yellow;
     cursor: pointer;
     margin-right: 10px;
 }
+
 .conclusion__tag {
     width: fit-content;
     height: fit-content;
@@ -239,6 +260,7 @@ body {
     color: white;
     margin-right: 3px;
 }
+
 .dashboard__footer {
     width: 100%;
     height: 100px;
@@ -248,6 +270,7 @@ body {
     align-items: center;
     padding: 0 30px 0 30px;
 }
+
 .info__card {
     width: fit-content;
     padding: 10px 15px 10px 15px;
@@ -273,10 +296,17 @@ body {
     display: flex;
     overflow-y: scroll;
     flex-direction: column;
+    padding-right: 10px;
 }
 
 .meeting__participants::-webkit-scrollbar {
-    display: none;
+    width: 3px;
+}
+
+/* Handle */
+.meeting__participants::-webkit-scrollbar-thumb {
+    background: #6143ad;
+    border-radius: 10px;
 }
 
 .meeting__participant {
@@ -291,13 +321,14 @@ body {
     margin-bottom: 10px;
     padding: 10px;
     cursor: pointer;
-
 }
+
 .participant__avatar {
     height: 48px;
     border-radius: 100%;
     margin-right: 10px;
 }
+
 .meeting__participant__info__wrapper {
     display: flex;
     flex-direction: column;
@@ -307,15 +338,18 @@ body {
     height: 100%;
     margin-right: 30px;
 }
+
 .participant__rating {
     margin-bottom: 2px;
 }
+
 .statistics__percents__wrapper {
     width: fit-content;
     height: fit-content;
     display: flex;
     align-items: center;
 }
+
 .statistics__ratio {
     --before__prop: 0;
     height: 22px;
@@ -337,6 +371,7 @@ body {
     z-index: -2;
     background-image: var(--before__prop);
 }
+
 .statistics__ratio::after {
     content: '';
     position: absolute;
@@ -348,13 +383,48 @@ body {
     border-radius: 50%;
     z-index: -1;
 }
+
 .statistics__percents {
     color: white;
 }
+
 .audio__activity {
     height: 75px;
     width: 100%;
+    /* overflow-x: scroll; */
+    display: flex;
+    align-items: center;
 }
+
 .user__activity__nodata {
     display: none;
+}
+.peak {
+    width: 3px;
+    margin-right: 1px;
+    background: white;
+}
+.peak:nth-child(-n + 5) {
+    display: none;
+}
+.peaks__wrapper {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+.participants__top {
+    width: calc(100% - 15px);
+    height: 30px;
+    background: #8967e0;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: rgb(211, 211, 211);
+    padding: 0 0 0 10px;
+    margin-bottom: 5px;
+}
+.participants__top > span:first-child {
+    width: 210px;
 }

@@ -36,7 +36,8 @@ export const UserSchema = new mongoose.Schema({
     status: {
         type: String,
         default: ''
-    }
+    },
+    transcription: String
 })
 
 export interface User {
@@ -46,4 +47,5 @@ export interface User {
     badges: string,
     peaks: number[],
     percents: string,
+    transcription: String
 }

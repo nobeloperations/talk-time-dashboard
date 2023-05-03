@@ -4,6 +4,10 @@
         <div class="dashboard__content__wrapper">
             <div class="dashboard__card dashboard__users animated fadeInRight">
                 <h1 class="meeting__participants__title">Meeting participants and statistics</h1>
+                <div class="participants__top">
+                    <span>User`s Statistic</span>
+                    <span>User`s audio activity</span>
+                </div>
                 <div class="meeting__participants">
                     {{#each feedbacksByName}}
                     <div class="meeting__participant">
@@ -17,11 +21,18 @@
                             </div>
                         </div>
                         {{#if peaks}}
-                        <canvas class="audio__activity" data-peaks="{{peaks}}"></canvas>
+                        <div class="audio__activity">
+                            <div class="peaks__wrapper">
+                                {{#each peaks}}
+                                    <div class="peak" style="height: {{mult this 4}}px"></div>
+                                {{/each}}
+                            </div>
+                        </div>
                         {{else}}
                         <span>No audio data</span>
                         {{/if}}
                     </div>
+                    
                     {{/each}}
                 </div>
             </div>
@@ -61,7 +72,7 @@
                     </div>
                     {{/each}}
                     {{else}}
-                    <span class="empty__conclusions__warning">No conclusions ...Add a new one!</span>
+                    <span class="empty__conclusions__warning">There are no notes, add a new one!</span>
                     {{/if}}
                     <span class="empty__conclusions__warning" style="display: none;">No conclusions ...Add a new
                         one!</span>

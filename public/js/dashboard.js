@@ -1,10 +1,6 @@
 window.onload = function () {
     const URL = window.location.href.split('/').at(-2);
     const DATE = window.location.href.split('/').at(-1);
-    const X_COEF = 1.5;
-    const Y_COEF = 7;
-    const CENTER_COEF = 40;
-    const CANVAS_HEIGHT = 150;
     let _conclusionInputWrapper = document.querySelector('.conclusion__input__wrapper')
     let _addConclusionButton = document.querySelector('.add__conclusion')
     let _addConclusionInput = document.querySelector('.conclusion__input')
@@ -15,19 +11,6 @@ window.onload = function () {
     let _tagsList = document.querySelector('.tags__list')
     let _tagsInput = document.querySelector('.tags__input')
     let _plusTag = document.querySelector('.plus__tag')
-    let _audioActivities = document.querySelectorAll(".audio__activity");
-
-    _audioActivities.forEach(_audioActivity => {
-        let _ctx = _audioActivity.getContext('2d')
-        let _data = _audioActivity.dataset.peaks.split(',').map(e => +e).filter(i => i != 1)
-        _data.slice(5, _data.length).forEach((_e, _idx) => {
-            let _x = _idx * X_COEF
-            let _y = (CANVAS_HEIGHT - (_e * Y_COEF)) - CENTER_COEF
-            _ctx.lineTo(_x, _y);
-        })
-        _ctx.strokeStyle = 'white'
-        _ctx.stroke()
-    })
 
     let _tags = []
 

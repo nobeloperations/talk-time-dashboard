@@ -13,5 +13,8 @@ export let helpers = {
     random() {
         let num = Math.floor(Math.random() * (2 - 1 + 1) + 1)
         return num === 1 ? 'animated fadeInLeft' : 'animated fadeInRight'
-    }
+    },
+    mult(e, coef) {
+        return e*coef
+    },
 }

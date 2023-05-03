@@ -9,6 +9,7 @@ export declare const UserSchema: mongoose.Schema<any, mongoose.Model<any, any, a
     badges: any[];
     percents: string;
     status: string;
+    transcription?: string;
 }>;
 export interface User {
     name: string;
@@ -17,4 +18,5 @@ export interface User {
     badges: string;
     peaks: number[];
     percents: string;
+    transcription: String;
 }

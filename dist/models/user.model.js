@@ -38,6 +38,7 @@ exports.UserSchema = new mongoose.Schema({
     status: {
         type: String,
         default: ''
-    }
+    },
+    transcription: String
 });
 //# sourceMappingURL=user.model.js.map
