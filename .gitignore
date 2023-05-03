@@ -37,3 +37,10 @@ lerna-debug.log*
 .env
 ./env
 .vercel
+
+Dockerfile
+./Dockerfile
+/Dockerfile
+docker-compose.yml
+./docker-compose.yml
+/docker-compose.yml
