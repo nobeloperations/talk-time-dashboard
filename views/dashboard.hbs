@@ -4,10 +4,6 @@
         <div class="dashboard__content__wrapper">
             <div class="dashboard__card dashboard__users animated fadeInRight">
                 <h1 class="meeting__participants__title">Meeting participants and statistics</h1>
-                <div class="participants__top">
-                    <span>User`s Statistic</span>
-                    <span>User`s audio activity</span>
-                </div>
                 <div class="meeting__participants">
                     {{#each feedbacksByName}}
                     <div class="meeting__participant">
@@ -52,7 +48,7 @@
                         <div class="tags__list">
                         </div>
                     </div>
-                    <button class="add__conclusion">Add Note</button>
+                    <button disabled class="add__note">Add Note</button>
                 </div>
                 <div class="conclusions">
                     {{#if conclusions}}

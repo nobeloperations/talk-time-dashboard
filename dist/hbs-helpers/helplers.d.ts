@@ -3,4 +3,5 @@ export declare let helpers: {
     average(rate: any): string | 0;
     random(): "animated fadeInLeft" | "animated fadeInRight";
     mult(e: any, coef: any): number;
+    formatDate(date: any): string;
 };

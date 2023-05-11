@@ -194,7 +194,7 @@ body {
     opacity: .7;
 }
 
-.add__conclusion {
+.add__note {
     width: 25%;
     height: 100%;
     background: -webkit-linear-gradient(right, #7E51F0, #bca2ff);
@@ -427,4 +427,8 @@ body {
 }
 .participants__top > span:first-child {
     width: 210px;
+}
+
+.add__note:disabled {
+   cursor: not-allowed;
 }

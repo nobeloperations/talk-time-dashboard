@@ -6,7 +6,6 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { FeedbacksModule } from './feedbacks/feedbacks.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { AudioModule } from './audio/audio.module';
-import { CommentsModule } from './comments/comments.module';
 import { UsersModule } from './users/users.module';
 import { BadgesModule } from './badges/badges.module';
 import { APP_FILTER } from '@nestjs/core';
@@ -24,8 +23,7 @@ import { StaticModule } from './static/static.module';
     MainModule,
     DashboardModule,
     FeedbacksModule,
-    AudioModule,
-    CommentsModule,
+    AudioModule, 
     UsersModule,
     BadgesModule,
     StaticModule

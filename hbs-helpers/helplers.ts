@@ -15,6 +15,10 @@ export let helpers = {
         return num === 1 ? 'animated fadeInLeft' : 'animated fadeInRight'
     },
     mult(e, coef) {
-        return e*coef
+        return e * coef
     },
+    formatDate(date) {
+        const parts = date.split('.')
+        return `${parts[1]}.${parts[0]}.${parts[2]}`.replaceAll('.', '/')
+    }
 }

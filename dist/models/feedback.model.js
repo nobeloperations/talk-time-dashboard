@@ -40,9 +40,6 @@ exports.FeedbackSchema = new mongoose.Schema({
     date: {
         type: String,
         required: true
-    },
-    comments: {
-        type: Array
     }
 });
 //# sourceMappingURL=feedback.model.js.map

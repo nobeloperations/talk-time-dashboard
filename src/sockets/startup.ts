@@ -8,6 +8,7 @@ export default function startUpSocket() {
         ws.on('message', message => {
             const convertedMessage = message.toString()
             server.clients.forEach(client => {
+                console.log(client)
                 if (client.readyState === WEBSOCKET_OPEN) {
                     client.send(JSON.stringify({ message: convertedMessage }))
                 }

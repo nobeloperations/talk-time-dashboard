@@ -2,31 +2,60 @@
     {{#if currentUser}}
     {{>header}}
     <div class="personal__feedbacks__content">
-                <h1 class="personal__feedbacks__title animated fadeInRight">{{name}}(`s) feedbacks</h1>
-        {{#if feedbacks}}
-        {{#each feedbacks}}
-        <div class="personal__feedback animated fadeInLeft">
-            <div class="personal__feedback__sender">
-                <img class="personal__feedback__avatar" src={{senderImg}} alt="">
-                <h2 class="personal__feedback__sender__name">{{sender}}</h2>
-                <span class="personal__feedback__id">{{_id}}</span>
-            </div>
-            <div class="personal__feedback__text__wrapper">
-                <span class="personal__feedback__text">{{feedback}}</span>
-                <span class="personal__feedback__rating__date">⭐{{rating}} &nbsp; <b>{{date}}</b></span>
-                <div class="personal__feedback__buttons__wrapper">
-                    {{#if feedbackImg}}
-                    <button class="personal__feedback__view__image__button">View image</button>
-                    {{/if}}
-                    <a href="/comments/{{url}}/{{_id}}/{{date}}"><button class="personal__feedback__leave__comment">Leave
-                            Comment</button></a>
+        <div class="personal__feedbacks__filter__wrapper">
+            <img class="personal__feedbacks__filter__icon" src="/img/filter.png" alt="">
+            <button data-active="" class="personal__feedbacks__image__filter">With Image</button>
+            <button data-active="" class="personal__feedbacks__high__filter">High Rating</button>
+            <button data-active="" class="personal__feedbacks__low__filter">Low Rating</button>
+            <button data-active="" class="personal__feedbacks__date__filter">Date range</button>
+            <div class="date__range__wrapper">
+                <div class="date__range">
+                    <input required lang="en-GB" data-date-format="dd-mm-yyyy" class="date__input" id="start__date" type="date">
+                    <input required lang="en-GB" data-date-format="dd-mm-yyyy" class="date__input" id="end__date" type="date">
+                    <button class="apply__date__filter">Apply date</button>
                 </div>
             </div>
         </div>
+        {{#if feedbacks}}
+        <span class="no__filtered__feedbacks">No feedbacks found</span>
+        {{#each feedbacks}}
+        {{#if feedbackImg}}
+        <div data-rating="{{rating}}" data-image="true" data-date="{{formatDate postDate}}" class="personal__feedback animated fadeInLeft">
+        {{else}}
+        <div data-rating="{{rating}}" data-date="{{formatDate postDate}}" class="personal__feedback animated fadeInLeft">
+        {{/if}}
+            <div class="personal__feedback__top">
+                <div class="personal__feedback__user">
+                    <img class="personal__feedback__avatar"
+                        src="{{senderImg}}">
+                    <div>
+                        <span class="personal__feedback__sender">{{sender}}</span><br />
+                        <span class="personal__feedback__date">{{formatDate postDate}}</span>
+                    </div>
+                </div>
+                <div class="rating__wrapper">
+                    <span class="rating">☆</span>
+                    <span class="rating">☆</span>
+                    <span class="rating">☆</span>
+                    <span class="rating">☆</span>
+                    <span class="rating">☆</span>
+                </div>
+            </div>
+            <span class="personal__feedback__text">{{feedback}}</span>
+            <div class="personal__feedback__buttons">
+                <button class="personal__feedback__read__more">Read More</button>
+                <button class="personal__feedback__read__less">Read Less</button>
+                {{#if feedbackImg}}
+                <button class="personal__feedback__view__image">View Image</button>
+                {{/if}}
+            </div>
+        </div>
+        {{#if feedbackImg}}
         <div class="personal__feedback__img__wrapper">
             <img class="personal__feedback__img" src="/{{feedbackImg}}" alt="">
             <button class="personal__feedback__close__img">Close</button>
         </div>
+        {{/if}}
         {{/each}}
         {{else}}
         <span class="personal__feedback__empty__text">No feedbacks yet</span>

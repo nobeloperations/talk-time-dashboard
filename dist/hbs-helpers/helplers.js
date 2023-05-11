@@ -21,5 +21,9 @@ exports.helpers = {
     mult(e, coef) {
         return e * coef;
     },
+    formatDate(date) {
+        const parts = date.split('.');
+        return `${parts[1]}.${parts[0]}.${parts[2]}`.replaceAll('.', '/');
+    }
 };
 //# sourceMappingURL=helplers.js.map

@@ -9,30 +9,70 @@
         <div class="welcome__text">
             <h1 class="welcome__title animated fadeInRight">WELCOME</h1>
             <span class="welcome__description animated fadeInLeft">Start making your meetings
-                more comfortable <br/> and communicate more efficiently</span>
+                more comfortable <br /> and communicate more efficiently</span>
             <a href="/main"><button class="welcome__trynow animated fadeInRight">Try now</button></a>
         </div>
         <div class="welcome__cards">
             <div class="welcome__card welcome__card__3 welcome__card__left animated fadeInLeft">
                 <img class="welcome__badges__img" src="/img/badges.png" alt="">
-                <span>Gain new<br/> badges</span>
+                <span>Gain new<br /> badges</span>
             </div>
             <div class="welcome__card welcome__card__2 welcome__card__left animated fadeInRight">
                 <img class="welcome__message__img" src="/img/message-card.png" alt="">
-                <span>Private <br/> messaging</span>
+                <span>Private <br /> messaging</span>
             </div>
             <div class="welcome__card welcome__card__1 animated fadeInLeft">
                 <img class="welcome__meet__img" src="/img/meet.png" alt="">
-                <span>Your every<br/> meeting</span>
+                <span>Your every<br /> meeting</span>
             </div>
             <div class="welcome__card welcome__card__2 welcome__card__right animated fadeInRight">
                 <img class="welcome__feedback__img" src="/img/feedback-card.png" alt="">
-                <span>Feedback<br/> system</span>
+                <span>Feedback<br /> system</span>
             </div>
             <div class="welcome__card welcome__card__3 welcome__card__right animated fadeInLeft">
                 <img class="welcome__statistic__img" src="/img/statistic.png" alt="">
-                <span>Meeting<br/> statistic</span>
+                <span>Meeting<br /> statistic</span>
             </div>
         </div>
     </div>
 </div>
+
+{{#each feedbacks}}
+{{#if feedbackImg}}
+<div data-rating="{{rating}}" data-feedbackImage="true" data-date="{{postDate}}"
+    class="personal__feedback animated fadeInLeft">
+    {{else}}
+    <div data-rating="{{rating}}" data-date="{{postDate}}" class="personal__feedback animated fadeInLeft">
+        {{/if}}
+        <div class="personal__feedback__top">
+            <div class="personal__feedback__user">
+                <img class="personal__feedback__avatar" src="{{senderImg}}">
+                <div>
+                    <span class="personal__feedback__sender">{{sender}}</span><br />
+                    <span>{{@index}}</span>
+                    <span class="personal__feedback__date">{{postDate}}</span>
+                </div>
+            </div>
+            <div class="rating__wrapper">
+                <span class="rating">☆</span>
+                <span class="rating">☆</span>
+                <span class="rating">☆</span>
+                <span class="rating">☆</span>
+                <span class="rating">☆</span>
+            </div>
+        </div>
+        <span class="personal__feedback__text">{{feedback}}</span><br />
+        <div class="personal__feedback__buttons">
+            <button class="personal__feedback__read__less">Read Less</button>
+            {{#if feedbackImg}}
+            <button class="personal__feedback__view__image">View Image</button>
+            {{/if}}
+        </div>
+    </div>
+    {{#if feedbackImg}}
+    <div class="personal__feedback__img__wrapper">
+        <img class="personal__feedback__img" src="/{{feedbackImg}}" alt="">
+        <button class="personal__feedback__close__img">Close</button>
+    </div>
+    {{/if}}
+    {{/each}}

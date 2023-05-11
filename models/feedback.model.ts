@@ -38,9 +38,6 @@ export const FeedbackSchema = new mongoose.Schema({
     date: {
         type: String,
         required: true
-    },
-    comments: {
-        type: Array
     }
 })
 
@@ -54,5 +51,4 @@ export interface Feedback {
     senderImg: string,
     feedbackImg: string,
     date: string,
-    comments: string[]
 }

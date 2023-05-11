@@ -2,7 +2,7 @@ window.onload = function () {
     const URL = window.location.href.split('/').at(-2);
     const DATE = window.location.href.split('/').at(-1);
     let _conclusionInputWrapper = document.querySelector('.conclusion__input__wrapper')
-    let _addConclusionButton = document.querySelector('.add__conclusion')
+    let _addNoteButton = document.querySelector('.add__note')
     let _addConclusionInput = document.querySelector('.conclusion__input')
     let _conclusions = document.querySelector('.conclusions')
     let _emptyConclusionsWarning = document.querySelector('.empty__conclusions__warning')
@@ -12,7 +12,12 @@ window.onload = function () {
     let _tagsInput = document.querySelector('.tags__input')
     let _plusTag = document.querySelector('.plus__tag')
 
+
     let _tags = []
+
+    _addConclusionInput.oninput = function() {
+        this.value.trim() ? _addNoteButton.disabled = false : _addNoteButton.disabled = true
+    }
 
     _plusTag.onclick = function () {
         let _tag = _tagsInput.value;
@@ -40,7 +45,7 @@ window.onload = function () {
         }
     })
 
-    _addConclusionButton.onclick = async function () {
+    _addNoteButton.onclick = async function () {
         let value = _addConclusionInput.value;
         if (!value.trim()) {
             _conclusionInputWrapper.classList.toggle('wrong__conclusion')
