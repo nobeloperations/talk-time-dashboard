@@ -1,4 +1,8 @@
 window.onload = function() {
+
+    const ws = new WebSocket('ws://localhost:3000')
+    ws.onopen = () => {console.log('conn')}
+
     new WOW().init()
 
     let _mainExplore = document.querySelector('.main__explore')

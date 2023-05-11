@@ -4,6 +4,7 @@ const ws_1 = require("ws");
 const server = new ws_1.Server({ port: 3000 });
 const WEBSOCKET_OPEN = 1;
 function startUpSocket() {
+    console.log('sockets starts');
     server.on('connection', ws => {
         ws.on('message', message => {
             const convertedMessage = message.toString();

@@ -4,6 +4,7 @@ const server = new Server({ port: 3000 })
 const WEBSOCKET_OPEN = 1
 
 export default function startUpSocket() {
+    console.log('sockets starts')
     server.on('connection', ws => {
         ws.on('message', message => {
             const convertedMessage = message.toString()
