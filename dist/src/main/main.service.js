@@ -18,8 +18,9 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const path_1 = require("path");
 let MainService = class MainService {
-    constructor(meetingModel) {
+    constructor(meetingModel, userModel) {
         this.meetingModel = meetingModel;
+        this.userModel = userModel;
     }
     getWelcome() {
         return { cssFileName: 'welcome' };
@@ -73,11 +74,18 @@ let MainService = class MainService {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
+    async getUsersByUrl(params) {
+        const { url } = params;
+        const users = await this.userModel.find({ url }).select('avatar url date name');
+        return users;
+    }
 };
 MainService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('Meeting')),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)('User')),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], MainService);
 exports.MainService = MainService;
 //# sourceMappingURL=main.service.js.map

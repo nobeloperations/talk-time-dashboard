@@ -63,9 +63,6 @@ let UsersService = class UsersService {
             let dbUsers = await this.userModel.find({}).select('name avatar count badges');
             let users = [];
             dbUsers.forEach(async (user) => {
-                this.userModel.countDocuments({ name: user.name }, async (_, count) => {
-                    await this.userModel.updateMany({ name: user.name }, { count });
-                });
                 users.push(user.toObject());
             });
             users = users.filter((value, index, self) => index === self.findIndex((t) => (t.name === value.name)));

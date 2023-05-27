@@ -20,5 +20,8 @@ export let helpers = {
     formatDate(date) {
         const parts = date.split('.')
         return `${parts[1]}.${parts[0]}.${parts[2]}`.replaceAll('.', '/')
+    },
+    badgesLevel(e) {
+        return e === 1 ? 'Knowlege level' : e === 2 ? 'Apprentice level' : e === 3 ? 'Mastery level' : 'Leadership level'
     }
 }

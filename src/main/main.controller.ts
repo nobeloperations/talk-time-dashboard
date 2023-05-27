@@ -33,4 +33,10 @@ export class MainController {
     addGeneral(@Body() addGeneralBodyDto) {
         return this.mainService.addMeeting(addGeneralBodyDto)
     }
+
+    @Get('/users/:url/') 
+    @HttpCode(200)
+    getUsersByUrAndDate(@Param() params) {
+        return this.mainService.getUsersByUrl(params)
+    }
 }

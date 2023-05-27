@@ -4,13 +4,14 @@ window.onload = function () {
     let _container = document.querySelector('.container');
     let _feedbacks = document.querySelectorAll('.personal__feedback')
     let _feedbacksTexts = document.querySelectorAll('.personal__feedback__text')
-    let _feedbacksFilterWrapper = document.querySelector('.personal__feedbacks__filter__wrapper')
+    let _feedbacksFilterWrapper = document.querySelector('.personal__feedbacks__filters__wrapper')
     let _lowRatingButton = document.querySelector('.personal__feedbacks__low__filter')
     let _highRatingButton = document.querySelector('.personal__feedbacks__high__filter')
     let _dateWrapper = document.querySelector('.date__range__wrapper')
     let _startDate = document.querySelector('#start__date')
     let _endDate = document.querySelector('#end__date')
-    let _noFilteredFeedbacks = document.querySelector('.no__filtered__feedbacks')
+    let _noFilteredFeedbacks = document.querySelector('.empty__feedbacks')
+    let _modalShadow = document.querySelector('.modal__shadow')
     const LOW_RATING = 'LOW'
     const HIGH_RATING = 'HIGH'
 
@@ -36,13 +37,14 @@ window.onload = function () {
             _feedback.style.display = _showFeedback ? 'block' : 'none';
             if(_showFeedback) _counter++
         });
-        _noFilteredFeedbacks.style.display = _counter ? 'none' : 'inline'
+        _noFilteredFeedbacks.style.display = _counter ? 'none' : 'flex'
     }
 
     _feedbacksFilterWrapper.onclick = function (e) {
         const _target = e.target;
         if (_target.tagName === 'BUTTON') {
             _target.dataset.active = _target.dataset.active ? '' : 'true';
+
             if(_target.className !== 'apply__date__filter') {
                 _target.style.background = _target.dataset.active ? 'white' : 'transparent';
                 _target.style.color = _target.dataset.active ? '#754BDF' : 'white';
@@ -85,7 +87,6 @@ window.onload = function () {
                 }
             }
 
-
             _filtersOptions()
 
         }
@@ -97,17 +98,41 @@ window.onload = function () {
             const _feedbackText = _target.closest('.personal__feedback').querySelector('.personal__feedback__hidden')
             const _threeDots = _target.closest('.personal__feedback').querySelector('.three__dots')
             const _readLess = _target.nextElementSibling
+            const _feedback = _target.parentElement.parentElement
+            const _viewImage = _feedback.querySelector('.personal__feedback__view__image')
+
+            const h = _feedback.scrollHeight;
+            const w = _feedback.scrollWidth;
+            const bh = document.body.scrollHeight;
+            const bw = document.body.scrollWidth - 20;
+
+            _feedback.style.position = 'absolute'
+            _feedback.style.left = ((bw - w) / 2) + "px"
+            _feedback.style.top = ((bh - h) / 2) + "px"
+            _feedback.style.zIndex = '4'
+            if(_viewImage) _viewImage.style.display = 'none'
 
             _feedbackText.style.display = 'inline'
             _readLess.style.display = 'block'
             _threeDots.style.display = 'none'
             _target.style.display = 'none'
+            _container.className = 'container open__modal'
+
         }
         else if (_target.matches('.personal__feedback__read__less')) {
             const _feedbackText = _target.closest('.personal__feedback').querySelector('.personal__feedback__hidden')
             const _threeDots = _target.closest('.personal__feedback').querySelector('.three__dots')
             const _readMore = _target.previousElementSibling
+            const _feedback = _target.parentElement.parentElement
+            const _viewImage = _feedback.querySelector('.personal__feedback__view__image')
 
+            _feedback.style.position = 'static'
+            _feedback.style.left = "none"
+            _feedback.style.top = "none"
+            _feedback.style.zIndex = '0'
+            if(_viewImage) _viewImage.style.display = 'block'
+
+            _container.className = 'container close__modal'
             _feedbackText.style.display = 'none'
             _readMore.style.display = 'inline'
             _threeDots.style.display = 'inline'
@@ -117,13 +142,19 @@ window.onload = function () {
 
     _feedbacksTexts.forEach(_feedbacksText => {
         const _text = _feedbacksText.textContent
-        let _hiddenTextCoef = _text.length - 70
-        if (_text.length > 70) {
-            let _visibleText = _text.substring(0, 70).trim()
-            let _hiddenText = _text.slice(-_hiddenTextCoef)
+        let HIDDEN_TEXT_COEF = _text.length - 40
+        if (_text.length > 40) {
+            let _visibleText = _text.substring(0, 50).trim()
+            let _hiddenText = _text.slice(-HIDDEN_TEXT_COEF)
             _feedbacksText.innerHTML = `
                 <span class="personal__feedback__visible">${_visibleText}<span class="three__dots">...</span><span class="personal__feedback__hidden">${_hiddenText}</span></span>
             `
+        }
+        else {
+            const _feedback = _feedbacksText.parentElement;
+            const _buttonsWrapper = _feedback.querySelector('.personal__feedback__buttons')
+            const _readMore = _buttonsWrapper.querySelector('.personal__feedback__read__more')
+            _buttonsWrapper.removeChild(_readMore)
         }
     })
 

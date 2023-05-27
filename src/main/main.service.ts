@@ -3,10 +3,12 @@ import { Meeting } from '../../models/meeting.model';
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose';
 import { resolve } from 'path';
+import { User } from 'models/user.model';
 
 @Injectable()
 export class MainService {
-    constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>){}
+    constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>,
+                @InjectModel('User') private readonly userModel: Model<User>){}
 
     getWelcome() {
         return {cssFileName: 'welcome'}
@@ -64,6 +66,12 @@ export class MainService {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
 
+    }
+
+    async getUsersByUrl(params) {
+        const { url } = params;
+        const users = await this.userModel.find({url}).select('avatar url date name')
+        return users;
     }
 
 }

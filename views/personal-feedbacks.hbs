@@ -2,7 +2,8 @@
     {{#if currentUser}}
     {{>header}}
     <div class="personal__feedbacks__content">
-        <div class="personal__feedbacks__filter__wrapper">
+        {{#if feedbacks}}
+        <div class="personal__feedbacks__filters__wrapper">
             <img class="personal__feedbacks__filter__icon" src="/img/filter.png" alt="">
             <button data-active="" class="personal__feedbacks__image__filter">With Image</button>
             <button data-active="" class="personal__feedbacks__high__filter">High Rating</button>
@@ -10,60 +11,70 @@
             <button data-active="" class="personal__feedbacks__date__filter">Date range</button>
             <div class="date__range__wrapper">
                 <div class="date__range">
-                    <input required lang="en-GB" data-date-format="dd-mm-yyyy" class="date__input" id="start__date" type="date">
-                    <input required lang="en-GB" data-date-format="dd-mm-yyyy" class="date__input" id="end__date" type="date">
+                    <input required lang="en-GB" data-date-format="dd-mm-yyyy" class="date__input" id="start__date"
+                        type="date">
+                    <input required lang="en-GB" data-date-format="dd-mm-yyyy" class="date__input" id="end__date"
+                        type="date">
                     <button class="apply__date__filter">Apply date</button>
                 </div>
             </div>
         </div>
-        {{#if feedbacks}}
-        <span class="no__filtered__feedbacks">No feedbacks found</span>
+        <div class="empty__feedbacks">
+            <img class="empty__feedbacks__img" src="/img/empty.png" alt="">
+            <span class="empty__title">There is nothing here...</span>
+            <span class="empty__text">Please make sure your request is correct</span>
+        </div>
         {{#each feedbacks}}
         {{#if feedbackImg}}
-        <div data-rating="{{rating}}" data-image="true" data-date="{{formatDate postDate}}" class="personal__feedback animated fadeInLeft">
-        {{else}}
-        <div data-rating="{{rating}}" data-date="{{formatDate postDate}}" class="personal__feedback animated fadeInLeft">
-        {{/if}}
-            <div class="personal__feedback__top">
-                <div class="personal__feedback__user">
-                    <img class="personal__feedback__avatar"
-                        src="{{senderImg}}">
-                    <div>
-                        <span class="personal__feedback__sender">{{sender}}</span><br />
-                        <span class="personal__feedback__date">{{formatDate postDate}}</span>
+        <div data-rating="{{rating}}" data-image="true" data-date="{{formatDate postDate}}"
+            class="personal__feedback animated fadeInLeft">
+            {{else}}
+            <div data-rating="{{rating}}" data-date="{{formatDate postDate}}"
+                class="personal__feedback animated fadeInLeft">
+                {{/if}}
+                <div class="personal__feedback__top">
+                    <div class="personal__feedback__user">
+                        <img class="personal__feedback__avatar" src="{{senderImg}}">
+                        <div>
+                            <span class="personal__feedback__sender">{{sender}}</span><br />
+                            <span class="personal__feedback__date">{{formatDate postDate}}</span>
+                        </div>
+                    </div>
+                    <div class="rating__wrapper">
+                        <span class="rating">☆</span>
+                        <span class="rating">☆</span>
+                        <span class="rating">☆</span>
+                        <span class="rating">☆</span>
+                        <span class="rating">☆</span>
                     </div>
                 </div>
-                <div class="rating__wrapper">
-                    <span class="rating">☆</span>
-                    <span class="rating">☆</span>
-                    <span class="rating">☆</span>
-                    <span class="rating">☆</span>
-                    <span class="rating">☆</span>
+                <span class="personal__feedback__text">{{feedback}}</span>
+                <div class="personal__feedback__buttons">
+                    <button class="personal__feedback__read__more">Read More</button>
+                    <button class="personal__feedback__read__less">Read Less</button>
+                    {{#if feedbackImg}}
+                    <button class="personal__feedback__view__image">View Image</button>
+                    {{/if}}
                 </div>
             </div>
-            <span class="personal__feedback__text">{{feedback}}</span>
-            <div class="personal__feedback__buttons">
-                <button class="personal__feedback__read__more">Read More</button>
-                <button class="personal__feedback__read__less">Read Less</button>
-                {{#if feedbackImg}}
-                <button class="personal__feedback__view__image">View Image</button>
-                {{/if}}
+            {{#if feedbackImg}}
+            <div class="personal__feedback__img__wrapper">
+                <img class="personal__feedback__img" src="/{{feedbackImg}}" alt="">
+                <button class="personal__feedback__close__img">Close</button>
             </div>
+            {{/if}}
+            {{/each}}
+            {{else}}
+            <div class="no__feedbacks">
+                <img class="empty__feedbacks__img" src="/img/empty.png" alt="">
+                <span class="empty__title">There is no feedbacks...</span>
+                <span class="empty__text">Become a first one who added it</span>
+            </div>
+            {{/if}}
+            {{else}}
+            <h1 class="invalid__url">Invalid Meeting url or username, make sure that your link is valid</h1>
+            {{/if}}
         </div>
-        {{#if feedbackImg}}
-        <div class="personal__feedback__img__wrapper">
-            <img class="personal__feedback__img" src="/{{feedbackImg}}" alt="">
-            <button class="personal__feedback__close__img">Close</button>
-        </div>
-        {{/if}}
-        {{/each}}
-        {{else}}
-        <span class="personal__feedback__empty__text">No feedbacks yet</span>
-        {{/if}}
-        {{else}}
-        <h1 class="invalid__url">Invalid Meeting url or username, make sure that your link is valid</h1>
-        {{/if}}
     </div>
-</div>
-<div class="modal__shadow"></div>
-<script src="/js/personal-feedbacks.js"></script>
+    <div class="modal__shadow"></div>
+    <script src="/js/personal-feedbacks.js"></script>

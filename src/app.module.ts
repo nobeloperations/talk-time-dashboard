@@ -11,6 +11,9 @@ import { BadgesModule } from './badges/badges.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { StaticModule } from './static/static.module';
+import { ProfileController } from './profile/profile.controller';
+import { ProfileService } from './profile/profile.service';
+import { ProfileModule } from './profile/profile.module';
 
 
 @Module({
@@ -26,14 +29,14 @@ import { StaticModule } from './static/static.module';
     AudioModule, 
     UsersModule,
     BadgesModule,
-    StaticModule
+    StaticModule,
+    ProfileModule
   ],
-  controllers: [],
   providers: [
     {
         provide: APP_FILTER,
         useClass: HttpExceptionFilter
-    }
+    },
   ],
 })
 export class AppModule { }

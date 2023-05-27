@@ -12,11 +12,4 @@ export class BadgesController {
     newBadge(@Param() params, @Body() newBadgeBodyDto) {
         return this.badgesService.newBadge(params, newBadgeBodyDto)
     }
-
-    @Get('/:url/:name/:date')
-    @Render('feedback-badges')
-    @HttpCode(200)
-    getFeedbackBadges(@Param() params, @Res() res: Response) {
-        return this.badgesService.getFeedbackBadges(params, res)
-    }
 }

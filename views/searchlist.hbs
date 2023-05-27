@@ -1,15 +1,21 @@
 <div class="searchlist__container">
     <header class="main__header animated fadeInLeft">
-        <img class="header__logo" src="/img/menu-logo.png" alt="">
-        <h2 class="header__title">Talk Time</h2>
+        <a href="/main">
+            <div style="display: flex;">
+                <img class="header__logo" src="/img/menu-logo.png" alt="">
+                <h2 class="header__title">Talk Time</h2>
+            </div>
+        </a>
     </header>
     <div class="generals">
         {{#each meetingsResult}}
         {{#each meetings}}
-        <div class="meeting__card animated fadeInLeft">
+        <div class="meeting__card animated fadeInLeft" data-date="{{date}}" data-url="{{url}}">
             <div class="meeting__info">
                 <span class="card__url">{{url}}</span>
                 <span class="card__date">{{date}}</span>
+                <div class="meeting__users">
+                </div>
             </div>
             <a class="dashboard__link" href="/dashboard/{{url}}/{{date}}">
                 <div class="link__button">Go to dashboard page</div>
@@ -19,3 +25,4 @@
         {{/each}}
     </div>
 </div>
+<script src="/js/searchlist.js"></script>

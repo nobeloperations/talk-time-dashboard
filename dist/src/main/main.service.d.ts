@@ -24,9 +24,11 @@
 /// <reference types="mongoose/types/inferschematype" />
 import { Meeting } from '../../models/meeting.model';
 import { Model } from 'mongoose';
+import { User } from 'models/user.model';
 export declare class MainService {
     private readonly meetingModel;
-    constructor(meetingModel: Model<Meeting>);
+    private readonly userModel;
+    constructor(meetingModel: Model<Meeting>, userModel: Model<User>);
     getWelcome(): {
         cssFileName: string;
     };
@@ -43,4 +45,7 @@ export declare class MainService {
         cssFileName: string;
     }>;
     addMeeting(addGeneralBodyDto: any): Promise<string>;
+    getUsersByUrl(params: any): Promise<(import("mongoose").Document<unknown, any, User> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }

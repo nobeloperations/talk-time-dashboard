@@ -16,7 +16,6 @@ exports.BadgesService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const path_1 = require("path");
 let BadgesService = class BadgesService {
     constructor(userModel, meetingModel) {
         this.userModel = userModel;
@@ -30,34 +29,6 @@ let BadgesService = class BadgesService {
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
-        }
-    }
-    async getFeedbackBadges(params, res) {
-        try {
-            const { url, name, date } = params;
-            const currentUser = await this.userModel.findOne({ name, url });
-            const meeting = await this.meetingModel.findOne({ name: url });
-            let currentMeeting = false;
-            meeting.meetings.forEach(curr => {
-                if (curr['date'] == date)
-                    currentMeeting = true;
-            });
-            if (!currentUser || !meeting || !currentMeeting) {
-                res.sendFile((0, path_1.resolve)('views/notfound.html'));
-                return;
-            }
-            let badges = await this.userModel.findOne({ name }).select('badges');
-            let convertedBadges = [];
-            Array.from(badges.badges).forEach(o => {
-                convertedBadges[o['badge']] ? convertedBadges[o['badge']] += 1 : convertedBadges[o['badge']] = 1;
-            });
-            let objectBadges = Object.assign({}, convertedBadges);
-            let isBadges = !!Object.keys(objectBadges).length;
-            return { cssFileName: 'feedback-badges', badges: objectBadges, isBadges, currentUser, url, name, date };
-        }
-        catch (e) {
-            res.sendFile((0, path_1.resolve)('views/notfound.html'));
-            return;
         }
     }
 };

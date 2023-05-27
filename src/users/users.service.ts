@@ -47,6 +47,7 @@ export class UsersService {
             meeting?.meetings.forEach(curr => {
                 if(curr['date'] == date) currentMeeting = true
             })
+            
             if(!meeting || !currentMeeting) {
                 res.sendFile(resolve('views/notfound.html'))
             }
@@ -54,9 +55,6 @@ export class UsersService {
             let dbUsers = await this.userModel.find({}).select('name avatar count badges')
             let users = []
             dbUsers.forEach(async user => {
-                this.userModel.countDocuments({ name: user.name }, async (_, count) => {
-                    await this.userModel.updateMany({ name: user.name }, { count })
-                })
                 users.push(user.toObject())
             })
     

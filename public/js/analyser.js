@@ -4,10 +4,10 @@ window.onload = async function () {
     let bookmarkButton = document.querySelector('.open-bookmark-popup');
     let bookmarkPopUp = document.querySelector('.bookmark-popup');
     let createBookmark = document.querySelector('.create-bookmark')
+    let timeLabel = document.querySelector('.time-label')
     let time = document.querySelector('input[name="time"]');
     let closeCreateBookmark = document.querySelector('.close-create-bookmark-popup');
     let closeBookmarks = document.querySelector('.close-bookmarks-popup');
-    let timeLabel = document.querySelector('.time-label')
     let showBookmarksButton = document.querySelector('.show-bookmarks');
     let bookmarksWrapper = document.querySelector('.all-bookmarks')
     let allBookmarks = document.querySelectorAll('.bookmark')

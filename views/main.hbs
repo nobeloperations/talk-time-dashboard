@@ -1,6 +1,10 @@
 <header class="main__header animated fadeInLeft">
-    <img class="header__logo" src="/img/menu-logo.png" alt="">
-    <h2 class="header__title">Talk Time</h2>
+    <a href="/main">
+        <div style="display: flex;">
+            <img class="header__logo" src="/img/menu-logo.png" alt="">
+            <h2 class="header__title">Talk Time</h2>
+        </div>
+    </a>
 </header>
 <div class="main__wrapper">
     <div class="main__template">
@@ -32,7 +36,9 @@
                 </div>
                 <div class="select__items">
                     {{#each meetings}}
-                        <a class="select__item__link" href="/main/searchlist/{{name}}"><div class="select__item" data-name="{{name}}">{{name}}</div></a>
+                    <a class="select__item__link" href="/main/searchlist/{{name}}">
+                        <div class="select__item" data-name="{{name}}">{{name}}</div>
+                    </a>
                     {{/each}}
                 </div>
             </div>

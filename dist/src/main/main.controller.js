@@ -31,6 +31,9 @@ let MainController = class MainController {
     addGeneral(addGeneralBodyDto) {
         return this.mainService.addMeeting(addGeneralBodyDto);
     }
+    getUsersByUrAndDate(params) {
+        return this.mainService.getUsersByUrl(params);
+    }
 };
 __decorate([
     (0, common_1.Get)(''),
@@ -66,6 +69,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "addGeneral", null);
+__decorate([
+    (0, common_1.Get)('/users/:url/'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], MainController.prototype, "getUsersByUrAndDate", null);
 MainController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [main_service_1.MainService])

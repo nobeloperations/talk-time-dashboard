@@ -1,32 +1,17 @@
 <div class="users__container">
     {{>header}}
-    <input type="text" class="users__search animated fadeInLeft" placeholder="🔎︎ Seach users">
     <div class="users__list">
+    <input type="text" class="users__search animated fadeInLeft" placeholder="🔎︎ Seach users">
         {{#each users}}
-            <div class="user {{random}}" data-name="{{name}}">
-                <div class="user__info">
-                    <img class="user__avatar" src="{{avatar}}" alt="">
-                    <div class="username__participated">
-                        <span class="user__name">{{name}}</span>
-                        <span class="meeting__participated">Participated in {{count}} meeting(s)</span>
-                    </div>
+        <div class="user {{random}}" data-name="{{name}}" data-badges={{#if badges}}"true"{{else}}""{{/if}}>
+            <div class="user__info">
+                <img class="user__avatar" src="{{avatar}}" alt="">
+                <div class="username__participated">
+                    <span class="user__name">{{name}}</span>
                 </div>
-                <button class="user__badges__button">View Badges</button>
             </div>
-            <div class="badges__modal">
-                <div class="badges__modal__title">
-                    <span>{{name}}`s badges</span>
-                </div>
-                <div class="user__badges">
-                    {{#each badges}}
-                        <div class="user__badge">
-                            <img class="user__badge__img" src="/img/{{badge}}" alt="">
-                            <span class="user__badge__name">{{convert badge}}</span>
-                        </div>
-                    {{/each}}
-                </div>
-                <button class="close__badges__button">Close</button>
-            </div>
+            <a class="user__profile__link" href="/profile/{{name}}"><button class="user__profile__button">Go to profile</button></a>
+        </div>
         {{/each}}
     </div>
 </div>

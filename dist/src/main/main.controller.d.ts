@@ -44,4 +44,7 @@ export declare class MainController {
         cssFileName: string;
     }>;
     addGeneral(addGeneralBodyDto: any): Promise<string>;
+    getUsersByUrAndDate(params: any): Promise<(import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }

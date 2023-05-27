@@ -2,7 +2,14 @@
     height: calc(100vh - 70px);
     width: 100vw;
 }
-
+.main__header {
+    width: 100vw;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 40px 0 20px;
+}
 .welcome__text {
     width: 100%;
     height: calc(100vh - 220px);
