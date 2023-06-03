@@ -36,7 +36,7 @@ let DashboardController = class DashboardController {
     }
 };
 __decorate([
-    (0, common_1.Get)('dashboard/:url/:date'),
+    (0, common_1.Get)('dashboard/:generalName/:url/:date'),
     (0, common_1.Render)('dashboard'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),

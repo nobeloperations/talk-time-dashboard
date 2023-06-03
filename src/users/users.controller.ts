@@ -14,7 +14,7 @@ export class UsersController {
     }
 
     
-    @Get('/:url/:date')
+    @Get('/:generalName/:url/:date')
     @HttpCode(200)
     @Render('users')
     getUsers(@Param() params, @Res() res: Response) {

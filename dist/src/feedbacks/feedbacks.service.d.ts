@@ -36,6 +36,7 @@ export declare class FeedbacksService {
         })[];
         url: any;
         date: any;
+        generalName: any;
     }>;
     getPersonalFeedbacks(params: any, res: any): Promise<{
         cssFileName: string;
@@ -48,6 +49,7 @@ export declare class FeedbacksService {
         })[];
         url: any;
         date: any;
+        generalName: any;
     }>;
     getNewFeedback(params: any, res: any): Promise<{
         cssFileName: string;
@@ -60,6 +62,7 @@ export declare class FeedbacksService {
             _id: import("mongoose").Types.ObjectId;
         })[];
         date: any;
+        generalName: any;
     }>;
     createFeedback(files: any, createFeedbackBodyDto: any, params: any, res: any): Promise<string>;
 }

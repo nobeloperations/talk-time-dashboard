@@ -21,6 +21,7 @@ const core_1 = require("@nestjs/core");
 const http_exception_filter_1 = require("./filters/http-exception.filter");
 const static_module_1 = require("./static/static.module");
 const profile_module_1 = require("./profile/profile.module");
+const recording_module_1 = require("./recording/recording.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -38,14 +39,15 @@ AppModule = __decorate([
             users_module_1.UsersModule,
             badges_module_1.BadgesModule,
             static_module_1.StaticModule,
-            profile_module_1.ProfileModule
+            profile_module_1.ProfileModule,
+            recording_module_1.RecordingModule
         ],
         providers: [
             {
                 provide: core_1.APP_FILTER,
                 useClass: http_exception_filter_1.HttpExceptionFilter
             },
-        ],
+        ]
     })
 ], AppModule);
 exports.AppModule = AppModule;

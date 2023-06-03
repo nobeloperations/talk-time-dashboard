@@ -50,8 +50,8 @@ let UsersService = class UsersService {
     }
     async getUsers(params, res) {
         try {
-            const { url, date } = params;
-            let meeting = await this.meetingModel.findOne({ name: url });
+            const { url, date, generalName } = params;
+            let meeting = await this.meetingModel.findOne({ name: generalName });
             let currentMeeting = false;
             meeting === null || meeting === void 0 ? void 0 : meeting.meetings.forEach(curr => {
                 if (curr['date'] == date)
@@ -66,7 +66,7 @@ let UsersService = class UsersService {
                 users.push(user.toObject());
             });
             users = users.filter((value, index, self) => index === self.findIndex((t) => (t.name === value.name)));
-            return { cssFileName: 'users', users, url, date };
+            return { cssFileName: 'users', users, url, date, generalName };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));

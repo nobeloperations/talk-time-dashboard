@@ -16,10 +16,8 @@
                     <span class="feedbacks__user__name">{{name}}</span>
                 </div>
                 <div class="feedbacks__user__buttons">
-                    <span style="display: none;">{{name}}</span>
-                    <button class="feedbacks__user__button feedbacks__see__feedbacks">Feedbacks</button>
-                    <span style="display: none;">{{name}}</span>
-                    <button class="feedbacks__user__button feedbacks__leave__feedback">Leave feedback</button>
+                    <a href="/feedbacks/{{../generalName}}/{{../url}}/{{name}}/{{../date}}"><button class="feedbacks__user__button feedbacks__see__feedbacks">Feedbacks</button></a>
+                    <a href="/feedbacks/create/{{../generalName}}/{{url}}/{{name}}/{{date}}"><button class="feedbacks__user__button feedbacks__leave__feedback">Leave feedback</button></a>
                 </div>
             </div>
         </div>

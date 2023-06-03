@@ -10,28 +10,28 @@ export class FeedbacksController {
 
     constructor(private feedbacksService: FeedbacksService){}
 
-    @Get('/:url/:date')
+    @Get(':generalName/:url/:date')
     @Render('feedbacks')
     @HttpCode(200)
     getFeedbacks(@Param() params, @Res() res: Response) {
         return this.feedbacksService.getFeedbacks(params, res)
     }
 
-    @Get('/:url/:name/:date')
+    @Get('/:generalName/:url/:name/:date')
     @Render('personal-feedbacks')
     @HttpCode(200)
     getPersonalFeedbacks(@Param() params, @Res() res: Response) {
         return this.feedbacksService.getPersonalFeedbacks(params, res)
     }
 
-    @Get('/create/:url/:name/:date')
+    @Get('/create/:generalName/:url/:name/:date')
     @Render('new-feedback')
     @HttpCode(200)
     getNewFeedback(@Param() params, @Res() res: Response) {
         return this.feedbacksService.getNewFeedback(params, res)
     }
 
-    @Post('/create/:url/:name/:date')
+    @Post('/create/:generalName/:url/:name/:date')
     @HttpCode(200)
     @UseInterceptors(
         FilesInterceptor('file', 20, {

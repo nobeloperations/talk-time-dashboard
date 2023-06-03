@@ -45,6 +45,7 @@ export declare class DashboardService {
         conclusionsLength: number;
         feedbacksByName: {};
         date: any;
+        generalName: any;
     }>;
     postPercents(params: any, postPercentsBodyDto: any): Promise<string>;
     newConclusion(params: any, createConclusionBodyDto: any): Promise<string>;

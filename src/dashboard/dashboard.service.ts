@@ -16,8 +16,9 @@ export class DashboardService {
 
     async getDashboard(params, res) {
         try {
-            const { url, date } = params;
+            const { url, date, generalName } = params;
             const users = await this.userModel.find({ url, date })
+            console.log(url, date)
             const conclusions = await this.conclusionModel.find({ url, date })
             const feedbacks = await this.feedbackModel.find({ url, date })
 
@@ -43,7 +44,7 @@ export class DashboardService {
                 feedbacksByName[feedback.receiver].rating.push(feedback.rating)
             })
 
-            return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName, date }
+            return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName, date, generalName }
         }
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))

@@ -43,7 +43,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "newUser", null);
 __decorate([
-    (0, common_1.Get)('/:url/:date'),
+    (0, common_1.Get)('/:generalName/:url/:date'),
     (0, common_1.HttpCode)(200),
     (0, common_1.Render)('users'),
     __param(0, (0, common_1.Param)()),

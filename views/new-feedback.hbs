@@ -2,7 +2,7 @@
     {{#if currentUser}}
     {{>header}}
     <div class="form__wrapper">
-        <form action="/feedbacks/create/{{url}}/{{name}}/{{date}}" method="POST" enctype="multipart/form-data">
+        <form action="/feedbacks/create/{{generalName}}/{{url}}/{{name}}/{{date}}" method="POST" enctype="multipart/form-data">
             <label for="">Your name</label>
             <select name="sender" class="send__feedback__name animated fadeInLeft" required>
                 <option hidden selected value="">Choose your name</option>

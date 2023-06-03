@@ -41,8 +41,8 @@ export class UsersService {
 
     async getUsers(params, res) {
         try {
-            const { url, date } = params;
-            let meeting = await this.meetingModel.findOne({name: url})
+            const { url, date, generalName } = params;
+            let meeting = await this.meetingModel.findOne({name: generalName})
             let currentMeeting = false;
             meeting?.meetings.forEach(curr => {
                 if(curr['date'] == date) currentMeeting = true
@@ -64,7 +64,7 @@ export class UsersService {
                 ))
             )
             
-            return { cssFileName: 'users', users, url, date }
+            return { cssFileName: 'users', users, url, date, generalName }
         }
         catch(e) {
             res.sendFile(resolve('views/notfound.html'))

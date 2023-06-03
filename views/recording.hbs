@@ -1,0 +1,18 @@
+<div class="recording__container">
+    {{>header}}
+    <div class="recording__content">
+        <h1 class="recording__title">{{generalName}} / {{date}}</h1>
+        <div class="recording__meeting">
+            <iframe src="https://drive.google.com/file/d/{{readyId}}/preview"></iframe>
+            <div class="recording__chat">
+                <div class="chat__title">
+                    <span>Chat</span>
+                </div>
+                <div class="meeting__chat"></div>
+            </div>
+            <span class="non__formatted__chat hidden">{{chat}}</span>
+        </div>
+        <a href="/faq" class="recording__problem">*I don`t see recording or it is not correct</a> 
+    </div>
+</div>
+<script src="/js/recording.js"></script>

@@ -9,6 +9,7 @@ export declare class UsersController {
         users: any[];
         url: any;
         date: any;
+        generalName: any;
     }>;
     updateStatus(updateStatusBodyDto: any): Promise<string>;
     getStatuses(params: any): Promise<string>;

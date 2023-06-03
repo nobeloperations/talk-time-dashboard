@@ -16,14 +16,14 @@ export class FeedbacksService {
 
     async getFeedbacks(params, res) {
         try {
-            const { url, date } = params;
+            const { url, date, generalName } = params;
             const users = await this.userModel.find({ url, date })
 
             if (!users.length) {
                 res.status(404).sendFile(resolve('views/notfound.html'))
                 return;
             }
-            return { cssFileName: 'feedback', users, url, date }
+            return { cssFileName: 'feedback', users, url, date, generalName }
         }
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))
@@ -33,7 +33,7 @@ export class FeedbacksService {
 
     async getPersonalFeedbacks(params, res) {
         try {
-            const { url, name, date } = params;
+            const { url, name, date, generalName } = params;
             const feedbacks = await this.feedbackModel.find({ receiver: name, url, date })
             const currentUser = await this.userModel.findOne({ name, url, date })
 
@@ -42,7 +42,7 @@ export class FeedbacksService {
                 return;
             }
 
-            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date }
+            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName }
         }
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))
@@ -51,7 +51,7 @@ export class FeedbacksService {
 
     async getNewFeedback(params, res) {
         try {
-            const { url, name, date } = params;
+            const { url, name, date, generalName } = params;
             const currentUser = await this.userModel.findOne({ name, url, date })
 
             if (!currentUser) {
@@ -60,7 +60,7 @@ export class FeedbacksService {
             }
 
             const users = await this.userModel.find({ url, date })
-            return { cssFileName: 'new-feedback', name, currentUser, url, users, date }
+            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName }
         }
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))
@@ -70,7 +70,7 @@ export class FeedbacksService {
     async createFeedback(files, createFeedbackBodyDto, params, res) {
         try {
             let { sender, rating, feedback, badge } = createFeedbackBodyDto;
-            let { url, name, date } = params;
+            let { url, name, date, generalName } = params;
             let receiver = name
             let sendUser = await this.userModel.findOne({ name: sender })
 
@@ -95,7 +95,7 @@ export class FeedbacksService {
             })
 
             await newFeedback.save()
-            res.redirect(`/dashboard/${url}/${date}`)
+            res.redirect(`/dashboard/${generalName}/${url}/${date}`)
         }
         catch(e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })

@@ -14,6 +14,9 @@ import { StaticModule } from './static/static.module';
 import { ProfileController } from './profile/profile.controller';
 import { ProfileService } from './profile/profile.service';
 import { ProfileModule } from './profile/profile.module';
+import { RecordingController } from './recording/recording.controller';
+import { RecordingService } from './recording/recording.service';
+import { RecordingModule } from './recording/recording.module';
 
 
 @Module({
@@ -30,13 +33,14 @@ import { ProfileModule } from './profile/profile.module';
     UsersModule,
     BadgesModule,
     StaticModule,
-    ProfileModule
+    ProfileModule,
+    RecordingModule
   ],
   providers: [
     {
         provide: APP_FILTER,
         useClass: HttpExceptionFilter
     },
-  ],
+  ]
 })
 export class AppModule { }

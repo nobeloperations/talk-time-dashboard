@@ -7,7 +7,7 @@ export class DashboardController {
 
     constructor(private dashboardService: DashboardService){}
 
-    @Get('dashboard/:url/:date')
+    @Get('dashboard/:generalName/:url/:date')
     @Render('dashboard')
     @HttpCode(200)
     getDashboard(@Param() params, @Res() res: Response) {
