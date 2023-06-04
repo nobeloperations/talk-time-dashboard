@@ -92,6 +92,16 @@ iframe {
     padding: 5px;
     border-radius: 5px;
 }
-.recording__problem {
-    color: white;
+.chat__link {
+    width: 16px;
+    height: 16px;
+    filter: invert(1) grayscale(0);
+    position: relative;
+    top: 3px;
+}
+.chat__item__wrapper {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
 }
