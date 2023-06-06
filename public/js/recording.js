@@ -14,7 +14,6 @@ window.onload = function () {
         chatItem.className = 'chat__item'
         chatItem.innerHTML = `
                 <span class="chat__message">${messages[0]}</span>
-                <img class="chat__link" src="/img/chat_link.png" />
         `
         chatContainer.appendChild(chatItem)
     })
