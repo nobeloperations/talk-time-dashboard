@@ -10,22 +10,10 @@ exports.RecordingService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
 const googleapis_1 = require("googleapis");
+const access_token_js_1 = require("../../helpers/access_token.js");
 const dotenv = require("dotenv");
 dotenv.config();
-function formatMemoryUsage(memoryUsage) {
-    const formattedMemoryUsage = {};
-    const bytesInMegabytes = 1024 * 1024;
-    for (const key in memoryUsage) {
-        if (memoryUsage.hasOwnProperty(key)) {
-            formattedMemoryUsage[key] = (memoryUsage[key] / bytesInMegabytes).toFixed(2);
-        }
-    }
-    return formattedMemoryUsage;
-}
-const refreshToken = process.env.REFRESH_TOKEN;
-const clientId = process.env.CLIENT_ID;
-const clientSecret = process.env.CLIENT_SECRET;
-const authorEmail = 'operations@nobelhub.com';
+const { DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI, DRIVE_REFRESH_TOKEN, REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, MAIL_AUTHOR } = process.env;
 function getMessageSubject(messageData) {
     const headers = messageData.payload.headers;
     const subjectHeader = headers.find(header => header.name.toLowerCase() === 'subject');
@@ -42,34 +30,15 @@ let RecordingService = class RecordingService {
     async getRecording(params, res) {
         const { generalName, url, date } = params;
         try {
-            console.log(formatMemoryUsage(process.memoryUsage()));
-            const response = await axios_1.default.post('https://oauth2.googleapis.com/token', {
-                refresh_token: refreshToken,
-                client_id: clientId,
-                client_secret: clientSecret,
-                grant_type: 'refresh_token',
-            });
-            const { access_token } = response.data;
+            const access_token = await this.getAccessToken();
             if (access_token) {
-                const messagesResponse = await axios_1.default.get(`https://www.googleapis.com/gmail/v1/users/me/messages?q=from:${authorEmail}`, {
-                    headers: {
-                        Authorization: `Bearer ${access_token}`
-                    }
-                });
-                const messages = messagesResponse.data.messages;
+                const messages = await this.getMessages(access_token);
                 for (const message of messages) {
                     const messageId = message.id;
-                    const messageResponse = await axios_1.default.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}`, {
-                        headers: {
-                            Authorization: `Bearer ${access_token}`
-                        }
-                    });
-                    const messageData = messageResponse.data;
+                    const messageData = await this.getMessageData(access_token, messageId);
                     const body = getMessageBody(messageData);
                     const subject = getMessageSubject(messageData);
-                    const dateRegex = /\((\d{4}-\d{2}-\d{2})/;
-                    const meetingDate = dateRegex.exec(subject)[1];
-                    if (subject.includes(generalName) && date === meetingDate) {
+                    if (subject.includes(generalName) && subject.includes(date)) {
                         let letter = `${subject}\n${body}`;
                         const linkRegex = /<(https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9-_]+\/view\?usp=drive_web)>/g;
                         const matches = letter.match(linkRegex);
@@ -77,40 +46,50 @@ let RecordingService = class RecordingService {
                         const meetingLink = matches[1];
                         const chatId = chatLink.split('/')[5];
                         const videoId = meetingLink.split('/')[5];
-                        READY_ID = videoId;
-                        const { DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI, DRIVE_REFRESH_TOKEN } = process.env;
-                        const oauth2Client = new googleapis_1.google.auth.OAuth2(DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI);
-                        oauth2Client.setCredentials({
-                            refresh_token: DRIVE_REFRESH_TOKEN
-                        });
-                        const drive = googleapis_1.google.drive({
-                            version: 'v3',
-                            auth: oauth2Client
-                        });
-                        try {
-                            await drive.files.get({
-                                fileId: chatId,
-                                alt: 'media'
-                            }).then(res => {
-                                CHAT_CONTENT = res.data.toString();
-                            });
-                        }
-                        catch (error) {
-                            if (error.response.status === 403) {
-                                console.error('Error accessing file:', error.response);
-                            }
-                            else {
-                                console.error('Error fetching file:', error.response);
-                            }
-                        }
+                        const CHAT_CONTENT = await this.getChatContent(chatId);
+                        return { generalName, url, date, cssFileName: 'recording', readyId: videoId, chat: CHAT_CONTENT };
                     }
                 }
             }
         }
         catch (error) {
-            console.error('Error refreshing access token:', error.response);
+            console.error('Error refreshing access token:', error);
         }
         return { generalName, url, date, cssFileName: 'recording', readyId: READY_ID, chat: CHAT_CONTENT };
+    }
+    async getAccessToken() {
+        return await (0, access_token_js_1.getAccessToken)(REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, axios_1.default);
+    }
+    async getMessages(access_token) {
+        const messagesResponse = await axios_1.default.get(`https://www.googleapis.com/gmail/v1/users/me/messages?q=from:${MAIL_AUTHOR}`, {
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            }
+        });
+        return messagesResponse.data.messages;
+    }
+    async getMessageData(access_token, messageId) {
+        const messageResponse = await axios_1.default.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}`, {
+            headers: {
+                Authorization: `Bearer ${access_token}`
+            }
+        });
+        return messageResponse.data;
+    }
+    async getChatContent(chatId) {
+        const oauth2Client = new googleapis_1.google.auth.OAuth2(DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI);
+        oauth2Client.setCredentials({
+            refresh_token: DRIVE_REFRESH_TOKEN
+        });
+        const drive = googleapis_1.google.drive({
+            version: 'v3',
+            auth: oauth2Client
+        });
+        const res = await drive.files.get({
+            fileId: chatId,
+            alt: 'media'
+        });
+        return res.data.toString();
     }
 };
 RecordingService = __decorate([
