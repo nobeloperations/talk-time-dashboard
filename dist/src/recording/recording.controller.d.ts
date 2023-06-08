@@ -8,7 +8,7 @@ export declare class RecordingController {
         url: any;
         date: any;
         cssFileName: string;
-        readyId: any;
+        readyId: string;
         chat: string;
     }>;
 }
