@@ -31,10 +31,8 @@ let READY_ID = '';
 export class RecordingService {
     async getRecording(params, res) {
         const { generalName, url, date } = params;
-
         try {
             const access_token = await this.getAccessToken();
-
             if (access_token) {
                 const messagesResponse = await axios.get(
                     `https://www.googleapis.com/gmail/v1/users/me/messages`,
@@ -104,7 +102,7 @@ export class RecordingService {
                 };
             }
         } catch (error) {
-            console.error('Error refreshing access token:', error.response);
+            console.error('Error refreshing access token:', error);
         }
 
     }

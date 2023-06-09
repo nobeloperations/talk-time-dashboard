@@ -11,12 +11,9 @@ import { BadgesModule } from './badges/badges.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { StaticModule } from './static/static.module';
-import { ProfileController } from './profile/profile.controller';
-import { ProfileService } from './profile/profile.service';
 import { ProfileModule } from './profile/profile.module';
-import { RecordingController } from './recording/recording.controller';
-import { RecordingService } from './recording/recording.service';
 import { RecordingModule } from './recording/recording.module';
+import { TestmodModule } from './testmod/testmod.module';
 
 
 @Module({
@@ -34,7 +31,8 @@ import { RecordingModule } from './recording/recording.module';
     BadgesModule,
     StaticModule,
     ProfileModule,
-    RecordingModule
+    RecordingModule,
+    TestmodModule
   ],
   providers: [
     {

@@ -74,7 +74,7 @@ let RecordingService = class RecordingService {
             }
         }
         catch (error) {
-            console.error('Error refreshing access token:', error.response);
+            console.error('Error refreshing access token:', error);
         }
     }
     async getAccessToken() {

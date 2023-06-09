@@ -22,6 +22,7 @@ const http_exception_filter_1 = require("./filters/http-exception.filter");
 const static_module_1 = require("./static/static.module");
 const profile_module_1 = require("./profile/profile.module");
 const recording_module_1 = require("./recording/recording.module");
+const testmod_module_1 = require("./testmod/testmod.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -40,7 +41,8 @@ AppModule = __decorate([
             badges_module_1.BadgesModule,
             static_module_1.StaticModule,
             profile_module_1.ProfileModule,
-            recording_module_1.RecordingModule
+            recording_module_1.RecordingModule,
+            testmod_module_1.TestmodModule
         ],
         providers: [
             {
