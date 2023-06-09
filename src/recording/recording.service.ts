@@ -16,6 +16,7 @@ const {
     MAIL_AUTHOR,
 } = process.env;
 
+const access_token = 'ya29.a0AWY7CknybWwopGw3uk_rUHmOtEHMGXXj34i9l4OcPwi7ffBP3jcVoCSA9LbfZddWqjMmQNtzHLXA1qxix16c6g1Crx4gbJyqSD8fySaUfzcoOqG1FXyxF6ZPPbyGLBJj5ZkxRXDmA4VrPm-AqssAaTYiivXXFqCHaCgYKAZYSARISFQG1tDrp61do8Z6N4s3ihRSxoHsf6w0167'
 
 function getMessageBody(messageData) {
     const parts = messageData.payload.parts;
@@ -25,14 +26,13 @@ function getMessageBody(messageData) {
         : 'No Body';
 }
 
-let READY_ID = '';
 
 @Injectable()
 export class RecordingService {
     async getRecording(params, res) {
         const { generalName, url, date } = params;
         try {
-            const access_token = await this.getAccessToken();
+            // const access_token = await getAccessToken(REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, axios);
             if (access_token) {
                 const messagesResponse = await axios.get(
                     `https://www.googleapis.com/gmail/v1/users/me/messages`,
@@ -69,7 +69,7 @@ export class RecordingService {
                 const meetingLink = matches[1];
 
                 const chatId = chatLink.split('/')[5];
-                READY_ID = meetingLink.split('/')[5];
+                let READY_ID = meetingLink.split('/')[5];
 
                 const oauth2Client = new google.auth.OAuth2(
                     DRIVE_CLIENT_ID,
@@ -107,12 +107,4 @@ export class RecordingService {
 
     }
 
-    async getAccessToken() {
-        return await getAccessToken(
-            REFRESH_TOKEN,
-            CLIENT_ID,
-            CLIENT_SECRET,
-            axios
-        );
-    }
 }

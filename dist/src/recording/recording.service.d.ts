@@ -7,5 +7,4 @@ export declare class RecordingService {
         readyId: string;
         chat: string;
     }>;
-    getAccessToken(): Promise<any>;
 }

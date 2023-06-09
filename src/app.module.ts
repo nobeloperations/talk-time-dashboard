@@ -13,7 +13,6 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { StaticModule } from './static/static.module';
 import { ProfileModule } from './profile/profile.module';
 import { RecordingModule } from './recording/recording.module';
-import { TestmodModule } from './testmod/testmod.module';
 
 
 @Module({
@@ -32,7 +31,6 @@ import { TestmodModule } from './testmod/testmod.module';
     StaticModule,
     ProfileModule,
     RecordingModule,
-    TestmodModule
   ],
   providers: [
     {
