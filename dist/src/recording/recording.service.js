@@ -9,14 +9,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RecordingService = void 0;
 const common_1 = require("@nestjs/common");
 const axios_1 = require("axios");
-const googleapis_1 = require("googleapis");
+const access_token_js_1 = require("../../helpers/access_token.js");
+const drive_1 = require("@googleapis/drive");
+const google_auth_library_1 = require("google-auth-library");
 const dotenv = require("dotenv");
 dotenv.config();
 const { DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI, DRIVE_REFRESH_TOKEN, REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, MAIL_AUTHOR, } = process.env;
-const access_token = 'ya29.a0AWY7CknybWwopGw3uk_rUHmOtEHMGXXj34i9l4OcPwi7ffBP3jcVoCSA9LbfZddWqjMmQNtzHLXA1qxix16c6g1Crx4gbJyqSD8fySaUfzcoOqG1FXyxF6ZPPbyGLBJj5ZkxRXDmA4VrPm-AqssAaTYiivXXFqCHaCgYKAZYSARISFQG1tDrp61do8Z6N4s3ihRSxoHsf6w0167';
 function getMessageBody(messageData) {
-    const parts = messageData.payload.parts;
-    const bodyPart = parts.find((part) => part.mimeType === 'text/plain');
+    const bodyPart = messageData.find((part) => part.mimeType === 'text/plain');
     return bodyPart
         ? Buffer.from(bodyPart.body.data, 'base64').toString()
         : 'No Body';
@@ -25,6 +25,7 @@ let RecordingService = class RecordingService {
     async getRecording(params, res) {
         const { generalName, url, date } = params;
         try {
+            const access_token = await (0, access_token_js_1.getAccessToken)(REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, axios_1.default);
             if (access_token) {
                 const messagesResponse = await axios_1.default.get(`https://www.googleapis.com/gmail/v1/users/me/messages`, {
                     params: {
@@ -41,7 +42,7 @@ let RecordingService = class RecordingService {
                         Authorization: `Bearer ${access_token}`,
                     },
                 });
-                const messageData = messageResponse.data;
+                const messageData = messageResponse.data.payload.parts;
                 const body = getMessageBody(messageData);
                 const linkRegex = /<(https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9-_]+\/view\?usp=drive_web)>/g;
                 const matches = body.match(linkRegex);
@@ -49,11 +50,11 @@ let RecordingService = class RecordingService {
                 const meetingLink = matches[1];
                 const chatId = chatLink.split('/')[5];
                 let READY_ID = meetingLink.split('/')[5];
-                const oauth2Client = new googleapis_1.google.auth.OAuth2(DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI);
+                const oauth2Client = new google_auth_library_1.OAuth2Client(DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI);
                 oauth2Client.setCredentials({
                     refresh_token: DRIVE_REFRESH_TOKEN,
                 });
-                const drive = googleapis_1.google.drive({
+                const drive = (0, drive_1.drive)({
                     version: 'v3',
                     auth: oauth2Client,
                 });

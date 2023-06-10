@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@googleapis/drive": "^5.1.0",
     "@handlebars/allow-prototype-access": "^1.0.5",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
@@ -34,7 +35,7 @@
     "class-validator": "^0.14.0",
     "dotenv": "^16.1.3",
     "express-handlebars": "^6.0.6",
-    "googleapis": "^118.0.0",
+    "google-auth-library": "^8.8.0",
     "handlebars": "^4.7.7",
     "hbs": "^4.2.0",
     "i": "^0.3.7",

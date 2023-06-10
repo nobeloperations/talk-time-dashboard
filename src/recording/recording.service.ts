@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { google } from 'googleapis';
 import { getAccessToken } from '../../helpers/access_token.js';
+import { drive as driveAPI } from '@googleapis/drive';
+import { OAuth2Client } from 'google-auth-library';
 import * as dotenv from 'dotenv';
 dotenv.config();
 
@@ -16,11 +17,9 @@ const {
     MAIL_AUTHOR,
 } = process.env;
 
-const access_token = 'ya29.a0AWY7CknybWwopGw3uk_rUHmOtEHMGXXj34i9l4OcPwi7ffBP3jcVoCSA9LbfZddWqjMmQNtzHLXA1qxix16c6g1Crx4gbJyqSD8fySaUfzcoOqG1FXyxF6ZPPbyGLBJj5ZkxRXDmA4VrPm-AqssAaTYiivXXFqCHaCgYKAZYSARISFQG1tDrp61do8Z6N4s3ihRSxoHsf6w0167'
 
 function getMessageBody(messageData) {
-    const parts = messageData.payload.parts;
-    const bodyPart = parts.find((part) => part.mimeType === 'text/plain');
+    const bodyPart = messageData.find((part) => part.mimeType === 'text/plain');
     return bodyPart
         ? Buffer.from(bodyPart.body.data, 'base64').toString()
         : 'No Body';
@@ -32,7 +31,8 @@ export class RecordingService {
     async getRecording(params, res) {
         const { generalName, url, date } = params;
         try {
-            // const access_token = await getAccessToken(REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, axios);
+            const access_token = await getAccessToken(REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, axios);
+
             if (access_token) {
                 const messagesResponse = await axios.get(
                     `https://www.googleapis.com/gmail/v1/users/me/messages`,
@@ -59,7 +59,8 @@ export class RecordingService {
                     }
                 );
 
-                const messageData = messageResponse.data;
+                const messageData = messageResponse.data.payload.parts;
+
                 const body = getMessageBody(messageData);
 
                 const linkRegex = /<(https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9-_]+\/view\?usp=drive_web)>/g;
@@ -71,7 +72,7 @@ export class RecordingService {
                 const chatId = chatLink.split('/')[5];
                 let READY_ID = meetingLink.split('/')[5];
 
-                const oauth2Client = new google.auth.OAuth2(
+                const oauth2Client = new OAuth2Client(
                     DRIVE_CLIENT_ID,
                     DRIVE_CLIENT_SECRET,
                     DRIVE_REDIRECT_URI
@@ -81,7 +82,7 @@ export class RecordingService {
                     refresh_token: DRIVE_REFRESH_TOKEN,
                 });
 
-                const drive = google.drive({
+                const drive = driveAPI({
                     version: 'v3',
                     auth: oauth2Client,
                 });
