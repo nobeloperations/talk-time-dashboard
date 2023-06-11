@@ -74,11 +74,6 @@ let MainService = class MainService {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async getUsersByUrl(params) {
-        const { url } = params;
-        const users = await this.userModel.find({ url }).select('avatar url date name');
-        return users;
-    }
 };
 MainService = __decorate([
     (0, common_1.Injectable)(),

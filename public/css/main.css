@@ -130,6 +130,13 @@ body::-webkit-scrollbar {
   position: absolute;
   transition: visibility 0.4s, opacity 0.5s ease;
   overflow-y: scroll;
+  padding-right: 5px;
+}
+.select__items::-webkit-scrollbar {
+  width: 3px;
+}
+.select__items::-webkit-scrollbar-thumb {
+  background: #ab76ff;
 }
 .select__item {
   width: 100%;
@@ -147,9 +154,6 @@ body::-webkit-scrollbar {
 }
 .select__item__link {
   color: white;
-}
-.select__items::-webkit-scrollbar {
-  width: 0;
 }
 .select__input {
   width: 300px;
