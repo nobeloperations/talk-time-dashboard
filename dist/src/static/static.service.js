@@ -12,9 +12,6 @@ let StaticService = class StaticService {
     getFAQ() {
         return { cssFileName: 'faq' };
     }
-    getContacts() {
-        return { cssFileName: 'contacts' };
-    }
 };
 StaticService = __decorate([
     (0, common_1.Injectable)()

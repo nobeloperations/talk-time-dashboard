@@ -1,18 +1,24 @@
 <div class="users__container">
-    {{>header}}
+    {{>menu}}
     <div class="users__list">
-    <input type="text" class="users__search animated fadeInLeft" placeholder="🔎︎ Seach users">
-        {{#each users}}
-        <div class="user {{random}}" data-name="{{name}}" data-badges={{#if badges}}"true"{{else}}""{{/if}}>
-            <div class="user__info">
-                <img class="user__avatar" src="{{avatar}}" alt="">
-                <div class="username__participated">
-                    <span class="user__name">{{name}}</span>
+        {{>navigate}}
+        <div class="users__content">
+            <input type="text" class="users__search" placeholder="🔎︎ Seach users">
+            <div class="users">
+                {{#each users}}
+                <div class="user" data-name="{{name}}" data-hidden="">
+                    <div class="user__info">
+                        <img class="user__avatar" src="{{avatar}}" alt="">
+                        <div class="username__participated">
+                            <span class="user__name">{{name}}</span>
+                        </div>
+                    </div>
+                    <a class="user__profile__link" href="/profile/{{name}}"><button
+                            class="user__profile__button">Profile</button></a>
                 </div>
+                {{/each}}
             </div>
-            <a class="user__profile__link" href="/profile/{{name}}"><button class="user__profile__button">Go to profile</button></a>
         </div>
-        {{/each}}
     </div>
 </div>
 <div class="modal__shadow"></div>

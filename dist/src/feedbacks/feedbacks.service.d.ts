@@ -29,15 +29,6 @@ export declare class FeedbacksService {
     private readonly feedbackModel;
     private readonly userModel;
     constructor(feedbackModel: Model<Feedback>, userModel: Model<User>);
-    getFeedbacks(params: any, res: any): Promise<{
-        cssFileName: string;
-        users: (import("mongoose").Document<unknown, any, User> & User & {
-            _id: import("mongoose").Types.ObjectId;
-        })[];
-        url: any;
-        date: any;
-        generalName: any;
-    }>;
     getPersonalFeedbacks(params: any, res: any): Promise<{
         cssFileName: string;
         name: any;
@@ -50,6 +41,7 @@ export declare class FeedbacksService {
         url: any;
         date: any;
         generalName: any;
+        pageName: string;
     }>;
     getNewFeedback(params: any, res: any): Promise<{
         cssFileName: string;
@@ -63,6 +55,7 @@ export declare class FeedbacksService {
         })[];
         date: any;
         generalName: any;
+        pageName: string;
     }>;
     createFeedback(files: any, createFeedbackBodyDto: any, params: any, res: any): Promise<string>;
 }

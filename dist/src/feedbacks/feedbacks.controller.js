@@ -22,9 +22,6 @@ let FeedbacksController = class FeedbacksController {
     constructor(feedbacksService) {
         this.feedbacksService = feedbacksService;
     }
-    getFeedbacks(params, res) {
-        return this.feedbacksService.getFeedbacks(params, res);
-    }
     getPersonalFeedbacks(params, res) {
         return this.feedbacksService.getPersonalFeedbacks(params, res);
     }
@@ -35,16 +32,6 @@ let FeedbacksController = class FeedbacksController {
         return this.feedbacksService.createFeedback(files, createFeedbackBodyDto, params, res);
     }
 };
-__decorate([
-    (0, common_1.Get)(':generalName/:url/:date'),
-    (0, common_1.Render)('feedbacks'),
-    (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Param)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], FeedbacksController.prototype, "getFeedbacks", null);
 __decorate([
     (0, common_1.Get)('/:generalName/:url/:name/:date'),
     (0, common_1.Render)('personal-feedbacks'),

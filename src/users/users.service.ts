@@ -64,7 +64,7 @@ export class UsersService {
                 ))
             )
             
-            return { cssFileName: 'users', users, url, date, generalName }
+            return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users' }
         }
         catch(e) {
             res.sendFile(resolve('views/notfound.html'))

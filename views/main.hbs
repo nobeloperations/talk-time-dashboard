@@ -1,54 +1,38 @@
-<header class="main__header animated fadeInLeft">
-    <a href="/main">
-        <div style="display: flex;">
-            <img class="header__logo" src="/img/menu-logo.png" alt="">
-            <h2 class="header__title">Talk Time</h2>
-        </div>
-    </a>
-</header>
 <div class="main__wrapper">
-    <div class="main__template">
-        <div class="main__content">
-            <h1 class="main__title animated fadeInLeft">Analyse, discover<br>and leave feedbacks</h1>
-            <h1 class="main__title second__title animated fadeInLeft">Make your <b class="gradient">meetings</b><br>more
-                convinient</h1>
-            <div class="main__explore animated fadeInRight">Explore</div>
-        </div>
-        <img class="main__poster animated fadeInRight" src="/img/main-poster.png" alt="poster">
-    </div>
+    <h1 class="main__title">Analyse, discover and <b>develop</b><br /> </h1>
+    <span class="main__subtitle">Make your meetings more convinient and get as much beneifits as you can <br>All
+        information you need about your meetings is here</span>
+    <button class="main__button">Explore</button>
 </div>
-<div class="explore__template">
-    <div class="explore__content">
-        <h1 class="explore__title wow fadeInLeft">Select your <b class="gradient">meeting</b><br>to start your
-            journey</h1>
-        <div class="explore__buttons wow fadeInRight">
-            <div class="explore__question">
-                <img class="explore__question__image" src="/img/information.png" />
+<div class="meetings">
+    <h1 class="meetings__title">Select your meeting <b>here</b></h1>
+    <div class="generals__wrapper">
+        <input class="search__generals" placeholder="Name of your meeting" type="text">
+        <div class="list__of__meetings">
+            {{#each generals}}
+            <div class="general" data-name="{{name}}">
+                <span class="general__name">{{name}}</span>
+                <hr>
+                <button class="select__general" data-active="">
+                    <img src="/img/down-arrow.png" alt="">
+                </button>
             </div>
-            <div class="explore__select">
-                <div class="select">
-                    <span>Select</span>
-                    <span>▼</span>
+            <div class="meetings__content">
+                {{#each meetings}}
+                <div class="meeting">
+                    <div class="meeting__info">
+                        <span>{{url}}</span>
+                        <span class="main__meeting__date">{{date}}</span>
+                    </div>
+                    <a href="/dashboard/{{../name}}/{{url}}/{{date}}"><button class="dashboard__button">Dashboard</button></a>
                 </div>
-                <div class="select__input">
-                    <input class="meeting__search" type="text" placeholder="Enter meeting name">
-                    <span class="close__input">✕</span>
-                </div>
-                <div class="select__items">
-                    {{#each meetings}}
-                    <a class="select__item__link" href="/main/searchlist/{{name}}">
-                        <div class="select__item" data-name="{{name}}">{{name}}</div>
-                    </a>
-                    {{/each}}
-                </div>
+                {{/each}}
             </div>
+            {{/each}}
         </div>
     </div>
-    <img class="explore__poster wow fadeInLeft" src="/img/explore-poster.png" alt="">
 </div>
-<div class="question__wrapper">
-    <button class="close__question">Close</button>
-</div>
+<div class="modal__shadow"></div>
 <script src="/js/main.js"></script>
 <script src="/js/wow.min.js"></script>
 <script src="/js/helpers/search.js"></script>

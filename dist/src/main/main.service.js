@@ -16,36 +16,17 @@ exports.MainService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const path_1 = require("path");
 let MainService = class MainService {
-    constructor(meetingModel, userModel) {
+    constructor(meetingModel) {
         this.meetingModel = meetingModel;
-        this.userModel = userModel;
-    }
-    getWelcome() {
-        return { cssFileName: 'welcome' };
     }
     async getMain() {
         try {
-            let meetings = await this.meetingModel.find();
-            return { cssFileName: 'main', meetings };
+            let generals = await this.meetingModel.find();
+            return { cssFileName: 'main', generals, };
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
-        }
-    }
-    async getSearchlist(params, res) {
-        try {
-            const { url } = params;
-            const meetingsResult = await this.meetingModel.find({ name: url });
-            if (!meetingsResult.length) {
-                res.sendFile((0, path_1.resolve)('views/notfound.html'));
-                return;
-            }
-            return { meetingsResult, cssFileName: 'searchlist' };
-        }
-        catch (e) {
-            res.sendFile((0, path_1.resolve)('views/notfound.html'));
         }
     }
     async addMeeting(addGeneralBodyDto) {
@@ -78,9 +59,7 @@ let MainService = class MainService {
 MainService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('Meeting')),
-    __param(1, (0, mongoose_1.InjectModel)('User')),
-    __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model])
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], MainService);
 exports.MainService = MainService;
 //# sourceMappingURL=main.service.js.map

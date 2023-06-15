@@ -24,20 +24,6 @@ let FeedbacksService = class FeedbacksService {
         this.feedbackModel = feedbackModel;
         this.userModel = userModel;
     }
-    async getFeedbacks(params, res) {
-        try {
-            const { url, date, generalName } = params;
-            const users = await this.userModel.find({ url, date });
-            if (!users.length) {
-                res.status(404).sendFile((0, path_1.resolve)('views/notfound.html'));
-                return;
-            }
-            return { cssFileName: 'feedback', users, url, date, generalName };
-        }
-        catch (e) {
-            res.sendFile((0, path_1.resolve)('views/notfound.html'));
-        }
-    }
     async getPersonalFeedbacks(params, res) {
         try {
             const { url, name, date, generalName } = params;
@@ -47,7 +33,7 @@ let FeedbacksService = class FeedbacksService {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
                 return;
             }
-            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName };
+            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks` };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));
@@ -62,7 +48,7 @@ let FeedbacksService = class FeedbacksService {
                 return;
             }
             const users = await this.userModel.find({ url, date });
-            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName };
+            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback" };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));

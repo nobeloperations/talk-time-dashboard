@@ -5,7 +5,4 @@ export declare class StaticController {
     getFAQ(): {
         cssFileName: string;
     };
-    getContacts(): {
-        cssFileName: string;
-    };
 }

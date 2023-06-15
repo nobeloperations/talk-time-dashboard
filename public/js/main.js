@@ -1,41 +1,31 @@
-window.onload = function() {
+window.onload = function () {
+    const _selectGenerals = document.querySelectorAll('.select__general')
+    const _searchMeetings = document.querySelector('.search__generals')
+    const _generals = document.querySelectorAll('.general')
+    const _arrowDown = document.querySelector('.main__button')
 
-    new WOW().init()
-
-    let _mainExplore = document.querySelector('.main__explore')
-    let _exploreSelect = document.querySelector('.explore__select')
-    let _select = document.querySelector('.select')
-    let _closeSelectInput = document.querySelector('.close__input')
-    let _meetingSearch = document.querySelector('.meeting__search')
-    let _selectItems = document.querySelectorAll('.select__item')
-    let _exploreQuestion = document.querySelector('.explore__question')
-    let _questionWrapper = document.querySelector('.question__wrapper')
-    let _closeQuestion = document.querySelector('.close__question')
-    
-    _mainExplore.onclick = function() {
-        window.scrollBy(0, window.innerHeight)
+    _arrowDown.onclick = function() {
+        window.scroll({
+            top: window.innerHeight,
+            left: 0,
+            behavior: "smooth",
+          });
     }
 
-    _select.onclick = function() {
-        _exploreSelect.className = 'explore__select open__select'
-    }
-    
-    _closeSelectInput.onclick = function() {
-        _exploreSelect.className = 'explore__select close__select'
+    _selectGenerals.forEach(_selectGeneral => {
+        _selectGeneral.onclick = function () {
+            this.dataset.active = this.dataset.active ? '' : true
+            const _meetings = this.parentElement.nextElementSibling
+            if (this.dataset.active) {
+                _meetings.style.display = 'block'
+                this.style.transform = 'rotate(270deg)'
+                return;
+            }
+            _meetings.style.display = 'none'
+            this.style.transform = 'rotate(90deg)'
 
-        _meetingSearch.value = ''
-        _selectItems.forEach(_selectItem => {
-            _selectItem.style.display = 'flex'
-        })
-    }
+        }
+    })
 
-    _exploreQuestion.onclick = function() {
-        _questionWrapper.style.display = 'block'
-    }
-
-    _closeQuestion.onclick = function() {
-        _questionWrapper.style.display = 'none'
-    }
-
-    _search(_meetingSearch, _selectItems)
+    _search(_searchMeetings, _generals)
 }

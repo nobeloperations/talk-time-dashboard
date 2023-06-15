@@ -12,11 +12,4 @@ export class StaticController {
     getFAQ() {
         return this.staticService.getFAQ()
     }
-
-    @Get('/contacts')
-    @Render('contacts')
-    @HttpCode(200)
-    getContacts() {
-        return this.staticService.getContacts()
-    }
 }

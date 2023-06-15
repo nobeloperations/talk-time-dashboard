@@ -5,8 +5,4 @@ export class StaticService {
     getFAQ() {
         return { cssFileName: 'faq' }
     }
-
-    getContacts() {
-        return { cssFileName: 'contacts' }
-    }
 }

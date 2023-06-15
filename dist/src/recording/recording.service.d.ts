@@ -6,5 +6,16 @@ export declare class RecordingService {
         cssFileName: string;
         readyId: string;
         chat: string;
+        pageName: string;
+        noRecording?: undefined;
+    } | {
+        cssFileName: string;
+        pageName: string;
+        generalName: any;
+        url: any;
+        date: any;
+        noRecording: boolean;
+        readyId?: undefined;
+        chat?: undefined;
     }>;
 }

@@ -23,5 +23,8 @@ export let helpers = {
     },
     badgesLevel(e) {
         return e === 1 ? 'Knowlege level' : e === 2 ? 'Apprentice level' : e === 3 ? 'Mastery level' : 'Leadership level'
+    },
+    moreThan(str, n) {
+        return str.length > n
     }
 }

@@ -10,13 +10,6 @@ export class FeedbacksController {
 
     constructor(private feedbacksService: FeedbacksService){}
 
-    @Get(':generalName/:url/:date')
-    @Render('feedbacks')
-    @HttpCode(200)
-    getFeedbacks(@Param() params, @Res() res: Response) {
-        return this.feedbacksService.getFeedbacks(params, res)
-    }
-
     @Get('/:generalName/:url/:name/:date')
     @Render('personal-feedbacks')
     @HttpCode(200)

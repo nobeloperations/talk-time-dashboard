@@ -47,7 +47,7 @@ let DashboardService = class DashboardService {
             feedbacks.forEach(feedback => {
                 feedbacksByName[feedback.receiver].rating.push(feedback.rating);
             });
-            return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName, date, generalName };
+            return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName, date, generalName, pageName: 'Dashboard' };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));

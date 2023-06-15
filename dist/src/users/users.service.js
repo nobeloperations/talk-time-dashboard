@@ -66,7 +66,7 @@ let UsersService = class UsersService {
                 users.push(user.toObject());
             });
             users = users.filter((value, index, self) => index === self.findIndex((t) => (t.name === value.name)));
-            return { cssFileName: 'users', users, url, date, generalName };
+            return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users' };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));

@@ -12,6 +12,7 @@ export declare class UsersService {
         url: any;
         date: any;
         generalName: any;
+        pageName: string;
     }>;
     updateStatus(updateStatusBodyDto: any): Promise<string>;
     getStatuses(params: any): Promise<string>;

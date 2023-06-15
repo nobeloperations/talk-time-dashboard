@@ -12,52 +12,65 @@
 
 body {
     overflow-x: hidden;
-    background-image: url('/img/main-bg.png');
-    background-size: cover;
+    background: #F8F8F8;
+}
+.navigate {
+    width: calc(100vw - 230px);
+    height: 50px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 30px;
 }
 
+.navigate__text {
+    font-size: 18px;
+    color: #646464;
+}
 a {
     text-decoration: none;
 }
-.header {
-    width: 100vw;
-    height: 70px;
+.menu {
+    width:  230px;
+    height: 100vh;
+    background: #00253f;
+}
+
+.menu__title {
+    margin-bottom: 20px;
+    color: white;
+    background: #002b49;
+    padding: 10px;
+}
+.menu__title a {
+    color: white;
+}
+.menu__items {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+}
+
+.menu__items>div {
+    width: 100%;
+    height: fit-content;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 40px 0 20px;
+    margin-bottom: 25px;
 }
-.header__menu {
-    width: 55%;
-    height: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+
+.menu__icon {
+    width: 24px;
+    margin-right: 10px;
+    filter: grayscale(0) invert(1);
 }
-.header__menu__item {
+
+.menu__item {
+    color: #ffffff;
+    text-decoration: none;
     font-size: 16px;
-    color: white;
-    cursor: pointer;
-}
-.header__logo__wrapper {
-    width: 200px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-}
-.header__logo {
-    width: 32px;
-    filter: invert(1) grayscale(0);
-    margin-right: 5px;
-}
-.header__title {
-    color: white;
-}
-.active__menu {
-    padding: 10px 20px 10px 20px;
-    background: white;
-    border-radius: 5px;
-    color: #ccb9fd;
 }
 .invalid__url {
     color: white;
@@ -76,8 +89,25 @@ a {
     visibility: hidden;
     opacity: 0;
 }
-@media only screen and (max-width: 500px) {
-    .main__header {
-      max-width: 100%;
-    }
-  }
+.modal__shadow {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background: black;
+    opacity: 0;
+    visibility: hidden;
+}
+*::-webkit-scrollbar {
+    width: 3px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+    background: gray;
+    border-radius: 10px;
+}

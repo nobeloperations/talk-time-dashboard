@@ -43,6 +43,7 @@ export declare class DashboardController {
         feedbacksByName: {};
         date: any;
         generalName: any;
+        pageName: string;
     }>;
     postPercents(params: any, postPercentsBodyDto: any): Promise<string>;
     newConclusion(params: any, createConclusionBodyDto: any): Promise<string>;

@@ -1,88 +1,120 @@
 <div class="dashboard__container">
-    {{>header}}
-    <div class="dashboard__content">
-        <div class="dashboard__content__wrapper">
-            <div class="dashboard__card dashboard__users animated fadeInRight">
-                <h1 class="meeting__participants__title">Meeting participants and statistics</h1>
-                <div class="meeting__participants">
-                    {{#each feedbacksByName}}
-                    <div class="meeting__participant">
-                        <img class="participant__avatar" src={{avatar}} alt="avatar">
-                        <div class="meeting__participant__info__wrapper">
-                            <span class="participant__name">{{name}}</span>
-                            <div class="statistics__percents__wrapper">
-                                <div class="statistics__ratio"></div>
-                                <span class="statistics__percents"> {{percents}}&nbsp;&nbsp;</span>
-                                <span class="participant__rating">★ {{average rating}}</span>
-                            </div>
-                        </div>
-                        {{#if peaks}}
-                        <div class="audio__activity">
-                            <div class="peaks__wrapper">
-                                {{#each peaks}}
-                                    <div class="peak" style="height: {{mult this 4}}px"></div>
-                                {{/each}}
-                            </div>
-                        </div>
-                        {{else}}
-                        <span>No audio data</span>
-                        {{/if}}
+    {{>menu}}
+    <div class="dashboard">
+        {{>navigate}}
+        <div class="dashboard__content">
+            <input type="text" placeholder="Search meeting participants" class="dashboard__search" />
+            <div class="dashboard__meeting__info__wrapper">
+                <div class="dashboard__meeting__info">
+                    <div class="dashboard__meeting__info__icon dashboard__meeting__info__icon__blue">
+                        <img src="/img/link.png" alt="">
                     </div>
-                    
-                    {{/each}}
+                    <div>
+                        <span>{{url}}</span>
+                        <span>Meeting link</span>
+                    </div>
+                </div>
+                <div class="dashboard__meeting__info">
+                    <div class="dashboard__meeting__info__icon dashboard__meeting__info__icon__orange">
+                        <img src="/img/date.png" alt="">
+                    </div>
+                    <div>
+                        <span>{{date}}</span>
+                        <span>Meeting date</span>
+                    </div>
+                </div>
+                <div class="dashboard__meeting__info">
+                    <div class="dashboard__meeting__info__icon dashboard__meeting__info__icon__green">
+                        <img src="/img/users.png" alt="">
+                    </div>
+                    <div>
+                        <span>{{usersLength}} user(s)</span>
+                        <span>Number of users</span>
+                    </div>
+                </div>
+                <div class="dashboard__meeting__info">
+                    <div class="dashboard__meeting__info__icon dashboard__meeting__info__icon__pink">
+                        <img src="/img/dashboard-feedback.png" alt="">
+                    </div>
+                    <div>
+                        <span>{{feedbacksLength}} feedback(s)</span>
+                        <span>Number of feedbacks</span>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="dashboard__content__wrapper dashboard__content__wrapper__left">
-            <div class="dashboard__card dashboard__conclusions animated fadeInLeft">
-                <h1 class="conclusions__title">Meeting Notes</h1>
-                <div class="conclusion__input__wrapper">
-                    <input placeholder="Enter a note" class="conclusion__input" type="text" name="meeting-conclusions">
-                    <div class="tags__select__wrapper">
-                        <div class="tag__input__wrapper">
-                            <div class="tag__input__container">
-                                <input type="text" class="tags__input" placeholder="Enter a tag(s)">
-                                <div class="plus__tag">+</div>
-                            </div>
-                        </div>
-                        <div class="tags__list">
-                        </div>
+            <div class="dashboard__users__notes">
+                <div class="dashboard__users">
+                    <div class="dashboard__users__names">
+                        <div style="width: 200px; padding-left: 10px;">Participants</div>
+                        <div style="width: 120px">Talking time</div>
+                        <div style="width: 120px">Average rating</div>
+                        <div style="width: 120px">Feedbacks</div>
                     </div>
-                    <button disabled class="add__note">Add Note</button>
-                </div>
-                <div class="conclusions">
-                    {{#if conclusions}}
-                    {{#each conclusions}}
-                    <div class="conclusion__wrapper">
-                        {{#each tags}}
-                        <span class="conclusion__tag">{{this}}</span>
-                        {{/each}}
-                        <span class="conclusion">- {{text}}</span>
-                        {{#if important}}
-                        <span class="conclusion__star">★</span>
-                        {{else}}
-                        <span class="conclusion__star">☆</span>
-                        {{/if}}
-                        <span class="conclusion__id">{{_id}}</span>
-                        <img class="conclusion__delete" src="/img/trash.png" alt="">
+                    {{#each feedbacksByName}}
+                    <div class="dashboard__user" data-name="{{name}}">
+                        <div class="user__info">
+                            <img class="user__avatar" src="{{avatar}}">
+                            <span class="username">{{name}}</span>
+                        </div>
+                        <div class="user__percents">
+                            {{#if percents}}
+                            <span>{{percents}}</span>
+                            {{else}}
+                            <span>0%</span>
+                            {{/if}}
+                        </div>
+                        <div class="user__rating">
+                            <span>{{average rating}}</span>
+                        </div>
+                       <a href="/feedbacks/{{../generalName}}/{{../url}}/{{name}}/{{../date}}">
+                         <button class="view__feedbacks__button">View feedbacks</button>
+                       </a>
                     </div>
                     {{/each}}
-                    {{else}}
-                    <span class="empty__conclusions__warning">There are no notes, add a new one!</span>
-                    {{/if}}
-                    <span class="empty__conclusions__warning" style="display: none;">No conclusions ...Add a new
-                        one!</span>
+                </div>
+                <div class="dashboard__notes">
+                    <div class="notes__input__wrapper">
+                        <input placeholder="Add new note" class="notes__input" type="text">
+                        <button class="add__note">Add Note</button>
+                    </div>
+                    <div class="tags__input__wrapper">
+                        <input class="tags__input" type="text" placeholder="Add new tag">
+                        <div class="open__tags">
+                            <div class="tags">
+                                <div class="tag" data-tag="statictag">
+                                    <span>No tags here...</span>
+                                </div>
+                            </div>
+                            <img class="view__tags" data-open="false" src="/img/tag.png" alt="">
+                        </div>
+                        <button class="add__tag">Add tag</button>
+                    </div>
+                    <div class="notes">
+                        {{#each conclusions}}
+                        <div class="note">
+                            <span class="note__text">{{text}}</span>
+                            <div class="note__options">
+                                <span style="display: none;" class="note__id">{{_id}}</span>
+                                <img class="delete__note" src="/img/trash.png" alt="">
+                                {{#if tags}}
+                                <img class="open__tags__note" data-tagsactive="" src="/img/tag.png" alt="">
+                                <div class="notes__tags">
+                                    {{#each tags}}
+                                        <span class="notes__tag">{{this}}</span>
+                                    {{/each}}
+                                </div>
+                                {{/if}}
+                            </div>
+                        </div>
+                        {{/each}}
+                        <span class="no__notes">You`ve not added notes yet...</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <footer class="dashboard__footer">
-        <div class="info__card animated fadeInLeft">Meet link: {{url}}</div>
-        <div class="info__card animated fadeInLeft">Meet date: {{date}}</div>
-        <div class="info__card animated fadeInLeft">Number of users: {{usersLength}}</div>
-        <div class="info__card animated fadeInLeft">Number of feedbacks: {{feedbacksLength}}</div>
-        <div class="info__card animated fadeInLeft">Number of notes: {{conclusionsLength}}</div>
-    </footer>
+    <div class="modal__shadow"></div>
 </div>
 
 <script src="/js/dashboard.js"></script>
+<script src="/js/helpers/search.js"></script>

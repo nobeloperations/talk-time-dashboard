@@ -7,17 +7,8 @@
   scroll-behavior: smooth;
   font-family: 'DM Sans', sans-serif;
 }
-.question__wrapper {
-  width: 100vw;
-  height: 100vh;
-  background-image: url('/img/question.png');
-  background-size: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  display: none;
-  padding: 20px;
-  z-index: 111;
+body {
+  background: #fcfcfc;
 }
 .container {
   flex-direction: column;
@@ -28,12 +19,6 @@ body::-webkit-scrollbar {
 .menu {
   display: none !important;
 }
-
-.gradient {
-  background: -webkit-linear-gradient(right, #7E51F0, #d7c7ff);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
 .main__header {
   width: 100vw;
   height: 100px;
@@ -42,189 +27,133 @@ body::-webkit-scrollbar {
   align-items: center;
   padding-left: 26px;
 }
-.main__wrapper, .explore__wrapper {
+.main__wrapper {
+  height: 100vh;
+}
+.main__wrapper, .meetings {
   width: 100vw;
-  height: calc(100vh - 100px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.explore__template, .main__template {
-  width: 100vw;
-  height: calc(100vh - 100px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.main__poster {
-  height: 400px;
-}
-.explore__poster {
-  width: 500px;
-}
-.main__content, .explore__content {
-  width: fit-content;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-}
-.main__content, .explore__content{
-  margin-right: 100px;
-}
-.main__title, .explore__title {
-  font-size: 40px;
-  color: rgb(255, 255, 255);
-}
-.explore__title {
-  margin-bottom: 20px;
-}
-.second__title {
-  margin-bottom: 10px;
-}
-.main__explore, .close__question {
-  width: 150px;
-  height: 45px;
-  background: transparent;
-  border-radius: 5px;
-  color: #FDF4E0;
-  cursor: pointer;
-  font-size: 16px;
-  display: flex;
-  justify-content: center;
   align-items: center;
-  border: 3px solid white;
-  background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
-  transition: .6s, background-position 0s;
-  background-size: 0 100%;
+  justify-content: center;
 }
-.main__explore:hover, .close__question:hover, .select:hover, .explore__question:hover {
-  background-size: 100% 100%;
-  color: #6E47D2;
+.meetings {
+  height: 100vh;
 }
-.explore__question:hover .explore__question__image {
-  filter: invert(51%) sepia(76%) saturate(6288%) hue-rotate(241deg) brightness(84%) contrast(94%);
+.main__arrow {
+  width: 40px;
+  cursor: pointer;
 }
-.select {
-  width: 300px;
-  height: 60px;
-  border-radius: 10px;
-  background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
-  transition: .6s, background-position 0s;
-  background-size: 0 100%;
-  border: 3px solid white;
+.main__title {
+  font-size: 96px;
+  margin-bottom: 5px;
+  color: black;
+
+}
+.main__subtitle {
+  margin-bottom: 15px;
+  font-size: 20px;
+  text-align: center;
+}
+.meeting {
+  width: 100%;
+  height: 50px;
   display: flex;
   justify-content: space-between;
-  padding: 15px;
   align-items: center;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
+  padding: 0 10px 0 20px;
+  align-items: center;
+  margin-bottom: 5px;
 }
-.select__items {
-  max-height: 180px;
-  width: 300px;
-  height: 180px;
-  visibility: hidden;
-  opacity: 0;
-  position: absolute;
-  transition: visibility 0.4s, opacity 0.5s ease;
+.meeting__info {
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+}
+.list__of__meetings {
+  height: 220px;
+  max-height: 220px;
+  width: 700px;
   overflow-y: scroll;
   padding-right: 5px;
 }
-.select__items::-webkit-scrollbar {
-  width: 3px;
-}
-.select__items::-webkit-scrollbar-thumb {
-  background: #ab76ff;
-}
-.select__item {
+.general {
   width: 100%;
   height: 50px;
-  margin-bottom: 3px;
-  border-radius: 10px;
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  cursor: pointer;
-  margin-top: 10px;
-  color: white;
-  border: 3px solid white;
-  background: transparent;
+  padding: 0 10px 0 10px;
+  font-size: 18px;
+  background: white;
+  border-radius: 5px;
+  border: 1px solid rgb(223, 223, 223);
+  margin-bottom: 5px;
 }
-.select__item__link {
-  color: white;
-}
-.select__input {
-  width: 300px;
-  height: 60px;
-  border-radius: 10px;
+.search__generals {
+  width: 700px;
+  margin-bottom: 5px;
+  height: 50px;
+  padding: 10px;
+  outline: none;
   background: transparent;
-  border: 3px solid white;
-  display: none;
-  color: white;
+  border-radius: 5px;
+  background: white;
+  border: 1px solid rgb(230, 230, 230);
 }
-.meeting__search {
-  background: transparent;
-  width: 88%;
-  height: 100%;
+.search__generals::placeholder {
+  font-size: 16px;
+}
+ 
+.meetings__title {
+  margin-bottom: 20px;
+  font-size: 72px;
+  transition: .6s all ease;
+}
+.dashboard__button {
+  width: 100px;
+  height: 35px;
   border: none;
   outline: none;
-  padding: 15px;
-  color: white;
-
-}
-.meeting__search::placeholder {
-  color: white;
-  font-size: 16px;
-  opacity: .8;
-}
-.close__input {
+  border-radius: 5px;
   cursor: pointer;
+  color: #0070B8;
+  background: #99D6FF;
 }
-.explore__question {
-  width: 60px;
-  height: 60px;
+.select__general {
+  width: 30px;
+  height: 30px;
+  outline: none;
   display: flex;
   justify-content: center;
   align-items: center;
-  border-radius: 10px;
-  margin-right: 10px;
-  color: white;
+  background: transparent;
+  border-radius: 100px;
+  transform: rotate(90deg);
   cursor: pointer;
-  background: linear-gradient(white 0 0) var(--p, 0)/var(--p, 0) no-repeat;
-  transition: .6s, background-position 0s;
-  background-size: 0 100%;
-  border: 3px solid white;
+  background: #99D6FF;
+  border: none;
 }
-.explore__question__image {
-  width: 24px;
-  filter: invert(1) grayscale(0)
+.select__general > img {
+  width: 12px;
+  filter: invert(27%) sepia(58%) saturate(2623%) hue-rotate(184deg) brightness(96%) contrast(101%);
+  transform: rotate(-90deg);
 }
-.explore__buttons {
-  display: flex;
-  width: fit-content;
-  height: auto;
-  justify-content: space-between;
-  align-items: center;
-}
-.explore__select.open__select .select {
+.meetings__content {
   display: none;
+  transition: .5s ease all;
 }
-.explore__select.open__select .select__input {
-  display: block;
+.main__button {
+  height: 40px;
+  width: 160px;
+  border: none;
+  outline: none;
+  border-radius: 0 3px 3px 0;
+  background: #B1FDD1;
+  color: #00D03E;
+  cursor: pointer;
 }
-.explore__select.open__select .select__items {
-  visibility: visible;
-  opacity: 1;
-}
-.explore__select.close__select .select {
-  display: flex;
-}
-.explore__select.close__select .select__input {
-  display: none;
-}
-.explore__select.close__select .select__items {
-  visibility: hidden;
-  opacity: 0;
+.main__meeting__date {
+  font-size: 14px;
+  color: rgb(65, 65, 65);
 }

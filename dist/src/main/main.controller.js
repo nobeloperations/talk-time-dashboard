@@ -19,45 +19,21 @@ let MainController = class MainController {
     constructor(mainService) {
         this.mainService = mainService;
     }
-    getWelcome() {
-        return this.mainService.getWelcome();
-    }
     getMain() {
         return this.mainService.getMain();
-    }
-    getSearchlist(params, res) {
-        return this.mainService.getSearchlist(params, res);
     }
     addGeneral(addGeneralBodyDto) {
         return this.mainService.addMeeting(addGeneralBodyDto);
     }
 };
 __decorate([
-    (0, common_1.Get)(''),
-    (0, common_1.Render)('welcome'),
-    (0, common_1.HttpCode)(200),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], MainController.prototype, "getWelcome", null);
-__decorate([
-    (0, common_1.Get)('/main'),
+    (0, common_1.Get)('/'),
     (0, common_1.Render)('main'),
     (0, common_1.HttpCode)(200),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getMain", null);
-__decorate([
-    (0, common_1.Get)('/main/searchlist/:url'),
-    (0, common_1.Render)('searchlist'),
-    (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Param)()),
-    __param(1, (0, common_1.Res)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], MainController.prototype, "getSearchlist", null);
 __decorate([
     (0, common_1.Post)('/main/addmeeting'),
     (0, common_1.HttpCode)(200),

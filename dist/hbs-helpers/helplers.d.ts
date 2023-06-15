@@ -5,4 +5,5 @@ export declare let helpers: {
     mult(e: any, coef: any): number;
     formatDate(date: any): string;
     badgesLevel(e: any): "Knowlege level" | "Apprentice level" | "Mastery level" | "Leadership level";
+    moreThan(str: any, n: any): boolean;
 };

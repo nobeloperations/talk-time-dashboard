@@ -11,7 +11,9 @@ window.onload = function () {
     let _startDate = document.querySelector('#start__date')
     let _endDate = document.querySelector('#end__date')
     let _noFilteredFeedbacks = document.querySelector('.empty__feedbacks')
-    let _modalShadow = document.querySelector('.modal__shadow')
+    let _leaveFeedback = document.querySelector('.leave__feedback__button')
+    let _readMoreButtons = document.querySelectorAll('.personal__feedback__read__more')
+    let _readLessButtons = document.querySelectorAll('.personal__feedback__read__less')
     const LOW_RATING = 'LOW'
     const HIGH_RATING = 'HIGH'
 
@@ -35,7 +37,7 @@ window.onload = function () {
                 (!_filters.endDate || new Date(_feedback.dataset.date) <= _filters.endDate);
 
             _feedback.style.display = _showFeedback ? 'block' : 'none';
-            if(_showFeedback) _counter++
+            if (_showFeedback) _counter++
         });
         _noFilteredFeedbacks.style.display = _counter ? 'none' : 'flex'
     }
@@ -45,9 +47,9 @@ window.onload = function () {
         if (_target.tagName === 'BUTTON') {
             _target.dataset.active = _target.dataset.active ? '' : 'true';
 
-            if(_target.className !== 'apply__date__filter') {
-                _target.style.background = _target.dataset.active ? 'white' : 'transparent';
-                _target.style.color = _target.dataset.active ? '#754BDF' : 'white';
+            if (_target.className !== 'apply__date__filter' && _target.className !== 'leave__feedback__button') {
+                _target.style.background = _target.dataset.active ? '#0070B8' : '#99D6FF';
+                _target.style.color = _target.dataset.active ? '#99D6FF' : '#0070B8';
             }
 
             if (_target.className === 'personal__feedbacks__image__filter') {
@@ -79,11 +81,13 @@ window.onload = function () {
 
             else if (_target.className === 'personal__feedbacks__date__filter') {
                 _dateWrapper.style.display = _target.dataset.active ? 'flex' : 'none'
+                _leaveFeedback.style.display = 'none'
                 if (!_target.dataset.active) {
                     _filters.startDate = '';
                     _filters.endDate = '';
                     _startDate.value = '';
                     _endDate.value = '';
+                    _leaveFeedback.style.display = 'flex'
                 }
             }
 
@@ -92,13 +96,11 @@ window.onload = function () {
         }
     }
 
-    _container.onclick = function (e) {
-        const _target = e.target;
-        if (_target.matches('.personal__feedback__read__more')) {
-            const _feedbackText = _target.closest('.personal__feedback').querySelector('.personal__feedback__hidden')
-            const _threeDots = _target.closest('.personal__feedback').querySelector('.three__dots')
-            const _readLess = _target.nextElementSibling
-            const _feedback = _target.parentElement.parentElement
+    _readMoreButtons.forEach(_readMoreButton => {
+        _readMoreButton.onclick = function () {
+            const _feedbackText = this.closest('.personal__feedback').querySelector('.personal__feedback__hidden')
+            const _readLess = this.nextElementSibling
+            const _feedback = this.parentElement.parentElement.parentElement
             const _viewImage = _feedback.querySelector('.personal__feedback__view__image')
 
             const h = _feedback.scrollHeight;
@@ -110,51 +112,46 @@ window.onload = function () {
             _feedback.style.left = ((bw - w) / 2) + "px"
             _feedback.style.top = ((bh - h) / 2) + "px"
             _feedback.style.zIndex = '4'
-            if(_viewImage) _viewImage.style.display = 'none'
+            if (_viewImage) _viewImage.style.display = 'none'
 
             _feedbackText.style.display = 'inline'
             _readLess.style.display = 'block'
-            _threeDots.style.display = 'none'
-            _target.style.display = 'none'
+            this.style.display = 'none'
             _container.className = 'container open__modal'
-
         }
-        else if (_target.matches('.personal__feedback__read__less')) {
-            const _feedbackText = _target.closest('.personal__feedback').querySelector('.personal__feedback__hidden')
-            const _threeDots = _target.closest('.personal__feedback').querySelector('.three__dots')
-            const _readMore = _target.previousElementSibling
-            const _feedback = _target.parentElement.parentElement
+    })
+
+    _readLessButtons.forEach(_readLessButton => {
+        _readLessButton.onclick = function () {
+            const _feedbackText = this.closest('.personal__feedback').querySelector('.personal__feedback__hidden')
+            const _threeDots = this.closest('.personal__feedback').querySelector('.three__dots')
+            const _readMore = this.previousElementSibling
+            const _feedback = this.parentElement.parentElement.parentElement
             const _viewImage = _feedback.querySelector('.personal__feedback__view__image')
 
             _feedback.style.position = 'static'
             _feedback.style.left = "none"
             _feedback.style.top = "none"
             _feedback.style.zIndex = '0'
-            if(_viewImage) _viewImage.style.display = 'block'
+            if (_viewImage) _viewImage.style.display = 'block'
 
             _container.className = 'container close__modal'
             _feedbackText.style.display = 'none'
             _readMore.style.display = 'inline'
             _threeDots.style.display = 'inline'
-            _target.style.display = 'none'
+            this.style.display = 'none'
         }
-    }
+    })
 
     _feedbacksTexts.forEach(_feedbacksText => {
         const _text = _feedbacksText.textContent
         let HIDDEN_TEXT_COEF = _text.length - 40
         if (_text.length > 40) {
-            let _visibleText = _text.substring(0, 50).trim()
+            let _visibleText = _text.substring(0, 40).trim()
             let _hiddenText = _text.slice(-HIDDEN_TEXT_COEF)
             _feedbacksText.innerHTML = `
                 <span class="personal__feedback__visible">${_visibleText}<span class="three__dots">...</span><span class="personal__feedback__hidden">${_hiddenText}</span></span>
             `
-        }
-        else {
-            const _feedback = _feedbacksText.parentElement;
-            const _buttonsWrapper = _feedback.querySelector('.personal__feedback__buttons')
-            const _readMore = _buttonsWrapper.querySelector('.personal__feedback__read__more')
-            _buttonsWrapper.removeChild(_readMore)
         }
     })
 

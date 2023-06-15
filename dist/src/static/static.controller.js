@@ -19,9 +19,6 @@ let StaticController = class StaticController {
     getFAQ() {
         return this.staticService.getFAQ();
     }
-    getContacts() {
-        return this.staticService.getContacts();
-    }
 };
 __decorate([
     (0, common_1.Get)('/faq'),
@@ -31,14 +28,6 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], StaticController.prototype, "getFAQ", null);
-__decorate([
-    (0, common_1.Get)('/contacts'),
-    (0, common_1.Render)('contacts'),
-    (0, common_1.HttpCode)(200),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
-], StaticController.prototype, "getContacts", null);
 StaticController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [static_service_1.StaticService])

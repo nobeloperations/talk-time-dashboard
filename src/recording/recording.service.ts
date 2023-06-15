@@ -48,60 +48,71 @@ export class RecordingService {
                 );
 
                 const messages = messagesResponse.data.messages;
+                
+                if (messages) {
+                    const messageId = messages[0].id;
+                    const messageResponse = await axios.get(
+                        `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}`,
+                        {
+                            headers: {
+                                Authorization: `Bearer ${access_token}`,
+                            },
+                        }
+                    );
 
-                const messageId = messages[0].id;
+                    const messageData = messageResponse.data.payload.parts;
 
-                const messageResponse = await axios.get(
-                    `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}`,
-                    {
-                        headers: {
-                            Authorization: `Bearer ${access_token}`,
-                        },
-                    }
-                );
+                    const body = getMessageBody(messageData);
 
-                const messageData = messageResponse.data.payload.parts;
+                    const linkRegex = /<(https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9-_]+\/view\?usp=drive_web)>/g;
+                    const matches = body.match(linkRegex);
 
-                const body = getMessageBody(messageData);
+                    const chatLink = matches[0];
+                    const meetingLink = matches[1];
 
-                const linkRegex = /<(https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9-_]+\/view\?usp=drive_web)>/g;
-                const matches = body.match(linkRegex);
+                    const chatId = chatLink.split('/')[5];
+                    let READY_ID = meetingLink.split('/')[5];
 
-                const chatLink = matches[0];
-                const meetingLink = matches[1];
+                    const oauth2Client = new OAuth2Client(
+                        DRIVE_CLIENT_ID,
+                        DRIVE_CLIENT_SECRET,
+                        DRIVE_REDIRECT_URI
+                    );
 
-                const chatId = chatLink.split('/')[5];
-                let READY_ID = meetingLink.split('/')[5];
+                    oauth2Client.setCredentials({
+                        refresh_token: DRIVE_REFRESH_TOKEN,
+                    });
 
-                const oauth2Client = new OAuth2Client(
-                    DRIVE_CLIENT_ID,
-                    DRIVE_CLIENT_SECRET,
-                    DRIVE_REDIRECT_URI
-                );
+                    const drive = driveAPI({
+                        version: 'v3',
+                        auth: oauth2Client,
+                    });
 
-                oauth2Client.setCredentials({
-                    refresh_token: DRIVE_REFRESH_TOKEN,
-                });
-
-                const drive = driveAPI({
-                    version: 'v3',
-                    auth: oauth2Client,
-                });
-
-                const chatResponse = await drive.files.get({
-                    fileId: chatId,
-                    alt: 'media',
-                });
+                    const chatResponse = await drive.files.get({
+                        fileId: chatId,
+                        alt: 'media',
+                    });
 
 
+                    return {
+                        generalName,
+                        url,
+                        date,
+                        cssFileName: 'recording',
+                        readyId: READY_ID,
+                        chat: chatResponse.data.toString(),
+                        pageName: 'Recording'
+                    };
+                }
                 return {
+                    cssFileName: 'recording',
+                    pageName: 'Recording',
                     generalName,
                     url,
                     date,
-                    cssFileName: 'recording',
-                    readyId: READY_ID,
-                    chat: chatResponse.data.toString(),
-                };
+                    noRecording: true
+                }
+
             }
         } catch (error) {
             console.error('Error refreshing access token:', error);

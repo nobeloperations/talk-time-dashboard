@@ -14,36 +14,21 @@ export class FeedbacksService {
     constructor(@InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>,
         @InjectModel('User') private readonly userModel: Model<User>) { }
 
-    async getFeedbacks(params, res) {
-        try {
-            const { url, date, generalName } = params;
-            const users = await this.userModel.find({ url, date })
-
-            if (!users.length) {
-                res.status(404).sendFile(resolve('views/notfound.html'))
-                return;
-            }
-            return { cssFileName: 'feedback', users, url, date, generalName }
-        }
-        catch (e) {
-            res.sendFile(resolve('views/notfound.html'))
-        }
-    }
-
-
     async getPersonalFeedbacks(params, res) {
         try {
             const { url, name, date, generalName } = params;
             const feedbacks = await this.feedbackModel.find({ receiver: name, url, date })
             const currentUser = await this.userModel.findOne({ name, url, date })
 
+            
             if (!currentUser) {
                 res.sendFile(resolve('views/notfound.html'))
                 return;
             }
 
-            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName }
+            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks` }
         }
+        
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))
         }
@@ -60,7 +45,7 @@ export class FeedbacksService {
             }
 
             const users = await this.userModel.find({ url, date })
-            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName }
+            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback" }
         }
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))

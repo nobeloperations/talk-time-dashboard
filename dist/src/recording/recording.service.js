@@ -36,39 +36,50 @@ let RecordingService = class RecordingService {
                     },
                 });
                 const messages = messagesResponse.data.messages;
-                const messageId = messages[0].id;
-                const messageResponse = await axios_1.default.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}`, {
-                    headers: {
-                        Authorization: `Bearer ${access_token}`,
-                    },
-                });
-                const messageData = messageResponse.data.payload.parts;
-                const body = getMessageBody(messageData);
-                const linkRegex = /<(https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9-_]+\/view\?usp=drive_web)>/g;
-                const matches = body.match(linkRegex);
-                const chatLink = matches[0];
-                const meetingLink = matches[1];
-                const chatId = chatLink.split('/')[5];
-                let READY_ID = meetingLink.split('/')[5];
-                const oauth2Client = new google_auth_library_1.OAuth2Client(DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI);
-                oauth2Client.setCredentials({
-                    refresh_token: DRIVE_REFRESH_TOKEN,
-                });
-                const drive = (0, drive_1.drive)({
-                    version: 'v3',
-                    auth: oauth2Client,
-                });
-                const chatResponse = await drive.files.get({
-                    fileId: chatId,
-                    alt: 'media',
-                });
+                if (messages) {
+                    const messageId = messages[0].id;
+                    const messageResponse = await axios_1.default.get(`https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}`, {
+                        headers: {
+                            Authorization: `Bearer ${access_token}`,
+                        },
+                    });
+                    const messageData = messageResponse.data.payload.parts;
+                    const body = getMessageBody(messageData);
+                    const linkRegex = /<(https:\/\/drive\.google\.com\/file\/d\/[a-zA-Z0-9-_]+\/view\?usp=drive_web)>/g;
+                    const matches = body.match(linkRegex);
+                    const chatLink = matches[0];
+                    const meetingLink = matches[1];
+                    const chatId = chatLink.split('/')[5];
+                    let READY_ID = meetingLink.split('/')[5];
+                    const oauth2Client = new google_auth_library_1.OAuth2Client(DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI);
+                    oauth2Client.setCredentials({
+                        refresh_token: DRIVE_REFRESH_TOKEN,
+                    });
+                    const drive = (0, drive_1.drive)({
+                        version: 'v3',
+                        auth: oauth2Client,
+                    });
+                    const chatResponse = await drive.files.get({
+                        fileId: chatId,
+                        alt: 'media',
+                    });
+                    return {
+                        generalName,
+                        url,
+                        date,
+                        cssFileName: 'recording',
+                        readyId: READY_ID,
+                        chat: chatResponse.data.toString(),
+                        pageName: 'Recording'
+                    };
+                }
                 return {
+                    cssFileName: 'recording',
+                    pageName: 'Recording',
                     generalName,
                     url,
                     date,
-                    cssFileName: 'recording',
-                    readyId: READY_ID,
-                    chat: chatResponse.data.toString(),
+                    noRecording: true
                 };
             }
         }
