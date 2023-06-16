@@ -23,10 +23,6 @@
                 <a href="/feedbacks/create/{{generalName}}/{{url}}/{{name}}/{{date}}"><button
                         class="leave__feedback__button">Leave feedback</button></a>
             </div>
-            <div class="empty__feedbacks">
-                <img class="empty__feedbacks__img" src="/img/empty.png" alt="">
-                <span class="empty__title">There is nothing here...</span>
-            </div>
             <div class="personal__feedbacks__list">
                 {{#each feedbacks}}
                 {{#if feedbackImg}}
@@ -82,6 +78,7 @@
                 <div class="no__feedbacks">
                     <img class="empty__feedbacks__img" src="/img/empty.png" alt="">
                     <span class="empty__title">There is no feedbacks...</span>
+                    <a href="/feedbacks/create/{{generalName}}/{{url}}/{{name}}/{{date}}" class="leave__feedback__link">Leave Feedback</a>
                 </div>
                 {{/if}}
             </div>

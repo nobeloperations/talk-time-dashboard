@@ -4,7 +4,7 @@ exports.hbsConfig = void 0;
 const Handlebars = require("handlebars");
 const exphbs = require("express-handlebars");
 const allow_prototype_access_1 = require("@handlebars/allow-prototype-access");
-const helplers_1 = require("./hbs-helpers/helplers");
+const helpers_1 = require("./hbs-helpers/helpers");
 const path_1 = require("path");
 function hbsConfig(app) {
     let hbs = exphbs.create({
@@ -12,7 +12,7 @@ function hbsConfig(app) {
         handlebars: (0, allow_prototype_access_1.allowInsecurePrototypeAccess)(Handlebars),
         defaultLayout: 'mainLayout',
         layoutsDir: (0, path_1.resolve)('./views/layouts'),
-        helpers: helplers_1.helpers,
+        helpers: helpers_1.helpers,
         partialsDir: (0, path_1.resolve)('./views/partials')
     });
     app.set('views', (0, path_1.resolve)('./views'));

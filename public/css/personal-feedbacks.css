@@ -296,3 +296,7 @@ button:disabled {
     display: flex;
     gap: 20px;
 }
+.leave__feedback__link {
+    color: #57b9ff;
+    font-size: 20px;
+}
