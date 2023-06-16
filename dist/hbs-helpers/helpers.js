@@ -19,8 +19,10 @@ exports.helpers = {
     },
     formatDate(date) {
         const parts = date.split('.');
-        console.log(parts);
-        return `${parts[1]}.${parts[0]}.${parts[2]}`.replaceAll('.', '/');
+        const day = parts[0];
+        const month = parts[1];
+        const year = parts[2];
+        return `${month}/${day}/${year}`;
     },
     badgesLevel(e) {
         return e === 1 ? 'Knowlege level' : e === 2 ? 'Apprentice level' : e === 3 ? 'Mastery level' : 'Leadership level';
