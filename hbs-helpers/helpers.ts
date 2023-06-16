@@ -14,7 +14,7 @@ export let helpers = {
         return e * coef
     },
     formatDate(date) {
-        const parts = date.split('.')
+        const parts = date.split('/')
         const day = parts[0]
         const month = parts[1]
         const year = parts[2]
