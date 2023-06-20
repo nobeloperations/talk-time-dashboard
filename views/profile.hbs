@@ -8,6 +8,7 @@
                     <span class="profile__rating">{{avgRating}}</span>
                     <div class="profile__rating__wrapper">
                         <span>Average feedback rating: &nbsp;</span>
+                        <span>{{generalName}}</span>
                         <div class="profile__stars">
                             <span class="profile__star"></span>
                             <span class="profile__star"></span>
@@ -39,6 +40,7 @@
                     <span class="profile__menu__text">Badges</span>
                 </div>
             </div>
+
             <div class="profile__tabs">
                 <div class="profile__tab meeting__tab" data-tabname="Meetings">
                     {{#if meetings}}
@@ -48,7 +50,7 @@
                             <span class="profile__meeting__url">{{url}}</span>
                             <span class="profile__meeting__date">{{date}}</span>
                         </div>
-                        <a href="/dashboard/{{url}}/{{date}}"><button
+                        <a href="/dashboard/{{../generalName}}/{{url}}/{{date}}"><button
                                 class="profile__meeting__link">Dashboard</button></a>
                     </div>
                     {{/each}}
@@ -68,7 +70,7 @@
                             <span class="profile__feedback__sender__name">{{sender}}</span>
                         </div>
                         <div class="profile__feedback__feedback">{{feedback}}</div>
-                        <a href="/feedbacks/{{url}}/{{../name}}/{{date}}"
+                        <a href="/feedbacks/{{../generalName}}/{{url}}/{{../name}}/{{date}}"
                             class="profile__feedback__view__received__feedback">View Feedback</a>
                     </div>
                     {{/each}}
@@ -88,7 +90,7 @@
                             <span class="profile__feedback__sender__name">{{sender}}</span>
                         </div>
                         <div class="profile__feedback__feedback">{{feedback}}</div>
-                        <a href="/feedbacks/{{url}}/{{receiver}}/{{date}}"
+                        <a href="/feedbacks/{{../generalName}}/{{url}}/{{receiver}}/{{date}}"
                             class="profile__feedback__view__sent__feedback">View Feedback</a>
                     </div>
                     {{/each}}

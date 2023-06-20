@@ -31,7 +31,7 @@ export declare class ProfileService {
     private readonly feedbackModel;
     private readonly meetingModel;
     constructor(userModel: Model<User>, feedbackModel: Model<Feedback>, meetingModel: Model<Meeting>);
-    getProfile(params: any, res: any): Promise<Error | {
+    getProfile(params: any, res: any, generalName: any): Promise<Error | {
         cssFileName: string;
         name: string;
         avatar: string;
@@ -47,5 +47,6 @@ export declare class ProfileService {
         usersBadges: {
             [x: string]: unknown;
         }[];
+        generalName: any;
     }>;
 }

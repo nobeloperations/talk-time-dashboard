@@ -1,4 +1,4 @@
-import { Controller, Get, HttpCode, Param, Render, Res } from '@nestjs/common';
+import { Controller, Get, HttpCode, Param, Query, Render, Res } from '@nestjs/common';
 import { ProfileService } from './profile.service';
 import { Response } from 'express';
 
@@ -10,7 +10,7 @@ export class ProfileController {
     @Get('/:name')
     @HttpCode(200)
     @Render('profile')
-    getProfile(@Param() params, @Res() res: Response) {
-        return this.profileService.getProfile(params, res)
+    getProfile(@Param() params, @Res() res: Response, @Query('q') generalName) {
+        return this.profileService.getProfile(params, res, generalName)
     }
 }

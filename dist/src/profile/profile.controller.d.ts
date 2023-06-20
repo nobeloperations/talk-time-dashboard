@@ -28,7 +28,7 @@ import { Response } from 'express';
 export declare class ProfileController {
     private profileService;
     constructor(profileService: ProfileService);
-    getProfile(params: any, res: Response): Promise<Error | {
+    getProfile(params: any, res: Response, generalName: any): Promise<Error | {
         cssFileName: string;
         name: string;
         avatar: string;
@@ -44,5 +44,6 @@ export declare class ProfileController {
         usersBadges: {
             [x: string]: unknown;
         }[];
+        generalName: any;
     }>;
 }

@@ -21,6 +21,8 @@ const http_exception_filter_1 = require("./filters/http-exception.filter");
 const static_module_1 = require("./static/static.module");
 const profile_module_1 = require("./profile/profile.module");
 const recording_module_1 = require("./recording/recording.module");
+const chat_service_1 = require("./chat/chat.service");
+const chat_module_1 = require("./chat/chat.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -39,13 +41,15 @@ AppModule = __decorate([
             static_module_1.StaticModule,
             profile_module_1.ProfileModule,
             recording_module_1.RecordingModule,
+            chat_module_1.ChatModule,
         ],
         providers: [
             {
                 provide: core_1.APP_FILTER,
                 useClass: http_exception_filter_1.HttpExceptionFilter
             },
-        ]
+            chat_service_1.ChatService,
+        ],
     })
 ], AppModule);
 exports.AppModule = AppModule;

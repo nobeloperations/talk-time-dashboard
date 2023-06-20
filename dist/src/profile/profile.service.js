@@ -23,7 +23,7 @@ let ProfileService = class ProfileService {
         this.feedbackModel = feedbackModel;
         this.meetingModel = meetingModel;
     }
-    async getProfile(params, res) {
+    async getProfile(params, res, generalName) {
         try {
             const { name } = params;
             const nameAndAvatar = await this.userModel.findOne({ name }).select('name avatar');
@@ -67,7 +67,7 @@ let ProfileService = class ProfileService {
                         meetings.push(meeting);
                 });
             }
-            return { cssFileName: 'profile', name: nameAndAvatar.name, avatar: nameAndAvatar.avatar, avgRating, meetingsCounter: currentUsers.length, feedbacksReceived, feedbacksSent, meetings, usersBadges };
+            return { cssFileName: 'profile', name: nameAndAvatar.name, avatar: nameAndAvatar.avatar, avgRating, meetingsCounter: currentUsers.length, feedbacksReceived, feedbacksSent, meetings, usersBadges, generalName };
         }
         catch (e) {
             return new Error(e);
