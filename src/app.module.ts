@@ -12,9 +12,6 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { StaticModule } from './static/static.module';
 import { ProfileModule } from './profile/profile.module';
 import { RecordingModule } from './recording/recording.module';
-import { ChatController } from './chat/chat.controller';
-import { ChatService } from './chat/chat.service';
-import { ChatModule } from './chat/chat.module';
 
 
 @Module({
@@ -32,14 +29,12 @@ import { ChatModule } from './chat/chat.module';
     StaticModule,
     ProfileModule,
     RecordingModule,
-    ChatModule,
   ],
   providers: [
     {
         provide: APP_FILTER,
         useClass: HttpExceptionFilter
     },
-    ChatService,
   ],
 })
 export class AppModule { }
