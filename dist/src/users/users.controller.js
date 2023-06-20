@@ -19,6 +19,9 @@ let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
     }
+    getUsersAvatar(params) {
+        return this.usersService.getUsersAvatar(params);
+    }
     newUser(params, newUserBodyDto, headers) {
         return this.usersService.newUser(params, newUserBodyDto, headers);
     }
@@ -32,6 +35,14 @@ let UsersController = class UsersController {
         return this.usersService.getStatuses(params);
     }
 };
+__decorate([
+    (0, common_1.Get)('/:name'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getUsersAvatar", null);
 __decorate([
     (0, common_1.Post)('/create/:url/:date'),
     (0, common_1.HttpCode)(200),

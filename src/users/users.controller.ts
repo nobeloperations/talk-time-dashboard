@@ -7,6 +7,12 @@ export class UsersController {
 
     constructor(private usersService: UsersService){}
 
+    @Get('/:name')
+    @HttpCode(200)
+    getUsersAvatar(@Param() params) {
+        return this.usersService.getUsersAvatar(params)
+    }
+
     @Post('/create/:url/:date')
     @HttpCode(200)
     newUser(@Param() params, @Body() newUserBodyDto, @Headers() headers) {

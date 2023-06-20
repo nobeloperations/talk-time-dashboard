@@ -22,6 +22,11 @@ let UsersService = class UsersService {
         this.userModel = userModel;
         this.meetingModel = meetingModel;
     }
+    async getUsersAvatar(params) {
+        const { name } = params;
+        let avatar = await this.userModel.findOne({ name }).select('avatar');
+        return avatar;
+    }
     async newUser(params, newUserBodyDto, headers) {
         try {
             if (headers['token'] === process.env.HEADER) {

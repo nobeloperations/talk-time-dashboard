@@ -10,6 +10,12 @@ export class UsersService {
     constructor(@InjectModel('User') private readonly userModel: Model<User>,
                 @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>) { }
 
+    async getUsersAvatar(params) {
+        const { name } = params;
+        let avatar = await this.userModel.findOne({name}).select('avatar');
+        return avatar
+    }
+
     async newUser(params, newUserBodyDto, headers) {
         try {
             if (headers['token'] === process.env.HEADER) {
