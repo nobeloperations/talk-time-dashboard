@@ -90,7 +90,7 @@ let UsersService = class UsersService {
         try {
             const { date, url } = params;
             const statuses = await this.userModel.find({ date, url }).select('name status avatar');
-            return JSON.stringify(statuses);
+            return statuses;
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });

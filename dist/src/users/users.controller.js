@@ -72,7 +72,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "updateStatus", null);
 __decorate([
-    (0, common_1.Get)('/getstatuses/:url/:date'),
+    (0, common_1.Get)('/status/getstatuses/:url/:date'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),

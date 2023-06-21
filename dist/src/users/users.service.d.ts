@@ -42,5 +42,7 @@ export declare class UsersService {
         pageName: string;
     }>;
     updateStatus(updateStatusBodyDto: any): Promise<string>;
-    getStatuses(params: any): Promise<string>;
+    getStatuses(params: any): Promise<string | (import("mongoose").Document<unknown, any, User> & User & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }

@@ -41,5 +41,7 @@ export declare class UsersController {
         pageName: string;
     }>;
     updateStatus(updateStatusBodyDto: any): Promise<string>;
-    getStatuses(params: any): Promise<string>;
+    getStatuses(params: any): Promise<string | (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
+        _id: import("mongoose").Types.ObjectId;
+    })[]>;
 }

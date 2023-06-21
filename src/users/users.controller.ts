@@ -33,7 +33,7 @@ export class UsersController {
         return this.usersService.updateStatus(updateStatusBodyDto)
     }
 
-    @Get('/getstatuses/:url/:date')
+    @Get('/status/getstatuses/:url/:date')
     @HttpCode(200)
     getStatuses(@Param() params) {
         return this.usersService.getStatuses(params)
