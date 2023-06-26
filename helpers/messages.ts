@@ -22,7 +22,7 @@ export async function getMessages(MAIL_AUTHOR, generalName, date, access_token) 
 
     const messages = messagesResponse.data.messages
 
-    return [messages, messages[0].id];
+    return messages ? [messages, messages[0].id] : [];
 }
 
 export async function getMessage(messageId , access_token) {
