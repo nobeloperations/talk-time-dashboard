@@ -22,8 +22,11 @@ let MainController = class MainController {
     getMain() {
         return this.mainService.getMain();
     }
-    addGeneral(addGeneralBodyDto) {
-        return this.mainService.addMeeting(addGeneralBodyDto);
+    addGeneral(addGeneralBody) {
+        return this.mainService.addMeeting(addGeneralBody);
+    }
+    getFAQ() {
+        return this.mainService.getFAQ();
     }
 };
 __decorate([
@@ -42,6 +45,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "addGeneral", null);
+__decorate([
+    (0, common_1.Get)('/faq'),
+    (0, common_1.Render)('faq'),
+    (0, common_1.HttpCode)(200),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], MainController.prototype, "getFAQ", null);
 MainController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [main_service_1.MainService])

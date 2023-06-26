@@ -11,7 +11,7 @@ export class MainService {
         try {
             let generals = await this.meetingModel.find()
 
-            return {cssFileName: 'main', generals, }
+            return {cssFileName: 'main', generals }
         }
         catch(e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
@@ -44,6 +44,10 @@ export class MainService {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
 
+    }
+
+    getFAQ() {
+        return { cssFileName: 'faq' }
     }
 
 }

@@ -13,10 +13,6 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    peaks: {
-        type: Array,
-        default: []
-    },
     badges: {
         type: Array,
         default: []
@@ -33,11 +29,6 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    status: {
-        type: String,
-        default: ''
-    },
-    transcription: String
 })
 
 export interface User {
@@ -45,7 +36,5 @@ export interface User {
     url: string,
     avatar: string,
     badges: string,
-    peaks: number[],
     percents: string,
-    transcription: String
 }

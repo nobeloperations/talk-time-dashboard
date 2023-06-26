@@ -19,8 +19,8 @@ let BadgesController = class BadgesController {
     constructor(badgesService) {
         this.badgesService = badgesService;
     }
-    newBadge(params, newBadgeBodyDto) {
-        return this.badgesService.newBadge(params, newBadgeBodyDto);
+    newBadge(params, newBadgeBody) {
+        return this.badgesService.newBadge(params, newBadgeBody);
     }
 };
 __decorate([

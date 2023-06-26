@@ -17,14 +17,13 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let BadgesService = class BadgesService {
-    constructor(userModel, meetingModel) {
+    constructor(userModel) {
         this.userModel = userModel;
-        this.meetingModel = meetingModel;
     }
-    async newBadge(params, newBadgeBodyDto) {
+    async newBadge(params, newBadgeBody) {
         try {
             const { name } = params;
-            const { badge } = newBadgeBodyDto;
+            const { badge } = newBadgeBody;
             await this.userModel.updateMany({ name }, { $push: { badges: { badge } } });
         }
         catch (e) {
@@ -35,9 +34,7 @@ let BadgesService = class BadgesService {
 BadgesService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('User')),
-    __param(1, (0, mongoose_1.InjectModel)('Meeting')),
-    __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model])
+    __metadata("design:paramtypes", [mongoose_2.Model])
 ], BadgesService);
 exports.BadgesService = BadgesService;
 //# sourceMappingURL=badges.service.js.map

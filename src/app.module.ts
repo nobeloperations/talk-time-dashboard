@@ -9,7 +9,6 @@ import { UsersModule } from './users/users.module';
 import { BadgesModule } from './badges/badges.module';
 import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
-import { StaticModule } from './static/static.module';
 import { ProfileModule } from './profile/profile.module';
 import { RecordingModule } from './recording/recording.module';
 
@@ -26,7 +25,6 @@ import { RecordingModule } from './recording/recording.module';
     FeedbacksModule,
     UsersModule,
     BadgesModule,
-    StaticModule,
     ProfileModule,
     RecordingModule,
   ],

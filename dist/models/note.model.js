@@ -1,6 +1,8 @@
-import * as mongoose from 'mongoose'
-
-export const ConclusionSchema = new mongoose.Schema({
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.NoteSchema = void 0;
+const mongoose = require("mongoose");
+exports.NoteSchema = new mongoose.Schema({
     text: {
         type: String,
         required: true
@@ -21,11 +23,5 @@ export const ConclusionSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-})
-
-export interface Conclusion {
-    text: string,
-    url: string,
-    important: string,
-    tags: string[]
-}
+});
+//# sourceMappingURL=note.model.js.map

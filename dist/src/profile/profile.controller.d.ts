@@ -32,7 +32,7 @@ export declare class ProfileController {
         cssFileName: string;
         name: string;
         avatar: string;
-        avgRating: any;
+        avgRating: number;
         meetingsCounter: number;
         feedbacksReceived: (import("mongoose").Document<unknown, any, import("../../models/feedback.model").Feedback> & import("../../models/feedback.model").Feedback & {
             _id: import("mongoose").Types.ObjectId;

@@ -27,8 +27,10 @@ let FeedbacksService = class FeedbacksService {
     async getPersonalFeedbacks(params, res, generalName) {
         try {
             const { url, name, date } = params;
-            const feedbacks = await this.feedbackModel.find({ receiver: name, url, date });
-            const currentUser = await this.userModel.findOne({ name, url, date });
+            const [feedbacks, currentUser] = await Promise.all([
+                await this.feedbackModel.find({ receiver: name, url, date }),
+                await this.userModel.findOne({ name, url, date })
+            ]);
             if (!currentUser) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
                 return;
@@ -42,22 +44,24 @@ let FeedbacksService = class FeedbacksService {
     async getNewFeedback(params, res, generalName) {
         try {
             const { url, name, date } = params;
-            const currentUser = await this.userModel.findOne({ name, url, date });
+            const [users, currentUser] = await Promise.all([
+                await this.userModel.find({ url, date }),
+                await this.userModel.findOne({ name, url, date })
+            ]);
             if (!currentUser) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
                 return;
             }
-            const users = await this.userModel.find({ url, date });
             return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback" };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));
         }
     }
-    async createFeedback(files, createFeedbackBodyDto, params, res) {
+    async createFeedback(files, createFeedbackBody, params, res) {
         var _a, _b;
         try {
-            let { sender, rating, feedback, badge } = createFeedbackBodyDto;
+            let { sender, rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
             let receiver = name;
             let sendUser = await this.userModel.findOne({ name: sender });
@@ -79,7 +83,7 @@ let FeedbacksService = class FeedbacksService {
                 date
             });
             await newFeedback.save();
-            res.redirect(`/dashboard/${generalName}/${url}/${date}`);
+            res.redirect(`/dashboard/${url}/${date}?q=${generalName}`);
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });

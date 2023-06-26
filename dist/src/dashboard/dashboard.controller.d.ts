@@ -34,19 +34,17 @@ export declare class DashboardController {
         users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
             _id: import("mongoose").Types.ObjectId;
         })[];
-        conclusions: (import("mongoose").Document<unknown, any, import("../../models/conclusion.model").Conclusion> & import("../../models/conclusion.model").Conclusion & {
+        notes: (import("mongoose").Document<unknown, any, import("../../models/note.model").Note> & import("../../models/note.model").Note & {
             _id: import("mongoose").Types.ObjectId;
         })[];
         usersLength: number;
         feedbacksLength: number;
-        conclusionsLength: number;
         feedbacksByName: {};
         date: any;
         generalName: any;
         pageName: string;
     }>;
-    postPercents(params: any, postPercentsBodyDto: any): Promise<string>;
-    newConclusion(params: any, createConclusionBodyDto: any): Promise<string>;
-    deleteConclusion(deleteConclusionBodyDto: any): Promise<string>;
-    importantConclusion(importantConclusionBodyDto: any): Promise<string>;
+    postPercents(params: any, updatePercentsBody: any): Promise<string>;
+    newConclusion(params: any, createNoteBody: any): Promise<string>;
+    deleteConclusion(deleteConclusionBody: any): Promise<string>;
 }

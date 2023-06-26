@@ -27,18 +27,17 @@ let UsersService = class UsersService {
         let avatar = await this.userModel.findOne({ name }).select('avatar');
         return avatar;
     }
-    async newUser(params, newUserBodyDto, headers) {
+    async newUser(params, newUserBody, headers) {
         try {
             if (headers['token'] === process.env.HEADER) {
                 const { url } = params;
-                const { name, avatar, date } = newUserBodyDto;
-                const isUser = await this.userModel.findOne({ name, url, date });
-                if (!isUser) {
+                const { name, avatar, date } = newUserBody;
+                const isUserExsist = await this.userModel.findOne({ name, url, date });
+                if (!isUserExsist) {
                     const newUser = new this.userModel({
                         name,
                         avatar,
                         url,
-                        peaks: [],
                         percents: '',
                         date
                     });
@@ -57,43 +56,22 @@ let UsersService = class UsersService {
         try {
             const { url, date } = params;
             let meeting = await this.meetingModel.findOne({ name: generalName });
-            let currentMeeting = false;
-            meeting === null || meeting === void 0 ? void 0 : meeting.meetings.forEach(curr => {
-                if (curr['date'] == date)
-                    currentMeeting = true;
-            });
+            const currentMeeting = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.some(curr => curr['date'] == date);
             if (!meeting || !currentMeeting) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
             }
-            let dbUsers = await this.userModel.find({}).select('name avatar count badges');
-            let users = [];
-            dbUsers.forEach(async (user) => {
-                users.push(user.toObject());
-            });
-            users = users.filter((value, index, self) => index === self.findIndex((t) => (t.name === value.name)));
+            const dbUsers = await this.userModel.find({}).select('name avatar count badges');
+            const users = [];
+            for (const user of dbUsers) {
+                const existingUser = users.find(u => u.name === user.name);
+                if (!existingUser) {
+                    users.push(user.toObject());
+                }
+            }
             return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users' };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));
-        }
-    }
-    async updateStatus(updateStatusBodyDto) {
-        try {
-            const { date, name, url, status } = updateStatusBodyDto;
-            await this.userModel.updateOne({ name, url, date }, { status });
-        }
-        catch (e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e });
-        }
-    }
-    async getStatuses(params) {
-        try {
-            const { date, url } = params;
-            const statuses = await this.userModel.find({ date, url }).select('name status avatar');
-            return statuses;
-        }
-        catch (e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
 };

@@ -12,7 +12,7 @@ const dashboard_service_1 = require("./dashboard.service");
 const dashboard_controller_1 = require("./dashboard.controller");
 const mongoose_1 = require("@nestjs/mongoose");
 const user_model_1 = require("../../models/user.model");
-const conclusion_model_1 = require("../../models/conclusion.model");
+const note_model_1 = require("../../models/note.model");
 const feedback_model_1 = require("../../models/feedback.model");
 let DashboardModule = class DashboardModule {
 };
@@ -20,7 +20,7 @@ DashboardModule = __decorate([
     (0, common_1.Module)({
         imports: [mongoose_1.MongooseModule.forFeature([
                 { name: 'User', schema: user_model_1.UserSchema },
-                { name: 'Conclusion', schema: conclusion_model_1.ConclusionSchema },
+                { name: 'Conclusion', schema: note_model_1.NoteSchema },
                 { name: 'Feedback', schema: feedback_model_1.FeedbackSchema },
             ])],
         providers: [dashboard_service_1.DashboardService],

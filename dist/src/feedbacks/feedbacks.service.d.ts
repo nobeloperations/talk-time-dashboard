@@ -57,5 +57,5 @@ export declare class FeedbacksService {
         generalName: any;
         pageName: string;
     }>;
-    createFeedback(files: any, createFeedbackBodyDto: any, params: any, res: any): Promise<string>;
+    createFeedback(files: any, createFeedbackBody: any, params: any, res: any): Promise<string>;
 }

@@ -28,8 +28,8 @@ let FeedbacksController = class FeedbacksController {
     getNewFeedback(params, res, generalName) {
         return this.feedbacksService.getNewFeedback(params, res, generalName);
     }
-    createFeedback(files, createFeedbackBodyDto, params, res) {
-        return this.feedbacksService.createFeedback(files, createFeedbackBodyDto, params, res);
+    createFeedback(files, createFeedbackBody, params, res) {
+        return this.feedbacksService.createFeedback(files, createFeedbackBody, params, res);
     }
 };
 __decorate([

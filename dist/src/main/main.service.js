@@ -23,15 +23,15 @@ let MainService = class MainService {
     async getMain() {
         try {
             let generals = await this.meetingModel.find();
-            return { cssFileName: 'main', generals, };
+            return { cssFileName: 'main', generals };
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async addMeeting(addGeneralBodyDto) {
+    async addMeeting(addGeneralBody) {
         try {
-            const { name, url, date } = addGeneralBodyDto;
+            const { name, url, date } = addGeneralBody;
             const meeting = await this.meetingModel.findOne({ name });
             if (!meeting && name !== 'Meeting Details') {
                 const newMeeting = new this.meetingModel({
@@ -54,6 +54,9 @@ let MainService = class MainService {
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
+    }
+    getFAQ() {
+        return { cssFileName: 'faq' };
     }
 };
 MainService = __decorate([

@@ -18,4 +18,11 @@ export class MainController {
     addGeneral(@Body() addGeneralBody) {
         return this.mainService.addMeeting(addGeneralBody)
     }
+
+    @Get('/faq')
+    @Render('faq')
+    @HttpCode(200)
+    getFAQ() {
+        return this.mainService.getFAQ()
+    }
 }

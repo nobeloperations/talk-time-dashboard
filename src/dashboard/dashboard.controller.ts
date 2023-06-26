@@ -17,14 +17,14 @@ export class DashboardController {
     
     @Post('/percentage/:url/:date')
     @HttpCode(200)
-    postPercents(@Param() params, @Body() postPercentsBody) {
-        return this.dashboardService.postPercents(params, postPercentsBody)
+    postPercents(@Param() params, @Body() updatePercentsBody) {
+        return this.dashboardService.updatePercents(params, updatePercentsBody)
     }
 
     @Post('/newconclusion/:url/:date')
     @HttpCode(200)
-    newConclusion(@Param() params, @Body() createConclusionBody) {
-        return this.dashboardService.newConclusion(params, createConclusionBody)
+    newConclusion(@Param() params, @Body() createNoteBody) {
+        return this.dashboardService.newNote(params, createNoteBody)
     }
 
     @Delete('/deleteconclusion')
@@ -32,10 +32,4 @@ export class DashboardController {
     deleteConclusion(@Body() deleteConclusionBody) {
         return this.dashboardService.deleteConclusion(deleteConclusionBody)
     } 
-
-    @Post('/importantconclusion')
-    @HttpCode(200)
-    importantConclusion(@Body() importantConclusionBody) {
-        return this.dashboardService.importantConclusion(importantConclusionBody)
-    }
 }

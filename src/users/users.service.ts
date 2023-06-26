@@ -8,11 +8,11 @@ import { resolve } from 'path';
 @Injectable()
 export class UsersService {
     constructor(@InjectModel('User') private readonly userModel: Model<User>,
-                @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>) { }
+        @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>) { }
 
     async getUsersAvatar(params) {
         const { name } = params;
-        let avatar = await this.userModel.findOne({name}).select('avatar');
+        let avatar = await this.userModel.findOne({ name }).select('avatar');
         return avatar
     }
 
@@ -21,26 +21,26 @@ export class UsersService {
             if (headers['token'] === process.env.HEADER) {
                 const { url } = params;
                 const { name, avatar, date } = newUserBody;
-    
-                const isUser = await this.userModel.findOne({ name, url, date })
-                if (!isUser) {
+
+                const isUserExsist = await this.userModel.findOne({ name, url, date })
+                if (!isUserExsist) {
                     const newUser = new this.userModel({
                         name,
                         avatar,
                         url,
-                        peaks: [],
                         percents: '',
                         date
                     })
-    
+
                     await newUser.save()
+
                 }
             }
             else {
                 throw new HttpException('Invalid headers', 404)
             }
         }
-        catch(e) {
+        catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
     }
@@ -48,53 +48,28 @@ export class UsersService {
     async getUsers(params, res, generalName) {
         try {
             const { url, date } = params;
-            let meeting = await this.meetingModel.findOne({name: generalName})
-            let currentMeeting = false;
-            meeting?.meetings.forEach(curr => {
-                if(curr['date'] == date) currentMeeting = true
-            })
-            
-            if(!meeting || !currentMeeting) {
+            let meeting = await this.meetingModel.findOne({ name: generalName })
+
+            const currentMeeting = meeting?.meetings.some(curr => curr['date'] == date);
+
+            if (!meeting || !currentMeeting) {
                 res.sendFile(resolve('views/notfound.html'))
             }
-    
-            let dbUsers = await this.userModel.find({}).select('name avatar count badges')
-            let users = []
-            dbUsers.forEach(async user => {
-                users.push(user.toObject())
-            })
-    
-            users = users.filter((value, index, self) =>
-                index === self.findIndex((t) => (
-                    t.name === value.name
-                ))
-            )
-            
+
+            const dbUsers = await this.userModel.find({}).select('name avatar count badges')
+            const users = []
+
+            for (const user of dbUsers) {
+                const existingUser = users.find(u => u.name === user.name)
+                if (!existingUser) {
+                    users.push(user.toObject())
+                }
+            }
+
             return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users' }
         }
-        catch(e) {
+        catch (e) {
             res.sendFile(resolve('views/notfound.html'))
-        }
-    }
-
-    async updateStatus(updateStatusBody) {
-        try {
-            const { date, name, url, status } = updateStatusBody
-            await this.userModel.updateOne({ name, url, date }, { status })
-        }
-        catch(e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e })
-        }
-    }
-
-    async getStatuses(params) {
-        try {
-            const { date, url } = params
-            const statuses = await this.userModel.find({ date, url }).select('name status avatar')
-            return statuses
-        }
-        catch(e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
     }
 }

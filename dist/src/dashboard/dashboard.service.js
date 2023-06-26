@@ -18,83 +18,74 @@ const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const path_1 = require("path");
 let DashboardService = class DashboardService {
-    constructor(userModel, conclusionModel, feedbackModel) {
+    constructor(userModel, noteModel, feedbackModel) {
         this.userModel = userModel;
-        this.conclusionModel = conclusionModel;
+        this.noteModel = noteModel;
         this.feedbackModel = feedbackModel;
     }
     async getDashboard(params, res, generalName) {
         try {
             const { url, date } = params;
-            const users = await this.userModel.find({ url, date });
-            console.log(url, date);
-            const conclusions = await this.conclusionModel.find({ url, date });
-            const feedbacks = await this.feedbackModel.find({ url, date });
+            const [users, notes, feedbacks] = await Promise.all([
+                await this.userModel.find({ url, date }),
+                await this.noteModel.find({ url, date }),
+                await this.feedbackModel.find({ url, date })
+            ]);
             if (!users.length) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
                 return;
             }
             let feedbacksByName = {};
-            users.forEach(user => {
-                feedbacksByName[user.name] = {
-                    name: user.name,
+            users.forEach(({ name, avatar, percents }) => {
+                feedbacksByName[name] = {
+                    name,
                     rating: [],
-                    avatar: user.avatar,
-                    percents: user.percents,
-                    peaks: user.peaks
+                    avatar,
+                    percents
                 };
             });
-            feedbacks.forEach(feedback => {
-                feedbacksByName[feedback.receiver].rating.push(feedback.rating);
+            feedbacks.forEach(({ receiver, rating }) => {
+                feedbacksByName[receiver].rating.push(rating);
             });
-            return { cssFileName: 'dashboard', url, users, conclusions, usersLength: users.length, feedbacksLength: feedbacks.length, conclusionsLength: conclusions.length, feedbacksByName, date, generalName, pageName: 'Dashboard' };
+            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard' };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));
         }
     }
-    async postPercents(params, postPercentsBodyDto) {
+    async updatePercents(params, postPercentsBody) {
         try {
-            const { percents } = postPercentsBodyDto;
+            const { percents } = postPercentsBody;
             const { url, date } = params;
-            percents.forEach(async (percent) => {
-                await this.userModel.findOneAndUpdate({ name: percent.name, url, date }, { percents: percent.percent });
+            percents.forEach(async ({ name, percent }) => {
+                await this.userModel.findOneAndUpdate({ name, url, date }, { percents: percent });
             });
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async newConclusion(params, createConclusionBodyDto) {
+    async newNote(params, createNoteBody) {
         try {
             const { url, date } = params;
-            const { text, tags } = createConclusionBodyDto;
-            const newConclusion = new this.conclusionModel({
+            const { text, tags } = createNoteBody;
+            const newNote = new this.noteModel({
                 text,
                 url,
                 tags,
                 date
             });
-            await newConclusion.save();
-            return JSON.stringify(newConclusion);
+            await newNote.save();
+            return JSON.stringify(newNote);
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async deleteConclusion(deleteConclusionBodyDto) {
+    async deleteConclusion(deleteConclusionBody) {
         try {
-            const { id } = deleteConclusionBodyDto;
-            await this.conclusionModel.deleteOne({ _id: id });
-        }
-        catch (e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e });
-        }
-    }
-    async importantConclusion(importantConclusionBodyDto) {
-        try {
-            const { id } = importantConclusionBodyDto;
-            await this.conclusionModel.findOneAndUpdate({ _id: id }, { important: true });
+            const { id } = deleteConclusionBody;
+            await this.noteModel.deleteOne({ _id: id });
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });

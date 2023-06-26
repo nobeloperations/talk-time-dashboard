@@ -33,5 +33,8 @@ export declare class MainController {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
-    addGeneral(addGeneralBodyDto: any): Promise<string>;
+    addGeneral(addGeneralBody: any): Promise<string>;
+    getFAQ(): {
+        cssFileName: string;
+    };
 }

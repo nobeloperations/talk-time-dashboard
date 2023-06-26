@@ -1,5 +1,6 @@
+import axios from 'axios'
 
-export async function getAccessToken(refresh_token, client_id, client_secret, axios) {
+export async function getAccessToken(refresh_token, client_id, client_secret) {
     const response = await axios.post('https://oauth2.googleapis.com/token', {
         refresh_token: refresh_token,
         client_id: client_id,

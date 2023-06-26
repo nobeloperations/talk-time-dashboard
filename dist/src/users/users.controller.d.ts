@@ -31,7 +31,7 @@ export declare class UsersController {
     getUsersAvatar(params: any): Promise<import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    newUser(params: any, newUserBodyDto: any, headers: any): Promise<string>;
+    newUser(params: any, newUserBody: any, headers: any): Promise<string>;
     getUsers(params: any, res: Response, generalName: any): Promise<{
         cssFileName: string;
         users: any[];
@@ -40,8 +40,4 @@ export declare class UsersController {
         generalName: any;
         pageName: string;
     }>;
-    updateStatus(updateStatusBodyDto: any): Promise<string>;
-    getStatuses(params: any): Promise<string | (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
-        _id: import("mongoose").Types.ObjectId;
-    })[]>;
 }

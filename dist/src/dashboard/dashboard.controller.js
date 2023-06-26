@@ -22,17 +22,14 @@ let DashboardController = class DashboardController {
     getDashboard(params, res, generalName) {
         return this.dashboardService.getDashboard(params, res, generalName);
     }
-    postPercents(params, postPercentsBodyDto) {
-        return this.dashboardService.postPercents(params, postPercentsBodyDto);
+    postPercents(params, updatePercentsBody) {
+        return this.dashboardService.updatePercents(params, updatePercentsBody);
     }
-    newConclusion(params, createConclusionBodyDto) {
-        return this.dashboardService.newConclusion(params, createConclusionBodyDto);
+    newConclusion(params, createNoteBody) {
+        return this.dashboardService.newNote(params, createNoteBody);
     }
-    deleteConclusion(deleteConclusionBodyDto) {
-        return this.dashboardService.deleteConclusion(deleteConclusionBodyDto);
-    }
-    importantConclusion(importantConclusionBodyDto) {
-        return this.dashboardService.importantConclusion(importantConclusionBodyDto);
+    deleteConclusion(deleteConclusionBody) {
+        return this.dashboardService.deleteConclusion(deleteConclusionBody);
     }
 };
 __decorate([
@@ -72,14 +69,6 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], DashboardController.prototype, "deleteConclusion", null);
-__decorate([
-    (0, common_1.Post)('/importantconclusion'),
-    (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], DashboardController.prototype, "importantConclusion", null);
 DashboardController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [dashboard_service_1.DashboardService])

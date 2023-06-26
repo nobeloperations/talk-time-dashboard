@@ -15,10 +15,6 @@ exports.UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    peaks: {
-        type: Array,
-        default: []
-    },
     badges: {
         type: Array,
         default: []
@@ -35,10 +31,5 @@ exports.UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    status: {
-        type: String,
-        default: ''
-    },
-    transcription: String
 });
 //# sourceMappingURL=user.model.js.map

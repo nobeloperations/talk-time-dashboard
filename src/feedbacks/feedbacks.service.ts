@@ -17,10 +17,12 @@ export class FeedbacksService {
     async getPersonalFeedbacks(params, res, generalName) {
         try {
             const { url, name, date } = params;
-            const feedbacks = await this.feedbackModel.find({ receiver: name, url, date })
-            const currentUser = await this.userModel.findOne({ name, url, date })
+            const [feedbacks, currentUser] = await Promise.all([
+                await this.feedbackModel.find({ receiver: name, url, date }),
+                await this.userModel.findOne({ name, url, date })
+            ])
 
-            
+
             if (!currentUser) {
                 res.sendFile(resolve('views/notfound.html'))
                 return;
@@ -28,7 +30,7 @@ export class FeedbacksService {
 
             return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks` }
         }
-        
+
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))
         }
@@ -37,14 +39,16 @@ export class FeedbacksService {
     async getNewFeedback(params, res, generalName) {
         try {
             const { url, name, date } = params;
-            const currentUser = await this.userModel.findOne({ name, url, date })
+            const [users, currentUser] = await Promise.all([
+                await this.userModel.find({ url, date }),
+                await this.userModel.findOne({ name, url, date })
+            ])
 
             if (!currentUser) {
                 res.sendFile(resolve('views/notfound.html'))
                 return;
             }
 
-            const users = await this.userModel.find({ url, date })
             return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback" }
         }
         catch (e) {
@@ -80,9 +84,9 @@ export class FeedbacksService {
             })
 
             await newFeedback.save()
-            res.redirect(`/dashboard/${generalName}/${url}/${date}`)
+            res.redirect(`/dashboard/${url}/${date}?q=${generalName}`)
         }
-        catch(e) {
+        catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
     }

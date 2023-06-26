@@ -32,7 +32,7 @@ export declare class UsersService {
     getUsersAvatar(params: any): Promise<import("mongoose").Document<unknown, any, User> & User & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    newUser(params: any, newUserBodyDto: any, headers: any): Promise<string>;
+    newUser(params: any, newUserBody: any, headers: any): Promise<string>;
     getUsers(params: any, res: any, generalName: any): Promise<{
         cssFileName: string;
         users: any[];
@@ -41,8 +41,4 @@ export declare class UsersService {
         generalName: any;
         pageName: string;
     }>;
-    updateStatus(updateStatusBodyDto: any): Promise<string>;
-    getStatuses(params: any): Promise<string | (import("mongoose").Document<unknown, any, User> & User & {
-        _id: import("mongoose").Types.ObjectId;
-    })[]>;
 }

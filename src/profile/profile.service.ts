@@ -16,49 +16,37 @@ export class ProfileService {
     async getProfile(params, res, generalName) {
         try {
             const { name } = params;
-            const nameAndAvatar = await this.userModel.findOne({ name }).select('name avatar')
-            const currentUsers = await this.userModel.find({ name })
-            const feedbacksReceived = await this.feedbackModel.find({ receiver: name })
-            const feedbacksSent = await this.feedbackModel.find({ sender: name })
-            const currentUser = await this.userModel.findOne({ name })
+            const [nameAndAvatar, currentUsers, feedbacksReceived, feedbacksSent, currentUser] = await Promise.all([
+                await this.userModel.findOne({ name }).select('name avatar'),
+                await this.userModel.find({ name }),
+                await this.feedbackModel.find({ receiver: name }),
+                await this.feedbackModel.find({ sender: name }),
+                await this.userModel.findOne({ name })
+            ])
 
             if (!currentUsers.length) {
                 res.sendFile(resolve('views/notfound.html'))
                 return;
             }
 
-            let avgRating;
-            let rating = 0;
-            let ratingCounter = 0;
-            if (feedbacksReceived.length) {
-                feedbacksReceived.forEach(feedback => {
-                    ratingCounter++
-                    rating += feedback.rating
-                })
-                avgRating = Math.floor(rating / ratingCounter)
-            }
+            const avgRating = feedbacksReceived.length
+                ? Math.floor(
+                    feedbacksReceived.reduce((total, feedback) => total + feedback.rating, 0) / feedbacksReceived.length
+                )
+                : undefined;
 
-            let meetingUrls = []
-            let meetingDates = []
-            let meetings = []
-
+                
             const badgesResult = {};
+            const usersBadges = Object.entries(badgesResult).map(([key, value]) => ({ [key]: value }));
 
             for (const item of currentUser.badges) {
                 const key = item['badge'];
                 badgesResult[key] = badgesResult[key] ? badgesResult[key] + 1 : 1;
             }
 
-            const usersBadges = Object.entries(badgesResult).map(([key, value]) => ({ [key]: value }));
-
-
-            for (let currentUser of currentUsers) {
-                meetingUrls.push(currentUser['url'])
-                meetingDates.push(currentUser['date'])
-            }
-
-            meetingUrls = [...new Set(meetingUrls)]
-            meetingDates = [...new Set(meetingDates)]
+            let meetingUrls = Array.from(new Set(currentUsers.map(currentUser => currentUser.url)))
+            let meetingDates = Array.from(new Set(currentUsers.map(currentUser => currentUser['date'])))
+            let meetings = []
 
             let meetingsByUrl = await this.meetingModel.find({ url: { $in: meetingUrls } })
 

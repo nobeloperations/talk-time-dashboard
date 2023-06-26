@@ -35,7 +35,7 @@ export declare class ProfileService {
         cssFileName: string;
         name: string;
         avatar: string;
-        avgRating: any;
+        avgRating: number;
         meetingsCounter: number;
         feedbacksReceived: (import("mongoose").Document<unknown, any, Feedback> & Feedback & {
             _id: import("mongoose").Types.ObjectId;

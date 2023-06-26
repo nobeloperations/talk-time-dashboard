@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAccessToken = void 0;
-async function getAccessToken(refresh_token, client_id, client_secret, axios) {
-    const response = await axios.post('https://oauth2.googleapis.com/token', {
+const axios_1 = require("axios");
+async function getAccessToken(refresh_token, client_id, client_secret) {
+    const response = await axios_1.default.post('https://oauth2.googleapis.com/token', {
         refresh_token: refresh_token,
         client_id: client_id,
         client_secret: client_secret,

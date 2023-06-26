@@ -1,13 +1,13 @@
 export declare class RecordingService {
     getRecording(params: any, res: any, generalName: any): Promise<{
+        cssFileName: string;
+        pageName: string;
         generalName: any;
         url: any;
         date: any;
-        cssFileName: string;
+        noRecording: boolean;
         readyId: string;
         chat: string;
-        pageName: string;
-        noRecording?: undefined;
     } | {
         cssFileName: string;
         pageName: string;

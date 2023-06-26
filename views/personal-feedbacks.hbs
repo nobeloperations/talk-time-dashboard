@@ -20,7 +20,7 @@
                         <button class="apply__date__filter">Apply date</button>
                     </div>
                 </div>
-                <a href="/feedbacks/create/{{generalName}}/{{url}}/{{name}}/{{date}}"><button
+                <a href="/feedbacks/create/{{url}}/{{name}}/{{date}}?q={{generalName}}"><button
                         class="leave__feedback__button">Leave feedback</button></a>
             </div>
             <div class="personal__feedbacks__list">
@@ -78,7 +78,7 @@
                 <div class="no__feedbacks">
                     <img class="empty__feedbacks__img" src="/img/empty.png" alt="">
                     <span class="empty__title">There is no feedbacks...</span>
-                    <a href="/feedbacks/create/{{generalName}}/{{url}}/{{name}}/{{date}}" class="leave__feedback__link">Leave Feedback</a>
+                    <a href="/feedbacks/create/{{url}}/{{name}}/{{date}}?q={{generalName}}" class="leave__feedback__link">Leave Feedback</a>
                 </div>
                 {{/if}}
             </div>

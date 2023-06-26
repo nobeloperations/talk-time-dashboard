@@ -22,17 +22,11 @@ let UsersController = class UsersController {
     getUsersAvatar(params) {
         return this.usersService.getUsersAvatar(params);
     }
-    newUser(params, newUserBodyDto, headers) {
-        return this.usersService.newUser(params, newUserBodyDto, headers);
+    newUser(params, newUserBody, headers) {
+        return this.usersService.newUser(params, newUserBody, headers);
     }
     getUsers(params, res, generalName) {
         return this.usersService.getUsers(params, res, generalName);
-    }
-    updateStatus(updateStatusBodyDto) {
-        return this.usersService.updateStatus(updateStatusBodyDto);
-    }
-    getStatuses(params) {
-        return this.usersService.getStatuses(params);
     }
 };
 __decorate([
@@ -64,22 +58,6 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsers", null);
-__decorate([
-    (0, common_1.Post)('/updatestatus'),
-    (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "updateStatus", null);
-__decorate([
-    (0, common_1.Get)('/status/getstatuses/:url/:date'),
-    (0, common_1.HttpCode)(200),
-    __param(0, (0, common_1.Param)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
-], UsersController.prototype, "getStatuses", null);
 UsersController = __decorate([
     (0, common_1.Controller)('users'),
     __metadata("design:paramtypes", [users_service_1.UsersService])

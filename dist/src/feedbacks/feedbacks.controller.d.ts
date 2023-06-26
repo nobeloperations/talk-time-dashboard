@@ -56,5 +56,5 @@ export declare class FeedbacksController {
         generalName: any;
         pageName: string;
     }>;
-    createFeedback(files: any, createFeedbackBodyDto: any, params: any, res: Response): Promise<string>;
+    createFeedback(files: any, createFeedbackBody: any, params: any, res: Response): Promise<string>;
 }

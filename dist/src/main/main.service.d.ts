@@ -33,5 +33,8 @@ export declare class MainService {
             _id: import("mongoose").Types.ObjectId;
         })[];
     }>;
-    addMeeting(addGeneralBodyDto: any): Promise<string>;
+    addMeeting(addGeneralBody: any): Promise<string>;
+    getFAQ(): {
+        cssFileName: string;
+    };
 }
