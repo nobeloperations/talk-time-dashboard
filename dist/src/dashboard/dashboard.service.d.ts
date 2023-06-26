@@ -31,7 +31,7 @@ export declare class DashboardService {
     private readonly conclusionModel;
     private readonly feedbackModel;
     constructor(userModel: Model<User>, conclusionModel: Model<Conclusion>, feedbackModel: Model<Feedback>);
-    getDashboard(params: any, res: any): Promise<{
+    getDashboard(params: any, res: any, generalName: any): Promise<{
         cssFileName: string;
         url: any;
         users: (import("mongoose").Document<unknown, any, User> & User & {

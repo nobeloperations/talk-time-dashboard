@@ -18,9 +18,9 @@ export class MainService {
         }
     }
 
-    async addMeeting(addGeneralBodyDto) {
+    async addMeeting(addGeneralBody) {
         try {
-            const { name, url, date } = addGeneralBodyDto;
+            const { name, url, date } = addGeneralBody;
             const meeting = await this.meetingModel.findOne({name})
             if(!meeting && name !== 'Meeting Details') {
                 const newMeeting = new this.meetingModel({

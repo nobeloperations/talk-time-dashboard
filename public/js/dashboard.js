@@ -149,7 +149,7 @@ window.onload = function () {
         let _noteValue = _addNoteInput.value;
         if (_noteValue.trim()) {
             let _noteHTML = `
-            <span class="note__text">• ${_noteValue}</span>
+            <span class="note__text">${_noteValue}</span>
             <div class="note__options">
             <img class="delete__note" src="/img/trash.png" alt="">
             <img class="open__tags__note" src="/img/tag.png" alt="">

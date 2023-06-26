@@ -22,34 +22,36 @@ let FeedbacksController = class FeedbacksController {
     constructor(feedbacksService) {
         this.feedbacksService = feedbacksService;
     }
-    getPersonalFeedbacks(params, res) {
-        return this.feedbacksService.getPersonalFeedbacks(params, res);
+    getPersonalFeedbacks(params, res, generalName) {
+        return this.feedbacksService.getPersonalFeedbacks(params, res, generalName);
     }
-    getNewFeedback(params, res) {
-        return this.feedbacksService.getNewFeedback(params, res);
+    getNewFeedback(params, res, generalName) {
+        return this.feedbacksService.getNewFeedback(params, res, generalName);
     }
     createFeedback(files, createFeedbackBodyDto, params, res) {
         return this.feedbacksService.createFeedback(files, createFeedbackBodyDto, params, res);
     }
 };
 __decorate([
-    (0, common_1.Get)('/:generalName/:url/:name/:date'),
+    (0, common_1.Get)('/:url/:name/:date'),
     (0, common_1.Render)('personal-feedbacks'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getPersonalFeedbacks", null);
 __decorate([
-    (0, common_1.Get)('/create/:generalName/:url/:name/:date'),
+    (0, common_1.Get)('/create/:url/:name/:date'),
     (0, common_1.Render)('new-feedback'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getNewFeedback", null);
 __decorate([

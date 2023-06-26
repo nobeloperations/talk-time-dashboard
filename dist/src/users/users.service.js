@@ -53,9 +53,9 @@ let UsersService = class UsersService {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async getUsers(params, res) {
+    async getUsers(params, res, generalName) {
         try {
-            const { url, date, generalName } = params;
+            const { url, date } = params;
             let meeting = await this.meetingModel.findOne({ name: generalName });
             let currentMeeting = false;
             meeting === null || meeting === void 0 ? void 0 : meeting.meetings.forEach(curr => {

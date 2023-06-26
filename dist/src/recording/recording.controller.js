@@ -19,18 +19,19 @@ let RecordingController = class RecordingController {
     constructor(recordingService) {
         this.recordingService = recordingService;
     }
-    getRecording(params, res) {
-        return this.recordingService.getRecording(params, res);
+    getRecording(params, res, generalName) {
+        return this.recordingService.getRecording(params, res, generalName);
     }
 };
 __decorate([
-    (0, common_1.Get)('/:generalName/:url/:date'),
+    (0, common_1.Get)('/:url/:date'),
     (0, common_1.Render)('recording'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], RecordingController.prototype, "getRecording", null);
 RecordingController = __decorate([

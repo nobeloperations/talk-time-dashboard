@@ -15,7 +15,7 @@ export class MainController {
 
     @Post('/main/addmeeting')
     @HttpCode(200)
-    addGeneral(@Body() addGeneralBodyDto) {
-        return this.mainService.addMeeting(addGeneralBodyDto)
+    addGeneral(@Body() addGeneralBody) {
+        return this.mainService.addMeeting(addGeneralBody)
     }
 }

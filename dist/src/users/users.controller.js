@@ -25,8 +25,8 @@ let UsersController = class UsersController {
     newUser(params, newUserBodyDto, headers) {
         return this.usersService.newUser(params, newUserBodyDto, headers);
     }
-    getUsers(params, res) {
-        return this.usersService.getUsers(params, res);
+    getUsers(params, res, generalName) {
+        return this.usersService.getUsers(params, res, generalName);
     }
     updateStatus(updateStatusBodyDto) {
         return this.usersService.updateStatus(updateStatusBodyDto);
@@ -54,13 +54,14 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "newUser", null);
 __decorate([
-    (0, common_1.Get)('/:generalName/:url/:date'),
+    (0, common_1.Get)('/:url/:date'),
     (0, common_1.HttpCode)(200),
     (0, common_1.Render)('users'),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsers", null);
 __decorate([

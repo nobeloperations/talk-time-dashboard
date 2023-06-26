@@ -14,9 +14,9 @@ export class FeedbacksService {
     constructor(@InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>,
         @InjectModel('User') private readonly userModel: Model<User>) { }
 
-    async getPersonalFeedbacks(params, res) {
+    async getPersonalFeedbacks(params, res, generalName) {
         try {
-            const { url, name, date, generalName } = params;
+            const { url, name, date } = params;
             const feedbacks = await this.feedbackModel.find({ receiver: name, url, date })
             const currentUser = await this.userModel.findOne({ name, url, date })
 
@@ -34,9 +34,9 @@ export class FeedbacksService {
         }
     }
 
-    async getNewFeedback(params, res) {
+    async getNewFeedback(params, res, generalName) {
         try {
-            const { url, name, date, generalName } = params;
+            const { url, name, date } = params;
             const currentUser = await this.userModel.findOne({ name, url, date })
 
             if (!currentUser) {
@@ -52,9 +52,9 @@ export class FeedbacksService {
         }
     }
 
-    async createFeedback(files, createFeedbackBodyDto, params, res) {
+    async createFeedback(files, createFeedbackBody, params, res) {
         try {
-            let { sender, rating, feedback, badge } = createFeedbackBodyDto;
+            let { sender, rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
             let receiver = name
             let sendUser = await this.userModel.findOne({ name: sender })

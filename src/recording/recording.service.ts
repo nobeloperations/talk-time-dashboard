@@ -29,8 +29,8 @@ function getMessageBody(messageData) {
 
 @Injectable()
 export class RecordingService {
-    async getRecording(params, res) {
-        const { generalName, url, date } = params;
+    async getRecording(params, res, generalName) {
+        const { url, date } = params;
         try {
             const access_token = await getAccessToken(REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, axios);
 

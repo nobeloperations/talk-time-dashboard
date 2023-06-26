@@ -9,7 +9,7 @@ export class BadgesController {
 
     @Post('/givebadge/:url/:name/:date')
     @HttpCode(200)
-    newBadge(@Param() params, @Body() newBadgeBodyDto) {
-        return this.badgesService.newBadge(params, newBadgeBodyDto)
+    newBadge(@Param() params, @Body() newBadgeBody) {
+        return this.badgesService.newBadge(params, newBadgeBody)
     }
 }

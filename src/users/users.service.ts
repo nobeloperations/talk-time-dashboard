@@ -16,11 +16,11 @@ export class UsersService {
         return avatar
     }
 
-    async newUser(params, newUserBodyDto, headers) {
+    async newUser(params, newUserBody, headers) {
         try {
             if (headers['token'] === process.env.HEADER) {
                 const { url } = params;
-                const { name, avatar, date } = newUserBodyDto;
+                const { name, avatar, date } = newUserBody;
     
                 const isUser = await this.userModel.findOne({ name, url, date })
                 if (!isUser) {
@@ -45,9 +45,9 @@ export class UsersService {
         }
     }
 
-    async getUsers(params, res) {
+    async getUsers(params, res, generalName) {
         try {
-            const { url, date, generalName } = params;
+            const { url, date } = params;
             let meeting = await this.meetingModel.findOne({name: generalName})
             let currentMeeting = false;
             meeting?.meetings.forEach(curr => {
@@ -77,9 +77,9 @@ export class UsersService {
         }
     }
 
-    async updateStatus(updateStatusBodyDto) {
+    async updateStatus(updateStatusBody) {
         try {
-            const { date, name, url, status } = updateStatusBodyDto
+            const { date, name, url, status } = updateStatusBody
             await this.userModel.updateOne({ name, url, date }, { status })
         }
         catch(e) {

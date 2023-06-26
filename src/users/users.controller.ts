@@ -1,4 +1,4 @@
-import { Controller, Post, HttpCode, Param, Body, Headers, Get, Render, Res } from '@nestjs/common';
+import { Controller, Post, HttpCode, Param, Body, Headers, Get, Render, Res, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { Response } from 'express';
 
@@ -15,27 +15,15 @@ export class UsersController {
 
     @Post('/create/:url/:date')
     @HttpCode(200)
-    newUser(@Param() params, @Body() newUserBodyDto, @Headers() headers) {
-        return this.usersService.newUser(params, newUserBodyDto, headers)
+    newUser(@Param() params, @Body() newUserBody, @Headers() headers) {
+        return this.usersService.newUser(params, newUserBody, headers)
     }
 
     
-    @Get('/:generalName/:url/:date')
+    @Get('/:url/:date')
     @HttpCode(200)
     @Render('users')
-    getUsers(@Param() params, @Res() res: Response) {
-        return this.usersService.getUsers(params, res)
-    }
-
-    @Post('/updatestatus')
-    @HttpCode(200)
-    updateStatus(@Body() updateStatusBodyDto) {
-        return this.usersService.updateStatus(updateStatusBodyDto)
-    }
-
-    @Get('/status/getstatuses/:url/:date')
-    @HttpCode(200)
-    getStatuses(@Param() params) {
-        return this.usersService.getStatuses(params)
+    getUsers(@Param() params, @Res() res: Response, @Query('q') generalName) {
+        return this.usersService.getUsers(params, res, generalName)
     }
 }

@@ -19,8 +19,8 @@ let DashboardController = class DashboardController {
     constructor(dashboardService) {
         this.dashboardService = dashboardService;
     }
-    getDashboard(params, res) {
-        return this.dashboardService.getDashboard(params, res);
+    getDashboard(params, res, generalName) {
+        return this.dashboardService.getDashboard(params, res, generalName);
     }
     postPercents(params, postPercentsBodyDto) {
         return this.dashboardService.postPercents(params, postPercentsBodyDto);
@@ -36,13 +36,14 @@ let DashboardController = class DashboardController {
     }
 };
 __decorate([
-    (0, common_1.Get)('dashboard/:generalName/:url/:date'),
+    (0, common_1.Get)('dashboard/:url/:date'),
     (0, common_1.Render)('dashboard'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], DashboardController.prototype, "getDashboard", null);
 __decorate([

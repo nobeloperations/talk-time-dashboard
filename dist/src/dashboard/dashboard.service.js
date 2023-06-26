@@ -23,9 +23,9 @@ let DashboardService = class DashboardService {
         this.conclusionModel = conclusionModel;
         this.feedbackModel = feedbackModel;
     }
-    async getDashboard(params, res) {
+    async getDashboard(params, res, generalName) {
         try {
-            const { url, date, generalName } = params;
+            const { url, date } = params;
             const users = await this.userModel.find({ url, date });
             console.log(url, date);
             const conclusions = await this.conclusionModel.find({ url, date });

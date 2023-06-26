@@ -28,7 +28,7 @@ import { Response } from 'express';
 export declare class FeedbacksController {
     private feedbacksService;
     constructor(feedbacksService: FeedbacksService);
-    getPersonalFeedbacks(params: any, res: Response): Promise<{
+    getPersonalFeedbacks(params: any, res: Response, generalName: any): Promise<{
         cssFileName: string;
         name: any;
         currentUser: import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
@@ -42,7 +42,7 @@ export declare class FeedbacksController {
         generalName: any;
         pageName: string;
     }>;
-    getNewFeedback(params: any, res: Response): Promise<{
+    getNewFeedback(params: any, res: Response, generalName: any): Promise<{
         cssFileName: string;
         name: any;
         currentUser: import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {

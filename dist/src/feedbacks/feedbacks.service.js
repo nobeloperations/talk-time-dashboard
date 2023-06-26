@@ -24,9 +24,9 @@ let FeedbacksService = class FeedbacksService {
         this.feedbackModel = feedbackModel;
         this.userModel = userModel;
     }
-    async getPersonalFeedbacks(params, res) {
+    async getPersonalFeedbacks(params, res, generalName) {
         try {
-            const { url, name, date, generalName } = params;
+            const { url, name, date } = params;
             const feedbacks = await this.feedbackModel.find({ receiver: name, url, date });
             const currentUser = await this.userModel.findOne({ name, url, date });
             if (!currentUser) {
@@ -39,9 +39,9 @@ let FeedbacksService = class FeedbacksService {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));
         }
     }
-    async getNewFeedback(params, res) {
+    async getNewFeedback(params, res, generalName) {
         try {
-            const { url, name, date, generalName } = params;
+            const { url, name, date } = params;
             const currentUser = await this.userModel.findOne({ name, url, date });
             if (!currentUser) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));

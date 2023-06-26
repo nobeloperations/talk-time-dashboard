@@ -22,8 +22,8 @@ function getMessageBody(messageData) {
         : 'No Body';
 }
 let RecordingService = class RecordingService {
-    async getRecording(params, res) {
-        const { generalName, url, date } = params;
+    async getRecording(params, res, generalName) {
+        const { url, date } = params;
         try {
             const access_token = await (0, access_token_js_1.getAccessToken)(REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, axios_1.default);
             if (access_token) {

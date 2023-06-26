@@ -14,9 +14,9 @@ export class DashboardService {
         @InjectModel('Conclusion') private readonly conclusionModel: Model<Conclusion>,
         @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>) { }
 
-    async getDashboard(params, res) {
+    async getDashboard(params, res, generalName) {
         try {
-            const { url, date, generalName } = params;
+            const { url, date } = params;
             const users = await this.userModel.find({ url, date })
             console.log(url, date)
             const conclusions = await this.conclusionModel.find({ url, date })
@@ -52,9 +52,9 @@ export class DashboardService {
 
     }
 
-    async postPercents(params, postPercentsBodyDto) {
+    async postPercents(params, postPercentsBody) {
         try {
-            const { percents } = postPercentsBodyDto
+            const { percents } = postPercentsBody
             const { url, date } = params
             percents.forEach(async percent => {
                 await this.userModel.findOneAndUpdate({ name: percent.name, url, date }, { percents: percent.percent })
@@ -65,10 +65,10 @@ export class DashboardService {
         }
     }
 
-    async newConclusion(params, createConclusionBodyDto) {
+    async newConclusion(params, createConclusionBody) {
         try {
             const { url, date } = params;
-            const { text, tags } = createConclusionBodyDto
+            const { text, tags } = createConclusionBody
             const newConclusion = new this.conclusionModel({
                 text,
                 url,
@@ -85,9 +85,9 @@ export class DashboardService {
 
     }
 
-    async deleteConclusion(deleteConclusionBodyDto) {
+    async deleteConclusion(deleteConclusionBody) {
         try {
-            const { id } = deleteConclusionBodyDto;
+            const { id } = deleteConclusionBody;
             await this.conclusionModel.deleteOne({ _id: id })
         }
         catch(e) {
@@ -95,9 +95,9 @@ export class DashboardService {
         }
     }
 
-    async importantConclusion(importantConclusionBodyDto) {
+    async importantConclusion(importantConclusionBody) {
         try {
-            const { id } = importantConclusionBodyDto
+            const { id } = importantConclusionBody
             await this.conclusionModel.findOneAndUpdate({ _id: id }, { important: true })
         }
         catch(e) {
@@ -105,23 +105,3 @@ export class DashboardService {
         }
     }
 }
-
-//version: '3.0'
-// services:
-// app:
-//   build: .
-//   command: npm run start:prod
-//   ports:
-//     - "3001:3001"
-
-// FROM node:18.14.0
-
-// RUN mkdir /app
-
-// WORKDIR /app
-
-// COPY . /app/
-
-// COPY ./package.json /usr/src/package.json
-
-// RUN npm install

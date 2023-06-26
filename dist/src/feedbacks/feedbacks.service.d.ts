@@ -29,7 +29,7 @@ export declare class FeedbacksService {
     private readonly feedbackModel;
     private readonly userModel;
     constructor(feedbackModel: Model<Feedback>, userModel: Model<User>);
-    getPersonalFeedbacks(params: any, res: any): Promise<{
+    getPersonalFeedbacks(params: any, res: any, generalName: any): Promise<{
         cssFileName: string;
         name: any;
         currentUser: import("mongoose").Document<unknown, any, User> & User & {
@@ -43,7 +43,7 @@ export declare class FeedbacksService {
         generalName: any;
         pageName: string;
     }>;
-    getNewFeedback(params: any, res: any): Promise<{
+    getNewFeedback(params: any, res: any, generalName: any): Promise<{
         cssFileName: string;
         name: any;
         currentUser: import("mongoose").Document<unknown, any, User> & User & {

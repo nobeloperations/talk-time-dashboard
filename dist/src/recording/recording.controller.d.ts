@@ -3,7 +3,7 @@ import { Response } from 'express';
 export declare class RecordingController {
     private recordingService;
     constructor(recordingService: RecordingService);
-    getRecording(params: any, res: Response): Promise<{
+    getRecording(params: any, res: Response, generalName: any): Promise<{
         generalName: any;
         url: any;
         date: any;

@@ -1,5 +1,5 @@
 export declare class RecordingService {
-    getRecording(params: any, res: any): Promise<{
+    getRecording(params: any, res: any, generalName: any): Promise<{
         generalName: any;
         url: any;
         date: any;

@@ -28,7 +28,7 @@ import { Response } from 'express';
 export declare class DashboardController {
     private dashboardService;
     constructor(dashboardService: DashboardService);
-    getDashboard(params: any, res: Response): Promise<{
+    getDashboard(params: any, res: Response, generalName: any): Promise<{
         cssFileName: string;
         url: any;
         users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
