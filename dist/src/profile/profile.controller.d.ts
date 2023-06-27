@@ -41,9 +41,7 @@ export declare class ProfileController {
             _id: import("mongoose").Types.ObjectId;
         })[];
         meetings: any[];
-        usersBadges: {
-            [x: string]: unknown;
-        }[];
+        usersBadges: {};
         generalName: any;
     }>;
 }

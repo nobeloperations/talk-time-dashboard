@@ -35,14 +35,14 @@ export class ProfileService {
                 )
                 : undefined;
 
-                
-            const badgesResult = {};
-            const usersBadges = Object.entries(badgesResult).map(([key, value]) => ({ [key]: value }));
+
+            const usersBadges = {};
 
             for (const item of currentUser.badges) {
                 const key = item['badge'];
-                badgesResult[key] = badgesResult[key] ? badgesResult[key] + 1 : 1;
+                usersBadges[key] = usersBadges[key] ? usersBadges[key] + 1 : 1;
             }
+
 
             let meetingUrls = Array.from(new Set(currentUsers.map(currentUser => currentUser.url)))
             let meetingDates = Array.from(new Set(currentUsers.map(currentUser => currentUser['date'])))
@@ -55,6 +55,7 @@ export class ProfileService {
                     if (meetingDates.includes(meeting['date'])) meetings.push(meeting)
                 })
             }
+
 
             return { cssFileName: 'profile', name: nameAndAvatar.name, avatar: nameAndAvatar.avatar, avgRating, meetingsCounter: currentUsers.length, feedbacksReceived, feedbacksSent, meetings, usersBadges, generalName }
 

@@ -40,11 +40,10 @@ let ProfileService = class ProfileService {
             const avgRating = feedbacksReceived.length
                 ? Math.floor(feedbacksReceived.reduce((total, feedback) => total + feedback.rating, 0) / feedbacksReceived.length)
                 : undefined;
-            const badgesResult = {};
-            const usersBadges = Object.entries(badgesResult).map(([key, value]) => ({ [key]: value }));
+            const usersBadges = {};
             for (const item of currentUser.badges) {
                 const key = item['badge'];
-                badgesResult[key] = badgesResult[key] ? badgesResult[key] + 1 : 1;
+                usersBadges[key] = usersBadges[key] ? usersBadges[key] + 1 : 1;
             }
             let meetingUrls = Array.from(new Set(currentUsers.map(currentUser => currentUser.url)));
             let meetingDates = Array.from(new Set(currentUsers.map(currentUser => currentUser['date'])));

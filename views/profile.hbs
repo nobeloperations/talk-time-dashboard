@@ -49,7 +49,7 @@
                             <span class="profile__meeting__url">{{url}}</span>
                             <span class="profile__meeting__date">{{date}}</span>
                         </div>
-                        <a href="/dashboard/{{../generalName}}/{{url}}/{{date}}"><button
+                        <a href="/dashboard/{{url}}/{{date}}?q={{../generalName}}"><button
                                 class="profile__meeting__link">Dashboard</button></a>
                     </div>
                     {{/each}}
@@ -69,7 +69,7 @@
                             <span class="profile__feedback__sender__name">{{sender}}</span>
                         </div>
                         <div class="profile__feedback__feedback">{{feedback}}</div>
-                        <a href="/feedbacks/{{../generalName}}/{{url}}/{{../name}}/{{date}}"
+                        <a href="/feedbacks/{{url}}/{{../name}}/{{date}}?q={{../generalName}}"
                             class="profile__feedback__view__received__feedback">View Feedback</a>
                     </div>
                     {{/each}}
@@ -89,7 +89,7 @@
                             <span class="profile__feedback__sender__name">{{sender}}</span>
                         </div>
                         <div class="profile__feedback__feedback">{{feedback}}</div>
-                        <a href="/feedbacks/{{../generalName}}/{{url}}/{{receiver}}/{{date}}"
+                        <a href="/feedbacks/{{url}}/{{receiver}}/{{date}}?q={{../generalName}}"
                             class="profile__feedback__view__sent__feedback">View Feedback</a>
                     </div>
                     {{/each}}
@@ -104,7 +104,6 @@
                     <div class="profile__badges">
                         {{#if usersBadges}}
                         {{#each usersBadges}}
-                        {{#each this}}
                         <div class="profile__badge" data-level="{{this}}">
                             <img class="profile__badge__img" src="/img/{{@key}}" alt="">
                             <div class="profile__badge__info">
@@ -112,7 +111,6 @@
                                 <span>{{badgesLevel this}}</span>
                             </div>
                         </div>
-                        {{/each}}
                         {{/each}}
                         {{else}}
                         <div class="profile__empty">

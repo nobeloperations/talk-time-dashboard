@@ -172,6 +172,7 @@
     display: flex;
     flex-wrap: wrap;
     align-content: flex-start;
+    padding-right: 5px;
 }
 .profile__badge {
     width: calc(50% - 3px) ;
