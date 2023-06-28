@@ -28,8 +28,8 @@ let DashboardController = class DashboardController {
     newConclusion(params, createNoteBody) {
         return this.dashboardService.newNote(params, createNoteBody);
     }
-    deleteConclusion(deleteConclusionBody) {
-        return this.dashboardService.deleteConclusion(deleteConclusionBody);
+    deleteNote(deleteNoteBody) {
+        return this.dashboardService.deleteNote(deleteNoteBody);
     }
 };
 __decorate([
@@ -68,7 +68,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], DashboardController.prototype, "deleteConclusion", null);
+], DashboardController.prototype, "deleteNote", null);
 DashboardController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [dashboard_service_1.DashboardService])

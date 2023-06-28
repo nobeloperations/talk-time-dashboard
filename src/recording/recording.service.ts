@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import axios from 'axios';
 import { getAccessToken } from '../../helpers/access_token.js';
 import * as dotenv from 'dotenv';
 import { getMessages, getMessage } from '../../helpers/messages.js';
@@ -19,7 +18,7 @@ const {
 
 @Injectable()
 export class RecordingService {
-    async getRecording(params, res, generalName) {
+    async getRecording(params, _, generalName) {
         const { url, date } = params;
 
         try {

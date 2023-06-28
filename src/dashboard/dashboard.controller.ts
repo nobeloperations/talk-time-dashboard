@@ -29,7 +29,7 @@ export class DashboardController {
 
     @Delete('/deleteconclusion')
     @HttpCode(200)
-    deleteConclusion(@Body() deleteConclusionBody) {
-        return this.dashboardService.deleteConclusion(deleteConclusionBody)
+    deleteNote(@Body() deleteNoteBody) {
+        return this.dashboardService.deleteNote(deleteNoteBody)
     } 
 }

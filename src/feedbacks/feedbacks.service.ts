@@ -60,24 +60,22 @@ export class FeedbacksService {
         try {
             let { sender, rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
-            let receiver = name
             let sendUser = await this.userModel.findOne({ name: sender })
-
 
             if (badge !== DEFAULT_BADGE) {
                 let key = `${badge.toLowerCase().split(' ').join('_')}`;
                 let value = config[key]
                 badge = `${key}${value}.png`
-                await this.userModel.updateMany({ name: receiver }, { $push: { badges: { badge } } })
+                await this.userModel.updateMany({ name }, { $push: { badges: { badge } } })
 
             }
             let newFeedback = new this.feedbackModel({
                 sender,
-                receiver,
+                receiver: name,
                 feedback,
                 rating,
                 url,
-                senderImg: sendUser?.avatar ?? 'https://cdn-icons-png.flaticon.com/512/1177/1177568.png',
+                senderImg: sendUser.avatar,
                 feedbackImg: files[0]?.filename,
                 postDate: new Date().toLocaleDateString(),
                 date

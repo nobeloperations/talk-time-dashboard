@@ -11,7 +11,7 @@ import { resolve } from 'path';
 export class DashboardService {
 
     constructor(@InjectModel('User') private readonly userModel: Model<User>,
-        @InjectModel('Conclusion') private readonly noteModel: Model<Note>,
+        @InjectModel('Note') private readonly noteModel: Model<Note>,
         @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>) { }
 
     async getDashboard(params, res, generalName) {
@@ -85,9 +85,9 @@ export class DashboardService {
 
     }
 
-    async deleteConclusion(deleteConclusionBody) {
+    async deleteNote(deleteNoteBody) {
         try {
-            const { id } = deleteConclusionBody;
+            const { id } = deleteNoteBody;
             await this.noteModel.deleteOne({ _id: id })
         }
         catch(e) {

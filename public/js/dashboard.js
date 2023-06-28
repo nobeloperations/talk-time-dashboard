@@ -152,7 +152,7 @@ window.onload = function () {
             <span class="note__text">${_noteValue}</span>
             <div class="note__options">
             <img class="delete__note" src="/img/trash.png" alt="">
-            <img class="open__tags__note" src="/img/tag.png" alt="">
+            ${_tagsArray.length ? '<img class="open__tags__note" src="/img/tag.png" alt="">' : ''}
             <div class="notes__tags">
                 ${_tagsArray.map(_tag => {
                 return `<span class="notes__tag">${_tag}</span>`

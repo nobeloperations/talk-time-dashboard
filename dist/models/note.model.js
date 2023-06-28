@@ -11,10 +11,6 @@ exports.NoteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    important: {
-        type: Boolean,
-        default: false
-    },
     tags: {
         type: Array,
         default: []

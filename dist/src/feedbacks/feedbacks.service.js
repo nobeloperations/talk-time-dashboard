@@ -59,26 +59,25 @@ let FeedbacksService = class FeedbacksService {
         }
     }
     async createFeedback(files, createFeedbackBody, params, res) {
-        var _a, _b;
+        var _a;
         try {
             let { sender, rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
-            let receiver = name;
             let sendUser = await this.userModel.findOne({ name: sender });
             if (badge !== DEFAULT_BADGE) {
                 let key = `${badge.toLowerCase().split(' ').join('_')}`;
                 let value = config_1.config[key];
                 badge = `${key}${value}.png`;
-                await this.userModel.updateMany({ name: receiver }, { $push: { badges: { badge } } });
+                await this.userModel.updateMany({ name }, { $push: { badges: { badge } } });
             }
             let newFeedback = new this.feedbackModel({
                 sender,
-                receiver,
+                receiver: name,
                 feedback,
                 rating,
                 url,
-                senderImg: (_a = sendUser === null || sendUser === void 0 ? void 0 : sendUser.avatar) !== null && _a !== void 0 ? _a : 'https://cdn-icons-png.flaticon.com/512/1177/1177568.png',
-                feedbackImg: (_b = files[0]) === null || _b === void 0 ? void 0 : _b.filename,
+                senderImg: sendUser.avatar,
+                feedbackImg: (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename,
                 postDate: new Date().toLocaleDateString(),
                 date
             });

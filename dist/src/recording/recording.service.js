@@ -15,7 +15,7 @@ const recording_setup_js_1 = require("../../helpers/recording_setup.js");
 dotenv.config();
 const { DRIVE_CLIENT_ID, DRIVE_CLIENT_SECRET, DRIVE_REDIRECT_URI, DRIVE_REFRESH_TOKEN, REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET, MAIL_AUTHOR, } = process.env;
 let RecordingService = class RecordingService {
-    async getRecording(params, res, generalName) {
+    async getRecording(params, _, generalName) {
         const { url, date } = params;
         try {
             const access_token = await (0, access_token_js_1.getAccessToken)(REFRESH_TOKEN, CLIENT_ID, CLIENT_SECRET);

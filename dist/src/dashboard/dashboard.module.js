@@ -20,7 +20,7 @@ DashboardModule = __decorate([
     (0, common_1.Module)({
         imports: [mongoose_1.MongooseModule.forFeature([
                 { name: 'User', schema: user_model_1.UserSchema },
-                { name: 'Conclusion', schema: note_model_1.NoteSchema },
+                { name: 'Note', schema: note_model_1.NoteSchema },
                 { name: 'Feedback', schema: feedback_model_1.FeedbackSchema },
             ])],
         providers: [dashboard_service_1.DashboardService],

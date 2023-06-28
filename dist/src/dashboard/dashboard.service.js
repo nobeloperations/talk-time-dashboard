@@ -82,9 +82,9 @@ let DashboardService = class DashboardService {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async deleteConclusion(deleteConclusionBody) {
+    async deleteNote(deleteNoteBody) {
         try {
-            const { id } = deleteConclusionBody;
+            const { id } = deleteNoteBody;
             await this.noteModel.deleteOne({ _id: id });
         }
         catch (e) {
@@ -95,7 +95,7 @@ let DashboardService = class DashboardService {
 DashboardService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('User')),
-    __param(1, (0, mongoose_1.InjectModel)('Conclusion')),
+    __param(1, (0, mongoose_1.InjectModel)('Note')),
     __param(2, (0, mongoose_1.InjectModel)('Feedback')),
     __metadata("design:paramtypes", [mongoose_2.Model,
         mongoose_2.Model,

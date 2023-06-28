@@ -9,10 +9,6 @@ export const NoteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    important: {
-        type: Boolean,
-        default: false
-    },
     tags: {
         type: Array,
         default: []
@@ -26,6 +22,5 @@ export const NoteSchema = new mongoose.Schema({
 export interface Note {
     text: string,
     url: string,
-    important: string,
     tags: string[]
 }

@@ -9,7 +9,7 @@ import { FeedbackSchema } from '../../models/feedback.model';
 @Module({
   imports: [MongooseModule.forFeature([
     {name: 'User', schema: UserSchema},
-    {name: 'Conclusion', schema: NoteSchema},
+    {name: 'Note', schema: NoteSchema},
     {name: 'Feedback', schema: FeedbackSchema},
   ])],
   providers: [DashboardService],
