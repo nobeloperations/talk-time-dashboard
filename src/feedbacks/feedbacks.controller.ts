@@ -13,14 +13,14 @@ export class FeedbacksController {
     @Get('/:url/:name/:date')
     @Render('personal-feedbacks')
     @HttpCode(200)
-    getPersonalFeedbacks(@Param() params, @Res() res: Response, @Query('q') generalName) {
+    getPersonalFeedbacks(@Param() params: Object, @Res() res: Response, @Query('q') generalName: String) {
         return this.feedbacksService.getPersonalFeedbacks(params, res, generalName)
     }
 
     @Get('/create/:url/:name/:date')
     @Render('new-feedback')
     @HttpCode(200)
-    getNewFeedback(@Param() params, @Res() res: Response, @Query('q') generalName) {
+    getNewFeedback(@Param() params: Object, @Res() res: Response, @Query('q') generalName: String) {
         return this.feedbacksService.getNewFeedback(params, res, generalName)
     }
 
@@ -30,13 +30,14 @@ export class FeedbacksController {
         FilesInterceptor('file', 20, {
           storage: diskStorage({
             destination: './uploads',
-            filename: function (req, file, done) {
+            filename: function (_, file, done) {
               done(null, Date.now() + extname(file.originalname));
           }
           }),
         }),
       )
       createFeedback(@UploadedFiles() files, @Body() createFeedbackBody, @Param() params, @Res() res: Response) {
+        console.log()
         return this.feedbacksService.createFeedback(files, createFeedbackBody, params, res)
       }
 }

@@ -28,7 +28,7 @@ import { Response } from 'express';
 export declare class DashboardController {
     private dashboardService;
     constructor(dashboardService: DashboardService);
-    getDashboard(params: any, res: Response, generalName: any): Promise<{
+    getDashboard(params: Object, res: Response, generalName: String): Promise<{
         cssFileName: string;
         url: any;
         users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
@@ -44,7 +44,7 @@ export declare class DashboardController {
         generalName: any;
         pageName: string;
     }>;
-    postPercents(params: any, updatePercentsBody: any): Promise<string>;
-    newConclusion(params: any, createNoteBody: any): Promise<string>;
-    deleteNote(deleteNoteBody: any): Promise<string>;
+    postPercents(params: Object, updatePercentsBody: Object): Promise<string>;
+    newConclusion(params: Object, createNoteBody: Object): Promise<string>;
+    deleteNote(deleteNoteBody: Object): Promise<string>;
 }

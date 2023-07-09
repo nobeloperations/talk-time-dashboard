@@ -1,20 +1,20 @@
 window.onload = function () {
-    let chatContainer = document.querySelector('.meeting__chat')
-    let chatText = document.querySelector('.non__formatted__chat').textContent
+    let _chatContainer = document.querySelector('.meeting__chat')
+    let _chatText = document.querySelector('.non__formatted__chat').textContent
 
-    chatText = chatText.split(/\n\s*\n/).filter(chatLine => !!chatLine)
-    chatText.forEach(chatLine => {
-        chatLine = chatLine.split('\n')
-        let [ messageTime, ...messages ] = chatLine
-        messageTime = messageTime.slice(0, 8)
-        if(messages.length >= 2) {
-            messages = [messages.join('\n')];
+    _chatText = _chatText.split(/\n\s*\n/).filter(_chatLine => !!_chatLine)
+    _chatText.forEach(chatLine => {
+        _chatLine = chatLine.split('\n')
+        let [ _messageTime, ..._messages ] = chatLine
+        _messageTime = _messageTime.slice(0, 8)
+        if(_messages.length >= 2) {
+            _messages = [_messages.join('\n')];
         }
-        const chatItem = document.createElement('div')
-        chatItem.className = 'chat__item'
-        chatItem.innerHTML = `
-                <span class="chat__message">${messages[0]}</span>
+        const _chatItem = document.createElement('div')
+        _chatItem.className = 'chat__item'
+        _chatItem.innerHTML = `
+                <span class="chat__message">${_messages[0]}</span>
         `
-        chatContainer.appendChild(chatItem)
+        _chatContainer.appendChild(_chatItem)
     })
 }

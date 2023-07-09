@@ -14,7 +14,7 @@
 .personal__feedback__wrapper {
     width: 100%;
     height: calc(100vh - 60px);
-    padding: 10px 30px 10px 30px;
+    padding: 0 30px 10px 30px;
 }
 .personal__feedbacks__content {
     overflow-y: hidden;
@@ -97,7 +97,7 @@
 }
 
 .personal__feedback__user {
-    width: 50%;
+    width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
@@ -295,8 +295,62 @@ button:disabled {
     height: calc(100vh - 100px);
     display: flex;
     gap: 20px;
+    flex-wrap: wrap;
+    align-content: flex-start;
 }
 .leave__feedback__link {
     color: #57b9ff;
     font-size: 20px;
+}
+.rating__statistic {
+    padding: 10px 25px 10px 25px;
+    height: fit-content;
+    width: calc(100vw - 230px);
+    display: flex;
+
+}
+.average__rating__wrapper {
+    width: fit-content;
+    height: 90px;
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 5px;
+    border: 1px solid rgb(228, 228, 228);
+    margin-right: 10px;
+}
+.rating__levels {
+    width: fit-content;
+    height: 90px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.rating__level {
+    width: fit-content;
+    height: 10px;
+    display: flex;
+    align-items: center;
+}
+.rating__out {
+    width: 200px;
+    height: 100%;
+    background: rgb(238, 238, 238);
+    margin-right: 10px;
+    border-radius: 100px;
+}
+.rating__in {
+    background: #F1C40F;
+    border-radius: 100px;
+}
+.rating__value {
+    width: 25px;
+    margin-right: 5px;
+}
+.personal__feedback__user__data {
+    width: 100%;
 }

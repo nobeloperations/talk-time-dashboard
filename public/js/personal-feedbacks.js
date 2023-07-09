@@ -14,8 +14,35 @@ window.onload = function () {
     let _leaveFeedback = document.querySelector('.leave__feedback__button')
     let _readMoreButtons = document.querySelectorAll('.personal__feedback__read__more')
     let _readLessButtons = document.querySelectorAll('.personal__feedback__read__less')
+    let _ratingsIn = document.querySelectorAll('.rating__in')
+    let _ratingsCount = document.querySelectorAll('.rating__count')
+    let _averageRating = document.querySelector('.average__rating')
+    let _feedbacksCounter = document.querySelector('.feedbacks__counter')
     const LOW_RATING = 'LOW'
     const HIGH_RATING = 'HIGH'
+
+    const _ratingOptions = {
+        1: {
+            percentage: 0,
+            count: 0
+        },
+        2: {
+            percentage: 0,
+            count: 0
+        },
+        3: {
+            percentage: 0,
+            count: 0
+        },
+        4: {
+            percentage: 0,
+            count: 0
+        },
+        5: {
+            percentage: 0,
+            count: 0
+        },
+    }
 
     const _filters = {
         image: false,
@@ -98,6 +125,8 @@ window.onload = function () {
 
     _readMoreButtons.forEach(_readMoreButton => {
         _readMoreButton.onclick = function () {
+            const _threeDots = this.parentElement.parentElement.parentElement.querySelector('.three__dots');
+            console.log(_threeDots)
             const _feedbackText = this.closest('.personal__feedback').querySelector('.personal__feedback__hidden')
             const _readLess = this.nextElementSibling
             const _feedback = this.parentElement.parentElement.parentElement
@@ -118,6 +147,7 @@ window.onload = function () {
             _readLess.style.display = 'block'
             this.style.display = 'none'
             _container.className = 'container open__modal'
+            _threeDots.style.display = 'none'
         }
     })
 
@@ -155,14 +185,36 @@ window.onload = function () {
         }
     })
 
+    let _ratingSum = 0
+
     _feedbacks.forEach(_feedback => {
         const _rating = _feedback.dataset.rating;
+        _ratingSum += +_rating
         const _ratingElements = _feedback.querySelectorAll(`.rating:nth-child(-n + ${_rating})`)
         _ratingElements.forEach(_ratingElement => {
             _ratingElement.innerHTML = '★'
         })
+        if(_ratingOptions[_rating]) _ratingOptions[_rating]['count']++
+        else _ratingOptions[_rating]['count'] = 1
+    })
+    let _ratingCounter = 0
+    for(key in _ratingOptions) {
+        _ratingCounter += _ratingOptions[key].count;
+    }
+    for(key in _ratingOptions) {
+        _ratingOptions[key].percentage = Math.floor((_ratingOptions[key].count / _ratingCounter) * 100)
+    }
+
+    _ratingsIn.forEach((_ratingIn, idx) => {
+        let _ratingCount = _ratingsCount[idx].dataset.ratingcount
+        let _ratingMark = _ratingIn.dataset.ratingin;
+        _ratingIn.style.width = `${_ratingOptions[_ratingMark].percentage}%`
+        _ratingIn.style.height = '100%'
+        _ratingsCount[idx].textContent = _ratingOptions[_ratingCount].count
     })
 
+    _averageRating.innerHTML = `<b style="color: #F1C40F;">★</b> ${(_ratingSum / _ratingCounter).toFixed(1)}`
+    _feedbacksCounter.textContent = `(${_feedbacks.length} feedbacks)`
 
     const _viewImageOptions = {
         _viewImage: (_currentImage) => {

@@ -3,8 +3,51 @@
     {{>menu}}
     <div class="personal__feedbacks__content">
         {{>navigate}}
+        {{#if feedbacks}}
+        <div class="rating__statistic">
+            <div class="average__rating__wrapper">
+                <h2 class="average__rating"></h2>
+                <span class="feedbacks__counter"></span>
+            </div>
+            <div class="rating__levels">
+                <div class="rating__level">
+                    <div class="rating__value">1 ★</div>
+                    <div class="rating__out">
+                        <div class="rating__in" data-ratingin="1"></div>
+                    </div>
+                    <div class="rating__count" data-ratingcount="1"></div>
+                </div>
+                <div class="rating__level">
+                    <div class="rating__value">2★</div>
+                    <div class="rating__out">
+                        <div class="rating__in" data-ratingin="2"></div>
+                    </div>
+                    <div class="rating__count" data-ratingcount="2"></div>
+                </div>
+                <div class="rating__level">
+                    <div class="rating__value">3★</div>
+                    <div class="rating__out">
+                        <div class="rating__in" data-ratingin="3"></div>
+                    </div>
+                    <div class="rating__count" data-ratingcount="3"></div>
+                </div>
+                <div class="rating__level">
+                    <div class="rating__value">4★</div>
+                    <div class="rating__out">
+                        <div class="rating__in" data-ratingin="4"></div>
+                    </div>
+                    <div class="rating__count" data-ratingcount="4"></div>
+                </div>
+                <div class="rating__level">
+                    <div class="rating__value">5★</div>
+                    <div class="rating__out">
+                        <div class="rating__in" data-ratingin="5"></div>
+                    </div>
+                    <div class="rating__count" data-ratingcount="5"></div>
+                </div>
+            </div>
+        </div>
         <div class="personal__feedback__wrapper">
-            {{#if feedbacks}}
             <div class="personal__feedbacks__filters__wrapper">
                 <img class="personal__feedbacks__filter__icon" src="/img/filter.png" alt="">
                 <button data-active="" class="personal__feedbacks__image__filter">With Image</button>
@@ -34,7 +77,7 @@
                         <div class="personal__feedback__top">
                             <div class="personal__feedback__user">
                                 <img class="personal__feedback__avatar" src="{{senderImg}}">
-                                <div>
+                                <div class="personal__feedback__user__data">
                                     <span class="personal__feedback__sender">{{sender}}</span><br />
                                     <span class="personal__feedback__date">{{formatDate postDate}}</span>
                                 </div>
@@ -78,7 +121,8 @@
                 <div class="no__feedbacks">
                     <img class="empty__feedbacks__img" src="/img/empty.png" alt="">
                     <span class="empty__title">There is no feedbacks...</span>
-                    <a href="/feedbacks/create/{{url}}/{{name}}/{{date}}?q={{generalName}}" class="leave__feedback__link">Leave Feedback</a>
+                    <a href="/feedbacks/create/{{url}}/{{name}}/{{date}}?q={{generalName}}"
+                        class="leave__feedback__link">Leave Feedback</a>
                 </div>
                 {{/if}}
             </div>

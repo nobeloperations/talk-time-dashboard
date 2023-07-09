@@ -10,26 +10,26 @@ export class DashboardController {
     @Get('dashboard/:url/:date')
     @Render('dashboard')
     @HttpCode(200)
-    getDashboard(@Param() params, @Res() res: Response, @Query('q') generalName) {
+    getDashboard(@Param() params: Object, @Res() res: Response, @Query('q') generalName: String) {
         return this.dashboardService.getDashboard(params, res, generalName)   
          
     }   
     
     @Post('/percentage/:url/:date')
     @HttpCode(200)
-    postPercents(@Param() params, @Body() updatePercentsBody) {
+    postPercents(@Param() params: Object, @Body() updatePercentsBody: Object) {
         return this.dashboardService.updatePercents(params, updatePercentsBody)
     }
 
     @Post('/newconclusion/:url/:date')
     @HttpCode(200)
-    newConclusion(@Param() params, @Body() createNoteBody) {
+    newConclusion(@Param() params: Object, @Body() createNoteBody: Object) {
         return this.dashboardService.newNote(params, createNoteBody)
     }
 
     @Delete('/deleteconclusion')
     @HttpCode(200)
-    deleteNote(@Body() deleteNoteBody) {
+    deleteNote(@Body() deleteNoteBody: Object) {
         return this.dashboardService.deleteNote(deleteNoteBody)
     } 
 }

@@ -29,6 +29,7 @@ let FeedbacksController = class FeedbacksController {
         return this.feedbacksService.getNewFeedback(params, res, generalName);
     }
     createFeedback(files, createFeedbackBody, params, res) {
+        console.log();
         return this.feedbacksService.createFeedback(files, createFeedbackBody, params, res);
     }
 };
@@ -40,7 +41,7 @@ __decorate([
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, String]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getPersonalFeedbacks", null);
 __decorate([
@@ -51,7 +52,7 @@ __decorate([
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object]),
+    __metadata("design:paramtypes", [Object, Object, String]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getNewFeedback", null);
 __decorate([
@@ -60,7 +61,7 @@ __decorate([
     (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('file', 20, {
         storage: (0, multer_1.diskStorage)({
             destination: './uploads',
-            filename: function (req, file, done) {
+            filename: function (_, file, done) {
                 done(null, Date.now() + (0, path_1.extname)(file.originalname));
             }
         }),
