@@ -9,13 +9,13 @@ export class UsersController {
 
     @Get('/:name')
     @HttpCode(200)
-    getUsersAvatar(@Param() params) {
+    getUsersAvatar(@Param() params: Object) {
         return this.usersService.getUsersAvatar(params)
     }
 
     @Post('/create/:url/:date')
     @HttpCode(200)
-    newUser(@Param() params, @Body() newUserBody, @Headers() headers) {
+    newUser(@Param() params: Object, @Body() newUserBody: Object, @Headers() headers: Object) {
         return this.usersService.newUser(params, newUserBody, headers)
     }
 
@@ -23,7 +23,7 @@ export class UsersController {
     @Get('/:url/:date')
     @HttpCode(200)
     @Render('users')
-    getUsers(@Param() params, @Res() res: Response, @Query('q') generalName) {
+    getUsers(@Param() params: Object, @Res() res: Response, @Query('q') generalName: String) {
         return this.usersService.getUsers(params, res, generalName)
     }
 }

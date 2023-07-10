@@ -29,7 +29,7 @@ let FeedbacksController = class FeedbacksController {
         return this.feedbacksService.getNewFeedback(params, res, generalName);
     }
     createFeedback(files, createFeedbackBody, params, res) {
-        console.log();
+        console.log(files);
         return this.feedbacksService.createFeedback(files, createFeedbackBody, params, res);
     }
 };
@@ -71,7 +71,7 @@ __decorate([
     __param(2, (0, common_1.Param)()),
     __param(3, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, Object, Object]),
+    __metadata("design:paramtypes", [Array, Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "createFeedback", null);
 FeedbacksController = __decorate([

@@ -13,7 +13,7 @@
 }
 .personal__feedback__wrapper {
     width: 100%;
-    height: calc(100vh - 60px);
+    height: calc(100vh - 180px);
     padding: 0 30px 10px 30px;
 }
 .personal__feedbacks__content {
@@ -292,11 +292,12 @@ button:disabled {
 }
 .personal__feedbacks__list {
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 240px);
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
     align-content: flex-start;
+    overflow-y: scroll;
 }
 .leave__feedback__link {
     color: #57b9ff;
@@ -304,7 +305,7 @@ button:disabled {
 }
 .rating__statistic {
     padding: 10px 25px 10px 25px;
-    height: fit-content;
+    height: 110px;
     width: calc(100vw - 230px);
     display: flex;
 

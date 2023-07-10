@@ -28,11 +28,11 @@ import { Response } from 'express';
 export declare class UsersController {
     private usersService;
     constructor(usersService: UsersService);
-    getUsersAvatar(params: any): Promise<import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
+    getUsersAvatar(params: Object): Promise<import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
         _id: import("mongoose").Types.ObjectId;
     }>;
-    newUser(params: any, newUserBody: any, headers: any): Promise<string>;
-    getUsers(params: any, res: Response, generalName: any): Promise<{
+    newUser(params: Object, newUserBody: Object, headers: Object): Promise<string>;
+    getUsers(params: Object, res: Response, generalName: String): Promise<{
         cssFileName: string;
         users: any[];
         url: any;

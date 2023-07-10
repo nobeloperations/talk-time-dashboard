@@ -36,8 +36,8 @@ export class FeedbacksController {
           }),
         }),
       )
-      createFeedback(@UploadedFiles() files, @Body() createFeedbackBody, @Param() params, @Res() res: Response) {
-        console.log()
+      createFeedback(@UploadedFiles() files: Object[], @Body() createFeedbackBody: Object, @Param() params: Object, @Res() res: Response) {
+        console.log(files)
         return this.feedbacksService.createFeedback(files, createFeedbackBody, params, res)
       }
 }
