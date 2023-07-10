@@ -1,13 +1,13 @@
 import axios from "axios";
 
-function getMessageBody(messageData) {
+function getMessageBody(messageData: any) {
     const bodyPart = messageData.find((part) => part.mimeType === 'text/plain');
     return bodyPart
         ? Buffer.from(bodyPart.body.data, 'base64').toString()
         : 'No Body';
 }
 
-export async function getMessages(MAIL_AUTHOR, generalName, date, access_token) {
+export async function getMessages(MAIL_AUTHOR: string, generalName: string, date: string, access_token: string): Promise<any> {
     const messagesResponse = await axios.get(
         `https://www.googleapis.com/gmail/v1/users/me/messages`,
         {
@@ -25,7 +25,7 @@ export async function getMessages(MAIL_AUTHOR, generalName, date, access_token) 
     return messages ? [messages, messages[0].id] : [];
 }
 
-export async function getMessage(messageId , access_token) {
+export async function getMessage(messageId: string , access_token: string): Promise<any> {
     const messageResponse = await axios.get(
         `https://www.googleapis.com/gmail/v1/users/me/messages/${messageId}`,
         {

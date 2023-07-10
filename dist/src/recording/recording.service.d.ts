@@ -6,7 +6,7 @@ export declare class RecordingService {
         url: any;
         date: any;
         noRecording: boolean;
-        readyId: string;
+        readyId: any;
         chat: string;
     } | {
         cssFileName: string;

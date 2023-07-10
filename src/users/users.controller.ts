@@ -23,7 +23,7 @@ export class UsersController {
     @Get('/:url/:date')
     @HttpCode(200)
     @Render('users')
-    getUsers(@Param() params: Object, @Res() res: Response, @Query('q') generalName: String) {
+    getUsers(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string) {
         return this.usersService.getUsers(params, res, generalName)
     }
 }

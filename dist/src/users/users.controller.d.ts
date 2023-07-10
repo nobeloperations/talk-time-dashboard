@@ -32,7 +32,7 @@ export declare class UsersController {
         _id: import("mongoose").Types.ObjectId;
     }>;
     newUser(params: Object, newUserBody: Object, headers: Object): Promise<string>;
-    getUsers(params: Object, res: Response, generalName: String): Promise<{
+    getUsers(params: Object, res: Response, generalName: string): Promise<{
         cssFileName: string;
         users: any[];
         url: any;

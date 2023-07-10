@@ -3,14 +3,14 @@ import { Response } from 'express';
 export declare class RecordingController {
     private recordingService;
     constructor(recordingService: RecordingService);
-    getRecording(params: Object, res: Response, generalName: String): Promise<{
+    getRecording(params: Object, res: Response, generalName: string): Promise<{
         cssFileName: string;
         pageName: string;
         generalName: any;
         url: any;
         date: any;
         noRecording: boolean;
-        readyId: string;
+        readyId: any;
         chat: string;
     } | {
         cssFileName: string;

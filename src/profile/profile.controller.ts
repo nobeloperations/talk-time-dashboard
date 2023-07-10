@@ -10,7 +10,7 @@ export class ProfileController {
     @Get('/:name')
     @HttpCode(200)
     @Render('profile')
-    getProfile(@Param() params: Object, @Res() res: Response, @Query('q') generalName: String) {
+    getProfile(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string) {
         return this.profileService.getProfile(params, res, generalName)
     }
 }

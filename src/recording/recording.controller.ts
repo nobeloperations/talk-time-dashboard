@@ -9,7 +9,7 @@ export class RecordingController {
     @Get('/:url/:date')
     @Render('recording')
     @HttpCode(200)
-    getRecording(@Param() params: Object, @Res() res: Response, @Query('q') generalName: String) {
+    getRecording(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string) {
         return this.recordingService.getRecording(params, res, generalName)
     }
 }

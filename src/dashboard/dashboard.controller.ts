@@ -10,7 +10,7 @@ export class DashboardController {
     @Get('dashboard/:url/:date')
     @Render('dashboard')
     @HttpCode(200)
-    getDashboard(@Param() params: Object, @Res() res: Response, @Query('q') generalName: String) {
+    getDashboard(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string) {
         return this.dashboardService.getDashboard(params, res, generalName)   
          
     }   
