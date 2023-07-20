@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const passport_1 = require("@nestjs/passport");
 const jwt_1 = require("@nestjs/jwt");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
@@ -26,7 +25,6 @@ AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             mongoose_1.MongooseModule.forFeature([{ name: 'Meeting', schema: meeting_model_1.MeetingSchema }, { name: "User", schema: user_model_1.UserSchema }, { name: "Auth", schema: auth_model_1.AuthSchema }, { name: 'Reset', schema: reset_model_1.ResetSchema }]),
-            passport_1.PassportModule,
             jwt_1.JwtModule.register({
                 secret: JWT_SECRET,
                 signOptions: { expiresIn: '7d' },
