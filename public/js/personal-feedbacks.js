@@ -1,4 +1,5 @@
 window.onload = function () {
+    const _pathName = window.location.pathname.replaceAll('%20', ' ')
     let _closeImageButtons = document.querySelectorAll('.personal__feedback__close__img');
     let _viewImageButtons = document.querySelectorAll('.personal__feedback__view__image');
     let _container = document.querySelector('.container');
@@ -18,8 +19,27 @@ window.onload = function () {
     let _ratingsCount = document.querySelectorAll('.rating__count')
     let _averageRating = document.querySelector('.average__rating')
     let _feedbacksCounter = document.querySelector('.feedbacks__counter')
+    let _leaveFeedbackLink = document.querySelector('.leave__feedback__link')
+    console.log(_leaveFeedbackLink)
     const LOW_RATING = 'LOW'
     const HIGH_RATING = 'HIGH'
+
+    function _getUserFromCookies() {
+        const _cookies = document.cookie.split(';')
+        let _user = {};
+        _cookies.forEach(_cookie => {
+            if(_cookie.startsWith('user={')) {
+                _user = JSON.parse(_cookie.split('=').at(-1))
+            }
+        })
+        return _user
+    }
+
+    const _currentUser = _getUserFromCookies()
+    
+    if(_leaveFeedback) _leaveFeedback.style.display = _pathName.includes(_currentUser.name) ? 'none' : 'flex'
+    if(_leaveFeedbackLink) _leaveFeedbackLink.style.display = _pathName.includes(_currentUser.name) ? 'none' : 'flex'
+
 
     const _ratingOptions = {
         1: {
@@ -126,7 +146,6 @@ window.onload = function () {
     _readMoreButtons.forEach(_readMoreButton => {
         _readMoreButton.onclick = function () {
             const _threeDots = this.parentElement.parentElement.parentElement.querySelector('.three__dots');
-            console.log(_threeDots)
             const _feedbackText = this.closest('.personal__feedback').querySelector('.personal__feedback__hidden')
             const _readLess = this.nextElementSibling
             const _feedback = this.parentElement.parentElement.parentElement
@@ -194,14 +213,14 @@ window.onload = function () {
         _ratingElements.forEach(_ratingElement => {
             _ratingElement.innerHTML = '★'
         })
-        if(_ratingOptions[_rating]) _ratingOptions[_rating]['count']++
+        if (_ratingOptions[_rating]) _ratingOptions[_rating]['count']++
         else _ratingOptions[_rating]['count'] = 1
     })
     let _ratingCounter = 0
-    for(key in _ratingOptions) {
+    for (key in _ratingOptions) {
         _ratingCounter += _ratingOptions[key].count;
     }
-    for(key in _ratingOptions) {
+    for (key in _ratingOptions) {
         _ratingOptions[key].percentage = Math.floor((_ratingOptions[key].count / _ratingCounter) * 100)
     }
 
@@ -216,28 +235,21 @@ window.onload = function () {
     _averageRating.innerHTML = `<b style="color: #F1C40F;">★</b> ${(_ratingSum / _ratingCounter).toFixed(1)}`
     _feedbacksCounter.textContent = `(${_feedbacks.length} feedbacks)`
 
-    const _viewImageOptions = {
-        _viewImage: (_currentImage) => {
+    _viewImageButtons.forEach(_viewImageButton => {
+        _viewImageButton.onclick = function () {
+            let _currentImage = this.parentElement.parentElement.parentElement.nextElementSibling
+            console.log(_currentImage)
             _currentImage.style.visibility = 'visible'
             _currentImage.style.opacity = '1'
             _container.className = 'container open__modal'
-        },
-        _closeImage: (_parentElement) => {
-            _parentElement.style.visibility = 'hidden';
-            _parentElement.style.opacity = '0';
-            _container.className = 'container close__modal'
-        }
-    }
-
-    _viewImageButtons.forEach(_viewImageButton => {
-        _viewImageButton.onclick = function () {
-            let _currentImage = this.parentElement.parentElement.nextElementSibling
-            _viewImageOptions._viewImage(_currentImage)
         }
     })
     _closeImageButtons.forEach(_closeImageButton => {
         _closeImageButton.onclick = function () {
-            _viewImageOptions._closeImage(this.parentElement)
+            const _currentImage = this.parentElement
+            _currentImage.style.visibility = 'hidden'
+            _currentImage.style.opacity = '0'
+            _container.className = 'container close__modal'
         }
     })
 }

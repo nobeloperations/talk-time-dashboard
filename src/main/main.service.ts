@@ -2,19 +2,52 @@ import { Injectable } from '@nestjs/common';
 import { Meeting } from '../../models/meeting.model';
 import { InjectModel } from '@nestjs/mongoose'
 import { Model } from 'mongoose';
+import { User } from 'models/user.model';
 
 @Injectable()
 export class MainService {
-    constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>){}
+    constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>,
+    @InjectModel('User') private readonly userModel: Model<User>){}
 
-    async getMain() {
+    async getMain(req) {
         try {
-            let generals = await this.meetingModel.find()
+            let userPayload;
+            let usersMeetings = [];
+            let generalNames = []
+            const cookies = req.headers.cookie.split(';');
+            cookies.forEach(cookie => {
+                if(cookie.startsWith('user={')) {
+                    userPayload = JSON.parse(cookie.split('=').at(-1))
+                }
+            })
+            let currentUsers = await this.userModel.find({name: userPayload.name}).select('url date generalName')
+            currentUsers.forEach(currentUser => {
+                usersMeetings.push({
+                    url: currentUser.url,
+                    date: currentUser['date']
+                })
+                generalNames.push(currentUser.generalName)
+            })
+            let generals = await this.meetingModel.find({name: {$in: generalNames}})
 
-            return {cssFileName: 'main', generals }
+            function filterMeetings(meetings, usersMeetings) {
+                return meetings.filter(
+                  (meeting) =>
+                    usersMeetings.some(
+                      (userMeeting) => userMeeting.date === meeting.date && userMeeting.url === meeting.url
+                    )
+                );
+              }
+              
+              const filteredGenerals = generals.map((general) => ({
+                name: general.name,
+                meetings: filterMeetings(general.meetings, usersMeetings),
+              }));
+              
+            return {cssFileName: 'main', generals: filteredGenerals, profileName: userPayload.name }
         }
         catch(e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e })
+            return { message: 'Error' }
         }
     }
 

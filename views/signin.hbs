@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="/css/auth.css">
+<div class="auth__container">
+    <form action="" class="auth__form signup__form">
+        <h1 class="auth__title">Sign in to explore</h1>
+        <label for="">Your name</label>
+        <div class="input__wrapper">
+            <div class="input__icon__wrapper">
+                <i class="fi-cnsuxl-user-circle-solid input__icon"></i>
+            </div>
+            <input class="username__input" placeholder="John Doe" required type="text">
+        </div>
+        <label for="">Your mail</label>
+        <div class="input__wrapper">
+            <div class="input__icon__wrapper">
+                <i class="fi-xwsuxl-envelope-solid input__icon"></i>
+            </div>
+            <input class="email__input" placeholder="user@email.com" required type="text">
+        </div>
+        <label for="">Your password</label>
+        <div class="input__wrapper password__wrapper">
+            <div class="input__icon__wrapper">
+                <i class="fi-xnsuxl-lock-solid input__icon"></i>
+            </div>
+            <input class="password__input" placeholder="12345678" required type="password">
+        </div>
+        <span class="forgot__password">Forgot password?</span>
+        <button class="auth__button signin__button" type="submit">Sign In</button>
+        <span class="auth__bottom__link">Don`t have an account? <a class="auth__link" href="/auth/signup">Sign
+                Up</a></span>
+    </form>
+    <div class="signin__wrong">
+        <span class="signin__wrong__text"></span>
+        <span class="close__signin__wrong">✖</span>
+    </div>
+    <form class="send__email__wrapper">
+        <input required class="send__email__input" placeholder="Your email here" type="email">
+        <button type="submit" class="send__email__button">Send Letter</button>
+        <span class="close__send__email">✖</span>
+    </form>
+</div>
+<script defer src="https://friconix.com/cdn/friconix-0.2607.js"></script>
+<script src="/js/signin.js"></script>

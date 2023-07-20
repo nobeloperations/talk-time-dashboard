@@ -25,8 +25,8 @@ let UsersController = class UsersController {
     newUser(params, newUserBody, headers) {
         return this.usersService.newUser(params, newUserBody, headers);
     }
-    getUsers(params, res, generalName) {
-        return this.usersService.getUsers(params, res, generalName);
+    getUsers(params, res, generalName, req) {
+        return this.usersService.getUsers(params, res, generalName, req);
     }
 };
 __decorate([
@@ -54,13 +54,14 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Query)('q')),
+    __param(3, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:paramtypes", [Object, Object, String, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsers", null);
 UsersController = __decorate([
     (0, common_1.Controller)('users'),
-    __metadata("design:paramtypes", [users_service_1.UsersService])
+    __metadata("design:paramtypes", [users_service_1.UserService])
 ], UsersController);
 exports.UsersController = UsersController;
 //# sourceMappingURL=users.controller.js.map

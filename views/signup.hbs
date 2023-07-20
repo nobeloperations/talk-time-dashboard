@@ -1,0 +1,43 @@
+<link rel="stylesheet" href="/css/auth.css">
+<div class="auth__container">
+    <form action="" class="auth__form signup__form">
+        <h1 class="auth__title">Sign up to explore</h1>
+        <label for="">Your name</label>
+        <div class="input__wrapper">
+            <div class="input__icon__wrapper">
+                <i class="fi-cnsuxl-user-circle-solid input__icon"></i>
+            </div>
+            <input class="username__input" placeholder="John Doe" required type="text">
+        </div>
+        <label for="">Your mail</label>
+        <div class="input__wrapper">
+            <div class="input__icon__wrapper">
+                <i class="fi-xwsuxl-envelope-solid input__icon"></i>
+            </div>
+            <input class="email__input" placeholder="user@email.com" required type="email">
+        </div>
+        <label for="">Your password</label>
+        <div class="input__wrapper">
+            <div class="input__icon__wrapper">
+                <i class="fi-xnsuxl-lock-solid input__icon"></i>
+            </div>
+            <input class="password__input" placeholder="12345678" required type="password">
+        </div>
+        <label for="">Repeat password</label>
+        <div class="input__wrapper">
+            <div class="input__icon__wrapper">
+                <i class="fi-cnsdxl-undo input__icon"></i>
+            </div>
+            <input class="repeat__password__input" placeholder="Repeat your password" required type="password">
+        </div>
+        <button class="auth__button signup__button" type="submit">Sign Up</button>
+        <span class="auth__bottom__link">Already have an account? <a class="auth__link" href="/auth/signin">Sign
+                In</a></span>
+    </form>
+    <div class="signup__alert">
+        <span class="signup__alert__text"></span>
+        <span class="close__signup__alert">✖</span>
+    </div>
+</div>
+<script defer src="https://friconix.com/cdn/friconix-0.2607.js"></script>
+<script src="/js/signup.js"></script>

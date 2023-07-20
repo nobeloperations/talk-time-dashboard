@@ -37,12 +37,12 @@ export declare class ProfileService {
         avatar: string;
         avgRating: number;
         meetingsCounter: number;
-        feedbacksReceived: (import("mongoose").Document<unknown, any, Feedback> & Feedback & {
+        feedbacksReceived: (import("mongoose").Document<unknown, any, Feedback> & Omit<Feedback & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
-        feedbacksSent: (import("mongoose").Document<unknown, any, Feedback> & Feedback & {
+        }, never>)[];
+        feedbacksSent: (import("mongoose").Document<unknown, any, Feedback> & Omit<Feedback & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
+        }, never>)[];
         meetings: any[];
         usersBadges: {};
         generalName: any;

@@ -6,14 +6,6 @@
         <div class="form__content">
             <form action="/feedbacks/create/{{generalName}}/{{url}}/{{name}}/{{date}}" method="POST"
                 enctype="multipart/form-data">
-                <label for="">Your name</label>
-                <select name="sender" class="send__feedback__name" required>
-                    <option hidden selected value="">Choose your name</option>
-                    {{#each users}}
-                    <option value="{{name}}">{{name}}</option>
-                    {{/each}}
-                    <option hidden value="Anonymous">Anomymous</option>
-                </select>
                 <label for="">Your feedback</label>
                 <textarea class="send__feedback__text" name="feedback" placeholder="Enter feedback here"></textarea>
                 <label for="">Choose rating</label>
@@ -63,4 +55,3 @@
     <h1 class="invalid__url">Invalid Meeting url or username, make sure that your link is valid</h1>
     {{/if}}
 </div>
-<script src="/js/new-feedback.js"></script>

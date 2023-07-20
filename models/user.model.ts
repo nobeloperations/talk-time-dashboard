@@ -29,6 +29,10 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    generalName: {
+        type: String,
+        required: true
+    }
 })
 
 export interface User {
@@ -37,4 +41,5 @@ export interface User {
     avatar: string,
     badges: string,
     percents: string,
+    generalName: string
 }

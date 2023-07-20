@@ -17,16 +17,41 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let MainService = class MainService {
-    constructor(meetingModel) {
+    constructor(meetingModel, userModel) {
         this.meetingModel = meetingModel;
+        this.userModel = userModel;
     }
-    async getMain() {
+    async getMain(req) {
         try {
-            let generals = await this.meetingModel.find();
-            return { cssFileName: 'main', generals };
+            let userPayload;
+            let usersMeetings = [];
+            let generalNames = [];
+            const cookies = req.headers.cookie.split(';');
+            cookies.forEach(cookie => {
+                if (cookie.startsWith('user={')) {
+                    userPayload = JSON.parse(cookie.split('=').at(-1));
+                }
+            });
+            let currentUsers = await this.userModel.find({ name: userPayload.name }).select('url date generalName');
+            currentUsers.forEach(currentUser => {
+                usersMeetings.push({
+                    url: currentUser.url,
+                    date: currentUser['date']
+                });
+                generalNames.push(currentUser.generalName);
+            });
+            let generals = await this.meetingModel.find({ name: { $in: generalNames } });
+            function filterMeetings(meetings, usersMeetings) {
+                return meetings.filter((meeting) => usersMeetings.some((userMeeting) => userMeeting.date === meeting.date && userMeeting.url === meeting.url));
+            }
+            const filteredGenerals = generals.map((general) => ({
+                name: general.name,
+                meetings: filterMeetings(general.meetings, usersMeetings),
+            }));
+            return { cssFileName: 'main', generals: filteredGenerals, profileName: userPayload.name };
         }
         catch (e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e });
+            return { message: 'Error' };
         }
     }
     async addMeeting(addGeneralBody) {
@@ -62,7 +87,9 @@ let MainService = class MainService {
 MainService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('Meeting')),
-    __metadata("design:paramtypes", [mongoose_2.Model])
+    __param(1, (0, mongoose_1.InjectModel)('User')),
+    __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model])
 ], MainService);
 exports.MainService = MainService;
 //# sourceMappingURL=main.service.js.map

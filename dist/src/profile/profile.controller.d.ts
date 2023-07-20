@@ -34,12 +34,12 @@ export declare class ProfileController {
         avatar: string;
         avgRating: number;
         meetingsCounter: number;
-        feedbacksReceived: (import("mongoose").Document<unknown, any, import("../../models/feedback.model").Feedback> & import("../../models/feedback.model").Feedback & {
+        feedbacksReceived: (import("mongoose").Document<unknown, any, import("../../models/feedback.model").Feedback> & Omit<import("../../models/feedback.model").Feedback & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
-        feedbacksSent: (import("mongoose").Document<unknown, any, import("../../models/feedback.model").Feedback> & import("../../models/feedback.model").Feedback & {
+        }, never>)[];
+        feedbacksSent: (import("mongoose").Document<unknown, any, import("../../models/feedback.model").Feedback> & Omit<import("../../models/feedback.model").Feedback & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
+        }, never>)[];
         meetings: any[];
         usersBadges: {};
         generalName: any;

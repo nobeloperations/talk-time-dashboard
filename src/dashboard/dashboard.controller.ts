@@ -1,6 +1,6 @@
-import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete, Res, Query } from '@nestjs/common';
+import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete, Res, Query, Req } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 @Controller('')
 export class DashboardController {
@@ -10,8 +10,8 @@ export class DashboardController {
     @Get('dashboard/:url/:date')
     @Render('dashboard')
     @HttpCode(200)
-    getDashboard(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string) {
-        return this.dashboardService.getDashboard(params, res, generalName)   
+    getDashboard(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string, @Req() req: Request) {
+        return this.dashboardService.getDashboard(params, res, generalName, req)   
          
     }   
     

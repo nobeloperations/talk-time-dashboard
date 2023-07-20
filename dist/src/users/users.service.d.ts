@@ -25,20 +25,39 @@
 import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 import { Meeting } from 'models/meeting.model';
-export declare class UsersService {
+import { Auth } from 'models/auth.model';
+export declare class UserService {
     private readonly userModel;
     private readonly meetingModel;
-    constructor(userModel: Model<User>, meetingModel: Model<Meeting>);
-    getUsersAvatar(params: any): Promise<import("mongoose").Document<unknown, any, User> & User & {
+    private readonly authModel;
+    constructor(userModel: Model<User>, meetingModel: Model<Meeting>, authModel: Model<Auth>);
+    getUsersAvatar(params: any): Promise<import("mongoose").Document<unknown, any, User> & Omit<User & {
         _id: import("mongoose").Types.ObjectId;
-    }>;
+    }, never>>;
     newUser(params: any, newUserBody: any, headers: any): Promise<string>;
-    getUsers(params: any, res: any, generalName: any): Promise<{
+    getUsers(params: any, res: any, generalName: any, req: any): Promise<{
         cssFileName: string;
         users: any[];
         url: any;
         date: any;
         generalName: any;
         pageName: string;
+        profileName: any;
     }>;
+    createUser(name: any, email: any, password: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>>;
+    findByEmail(email: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>>;
+    findByEmailAndName(user: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>>;
+    findById(id: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>>;
+    findByName(name: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>>;
+    updatePassword(email: any, password: any): Promise<any>;
 }

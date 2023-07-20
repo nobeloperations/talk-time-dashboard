@@ -8,7 +8,8 @@
     <h1 class="meetings__title">Select your meeting <b>here</b></h1>
     <div class="generals__wrapper">
         <input class="search__generals" placeholder="Name of your meeting" type="text">
-        <div class="list__of__meetings">
+        <div class=" {{#if generals}} list__of__meetings {{else}} empty__list__of__meetings {{/if}}">
+            {{#if generals}}
             {{#each generals}}
             <div class="general" data-name="{{name}}">
                 <span class="general__name">{{name}}</span>
@@ -22,17 +23,21 @@
                 <div class="meeting">
                     <div class="meeting__info">
                         <span>{{url}}</span>
-                        <span class="main__meeting__date">{{date}}</span>
+                        <span class="main__meeting__date">🕙 {{date}}</span>
                     </div>
-                    <a href="/dashboard/{{url}}/{{date}}?q={{../name}}"><button class="dashboard__button">Dashboard</button></a>
+                    <a href="/dashboard/{{url}}/{{date}}?q={{../name}}"><button
+                            class="dashboard__button">Dashboard</button></a>
                 </div>
                 {{/each}}
             </div>
             {{/each}}
+            {{else}}
+            <img class="empty__meetings__img" src="/img/empty.png" alt="">
+            <span class="empty__meetings__text">You don`t have any meetings</span>
+            {{/if}}
         </div>
     </div>
+    {{>profile-information}}
 </div>
-<div class="modal__shadow"></div>
 <script src="/js/main.js"></script>
-<script src="/js/wow.min.js"></script>
 <script src="/js/helpers/search.js"></script>

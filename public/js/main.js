@@ -3,6 +3,9 @@ window.onload = function () {
     const _searchMeetings = document.querySelector('.search__generals')
     const _generals = document.querySelectorAll('.general')
     const _arrowDown = document.querySelector('.main__button')
+    const _profileInfo = document.querySelector('.profile__information')
+    const _profileInfoWidth = _profileInfo.offsetWidth;
+    _profileInfo.style.left = `calc(100% - ${_profileInfoWidth + 15}px)`
 
     _arrowDown.onclick = function() {
         window.scroll({

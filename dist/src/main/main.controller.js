@@ -19,8 +19,8 @@ let MainController = class MainController {
     constructor(mainService) {
         this.mainService = mainService;
     }
-    getMain() {
-        return this.mainService.getMain();
+    getMain(req) {
+        return this.mainService.getMain(req);
     }
     addGeneral(addGeneralBody) {
         return this.mainService.addMeeting(addGeneralBody);
@@ -33,8 +33,9 @@ __decorate([
     (0, common_1.Get)('/'),
     (0, common_1.Render)('main'),
     (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getMain", null);
 __decorate([

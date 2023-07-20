@@ -5,6 +5,7 @@ import { Feedback } from '../../models/feedback.model';
 import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 import { resolve } from 'path';
+import { getUserFromCookies } from 'helpers/user_cookies';
 
 
 @Injectable()
@@ -14,8 +15,9 @@ export class DashboardService {
         @InjectModel('Note') private readonly noteModel: Model<Note>,
         @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>) { }
 
-    async getDashboard(params, res, generalName) {
+    async getDashboard(params, res, generalName, req) {
         try {
+            const userPayload = getUserFromCookies(req)
             const { url, date } = params;
             const [ users, notes, feedbacks ] = await Promise.all([
                 await this.userModel.find({ url, date }),
@@ -44,7 +46,7 @@ export class DashboardService {
                 feedbacksByName[receiver].rating.push(rating)
             })
 
-            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard' }
+            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard', profileName: userPayload.name }
         }
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))

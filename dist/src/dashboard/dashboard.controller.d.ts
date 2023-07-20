@@ -24,25 +24,26 @@
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
 import { DashboardService } from './dashboard.service';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 export declare class DashboardController {
     private dashboardService;
     constructor(dashboardService: DashboardService);
-    getDashboard(params: Object, res: Response, generalName: string): Promise<{
+    getDashboard(params: Object, res: Response, generalName: string, req: Request): Promise<{
         cssFileName: string;
         url: any;
-        users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
+        users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & Omit<import("../../models/user.model").User & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
-        notes: (import("mongoose").Document<unknown, any, import("../../models/note.model").Note> & import("../../models/note.model").Note & {
+        }, never>)[];
+        notes: (import("mongoose").Document<unknown, any, import("../../models/note.model").Note> & Omit<import("../../models/note.model").Note & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
+        }, never>)[];
         usersLength: number;
         feedbacksLength: number;
         feedbacksByName: {};
         date: any;
         generalName: any;
         pageName: string;
+        profileName: any;
     }>;
     postPercents(params: Object, updatePercentsBody: Object): Promise<string>;
     newConclusion(params: Object, createNoteBody: Object): Promise<string>;

@@ -23,21 +23,22 @@
 /// <reference types="mongoose/types/virtuals" />
 /// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { UsersService } from './users.service';
-import { Response } from 'express';
+import { UserService } from './users.service';
+import { Request, Response } from 'express';
 export declare class UsersController {
     private usersService;
-    constructor(usersService: UsersService);
-    getUsersAvatar(params: Object): Promise<import("mongoose").Document<unknown, any, import("../../models/user.model").User> & import("../../models/user.model").User & {
+    constructor(usersService: UserService);
+    getUsersAvatar(params: Object): Promise<import("mongoose").Document<unknown, any, import("../../models/user.model").User> & Omit<import("../../models/user.model").User & {
         _id: import("mongoose").Types.ObjectId;
-    }>;
+    }, never>>;
     newUser(params: Object, newUserBody: Object, headers: Object): Promise<string>;
-    getUsers(params: Object, res: Response, generalName: string): Promise<{
+    getUsers(params: Object, res: Response, generalName: string, req: Request): Promise<{
         cssFileName: string;
         users: any[];
         url: any;
         date: any;
         generalName: any;
         pageName: string;
+        profileName: any;
     }>;
 }

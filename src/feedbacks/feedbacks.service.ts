@@ -5,6 +5,7 @@ import { User } from '../../models/user.model';
 import { Model } from 'mongoose';
 import { config } from '../../badge-config/config'
 import { resolve } from 'path';
+import { getUserFromCookies } from 'helpers/user_cookies';
 
 const DEFAULT_BADGE = 'Choose the Badge (not necessarily)'
 
@@ -14,8 +15,9 @@ export class FeedbacksService {
     constructor(@InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>,
         @InjectModel('User') private readonly userModel: Model<User>) { }
 
-    async getPersonalFeedbacks(params, res, generalName) {
+    async getPersonalFeedbacks(params, res, generalName, req) {
         try {
+            const userPayload = getUserFromCookies(req)
             const { url, name, date } = params;
             const [feedbacks, currentUser] = await Promise.all([
                 await this.feedbackModel.find({ receiver: name, url, date }),
@@ -28,7 +30,7 @@ export class FeedbacksService {
                 return;
             }
 
-            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks` }
+            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks`, profileName: userPayload.name }
         }
 
         catch (e) {
@@ -36,8 +38,9 @@ export class FeedbacksService {
         }
     }
 
-    async getNewFeedback(params, res, generalName) {
+    async getNewFeedback(params, res, generalName, req) {
         try {
+            const userPayload = getUserFromCookies(req)
             const { url, name, date } = params;
             const [users, currentUser] = await Promise.all([
                 await this.userModel.find({ url, date }),
@@ -49,18 +52,19 @@ export class FeedbacksService {
                 return;
             }
 
-            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback" }
+            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback", profileName: userPayload.name }
         }
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))
         }
     }
 
-    async createFeedback(files, createFeedbackBody, params, res) {
+    async createFeedback(files, createFeedbackBody, params, res, req) {
         try {
-            let { sender, rating, feedback, badge } = createFeedbackBody;
+            const userPayload = getUserFromCookies(req)
+            let { rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
-            let sendUser = await this.userModel.findOne({ name: sender })
+            let sendUser = await this.userModel.findOne({ name: userPayload.name })
 
             if (badge !== DEFAULT_BADGE) {
                 let key = `${badge.toLowerCase().split(' ').join('_')}`;
@@ -70,7 +74,7 @@ export class FeedbacksService {
 
             }
             let newFeedback = new this.feedbackModel({
-                sender,
+                sender: userPayload.name,
                 receiver: name,
                 feedback,
                 rating,

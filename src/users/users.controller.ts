@@ -1,11 +1,11 @@
-import { Controller, Post, HttpCode, Param, Body, Headers, Get, Render, Res, Query } from '@nestjs/common';
-import { UsersService } from './users.service';
-import { Response } from 'express';
+import { Controller, Post, HttpCode, Param, Body, Headers, Get, Render, Res, Query, Req } from '@nestjs/common';
+import { UserService } from './users.service';
+import { Request, Response } from 'express';
 
 @Controller('users')
 export class UsersController {
 
-    constructor(private usersService: UsersService){}
+    constructor(private usersService: UserService){}
 
     @Get('/:name')
     @HttpCode(200)
@@ -23,7 +23,7 @@ export class UsersController {
     @Get('/:url/:date')
     @HttpCode(200)
     @Render('users')
-    getUsers(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string) {
-        return this.usersService.getUsers(params, res, generalName)
+    getUsers(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string, @Req() req: Request) {
+        return this.usersService.getUsers(params, res, generalName, req)
     }
 }

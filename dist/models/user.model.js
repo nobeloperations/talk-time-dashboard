@@ -31,5 +31,9 @@ exports.UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    generalName: {
+        type: String,
+        required: true
+    }
 });
 //# sourceMappingURL=user.model.js.map

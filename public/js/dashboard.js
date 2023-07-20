@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function () {
     const URL = window.location.href.split('/').at(-2);
     const DATE = window.location.href.split('/').at(-1);
     const _usersList = document.querySelectorAll('.dashboard__user')
@@ -16,8 +16,7 @@ window.onload = function() {
     let _tagsArray = []
     if (_notes.children.length === 1) _noNotes.style.display = 'inline'
 
-    _addNote.onclick = async function () {
-        let _noteValue = _addNoteInput.value;
+    const _noteTemplate = (_noteValue) => {
         if (_noteValue.trim()) {
             let _noteHTML = `
             <span class="note__text">${_noteValue}</span>
@@ -35,29 +34,39 @@ window.onload = function() {
             _note.className = 'note'
             _note.innerHTML = _noteHTML
             _notes.prepend(_note)
+            return _note;
+        };
+    }
 
-            await fetch(`/newconclusion/${URL}/${DATE}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    text: _noteValue,
-                    URL,
-                    tags: _tagsArray
-                })
+    const _newNoteRequest = async (_noteValue, _note) => {
+        await fetch(`/newconclusion/${URL}/${DATE}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                text: _noteValue,
+                URL,
+                tags: _tagsArray
             })
-                .then(response => response.json())
-                .then(res => {
-                    _note.querySelector('.note__options').innerHTML += `<span style="display: none;" class="note__id">${res.id}</span>`
-                })
-            _tagsArray = []
-            _addNoteInput.value = ''
-            _noNotes.style.display = 'none'
-            _tags.innerHTML = `<div class="tag" data-tag="statictag">
+        })
+            .then(response => response.json())
+            .then(res => {
+                _note.querySelector('.note__options').innerHTML += `<span style="display: none;" class="note__id">${res.id}</span>`
+            })
+        _tagsArray = []
+        _addNoteInput.value = ''
+        _noNotes.style.display = 'none'
+        _tags.innerHTML = `<div class="tag" data-tag="statictag">
         <span>No tags here...</span>
     </div>`
-        }
+    
+    }
+
+    _addNote.onclick = async function () {
+        let _noteValue = _addNoteInput.value;
+        const _note = _noteTemplate(_noteValue)
+        if(_note) _newNoteRequest(_noteValue, _note)
     }
 
     _notes.onclick = e => {
@@ -73,19 +82,6 @@ window.onload = function() {
                 },
                 body: JSON.stringify({
                     id: _curr.previousElementSibling.textContent
-                })
-            })
-        }
-
-        else if (_curr.className == 'note__important') {
-            _curr.innerHTML = '★'
-            fetch(`/importantconclusion`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    id: _curr.nextElementSibling.textContent
                 })
             })
         }
@@ -128,8 +124,6 @@ window.onload = function() {
             _tagsInput.value = ''
         }
     }
-
-
 
     _search(_searchUsersInput, _usersList)
 

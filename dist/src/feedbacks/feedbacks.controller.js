@@ -22,15 +22,14 @@ let FeedbacksController = class FeedbacksController {
     constructor(feedbacksService) {
         this.feedbacksService = feedbacksService;
     }
-    getPersonalFeedbacks(params, res, generalName) {
-        return this.feedbacksService.getPersonalFeedbacks(params, res, generalName);
+    getPersonalFeedbacks(params, res, generalName, req) {
+        return this.feedbacksService.getPersonalFeedbacks(params, res, generalName, req);
     }
-    getNewFeedback(params, res, generalName) {
-        return this.feedbacksService.getNewFeedback(params, res, generalName);
+    getNewFeedback(params, res, generalName, req) {
+        return this.feedbacksService.getNewFeedback(params, res, generalName, req);
     }
-    createFeedback(files, createFeedbackBody, params, res) {
-        console.log(files);
-        return this.feedbacksService.createFeedback(files, createFeedbackBody, params, res);
+    createFeedback(files, createFeedbackBody, params, res, req) {
+        return this.feedbacksService.createFeedback(files, createFeedbackBody, params, res, req);
     }
 };
 __decorate([
@@ -40,8 +39,9 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Query)('q')),
+    __param(3, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:paramtypes", [Object, Object, String, Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getPersonalFeedbacks", null);
 __decorate([
@@ -51,8 +51,9 @@ __decorate([
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Res)()),
     __param(2, (0, common_1.Query)('q')),
+    __param(3, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:paramtypes", [Object, Object, String, Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getNewFeedback", null);
 __decorate([
@@ -70,8 +71,9 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __param(2, (0, common_1.Param)()),
     __param(3, (0, common_1.Res)()),
+    __param(4, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Array, Object, Object, Object]),
+    __metadata("design:paramtypes", [Array, Object, Object, Object, Object]),
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "createFeedback", null);
 FeedbacksController = __decorate([

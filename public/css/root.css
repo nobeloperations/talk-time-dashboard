@@ -21,6 +21,7 @@ body {
     display: flex;
     align-items: center;
     padding: 30px;
+    justify-content: space-between;
 }
 
 .navigate__text {
@@ -110,4 +111,36 @@ a {
 *::-webkit-scrollbar-thumb {
     background: gray;
     border-radius: 10px;
+}
+i {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+}
+.profile__information {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+}
+.profile__information__img {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}
+.profile__information__name {
+    font-size: 12px;
+}
+.logout {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    margin-right: 30px;
+    cursor: pointer;
+}
+.logout img {
+    width: 16px;
+    height: 16px;
+    margin-right: 5px;
 }

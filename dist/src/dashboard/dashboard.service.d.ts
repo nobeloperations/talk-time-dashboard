@@ -31,21 +31,22 @@ export declare class DashboardService {
     private readonly noteModel;
     private readonly feedbackModel;
     constructor(userModel: Model<User>, noteModel: Model<Note>, feedbackModel: Model<Feedback>);
-    getDashboard(params: any, res: any, generalName: any): Promise<{
+    getDashboard(params: any, res: any, generalName: any, req: any): Promise<{
         cssFileName: string;
         url: any;
-        users: (import("mongoose").Document<unknown, any, User> & User & {
+        users: (import("mongoose").Document<unknown, any, User> & Omit<User & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
-        notes: (import("mongoose").Document<unknown, any, Note> & Note & {
+        }, never>)[];
+        notes: (import("mongoose").Document<unknown, any, Note> & Omit<Note & {
             _id: import("mongoose").Types.ObjectId;
-        })[];
+        }, never>)[];
         usersLength: number;
         feedbacksLength: number;
         feedbacksByName: {};
         date: any;
         generalName: any;
         pageName: string;
+        profileName: any;
     }>;
     updatePercents(params: any, postPercentsBody: any): Promise<string>;
     newNote(params: any, createNoteBody: any): Promise<string>;

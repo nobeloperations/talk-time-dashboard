@@ -17,14 +17,16 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 const path_1 = require("path");
+const user_cookies_1 = require("../../helpers/user_cookies");
 let DashboardService = class DashboardService {
     constructor(userModel, noteModel, feedbackModel) {
         this.userModel = userModel;
         this.noteModel = noteModel;
         this.feedbackModel = feedbackModel;
     }
-    async getDashboard(params, res, generalName) {
+    async getDashboard(params, res, generalName, req) {
         try {
+            const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             const { url, date } = params;
             const [users, notes, feedbacks] = await Promise.all([
                 await this.userModel.find({ url, date }),
@@ -47,7 +49,7 @@ let DashboardService = class DashboardService {
             feedbacks.forEach(({ receiver, rating }) => {
                 feedbacksByName[receiver].rating.push(rating);
             });
-            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard' };
+            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard', profileName: userPayload.name };
         }
         catch (e) {
             res.sendFile((0, path_1.resolve)('views/notfound.html'));

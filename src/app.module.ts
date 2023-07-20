@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, MiddlewareConsumer } from '@nestjs/common';
 import { MainModule } from './main/main.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config'
@@ -11,14 +11,24 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { ProfileModule } from './profile/profile.module';
 import { RecordingModule } from './recording/recording.module';
+import { AuthModule } from './auth/auth.module';
+import { SessionModule } from 'nestjs-session';
+import * as cookieParser from 'cookie-parser'
 
 
 @Module({
   imports: [
-    ConfigModule.forRoot({envFilePath: '.env'}), 
+    ConfigModule.forRoot({ envFilePath: '.env' }),
     MongooseModule.forRoot(process.env.MONGODB_URL),
     MulterModule.register({
       dest: '../public/uploads'
+    }),
+    SessionModule.forRoot({
+      session: {
+        secret: 'Bearer580792',
+        resave: false,
+        saveUninitialized: false,
+      },
     }),
     MainModule,
     DashboardModule,
@@ -27,12 +37,14 @@ import { RecordingModule } from './recording/recording.module';
     BadgesModule,
     ProfileModule,
     RecordingModule,
+    AuthModule,
   ],
   providers: [
     {
-        provide: APP_FILTER,
-        useClass: HttpExceptionFilter
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter
     },
   ],
 })
-export class AppModule { }
+export class AppModule {
+}
