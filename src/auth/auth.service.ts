@@ -1,13 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import * as bcrypt from 'bcryptjs';
-import { UserService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt'
 import { Auth } from 'models/auth.model';
-import { Model } from 'mongoose';
-import { Reset } from 'models/reset.model';
-import { InjectModel } from '@nestjs/mongoose';
 import { resolve } from 'path';
 import * as nodemailer from 'nodemailer';
+import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 
 
 
@@ -15,9 +12,8 @@ import * as nodemailer from 'nodemailer';
 export class AuthService {
 
     constructor(
-        private readonly userService: UserService,
-        private readonly jwtService: JwtService,
-        @InjectModel('Reset') private readonly resetModel: Model<Reset>
+        private readonly databaseUtilsService: DatabaseUtilsService,
+        private readonly jwtService: JwtService
     ) { }
 
     getSignin() {
@@ -29,7 +25,8 @@ export class AuthService {
     }
 
     async login(user: Auth): Promise<any> {
-        const currentUser = await this.userService.findByEmailAndName(user)
+        const { name, email } = user
+        const currentUser = await this.databaseUtilsService.findAuth({name, email})
         if (!currentUser) return { message: "USER_NOT_FOUND" }
         const passwordsMatches = await bcrypt.compare(user.password, currentUser.password)
         if (!passwordsMatches) return { message: 'INVALID_PASS' }
@@ -48,20 +45,20 @@ export class AuthService {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const existingUserByEmail = await this.userService.findByEmail(email);
-        const existingUserByName = await this.userService.findByName(name);
+        const existingUserByEmail = await this.databaseUtilsService.findAuth({email});
+        const existingUserByName = await this.databaseUtilsService.findAuth({name});
 
         if (existingUserByEmail || existingUserByName) {
             return { message: 'ALREADY_EXIST', user: null };
         }
 
-        const newUser = await this.userService.createUser(name, email, hashedPassword);
+        const newUser = await this.databaseUtilsService.createNewAuth(name, email, hashedPassword);
         return { message: 'SUCCESS_SIGNUP', user: newUser };
     }
 
     async getReset(params, res) {
         const { id } = params;
-        const _idExist = await this.resetModel.findOne({ value: id })
+        const _idExist = await this.databaseUtilsService.findResetById(id)
         if (!_idExist) {
             return res.sendFile(resolve('views/notfound.html'))
         }
@@ -70,11 +67,7 @@ export class AuthService {
 
     async createResetId(body) {
         const { id } = body;
-        const newReset = new this.resetModel({
-            value: id
-        })
-        newReset.save()
-        console.log(newReset)
+        const newReset = this.databaseUtilsService.createNewReset(id)
         return newReset
     }
 
@@ -87,14 +80,14 @@ export class AuthService {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const _idExist = await this.resetModel.findOne({ value: id })
+        const _idExist = await this.databaseUtilsService.findResetById(id)
 
         if (_idExist) {
-            const currentUser = await this.userService.findByEmail(email)
+            const currentUser = await this.databaseUtilsService.findAuth({email})
             if (currentUser) {
-                return this.userService.updatePassword(email, hashedPassword)
+                return this.databaseUtilsService.updateAuthPassword(email, hashedPassword)
                 .then(async () => {
-                    await this.resetModel.deleteOne({value: id})
+                    await this.databaseUtilsService.deleteResetById(id)
                 })
             }
         }

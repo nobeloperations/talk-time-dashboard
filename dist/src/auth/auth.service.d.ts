@@ -21,17 +21,15 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
+/// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { UserService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { Auth } from 'models/auth.model';
-import { Model } from 'mongoose';
-import { Reset } from 'models/reset.model';
+import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 export declare class AuthService {
-    private readonly userService;
+    private readonly databaseUtilsService;
     private readonly jwtService;
-    private readonly resetModel;
-    constructor(userService: UserService, jwtService: JwtService, resetModel: Model<Reset>);
+    constructor(databaseUtilsService: DatabaseUtilsService, jwtService: JwtService);
     getSignin(): {
         cssFileName: string;
     };
@@ -41,7 +39,7 @@ export declare class AuthService {
     login(user: Auth): Promise<any>;
     signup(user: Auth): Promise<any>;
     getReset(params: any, res: any): Promise<any>;
-    createResetId(body: any): Promise<import("mongoose").Document<unknown, any, Reset> & Omit<Reset & {
+    createResetId(body: any): Promise<import("mongoose").Document<unknown, any, import("../../models/reset.model").Reset> & Omit<import("../../models/reset.model").Reset & {
         _id: import("mongoose").Types.ObjectId;
     }, never>>;
     resetPassword(params: any, body: any): Promise<void | {

@@ -1,4 +1,4 @@
-import { Module, MiddlewareConsumer } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { MainModule } from './main/main.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigModule } from '@nestjs/config'
@@ -13,7 +13,7 @@ import { ProfileModule } from './profile/profile.module';
 import { RecordingModule } from './recording/recording.module';
 import { AuthModule } from './auth/auth.module';
 import { SessionModule } from 'nestjs-session';
-import * as cookieParser from 'cookie-parser'
+import { DatabaseUtilsModule } from './database-utils/database-utils.module';
 
 
 @Module({
@@ -38,6 +38,7 @@ import * as cookieParser from 'cookie-parser'
     ProfileModule,
     RecordingModule,
     AuthModule,
+    DatabaseUtilsModule,
   ],
   providers: [
     {

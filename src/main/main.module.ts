@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
 import { MainService } from './main.service';
 import { MainController } from './main.controller';
-import { MongooseModule } from '@nestjs/mongoose'
-import { MeetingSchema } from '../../models/meeting.model';
-import { UserSchema } from 'models/user.model';
+import { DatabaseUtilsModule } from 'src/database-utils/database-utils.module';
 
 @Module({
-  imports: [MongooseModule.forFeature([{name: 'Meeting', schema: MeetingSchema}, {name: 'User', schema: UserSchema}])],
+  imports: [DatabaseUtilsModule],
   providers: [MainService],
   controllers: [MainController]
 })

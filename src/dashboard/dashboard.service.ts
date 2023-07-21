@@ -1,28 +1,22 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Note } from '../../models/note.model';
-import { Feedback } from '../../models/feedback.model';
-import { User } from '../../models/user.model';
-import { Model } from 'mongoose';
 import { resolve } from 'path';
 import { getUserFromCookies } from 'helpers/user_cookies';
+import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 
 
 @Injectable()
 export class DashboardService {
 
-    constructor(@InjectModel('User') private readonly userModel: Model<User>,
-        @InjectModel('Note') private readonly noteModel: Model<Note>,
-        @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>) { }
+    constructor(private readonly databaseUtilsService: DatabaseUtilsService) { }
 
     async getDashboard(params, res, generalName, req) {
         try {
             const userPayload = getUserFromCookies(req)
             const { url, date } = params;
             const [ users, notes, feedbacks ] = await Promise.all([
-                await this.userModel.find({ url, date }),
-                await this.noteModel.find({ url, date }),
-                await this.feedbackModel.find({ url, date })
+                await this.databaseUtilsService.findUsersByUrlAndDate( url, date ),
+                await this.databaseUtilsService.findNotesByUrlAndDate( url, date ),
+                await this.databaseUtilsService.findFeedbacksByUrlAndDate( url, date )
             ])
 
             if (!users.length) {
@@ -59,7 +53,7 @@ export class DashboardService {
             const { percents } = postPercentsBody
             const { url, date } = params
             percents.forEach(async ({name, percent}) => {
-                await this.userModel.findOneAndUpdate({ name, url, date }, { percents: percent })
+                await this.databaseUtilsService.updateUserPercents(name, url, date, percent)
             })
         }
         catch(e) {
@@ -71,15 +65,8 @@ export class DashboardService {
         try {
             const { url, date } = params;
             const { text, tags } = createNoteBody
-            const newNote = new this.noteModel({
-                text,
-                url,
-                tags,
-                date
-            })
-    
-            await newNote.save()
-            return JSON.stringify(newNote)
+            const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags)
+            return newNote
         }
         catch(e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
@@ -90,7 +77,7 @@ export class DashboardService {
     async deleteNote(deleteNoteBody) {
         try {
             const { id } = deleteNoteBody;
-            await this.noteModel.deleteOne({ _id: id })
+            await this.databaseUtilsService.deleteNoteById(id)
         }
         catch(e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })

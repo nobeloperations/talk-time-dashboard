@@ -1,21 +1,15 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { User } from '../../models/user.model';
-import { Model } from 'mongoose';
-import { Meeting } from 'models/meeting.model';
 import { resolve } from 'path';
-import { Auth } from 'models/auth.model';
 import { getUserFromCookies } from 'helpers/user_cookies';
+import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel('User') private readonly userModel: Model<User>,
-        @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>,
-        @InjectModel('Auth') private readonly authModel: Model<Auth>) { }
+    constructor(private readonly databaseUtilsService: DatabaseUtilsService) { }
 
     async getUsersAvatar(params) {
         const { name } = params;
-        let avatar = await this.userModel.findOne({ name }).select('avatar');
+        let avatar = await this.databaseUtilsService.findUserAvatarByName(name);
         return avatar
     }
 
@@ -25,19 +19,9 @@ export class UserService {
                 const { url } = params;
                 const { name, avatar, date, generalName } = newUserBody;
 
-                const isUserExsist = await this.userModel.findOne({ name, url, date })
+                const isUserExsist = await this.databaseUtilsService.findUserByNameAndUrlAndDate( name, url, date )
                 if (!isUserExsist) {
-                    const newUser = new this.userModel({
-                        name,
-                        avatar,
-                        url,
-                        percents: '',
-                        date,
-                        generalName
-                    })
-
-                    await newUser.save()
-
+                    await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName)
                 }
             }
             else {
@@ -53,7 +37,7 @@ export class UserService {
         try {
             const userPayload = getUserFromCookies(req)
             const { url, date } = params;
-            let meeting = await this.meetingModel.findOne({ name: generalName })
+            let meeting = await this.databaseUtilsService.findMeetingByName(generalName)
 
             const currentMeeting = meeting?.meetings.some(curr => curr['date'] == date);
 
@@ -61,7 +45,7 @@ export class UserService {
                 res.sendFile(resolve('views/notfound.html'))
             }
 
-            const dbUsers = await this.userModel.find({}).select('name avatar count badges')
+            const dbUsers = await this.databaseUtilsService.findUsersAndSelectFields({}, 'name avatar count badges')
             let users = []
 
             for (const user of dbUsers) {
@@ -100,32 +84,5 @@ export class UserService {
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))
         }
-    }
-
-    async createUser(name, email, password) {
-        const newUser = new this.authModel({ name, email, password });
-        return newUser.save();
-    }
-
-    async findByEmail(email){
-        return this.authModel.findOne({ email }).exec();
-    }
-
-    async findByEmailAndName(user) {
-        const { name, email } = user;
-        const dbUser = await this.authModel.findOne({email, name})
-        return dbUser
-    }
-
-    async findById(id) {
-        return this.authModel.findById(id).exec();
-    }
-
-    async findByName(name) {
-        return this.authModel.findOne({ name }).exec()
-    }
-
-    async updatePassword(email, password): Promise<any> {
-        return this.authModel.updateOne({ email }, { password })
     }
 }

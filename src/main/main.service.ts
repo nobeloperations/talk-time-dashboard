@@ -1,13 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { Meeting } from '../../models/meeting.model';
-import { InjectModel } from '@nestjs/mongoose'
-import { Model } from 'mongoose';
-import { User } from 'models/user.model';
+import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 
 @Injectable()
 export class MainService {
-    constructor(@InjectModel('Meeting') private readonly meetingModel: Model<Meeting>,
-    @InjectModel('User') private readonly userModel: Model<User>){}
+    constructor(private readonly databaseUtilsService: DatabaseUtilsService){}
 
     async getMain(req) {
         try {
@@ -20,7 +16,7 @@ export class MainService {
                     userPayload = JSON.parse(cookie.split('=').at(-1))
                 }
             })
-            let currentUsers = await this.userModel.find({name: userPayload.name}).select('url date generalName')
+            let currentUsers = await this.databaseUtilsService.findUsersAndSelectFields({name: userPayload.name}, "url date generalName")
             currentUsers.forEach(currentUser => {
                 usersMeetings.push({
                     url: currentUser.url,
@@ -28,7 +24,7 @@ export class MainService {
                 })
                 generalNames.push(currentUser.generalName)
             })
-            let generals = await this.meetingModel.find({name: {$in: generalNames}})
+            let generals = await this.databaseUtilsService.findMeetingsByNameIncluding(generalNames)
 
             function filterMeetings(meetings, usersMeetings) {
                 return meetings.filter(
@@ -54,22 +50,15 @@ export class MainService {
     async addMeeting(addGeneralBody) {
         try {
             const { name, url, date } = addGeneralBody;
-            const meeting = await this.meetingModel.findOne({name})
+            const meeting = await this.databaseUtilsService.findMeetingByName(name)
             if(!meeting && name !== 'Meeting Details') {
-                const newMeeting = new this.meetingModel({
-                    name,
-                    meetings: [{
-                        url,
-                        date
-                    }]
-                })
-                await newMeeting.save()
+                await this.databaseUtilsService.createNewMeeting(name, url, date)
             }
             else {
-                const currentMeet = await this.meetingModel.findOne({name})
+                const currentMeet = await this.databaseUtilsService.findMeetingByName(name)
                 let meetPresented = currentMeet?.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length
                 if(!meetPresented) {
-                    await this.meetingModel.updateOne({name}, {$push: { meetings: { url, date } }})
+                    await this.databaseUtilsService.UpdateMeetingByName(name, url, date)
                 }
             }
         }

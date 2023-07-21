@@ -12,24 +12,18 @@ const jwt_1 = require("@nestjs/jwt");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
 const users_service_1 = require("../users/users.service");
-const users_module_1 = require("../users/users.module");
-const mongoose_1 = require("@nestjs/mongoose");
-const meeting_model_1 = require("../../models/meeting.model");
-const user_model_1 = require("../../models/user.model");
-const auth_model_1 = require("../../models/auth.model");
-const reset_model_1 = require("../../models/reset.model");
+const database_utils_module_1 = require("../database-utils/database-utils.module");
 const { JWT_SECRET } = process.env;
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            mongoose_1.MongooseModule.forFeature([{ name: 'Meeting', schema: meeting_model_1.MeetingSchema }, { name: "User", schema: user_model_1.UserSchema }, { name: "Auth", schema: auth_model_1.AuthSchema }, { name: 'Reset', schema: reset_model_1.ResetSchema }]),
+            database_utils_module_1.DatabaseUtilsModule,
             jwt_1.JwtModule.register({
                 secret: JWT_SECRET,
                 signOptions: { expiresIn: '7d' },
             }),
-            users_module_1.UsersModule
         ],
         providers: [auth_service_1.AuthService, users_service_1.UserService],
         controllers: [auth_controller_1.AuthController],

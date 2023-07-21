@@ -8,30 +8,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DashboardService = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
 const path_1 = require("path");
 const user_cookies_1 = require("../../helpers/user_cookies");
+const database_utils_service_1 = require("../database-utils/database-utils.service");
 let DashboardService = class DashboardService {
-    constructor(userModel, noteModel, feedbackModel) {
-        this.userModel = userModel;
-        this.noteModel = noteModel;
-        this.feedbackModel = feedbackModel;
+    constructor(databaseUtilsService) {
+        this.databaseUtilsService = databaseUtilsService;
     }
     async getDashboard(params, res, generalName, req) {
         try {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             const { url, date } = params;
             const [users, notes, feedbacks] = await Promise.all([
-                await this.userModel.find({ url, date }),
-                await this.noteModel.find({ url, date }),
-                await this.feedbackModel.find({ url, date })
+                await this.databaseUtilsService.findUsersByUrlAndDate(url, date),
+                await this.databaseUtilsService.findNotesByUrlAndDate(url, date),
+                await this.databaseUtilsService.findFeedbacksByUrlAndDate(url, date)
             ]);
             if (!users.length) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
@@ -60,7 +54,7 @@ let DashboardService = class DashboardService {
             const { percents } = postPercentsBody;
             const { url, date } = params;
             percents.forEach(async ({ name, percent }) => {
-                await this.userModel.findOneAndUpdate({ name, url, date }, { percents: percent });
+                await this.databaseUtilsService.updateUserPercents(name, url, date, percent);
             });
         }
         catch (e) {
@@ -71,14 +65,8 @@ let DashboardService = class DashboardService {
         try {
             const { url, date } = params;
             const { text, tags } = createNoteBody;
-            const newNote = new this.noteModel({
-                text,
-                url,
-                tags,
-                date
-            });
-            await newNote.save();
-            return JSON.stringify(newNote);
+            const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags);
+            return newNote;
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
@@ -87,7 +75,7 @@ let DashboardService = class DashboardService {
     async deleteNote(deleteNoteBody) {
         try {
             const { id } = deleteNoteBody;
-            await this.noteModel.deleteOne({ _id: id });
+            await this.databaseUtilsService.deleteNoteById(id);
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
@@ -96,12 +84,7 @@ let DashboardService = class DashboardService {
 };
 DashboardService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('User')),
-    __param(1, (0, mongoose_1.InjectModel)('Note')),
-    __param(2, (0, mongoose_1.InjectModel)('Feedback')),
-    __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model,
-        mongoose_2.Model])
+    __metadata("design:paramtypes", [database_utils_service_1.DatabaseUtilsService])
 ], DashboardService);
 exports.DashboardService = DashboardService;
 //# sourceMappingURL=dashboard.service.js.map

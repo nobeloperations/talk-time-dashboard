@@ -22,6 +22,7 @@ const profile_module_1 = require("./profile/profile.module");
 const recording_module_1 = require("./recording/recording.module");
 const auth_module_1 = require("./auth/auth.module");
 const nestjs_session_1 = require("nestjs-session");
+const database_utils_module_1 = require("./database-utils/database-utils.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -47,6 +48,7 @@ AppModule = __decorate([
             profile_module_1.ProfileModule,
             recording_module_1.RecordingModule,
             auth_module_1.AuthModule,
+            database_utils_module_1.DatabaseUtilsModule,
         ],
         providers: [
             {

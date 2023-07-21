@@ -1,10 +1,7 @@
-import { Meeting } from '../../models/meeting.model';
-import { Model } from 'mongoose';
-import { User } from 'models/user.model';
+import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 export declare class MainService {
-    private readonly meetingModel;
-    private readonly userModel;
-    constructor(meetingModel: Model<Meeting>, userModel: Model<User>);
+    private readonly databaseUtilsService;
+    constructor(databaseUtilsService: DatabaseUtilsService);
     getMain(req: any): Promise<{
         cssFileName: string;
         generals: {

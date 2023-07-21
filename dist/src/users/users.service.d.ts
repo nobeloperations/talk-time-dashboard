@@ -21,17 +21,13 @@
 /// <reference types="mongoose/types/utility" />
 /// <reference types="mongoose/types/validation" />
 /// <reference types="mongoose/types/virtuals" />
+/// <reference types="mongoose" />
 /// <reference types="mongoose/types/inferschematype" />
-import { User } from '../../models/user.model';
-import { Model } from 'mongoose';
-import { Meeting } from 'models/meeting.model';
-import { Auth } from 'models/auth.model';
+import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 export declare class UserService {
-    private readonly userModel;
-    private readonly meetingModel;
-    private readonly authModel;
-    constructor(userModel: Model<User>, meetingModel: Model<Meeting>, authModel: Model<Auth>);
-    getUsersAvatar(params: any): Promise<import("mongoose").Document<unknown, any, User> & Omit<User & {
+    private readonly databaseUtilsService;
+    constructor(databaseUtilsService: DatabaseUtilsService);
+    getUsersAvatar(params: any): Promise<import("mongoose").Document<unknown, any, import("../../models/user.model").User> & Omit<import("../../models/user.model").User & {
         _id: import("mongoose").Types.ObjectId;
     }, never>>;
     newUser(params: any, newUserBody: any, headers: any): Promise<string>;
@@ -44,20 +40,4 @@ export declare class UserService {
         pageName: string;
         profileName: any;
     }>;
-    createUser(name: any, email: any, password: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
-        _id: import("mongoose").Types.ObjectId;
-    }, never>>;
-    findByEmail(email: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
-        _id: import("mongoose").Types.ObjectId;
-    }, never>>;
-    findByEmailAndName(user: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
-        _id: import("mongoose").Types.ObjectId;
-    }, never>>;
-    findById(id: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
-        _id: import("mongoose").Types.ObjectId;
-    }, never>>;
-    findByName(name: any): Promise<import("mongoose").Document<unknown, any, Auth> & Omit<Auth & {
-        _id: import("mongoose").Types.ObjectId;
-    }, never>>;
-    updatePassword(email: any, password: any): Promise<any>;
 }

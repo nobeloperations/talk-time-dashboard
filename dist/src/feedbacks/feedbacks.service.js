@@ -8,30 +8,25 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var __param = (this && this.__param) || function (paramIndex, decorator) {
-    return function (target, key) { decorator(target, key, paramIndex); }
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FeedbacksService = void 0;
 const common_1 = require("@nestjs/common");
-const mongoose_1 = require("@nestjs/mongoose");
-const mongoose_2 = require("mongoose");
 const config_1 = require("../../badge-config/config");
 const path_1 = require("path");
 const user_cookies_1 = require("../../helpers/user_cookies");
+const database_utils_service_1 = require("../database-utils/database-utils.service");
 const DEFAULT_BADGE = 'Choose the Badge (not necessarily)';
 let FeedbacksService = class FeedbacksService {
-    constructor(feedbackModel, userModel) {
-        this.feedbackModel = feedbackModel;
-        this.userModel = userModel;
+    constructor(databaseUtilsService) {
+        this.databaseUtilsService = databaseUtilsService;
     }
     async getPersonalFeedbacks(params, res, generalName, req) {
         try {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             const { url, name, date } = params;
             const [feedbacks, currentUser] = await Promise.all([
-                await this.feedbackModel.find({ receiver: name, url, date }),
-                await this.userModel.findOne({ name, url, date })
+                await this.databaseUtilsService.findFeedbacksByReceiverAndUrlAndDate(name, url, date),
+                await this.databaseUtilsService.findUserByNameAndUrlAndDate(name, url, date)
             ]);
             if (!currentUser) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
@@ -48,8 +43,8 @@ let FeedbacksService = class FeedbacksService {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             const { url, name, date } = params;
             const [users, currentUser] = await Promise.all([
-                await this.userModel.find({ url, date }),
-                await this.userModel.findOne({ name, url, date })
+                await this.databaseUtilsService.findUsersByUrlAndDate(url, date),
+                await this.databaseUtilsService.findUserByNameAndUrlAndDate(name, url, date)
             ]);
             if (!currentUser) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
@@ -67,25 +62,14 @@ let FeedbacksService = class FeedbacksService {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             let { rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
-            let sendUser = await this.userModel.findOne({ name: userPayload.name });
+            let sendUser = await this.databaseUtilsService.findUserByName(userPayload.name);
             if (badge !== DEFAULT_BADGE) {
                 let key = `${badge.toLowerCase().split(' ').join('_')}`;
                 let value = config_1.config[key];
                 badge = `${key}${value}.png`;
-                await this.userModel.updateMany({ name }, { $push: { badges: { badge } } });
+                await this.databaseUtilsService.updateUserBadges(name, badge);
             }
-            let newFeedback = new this.feedbackModel({
-                sender: userPayload.name,
-                receiver: name,
-                feedback,
-                rating,
-                url,
-                senderImg: sendUser.avatar,
-                feedbackImg: (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename,
-                postDate: new Date().toLocaleDateString(),
-                date
-            });
-            await newFeedback.save();
+            await this.databaseUtilsService.createNewFeedback(userPayload.name, name, feedback, rating, url, sendUser.avatar, (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename, date);
             res.redirect(`/dashboard/${url}/${date}?q=${generalName}`);
         }
         catch (e) {
@@ -95,10 +79,7 @@ let FeedbacksService = class FeedbacksService {
 };
 FeedbacksService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, mongoose_1.InjectModel)('Feedback')),
-    __param(1, (0, mongoose_1.InjectModel)('User')),
-    __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model])
+    __metadata("design:paramtypes", [database_utils_service_1.DatabaseUtilsService])
 ], FeedbacksService);
 exports.FeedbacksService = FeedbacksService;
 //# sourceMappingURL=feedbacks.service.js.map
