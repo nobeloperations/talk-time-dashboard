@@ -1,5 +1,3 @@
-import { Feedback } from '../../models/feedback.model';
-import { User } from '../../models/user.model';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 export declare class FeedbacksService {
     private readonly databaseUtilsService;
@@ -7,12 +5,8 @@ export declare class FeedbacksService {
     getPersonalFeedbacks(params: any, res: any, generalName: any, req: any): Promise<{
         cssFileName: string;
         name: any;
-        currentUser: import("mongoose").Document<unknown, any, User> & Omit<User & {
-            _id: import("mongoose").Types.ObjectId;
-        }, never>;
-        feedbacks: (import("mongoose").Document<unknown, any, Feedback> & Omit<Feedback & {
-            _id: import("mongoose").Types.ObjectId;
-        }, never>)[];
+        currentUser: any;
+        feedbacks: any;
         url: any;
         date: any;
         generalName: any;
@@ -22,13 +16,9 @@ export declare class FeedbacksService {
     getNewFeedback(params: any, res: any, generalName: any, req: any): Promise<{
         cssFileName: string;
         name: any;
-        currentUser: import("mongoose").Document<unknown, any, User> & Omit<User & {
-            _id: import("mongoose").Types.ObjectId;
-        }, never>;
+        currentUser: any;
         url: any;
-        users: (import("mongoose").Document<unknown, any, User> & Omit<User & {
-            _id: import("mongoose").Types.ObjectId;
-        }, never>)[];
+        users: any;
         date: any;
         generalName: any;
         pageName: string;

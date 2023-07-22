@@ -25,8 +25,8 @@ let FeedbacksService = class FeedbacksService {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             const { url, name, date } = params;
             const [feedbacks, currentUser] = await Promise.all([
-                await this.databaseUtilsService.findFeedbacksByReceiverAndUrlAndDate(name, url, date),
-                await this.databaseUtilsService.findUserByNameAndUrlAndDate(name, url, date)
+                await this.databaseUtilsService.findFeedbacks({ name, url, date }, ''),
+                await this.databaseUtilsService.findUser({ name, url, date }, '')
             ]);
             if (!currentUser) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
@@ -43,8 +43,8 @@ let FeedbacksService = class FeedbacksService {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             const { url, name, date } = params;
             const [users, currentUser] = await Promise.all([
-                await this.databaseUtilsService.findUsersByUrlAndDate(url, date),
-                await this.databaseUtilsService.findUserByNameAndUrlAndDate(name, url, date)
+                await this.databaseUtilsService.findUsers({ url, date }, ''),
+                await this.databaseUtilsService.findUser({ name, url, date }, '')
             ]);
             if (!currentUser) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
@@ -62,7 +62,7 @@ let FeedbacksService = class FeedbacksService {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             let { rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
-            let sendUser = await this.databaseUtilsService.findUserByName(userPayload.name);
+            let sendUser = await this.databaseUtilsService.findUser({ name: userPayload.name }, '');
             if (badge !== DEFAULT_BADGE) {
                 let key = `${badge.toLowerCase().split(' ').join('_')}`;
                 let value = config_1.config[key];

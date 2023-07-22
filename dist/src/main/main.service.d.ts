@@ -4,10 +4,7 @@ export declare class MainService {
     constructor(databaseUtilsService: DatabaseUtilsService);
     getMain(req: any): Promise<{
         cssFileName: string;
-        generals: {
-            name: string;
-            meetings: any;
-        }[];
+        generals: any;
         profileName: any;
         message?: undefined;
     } | {

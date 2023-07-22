@@ -9,7 +9,7 @@ export class UserService {
 
     async getUsersAvatar(params) {
         const { name } = params;
-        let avatar = await this.databaseUtilsService.findUserAvatarByName(name);
+        let avatar = await this.databaseUtilsService.findUser({name}, 'avatar');
         return avatar
     }
 
@@ -19,7 +19,7 @@ export class UserService {
                 const { url } = params;
                 const { name, avatar, date, generalName } = newUserBody;
 
-                const isUserExsist = await this.databaseUtilsService.findUserByNameAndUrlAndDate( name, url, date )
+                const isUserExsist = await this.databaseUtilsService.findUser({ name, url, date }, '' )
                 if (!isUserExsist) {
                     await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName)
                 }
@@ -37,7 +37,7 @@ export class UserService {
         try {
             const userPayload = getUserFromCookies(req)
             const { url, date } = params;
-            let meeting = await this.databaseUtilsService.findMeetingByName(generalName)
+            let meeting = await this.databaseUtilsService.findMeeting({name: generalName}, '')
 
             const currentMeeting = meeting?.meetings.some(curr => curr['date'] == date);
 
@@ -45,7 +45,7 @@ export class UserService {
                 res.sendFile(resolve('views/notfound.html'))
             }
 
-            const dbUsers = await this.databaseUtilsService.findUsersAndSelectFields({}, 'name avatar count badges')
+            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges')
             let users = []
 
             for (const user of dbUsers) {

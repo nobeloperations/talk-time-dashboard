@@ -21,79 +21,59 @@ export class DatabaseUtilsService {
         await this.userModel.updateMany({ name }, { $push: { badges: {badge} } })
     }
 
-    async findFeedbacksByUrlAndDate(url, date) {
-        return await this.feedbackModel.find({ url, date })
-    }
-
-    async findUsersByUrlAndDate(url, date) {
-        return await this.userModel.find({ url, date })
-
-    }
-
-    async findNotesByUrlAndDate(url, date) {
-        return await this.noteModel.find({ url, date })
-
-    }
-
-    async updateUserPercents(name, url, date, percent) {
+    async updateUserPercents(name: string, url: string, date: string, percent: string) {
         await this.userModel.findOneAndUpdate({ name, url, date }, { percents: percent })
     }
 
-    async deleteNoteById(id) {
-        await this.noteModel.deleteOne({ _id: id })
-    }
-
-    async findFeedbacksByReceiverAndUrlAndDate(name, url, date) {
-        return await this.feedbackModel.find({ receiver: name, url, date })
-    }
-
-    async findUserByNameAndUrlAndDate(name, url, date) {
-        return await this.userModel.findOne({ name, url, date })
-    }
-
-    async findUserByName(name) {
-        return await this.userModel.findOne({ name })
-    }
-
-    async findUsersAndSelectFields(filter, fields) {
+    async findUsers(filter: object, fields: string): Promise<any> {
         return await this.userModel.find(filter).select(fields)
     }
 
-
-    async findUserAvatarByName(name) {
-        return await this.userModel.findOne({ name }).select('avatar')
+    async findUser(filter: object, fields: string): Promise<any> {
+        return await this.userModel.findOne(filter).select(fields)
     }
 
-    async findMeetingsByNameIncluding(generalNames) {
+    async findFeedbacks(filter: object, fields: string): Promise<any> {
+        return await this.feedbackModel.find(filter).select(fields)
+    }
+
+    async findNotes(filter: object, fields: string): Promise<any> {
+        return await this.noteModel.find(filter).select(fields)
+    }
+
+    async deleteNote(filter: object) {
+        await this.noteModel.deleteOne(filter)
+    }
+
+    async findMeetingsByNameIncluding(generalNames: string[]): Promise<any> {
         return await this.meetingModel.find({name: {$in: generalNames}})
     }
 
-    async findMeetingByName(name) {
-        return await this.meetingModel.findOne({name})
+    async findMeeting(filter: object, fields: string): Promise<any> {
+        return await this.meetingModel.findOne(filter).select(fields)
     }
 
-    
-    async UpdateMeetingByName(name, url, date) {
+    async updateMeetingByName(name: string, url: string, date: string) {
         await this.meetingModel.updateOne({name}, {$push: { meetings: { url, date } }})
     }
 
-    async findAuth(filters) {
-        return await this.authModel.findOne(filters)
+    async findAuth(filters, fields: string): Promise<any> {
+        return await this.authModel.findOne(filters).select(fields)
     }
 
     async updateAuthPassword(email: string, password: string): Promise<any> {
-        return await this.authModel.updateOne({ email }, { password })
+        await this.authModel.updateOne({ email }, { password })
     }
 
-    async deleteResetById(id) {
+    async deleteResetById(id: string) {
         await this.resetModel.deleteOne({value: id})
     }
 
-    async findResetById(id) {
-        return await this.resetModel.findOne({ value: id })
+    async findReset(filter: object, fields: string): Promise<any> {
+        return await this.resetModel.findOne(filter).select(fields)
     }
 
-    async createNewMeeting(name, url, date) {
+    async createNewMeeting(name: string, url: string, date: string) {
         const newMeeting = new this.meetingModel({
             name,
             meetings: [{
@@ -101,10 +81,11 @@ export class DatabaseUtilsService {
                 date
             }]
         })
+        
         await newMeeting.save()
     }
 
-    async createNewFeedback(sender, receiver, feedback, rating, url, senderImg, feedbackImg, date) {
+    async createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string) {
         let newFeedback = new this.feedbackModel({
             sender,
             receiver,
@@ -120,7 +101,7 @@ export class DatabaseUtilsService {
         await newFeedback.save()
     }
 
-    async createNewNote(url, date, text, tags) {
+    async createNewNote(url: string, date: string, text: string, tags: string[]): Promise<string> {
         const newNote = new this.noteModel({
             text,
             url,
@@ -132,7 +113,7 @@ export class DatabaseUtilsService {
         return JSON.stringify(newNote)
     }
 
-    async createNewUser(name, avatar, url, date, generalName) {
+    async createNewUser(name: string, avatar: string, url: string, date: string, generalName: string) {
         const newUser = new this.userModel({
             name,
             avatar,
@@ -145,16 +126,16 @@ export class DatabaseUtilsService {
         await newUser.save()
     }
 
-    async createNewAuth(name, email, password) {
+    async createNewAuth(name: string, email: string, password: string) {
         const newUser = new this.authModel({ name, email, password });
-        return newUser.save();
+        await newUser.save();
     }
 
-    async createNewReset(id) {
+    async createNewReset(id: string): Promise<any> {
         const newReset = new this.resetModel({
             value: id
         })
-        newReset.save()
+        await newReset.save()
         return newReset
     }
 

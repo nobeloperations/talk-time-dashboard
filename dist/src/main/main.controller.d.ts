@@ -5,10 +5,7 @@ export declare class MainController {
     constructor(mainService: MainService);
     getMain(req: Request): Promise<{
         cssFileName: string;
-        generals: {
-            name: string;
-            meetings: any;
-        }[];
+        generals: any;
         profileName: any;
         message?: undefined;
     } | {

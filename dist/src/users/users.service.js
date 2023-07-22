@@ -20,7 +20,7 @@ let UserService = class UserService {
     }
     async getUsersAvatar(params) {
         const { name } = params;
-        let avatar = await this.databaseUtilsService.findUserAvatarByName(name);
+        let avatar = await this.databaseUtilsService.findUser({ name }, 'avatar');
         return avatar;
     }
     async newUser(params, newUserBody, headers) {
@@ -28,7 +28,7 @@ let UserService = class UserService {
             if (headers['token'] === process.env.HEADER) {
                 const { url } = params;
                 const { name, avatar, date, generalName } = newUserBody;
-                const isUserExsist = await this.databaseUtilsService.findUserByNameAndUrlAndDate(name, url, date);
+                const isUserExsist = await this.databaseUtilsService.findUser({ name, url, date }, '');
                 if (!isUserExsist) {
                     await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName);
                 }
@@ -45,12 +45,12 @@ let UserService = class UserService {
         try {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             const { url, date } = params;
-            let meeting = await this.databaseUtilsService.findMeetingByName(generalName);
+            let meeting = await this.databaseUtilsService.findMeeting({ name: generalName }, '');
             const currentMeeting = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.some(curr => curr['date'] == date);
             if (!meeting || !currentMeeting) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
             }
-            const dbUsers = await this.databaseUtilsService.findUsersAndSelectFields({}, 'name avatar count badges');
+            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges');
             let users = [];
             for (const user of dbUsers) {
                 const existingUser = users.find(u => u.name === user.name);

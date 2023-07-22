@@ -26,7 +26,7 @@ export class AuthService {
 
     async login(user: Auth): Promise<any> {
         const { name, email } = user
-        const currentUser = await this.databaseUtilsService.findAuth({name, email})
+        const currentUser = await this.databaseUtilsService.findAuth({name, email}, '')
         if (!currentUser) return { message: "USER_NOT_FOUND" }
         const passwordsMatches = await bcrypt.compare(user.password, currentUser.password)
         if (!passwordsMatches) return { message: 'INVALID_PASS' }
@@ -45,8 +45,8 @@ export class AuthService {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const existingUserByEmail = await this.databaseUtilsService.findAuth({email});
-        const existingUserByName = await this.databaseUtilsService.findAuth({name});
+        const existingUserByEmail = await this.databaseUtilsService.findAuth({email}, '');
+        const existingUserByName = await this.databaseUtilsService.findAuth({name}, '');
 
         if (existingUserByEmail || existingUserByName) {
             return { message: 'ALREADY_EXIST', user: null };
@@ -58,7 +58,7 @@ export class AuthService {
 
     async getReset(params, res) {
         const { id } = params;
-        const _idExist = await this.databaseUtilsService.findResetById(id)
+        const _idExist = await this.databaseUtilsService.findReset({value: id}, '')
         if (!_idExist) {
             return res.sendFile(resolve('views/notfound.html'))
         }
@@ -80,10 +80,10 @@ export class AuthService {
 
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        const _idExist = await this.databaseUtilsService.findResetById(id)
+        const _idExist = await this.databaseUtilsService.findReset({value: id}, '')
 
         if (_idExist) {
-            const currentUser = await this.databaseUtilsService.findAuth({email})
+            const currentUser = await this.databaseUtilsService.findAuth({email}, '')
             if (currentUser) {
                 return this.databaseUtilsService.updateAuthPassword(email, hashedPassword)
                 .then(async () => {

@@ -1,8 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Feedback } from '../../models/feedback.model';
-import { User } from '../../models/user.model';
-import { Model } from 'mongoose';
 import { config } from '../../badge-config/config'
 import { resolve } from 'path';
 import { getUserFromCookies } from 'helpers/user_cookies';
@@ -20,8 +16,8 @@ export class FeedbacksService {
             const userPayload = getUserFromCookies(req)
             const { url, name, date } = params;
             const [feedbacks, currentUser] = await Promise.all([
-                await this.databaseUtilsService.findFeedbacksByReceiverAndUrlAndDate( name, url, date ),
-                await this.databaseUtilsService.findUserByNameAndUrlAndDate( name, url, date )
+                await this.databaseUtilsService.findFeedbacks( {name, url, date}, '' ),
+                await this.databaseUtilsService.findUser({name, url, date}, '')
             ])
 
 
@@ -43,8 +39,8 @@ export class FeedbacksService {
             const userPayload = getUserFromCookies(req)
             const { url, name, date } = params;
             const [users, currentUser] = await Promise.all([
-                await this.databaseUtilsService.findUsersByUrlAndDate( url, date ),
-                await this.databaseUtilsService.findUserByNameAndUrlAndDate( name, url, date )
+                await this.databaseUtilsService.findUsers({ url, date}, ''),
+                await this.databaseUtilsService.findUser({name, url, date}, '')
             ])
 
             if (!currentUser) {
@@ -64,7 +60,7 @@ export class FeedbacksService {
             const userPayload = getUserFromCookies(req)
             let { rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
-            let sendUser = await this.databaseUtilsService.findUserByName(userPayload.name)
+            let sendUser = await this.databaseUtilsService.findUser({name: userPayload.name}, '')
 
             if (badge !== DEFAULT_BADGE) {
                 let key = `${badge.toLowerCase().split(' ').join('_')}`;

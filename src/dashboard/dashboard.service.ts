@@ -14,9 +14,9 @@ export class DashboardService {
             const userPayload = getUserFromCookies(req)
             const { url, date } = params;
             const [ users, notes, feedbacks ] = await Promise.all([
-                await this.databaseUtilsService.findUsersByUrlAndDate( url, date ),
-                await this.databaseUtilsService.findNotesByUrlAndDate( url, date ),
-                await this.databaseUtilsService.findFeedbacksByUrlAndDate( url, date )
+                await this.databaseUtilsService.findUsers( {url, date}, '' ),
+                await this.databaseUtilsService.findNotes( {url, date}, '' ),
+                await this.databaseUtilsService.findFeedbacks( {url, date}, '' )
             ])
 
             if (!users.length) {
@@ -77,7 +77,7 @@ export class DashboardService {
     async deleteNote(deleteNoteBody) {
         try {
             const { id } = deleteNoteBody;
-            await this.databaseUtilsService.deleteNoteById(id)
+            await this.databaseUtilsService.deleteNote({_id: id})
         }
         catch(e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })

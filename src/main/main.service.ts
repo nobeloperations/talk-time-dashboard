@@ -16,7 +16,7 @@ export class MainService {
                     userPayload = JSON.parse(cookie.split('=').at(-1))
                 }
             })
-            let currentUsers = await this.databaseUtilsService.findUsersAndSelectFields({name: userPayload.name}, "url date generalName")
+            let currentUsers = await this.databaseUtilsService.findUsers({name: userPayload.name}, "url date generalName")
             currentUsers.forEach(currentUser => {
                 usersMeetings.push({
                     url: currentUser.url,
@@ -50,15 +50,15 @@ export class MainService {
     async addMeeting(addGeneralBody) {
         try {
             const { name, url, date } = addGeneralBody;
-            const meeting = await this.databaseUtilsService.findMeetingByName(name)
+            const meeting = await this.databaseUtilsService.findMeeting({name}, '')
             if(!meeting && name !== 'Meeting Details') {
                 await this.databaseUtilsService.createNewMeeting(name, url, date)
             }
             else {
-                const currentMeet = await this.databaseUtilsService.findMeetingByName(name)
+                const currentMeet = await this.databaseUtilsService.findMeeting({name}, '')
                 let meetPresented = currentMeet?.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length
                 if(!meetPresented) {
-                    await this.databaseUtilsService.UpdateMeetingByName(name, url, date)
+                    await this.databaseUtilsService.updateMeetingByName(name, url, date)
                 }
             }
         }

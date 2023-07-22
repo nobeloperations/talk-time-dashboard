@@ -5,14 +5,10 @@ export declare class DashboardService {
     getDashboard(params: any, res: any, generalName: any, req: any): Promise<{
         cssFileName: string;
         url: any;
-        users: (import("mongoose").Document<unknown, any, import("../../models/user.model").User> & Omit<import("../../models/user.model").User & {
-            _id: import("mongoose").Types.ObjectId;
-        }, never>)[];
-        notes: (import("mongoose").Document<unknown, any, import("../../models/note.model").Note> & Omit<import("../../models/note.model").Note & {
-            _id: import("mongoose").Types.ObjectId;
-        }, never>)[];
-        usersLength: number;
-        feedbacksLength: number;
+        users: any;
+        notes: any;
+        usersLength: any;
+        feedbacksLength: any;
         feedbacksByName: {};
         date: any;
         generalName: any;

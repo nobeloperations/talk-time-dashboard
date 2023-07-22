@@ -23,9 +23,9 @@ let DashboardService = class DashboardService {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             const { url, date } = params;
             const [users, notes, feedbacks] = await Promise.all([
-                await this.databaseUtilsService.findUsersByUrlAndDate(url, date),
-                await this.databaseUtilsService.findNotesByUrlAndDate(url, date),
-                await this.databaseUtilsService.findFeedbacksByUrlAndDate(url, date)
+                await this.databaseUtilsService.findUsers({ url, date }, ''),
+                await this.databaseUtilsService.findNotes({ url, date }, ''),
+                await this.databaseUtilsService.findFeedbacks({ url, date }, '')
             ]);
             if (!users.length) {
                 res.sendFile((0, path_1.resolve)('views/notfound.html'));
@@ -75,7 +75,7 @@ let DashboardService = class DashboardService {
     async deleteNote(deleteNoteBody) {
         try {
             const { id } = deleteNoteBody;
-            await this.databaseUtilsService.deleteNoteById(id);
+            await this.databaseUtilsService.deleteNote({ _id: id });
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
