@@ -144,3 +144,20 @@ i {
     height: 16px;
     margin-right: 5px;
 }
+.auth__google {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 5px 10px 5px 10px;
+    cursor: pointer;
+}
+.google__logo {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+}
+.google__text {
+    color: rgb(129, 129, 129);
+}

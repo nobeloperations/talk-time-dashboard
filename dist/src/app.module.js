@@ -20,9 +20,8 @@ const core_1 = require("@nestjs/core");
 const http_exception_filter_1 = require("./filters/http-exception.filter");
 const profile_module_1 = require("./profile/profile.module");
 const recording_module_1 = require("./recording/recording.module");
-const auth_module_1 = require("./auth/auth.module");
-const nestjs_session_1 = require("nestjs-session");
 const database_utils_module_1 = require("./database-utils/database-utils.module");
+const auth_module_1 = require("./auth/auth.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -33,13 +32,6 @@ AppModule = __decorate([
             platform_express_1.MulterModule.register({
                 dest: '../public/uploads'
             }),
-            nestjs_session_1.SessionModule.forRoot({
-                session: {
-                    secret: 'Bearer580792',
-                    resave: false,
-                    saveUninitialized: false,
-                },
-            }),
             main_module_1.MainModule,
             dashboard_module_1.DashboardModule,
             feedbacks_module_1.FeedbacksModule,
@@ -47,8 +39,8 @@ AppModule = __decorate([
             badges_module_1.BadgesModule,
             profile_module_1.ProfileModule,
             recording_module_1.RecordingModule,
-            auth_module_1.AuthModule,
             database_utils_module_1.DatabaseUtilsModule,
+            auth_module_1.AuthModule
         ],
         providers: [
             {

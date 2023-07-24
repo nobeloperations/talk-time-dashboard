@@ -33,7 +33,7 @@
             {{/each}}
             {{else}}
             <img class="empty__meetings__img" src="/img/empty.png" alt="">
-            <span class="empty__meetings__text">You don`t have any meetings</span>
+            <span class="empty__meetings__text">{{#if isAuth}}You don`t have any meetings{{else}}Authenticate to see your meetings{{/if}}</span>
             {{/if}}
         </div>
     </div>

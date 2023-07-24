@@ -8,24 +8,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthModule = void 0;
 const common_1 = require("@nestjs/common");
-const jwt_1 = require("@nestjs/jwt");
 const auth_controller_1 = require("./auth.controller");
 const auth_service_1 = require("./auth.service");
-const users_service_1 = require("../users/users.service");
 const database_utils_module_1 = require("../database-utils/database-utils.module");
-const { JWT_SECRET } = process.env;
+const passport_stategy_1 = require("../../auth-stategy/passport.stategy");
 let AuthModule = class AuthModule {
 };
 AuthModule = __decorate([
     (0, common_1.Module)({
         imports: [
             database_utils_module_1.DatabaseUtilsModule,
-            jwt_1.JwtModule.register({
-                secret: JWT_SECRET,
-                signOptions: { expiresIn: '7d' },
-            }),
         ],
-        providers: [auth_service_1.AuthService, users_service_1.UserService],
+        providers: [auth_service_1.AuthService, passport_stategy_1.GoogleStrategy],
         controllers: [auth_controller_1.AuthController],
     })
 ], AuthModule);

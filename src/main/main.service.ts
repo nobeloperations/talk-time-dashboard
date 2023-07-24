@@ -1,21 +1,18 @@
 import { Injectable } from '@nestjs/common';
+import { getUserFromCookies } from 'helpers/user_cookies';
+import { resolve } from 'path';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 
 @Injectable()
 export class MainService {
     constructor(private readonly databaseUtilsService: DatabaseUtilsService){}
 
-    async getMain(req) {
+    async getMain(req, res) {
         try {
-            let userPayload;
+            let userPayload = getUserFromCookies(req)
+            if(!userPayload) return {cssFileName: 'main', isAuth: false}
             let usersMeetings = [];
             let generalNames = []
-            const cookies = req.headers.cookie.split(';');
-            cookies.forEach(cookie => {
-                if(cookie.startsWith('user={')) {
-                    userPayload = JSON.parse(cookie.split('=').at(-1))
-                }
-            })
             let currentUsers = await this.databaseUtilsService.findUsers({name: userPayload.name}, "url date generalName")
             currentUsers.forEach(currentUser => {
                 usersMeetings.push({
@@ -40,9 +37,10 @@ export class MainService {
                 meetings: filterMeetings(general.meetings, usersMeetings),
               }));
               
-            return {cssFileName: 'main', generals: filteredGenerals, profileName: userPayload.name }
+            return {cssFileName: 'main', generals: filteredGenerals, profileName: userPayload.name, isAuth: true }
         }
         catch(e) {
+            console.log(e)
             return { message: 'Error' }
         }
     }

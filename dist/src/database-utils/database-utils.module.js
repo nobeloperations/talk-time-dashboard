@@ -13,8 +13,6 @@ const mongoose_1 = require("@nestjs/mongoose");
 const user_model_1 = require("../../models/user.model");
 const meeting_model_1 = require("../../models/meeting.model");
 const note_model_1 = require("../../models/note.model");
-const reset_model_1 = require("../../models/reset.model");
-const auth_model_1 = require("../../models/auth.model");
 const feedback_model_1 = require("../../models/feedback.model");
 let DatabaseUtilsModule = class DatabaseUtilsModule {
 };
@@ -24,8 +22,6 @@ DatabaseUtilsModule = __decorate([
                 { name: "User", schema: user_model_1.UserSchema },
                 { name: "Meeting", schema: meeting_model_1.MeetingSchema },
                 { name: "Note", schema: note_model_1.NoteSchema },
-                { name: "Reset", schema: reset_model_1.ResetSchema },
-                { name: "Auth", schema: auth_model_1.AuthSchema },
                 { name: "Feedback", schema: feedback_model_1.FeedbackSchema }
             ])],
         providers: [database_utils_service_1.DatabaseUtilsService],

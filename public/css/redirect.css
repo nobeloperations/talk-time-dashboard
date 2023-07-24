@@ -1,0 +1,56 @@
+.redirect__container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.user__info {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    color: rgb(95, 95, 95);
+    margin-bottom: 20px;
+}
+.email {
+    font-size: 14px;
+}
+.user__avatar {
+    width: 32px;
+    height: 32px;
+    margin-right: 10px;
+    border-radius: 100px;
+}
+
+.username__wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.redirect__button {
+    width: 110px;
+    height: 30px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.continue__button {
+    margin-right: 10px;
+    background: #B1FDD1;
+    color: #00D03E;
+    border-radius: 5px;
+}
+
+.switch__account__button {
+    margin-right: 10px;
+    background: rgb(255, 204, 195);
+    color: tomato;
+    border-radius: 5px;
+}
+.invalid__email__text {
+    margin-bottom: 10px;
+}

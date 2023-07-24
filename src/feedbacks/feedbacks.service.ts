@@ -14,19 +14,19 @@ export class FeedbacksService {
     async getPersonalFeedbacks(params, res, generalName, req) {
         try {
             const userPayload = getUserFromCookies(req)
+            if(!userPayload) return res.redirect('/')
             const { url, name, date } = params;
             const [feedbacks, currentUser] = await Promise.all([
-                await this.databaseUtilsService.findFeedbacks( {name, url, date}, '' ),
+                await this.databaseUtilsService.findFeedbacks({receiver: name, url, date}, '' ),
                 await this.databaseUtilsService.findUser({name, url, date}, '')
             ])
-
 
             if (!currentUser) {
                 res.sendFile(resolve('views/notfound.html'))
                 return;
             }
 
-            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks`, profileName: userPayload.name }
+            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks`, profileName: userPayload.name, isAuth: true }
         }
 
         catch (e) {
@@ -37,6 +37,7 @@ export class FeedbacksService {
     async getNewFeedback(params, res, generalName, req) {
         try {
             const userPayload = getUserFromCookies(req)
+            if(!userPayload) return res.redirect('/')
             const { url, name, date } = params;
             const [users, currentUser] = await Promise.all([
                 await this.databaseUtilsService.findUsers({ url, date}, ''),
@@ -48,7 +49,7 @@ export class FeedbacksService {
                 return;
             }
 
-            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback", profileName: userPayload.name }
+            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback", profileName: userPayload.name, isAuth: true }
         }
         catch (e) {
             res.sendFile(resolve('views/notfound.html'))
@@ -58,6 +59,7 @@ export class FeedbacksService {
     async createFeedback(files, createFeedbackBody, params, res, req) {
         try {
             const userPayload = getUserFromCookies(req)
+            if(!userPayload) return res.redirect('/')
             let { rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
             let sendUser = await this.databaseUtilsService.findUser({name: userPayload.name}, '')

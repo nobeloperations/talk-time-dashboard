@@ -17,12 +17,10 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let DatabaseUtilsService = class DatabaseUtilsService {
-    constructor(userModel, authModel, feedbackModel, noteModel, resetModel, meetingModel) {
+    constructor(userModel, feedbackModel, noteModel, meetingModel) {
         this.userModel = userModel;
-        this.authModel = authModel;
         this.feedbackModel = feedbackModel;
         this.noteModel = noteModel;
-        this.resetModel = resetModel;
         this.meetingModel = meetingModel;
     }
     async updateUserBadges(name, badge) {
@@ -54,18 +52,6 @@ let DatabaseUtilsService = class DatabaseUtilsService {
     }
     async updateMeetingByName(name, url, date) {
         await this.meetingModel.updateOne({ name }, { $push: { meetings: { url, date } } });
-    }
-    async findAuth(filters, fields) {
-        return await this.authModel.findOne(filters).select(fields);
-    }
-    async updateAuthPassword(email, password) {
-        await this.authModel.updateOne({ email }, { password });
-    }
-    async deleteResetById(id) {
-        await this.resetModel.deleteOne({ value: id });
-    }
-    async findReset(filter, fields) {
-        return await this.resetModel.findOne(filter).select(fields);
     }
     async createNewMeeting(name, url, date) {
         const newMeeting = new this.meetingModel({
@@ -112,29 +98,14 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         });
         await newUser.save();
     }
-    async createNewAuth(name, email, password) {
-        const newUser = new this.authModel({ name, email, password });
-        await newUser.save();
-    }
-    async createNewReset(id) {
-        const newReset = new this.resetModel({
-            value: id
-        });
-        await newReset.save();
-        return newReset;
-    }
 };
 DatabaseUtilsService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, mongoose_1.InjectModel)('User')),
-    __param(1, (0, mongoose_1.InjectModel)('Auth')),
-    __param(2, (0, mongoose_1.InjectModel)('Feedback')),
-    __param(3, (0, mongoose_1.InjectModel)('Note')),
-    __param(4, (0, mongoose_1.InjectModel)('Reset')),
-    __param(5, (0, mongoose_1.InjectModel)('Meeting')),
+    __param(1, (0, mongoose_1.InjectModel)('Feedback')),
+    __param(2, (0, mongoose_1.InjectModel)('Note')),
+    __param(3, (0, mongoose_1.InjectModel)('Meeting')),
     __metadata("design:paramtypes", [mongoose_2.Model,
-        mongoose_2.Model,
-        mongoose_2.Model,
         mongoose_2.Model,
         mongoose_2.Model,
         mongoose_2.Model])

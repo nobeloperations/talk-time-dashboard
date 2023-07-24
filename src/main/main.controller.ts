@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Render, Body, HttpCode, Req } from '@nestjs/common';
+import { Controller, Get, Post, Render, Body, HttpCode, Req, Res } from '@nestjs/common';
 import { MainService } from './main.service';
 import { Request } from 'express';
 
@@ -10,8 +10,8 @@ export class MainController {
     @Get('/')
     @Render('main')
     @HttpCode(200)
-    getMain(@Req() req: Request) {
-        return this.mainService.getMain(req)
+    getMain(@Req() req: Request, @Res() res) {
+        return this.mainService.getMain(req, res)
     }
 
     @Post('/main/addmeeting')

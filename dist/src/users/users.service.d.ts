@@ -4,13 +4,5 @@ export declare class UserService {
     constructor(databaseUtilsService: DatabaseUtilsService);
     getUsersAvatar(params: any): Promise<any>;
     newUser(params: any, newUserBody: any, headers: any): Promise<string>;
-    getUsers(params: any, res: any, generalName: any, req: any): Promise<{
-        cssFileName: string;
-        users: any[];
-        url: any;
-        date: any;
-        generalName: any;
-        pageName: string;
-        profileName: any;
-    }>;
+    getUsers(params: any, res: any, generalName: any, req: any): Promise<any>;
 }

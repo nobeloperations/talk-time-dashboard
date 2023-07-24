@@ -36,13 +36,14 @@ export class UserService {
     async getUsers(params, res, generalName, req) {
         try {
             const userPayload = getUserFromCookies(req)
+            if(!userPayload) return res.redirect('/')
             const { url, date } = params;
             let meeting = await this.databaseUtilsService.findMeeting({name: generalName}, '')
 
             const currentMeeting = meeting?.meetings.some(curr => curr['date'] == date);
 
             if (!meeting || !currentMeeting) {
-                res.sendFile(resolve('views/notfound.html'))
+                return res.sendFile(resolve('views/notfound.html'))
             }
 
             const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges')
@@ -79,10 +80,11 @@ export class UserService {
             });
 
 
-            return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users', profileName: userPayload.name }
+            return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users', profileName: userPayload.name, isAuth: true }
         }
         catch (e) {
-            res.sendFile(resolve('views/notfound.html'))
+            return res.sendFile(resolve('views/notfound.html'))
         }
     }
 }
+

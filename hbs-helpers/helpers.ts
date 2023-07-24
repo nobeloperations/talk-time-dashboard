@@ -25,5 +25,8 @@ export let helpers = {
     },
     moreThan(str, n) {
         return str.length > n
+    },
+    emailCheck(str) {
+        return str.includes('@nobelcoaching.com')
     }
 }

@@ -12,37 +12,38 @@ export class DashboardService {
     async getDashboard(params, res, generalName, req) {
         try {
             const userPayload = getUserFromCookies(req)
+            if(!userPayload) return res.redirect('/')
             const { url, date } = params;
-            const [ users, notes, feedbacks ] = await Promise.all([
-                await this.databaseUtilsService.findUsers( {url, date}, '' ),
-                await this.databaseUtilsService.findNotes( {url, date}, '' ),
-                await this.databaseUtilsService.findFeedbacks( {url, date}, '' )
+            const [users, notes, feedbacks] = await Promise.all([
+                await this.databaseUtilsService.findUsers({ url, date }, ''),
+                await this.databaseUtilsService.findNotes({ url, date }, ''),
+                await this.databaseUtilsService.findFeedbacks({ url, date }, '')
             ])
 
+
             if (!users.length) {
-                res.sendFile(resolve('views/notfound.html'))
-                return;
+                return res.sendFile(resolve('views/notfound.html'))
             }
 
             let feedbacksByName = {}
 
-            users.forEach(({name, avatar, percents}) => {
+            for(const { name, avatar, percents } of users) {
                 feedbacksByName[name] = {
                     name,
                     rating: [],
                     avatar,
                     percents
                 }
-            })
+            }
 
-
-            feedbacks.forEach(({receiver, rating}) => {
+            for(const { receiver, rating } of feedbacks) {
                 feedbacksByName[receiver].rating.push(rating)
-            })
+            }
 
-            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard', profileName: userPayload.name }
+            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true }
         }
         catch (e) {
+            console.log(e)
             res.sendFile(resolve('views/notfound.html'))
         }
 
@@ -52,11 +53,10 @@ export class DashboardService {
         try {
             const { percents } = postPercentsBody
             const { url, date } = params
-            percents.forEach(async ({name, percent}) => {
-                await this.databaseUtilsService.updateUserPercents(name, url, date, percent)
-            })
+            const { name, percent } = percents
+            await this.databaseUtilsService.updateUserPercents(name, url, date, percent)
         }
-        catch(e) {
+        catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
     }
@@ -68,7 +68,7 @@ export class DashboardService {
             const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags)
             return newNote
         }
-        catch(e) {
+        catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
 
@@ -77,9 +77,9 @@ export class DashboardService {
     async deleteNote(deleteNoteBody) {
         try {
             const { id } = deleteNoteBody;
-            await this.databaseUtilsService.deleteNote({_id: id})
+            await this.databaseUtilsService.deleteNote({ _id: id })
         }
-        catch(e) {
+        catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
     }

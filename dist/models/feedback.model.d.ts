@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 export declare const FeedbackSchema: mongoose.Schema<any, mongoose.Model<any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
-    date: string;
     sender: string;
+    date: string;
     receiver: string;
     feedback: string;
     rating: number;

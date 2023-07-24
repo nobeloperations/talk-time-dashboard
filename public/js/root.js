@@ -22,25 +22,18 @@ function _parseCookieString(_cookieString) {
     return _cookies;
 }
 
-if(_logOut) {
-    _logOut.onclick = () => { 
-        _deleteCookie('user', () => {
-            window.location.href = '/auth/signup'
-        })
+if (_logOut) {
+    _logOut.onclick = function () {
+        fetch('/auth/logout')
+            .then(() => {
+                document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                window.location.href = '/';
+            })
+            .catch((error) => {
+                console.error('Logout failed:', error);
+            });
     }
 }
 
-const _authPaths = ['/auth/signin', '/auth/signup', '/auth/reset'];
-
 const _pathName = new URL(window.location.href).pathname;
-const _cookie = _parseCookieString(document.cookie);
-
-const _redirectToSignup = () => { window.location.href = '/auth/signup'; };
-const _redirectToHome = () => { window.location.href = '/'; };
-
-if (!_cookie.user) {
-    if (!_pathName.startsWith('/auth')) _redirectToSignup();
-} else {
-    const _isPathIncluded = _authPaths.some(e => _pathName.includes(e));
-    if (_isPathIncluded && _pathName !== '/') _redirectToHome();
-}
+const _cookie = _parseCookieString(document.cookie)

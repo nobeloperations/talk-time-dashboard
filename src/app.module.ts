@@ -11,9 +11,8 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { ProfileModule } from './profile/profile.module';
 import { RecordingModule } from './recording/recording.module';
-import { AuthModule } from './auth/auth.module';
-import { SessionModule } from 'nestjs-session';
 import { DatabaseUtilsModule } from './database-utils/database-utils.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -23,13 +22,6 @@ import { DatabaseUtilsModule } from './database-utils/database-utils.module';
     MulterModule.register({
       dest: '../public/uploads'
     }),
-    SessionModule.forRoot({
-      session: {
-        secret: 'Bearer580792',
-        resave: false,
-        saveUninitialized: false,
-      },
-    }),
     MainModule,
     DashboardModule,
     FeedbacksModule,
@@ -37,8 +29,8 @@ import { DatabaseUtilsModule } from './database-utils/database-utils.module';
     BadgesModule,
     ProfileModule,
     RecordingModule,
-    AuthModule,
     DatabaseUtilsModule,
+    AuthModule
   ],
   providers: [
     {

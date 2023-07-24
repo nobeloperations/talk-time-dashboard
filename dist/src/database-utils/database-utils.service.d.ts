@@ -1,18 +1,14 @@
-import { Auth } from 'models/auth.model';
 import { Feedback } from 'models/feedback.model';
 import { Meeting } from 'models/meeting.model';
 import { Note } from 'models/note.model';
-import { Reset } from 'models/reset.model';
 import { User } from 'models/user.model';
 import { Model } from 'mongoose';
 export declare class DatabaseUtilsService {
     private readonly userModel;
-    private readonly authModel;
     private readonly feedbackModel;
     private readonly noteModel;
-    private readonly resetModel;
     private readonly meetingModel;
-    constructor(userModel: Model<User>, authModel: Model<Auth>, feedbackModel: Model<Feedback>, noteModel: Model<Note>, resetModel: Model<Reset>, meetingModel: Model<Meeting>);
+    constructor(userModel: Model<User>, feedbackModel: Model<Feedback>, noteModel: Model<Note>, meetingModel: Model<Meeting>);
     updateUserBadges(name: string, badge: string): Promise<void>;
     updateUserPercents(name: string, url: string, date: string, percent: string): Promise<void>;
     findUsers(filter: object, fields: string): Promise<any>;
@@ -23,14 +19,8 @@ export declare class DatabaseUtilsService {
     findMeetingsByNameIncluding(generalNames: string[]): Promise<any>;
     findMeeting(filter: object, fields: string): Promise<any>;
     updateMeetingByName(name: string, url: string, date: string): Promise<void>;
-    findAuth(filters: any, fields: string): Promise<any>;
-    updateAuthPassword(email: string, password: string): Promise<any>;
-    deleteResetById(id: string): Promise<void>;
-    findReset(filter: object, fields: string): Promise<any>;
     createNewMeeting(name: string, url: string, date: string): Promise<void>;
     createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string): Promise<void>;
     createNewNote(url: string, date: string, text: string, tags: string[]): Promise<string>;
     createNewUser(name: string, avatar: string, url: string, date: string, generalName: string): Promise<void>;
-    createNewAuth(name: string, email: string, password: string): Promise<void>;
-    createNewReset(id: string): Promise<any>;
 }

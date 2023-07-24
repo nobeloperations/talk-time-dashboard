@@ -1,8 +1,17 @@
 <div class="profile__information">
+    {{#if isAuth}}
     <div class="logout">
         <img src="https://cdn-icons-png.flaticon.com/128/1/1228.png" alt="">
         <span>Log Out</span>
     </div>
     <img class="profile__information__img" src="https://cdn-icons-png.flaticon.com/128/1144/1144760.png" alt="">
     <span class="profile__information__name">{{profileName}}</span>
+    {{else}}
+    <a href="/auth">
+        <div class="auth__google">
+            <img class="google__logo" src="https://cdn-icons-png.flaticon.com/128/300/300221.png" alt="">
+            <span class="google__text">Authenticate with Google</span>
+        </div>
+    </a>
+    {{/if}}
 </div>

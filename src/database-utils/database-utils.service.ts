@@ -1,20 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Auth } from 'models/auth.model';
 import { Feedback } from 'models/feedback.model';
 import { Meeting } from 'models/meeting.model';
 import { Note } from 'models/note.model';
-import { Reset } from 'models/reset.model';
 import { User } from 'models/user.model';
 import { Model } from 'mongoose';
 
 @Injectable()
 export class DatabaseUtilsService {
     constructor(@InjectModel('User') private readonly userModel: Model<User>,
-                @InjectModel('Auth') private readonly authModel: Model<Auth>,
                 @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>,
                 @InjectModel('Note') private readonly noteModel: Model<Note>,
-                @InjectModel('Reset') private readonly resetModel: Model<Reset>,
                 @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>) {}
 
     async updateUserBadges(name: string, badge: string) {
@@ -55,22 +51,6 @@ export class DatabaseUtilsService {
 
     async updateMeetingByName(name: string, url: string, date: string) {
         await this.meetingModel.updateOne({name}, {$push: { meetings: { url, date } }})
-    }
-
-    async findAuth(filters, fields: string): Promise<any> {
-        return await this.authModel.findOne(filters).select(fields)
-    }
-
-    async updateAuthPassword(email: string, password: string): Promise<any> {
-        await this.authModel.updateOne({ email }, { password })
-    }
-
-    async deleteResetById(id: string) {
-        await this.resetModel.deleteOne({value: id})
-    }
-
-    async findReset(filter: object, fields: string): Promise<any> {
-        return await this.resetModel.findOne(filter).select(fields)
     }
 
     async createNewMeeting(name: string, url: string, date: string) {
@@ -124,19 +104,6 @@ export class DatabaseUtilsService {
         })
 
         await newUser.save()
-    }
-
-    async createNewAuth(name: string, email: string, password: string) {
-        const newUser = new this.authModel({ name, email, password });
-        await newUser.save();
-    }
-
-    async createNewReset(id: string): Promise<any> {
-        const newReset = new this.resetModel({
-            value: id
-        })
-        await newReset.save()
-        return newReset
     }
 
 }
