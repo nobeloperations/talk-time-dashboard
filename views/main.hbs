@@ -11,29 +11,32 @@
         <div class=" {{#if generals}} list__of__meetings {{else}} empty__list__of__meetings {{/if}}">
             {{#if generals}}
             {{#each generals}}
-            <div class="general" data-name="{{name}}">
-                <span class="general__name">{{name}}</span>
-                <hr>
-                <button class="select__general" data-active="">
-                    <img src="/img/down-arrow.png" alt="">
-                </button>
-            </div>
-            <div class="meetings__content">
-                {{#each meetings}}
-                <div class="meeting">
-                    <div class="meeting__info">
-                        <span>{{url}}</span>
-                        <span class="main__meeting__date">🕙 {{date}}</span>
-                    </div>
-                    <a href="/dashboard/{{url}}/{{date}}?q={{../name}}"><button
-                            class="dashboard__button">Dashboard</button></a>
+            <div class="general__wrapper" data-name="{{name}}">
+                <div class="general">
+                    <span class="general__name">{{name}}</span>
+                    <hr>
+                    <button class="select__general" data-active="">
+                        <img src="/img/down-arrow.png" alt="">
+                    </button>
                 </div>
-                {{/each}}
+                <div class="meetings__content">
+                    {{#each meetings}}
+                    <div class="meeting">
+                        <div class="meeting__info">
+                            <span>{{url}}</span>
+                            <span class="main__meeting__date">🕙 {{date}}</span>
+                        </div>
+                        <a href="/dashboard/{{url}}/{{date}}?q={{../name}}"><button
+                                class="dashboard__button">Dashboard</button></a>
+                    </div>
+                    {{/each}}
+                </div>
             </div>
             {{/each}}
             {{else}}
             <img class="empty__meetings__img" src="/img/empty.png" alt="">
-            <span class="empty__meetings__text">{{#if isAuth}}You don`t have any meetings{{else}}Authenticate to see your meetings{{/if}}</span>
+            <span class="empty__meetings__text">{{#if isAuth}}You don`t have any meetings{{else}}Authenticate to see
+                your meetings{{/if}}</span>
             {{/if}}
         </div>
     </div>

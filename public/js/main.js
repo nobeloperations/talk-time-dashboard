@@ -1,7 +1,7 @@
 window.onload = function () {
     const _selectGenerals = document.querySelectorAll('.select__general')
     const _searchMeetings = document.querySelector('.search__generals')
-    const _generals = document.querySelectorAll('.general')
+    const _generalWrappers = document.querySelectorAll('.general__wrapper')
     const _arrowDown = document.querySelector('.main__button')
     const _profileInfo = document.querySelector('.profile__information')
     const _profileInfoWidth = _profileInfo.offsetWidth;
@@ -30,5 +30,5 @@ window.onload = function () {
         }
     })
 
-    _search(_searchMeetings, _generals)
+    _search(_searchMeetings, _generalWrappers)
 }

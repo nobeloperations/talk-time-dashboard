@@ -178,3 +178,6 @@ body::-webkit-scrollbar {
   position: fixed;
   top: 15px;
 }
+.general__wrapper {
+  flex-direction: column;
+}
