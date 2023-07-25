@@ -11,8 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.FeedbacksService = void 0;
 const common_1 = require("@nestjs/common");
-const config_1 = require("../../badge-config/config");
-const path_1 = require("path");
 const user_cookies_1 = require("../../helpers/user_cookies");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
 const DEFAULT_BADGE = 'Choose the Badge (not necessarily)';
@@ -31,13 +29,12 @@ let FeedbacksService = class FeedbacksService {
                 await this.databaseUtilsService.findUser({ name, url, date }, '')
             ]);
             if (!currentUser) {
-                res.sendFile((0, path_1.resolve)('views/notfound.html'));
-                return;
+                return res.status(404).render('notfound');
             }
             return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks`, profileName: userPayload.name, isAuth: true };
         }
         catch (e) {
-            res.sendFile((0, path_1.resolve)('views/notfound.html'));
+            return res.status(404).render('notfound');
         }
     }
     async getNewFeedback(params, res, generalName, req) {
@@ -46,18 +43,14 @@ let FeedbacksService = class FeedbacksService {
             if (!userPayload)
                 return res.redirect('/');
             const { url, name, date } = params;
-            const [users, currentUser] = await Promise.all([
-                await this.databaseUtilsService.findUsers({ url, date }, ''),
-                await this.databaseUtilsService.findUser({ name, url, date }, '')
-            ]);
+            const currentUser = await this.databaseUtilsService.findUser({ name, url, date }, '');
             if (!currentUser) {
-                res.sendFile((0, path_1.resolve)('views/notfound.html'));
-                return;
+                return res.status(404).render('notfound');
             }
-            return { cssFileName: 'new-feedback', name, currentUser, url, users, date, generalName, pageName: "Leave feedback", profileName: userPayload.name, isAuth: true };
+            return { cssFileName: 'new-feedback', name, currentUser, url, date, generalName, pageName: "Leave feedback", profileName: userPayload.name, isAuth: true };
         }
         catch (e) {
-            res.sendFile((0, path_1.resolve)('views/notfound.html'));
+            return res.status(404).render('notfound');
         }
     }
     async createFeedback(files, createFeedbackBody, params, res, req) {
@@ -69,12 +62,9 @@ let FeedbacksService = class FeedbacksService {
             let { rating, feedback, badge } = createFeedbackBody;
             let { url, name, date, generalName } = params;
             let sendUser = await this.databaseUtilsService.findUser({ name: userPayload.name }, '');
-            if (badge !== DEFAULT_BADGE) {
-                let key = `${badge.toLowerCase().split(' ').join('_')}`;
-                let value = config_1.config[key];
-                badge = `${key}${value}.png`;
+            await this.databaseUtilsService.updateUser({ name, url, date }, { $push: { rating } });
+            if (badge !== DEFAULT_BADGE)
                 await this.databaseUtilsService.updateUserBadges(name, badge);
-            }
             await this.databaseUtilsService.createNewFeedback(userPayload.name, name, feedback, rating, url, sendUser.avatar, (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename, date);
             res.redirect(`/dashboard/${url}/${date}?q=${generalName}`);
         }

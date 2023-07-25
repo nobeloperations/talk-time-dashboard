@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DashboardService = void 0;
 const common_1 = require("@nestjs/common");
-const path_1 = require("path");
 const user_cookies_1 = require("../../helpers/user_cookies");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
 let DashboardService = class DashboardService {
@@ -30,25 +29,12 @@ let DashboardService = class DashboardService {
                 await this.databaseUtilsService.findFeedbacks({ url, date }, '')
             ]);
             if (!users.length) {
-                return res.sendFile((0, path_1.resolve)('views/notfound.html'));
+                return res.status(404).render('notfound');
             }
-            let feedbacksByName = {};
-            for (const { name, avatar, percents } of users) {
-                feedbacksByName[name] = {
-                    name,
-                    rating: [],
-                    avatar,
-                    percents
-                };
-            }
-            for (const { receiver, rating } of feedbacks) {
-                feedbacksByName[receiver].rating.push(rating);
-            }
-            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true };
+            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true };
         }
         catch (e) {
-            console.log(e);
-            res.sendFile((0, path_1.resolve)('views/notfound.html'));
+            return res.status(404).render('notfound');
         }
     }
     async updatePercents(params, postPercentsBody) {

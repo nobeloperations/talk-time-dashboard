@@ -4,7 +4,6 @@ import { Feedback } from 'models/feedback.model';
 import { Meeting } from 'models/meeting.model';
 import { User } from 'models/user.model';
 import { Model } from 'mongoose';
-import { resolve } from 'path';
 
 @Injectable()
 export class ProfileService {
@@ -25,8 +24,7 @@ export class ProfileService {
             ])
 
             if (!currentUsers.length) {
-                res.sendFile(resolve('views/notfound.html'))
-                return;
+                return res.status(404).render('notfound')
             }
 
             const avgRating = feedbacksReceived.length

@@ -1,5 +1,4 @@
 import { Injectable } from '@nestjs/common';
-import { resolve } from 'path';
 import { getUserFromCookies } from 'helpers/user_cookies';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 
@@ -20,31 +19,14 @@ export class DashboardService {
                 await this.databaseUtilsService.findFeedbacks({ url, date }, '')
             ])
 
-
             if (!users.length) {
-                return res.sendFile(resolve('views/notfound.html'))
+                return res.status(404).render('notfound')
             }
 
-            let feedbacksByName = {}
-
-            for(const { name, avatar, percents } of users) {
-                feedbacksByName[name] = {
-                    name,
-                    rating: [],
-                    avatar,
-                    percents
-                }
-            }
-
-            for(const { receiver, rating } of feedbacks) {
-                feedbacksByName[receiver].rating.push(rating)
-            }
-
-            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, feedbacksByName, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true }
+            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true }
         }
         catch (e) {
-            console.log(e)
-            res.sendFile(resolve('views/notfound.html'))
+            return res.status(404).render('notfound')
         }
 
     }

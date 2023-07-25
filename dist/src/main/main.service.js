@@ -43,24 +43,18 @@ let MainService = class MainService {
             return { cssFileName: 'main', generals: filteredGenerals, profileName: userPayload.name, isAuth: true };
         }
         catch (e) {
-            console.log(e);
-            return { message: 'Error' };
+            return res.status(404).render('notfound');
         }
     }
     async addMeeting(addGeneralBody) {
         try {
             const { name, url, date } = addGeneralBody;
             const meeting = await this.databaseUtilsService.findMeeting({ name }, '');
-            if (!meeting && name !== 'Meeting Details') {
-                await this.databaseUtilsService.createNewMeeting(name, url, date);
-            }
-            else {
-                const currentMeet = await this.databaseUtilsService.findMeeting({ name }, '');
-                let meetPresented = currentMeet === null || currentMeet === void 0 ? void 0 : currentMeet.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length;
-                if (!meetPresented) {
-                    await this.databaseUtilsService.updateMeetingByName(name, url, date);
-                }
-            }
+            if (!meeting && name !== 'Meeting Details')
+                return await this.databaseUtilsService.createNewMeeting(name, url, date);
+            let meetPresented = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length;
+            if (!meetPresented)
+                await this.databaseUtilsService.updateMeetingByName(name, url, date);
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });

@@ -15,8 +15,8 @@ const getUserFromCookies = (req) => {
         else {
             return 'no user';
         }
+        return userPayload;
     }
-    return userPayload;
 };
 exports.getUserFromCookies = getUserFromCookies;
 //# sourceMappingURL=user_cookies.js.map

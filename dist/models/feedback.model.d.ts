@@ -8,7 +8,6 @@ export declare const FeedbackSchema: mongoose.Schema<any, mongoose.Model<any, an
     url: string;
     senderImg: string;
     postDate: string;
-    file?: string;
     feedbackImg?: string;
 }>;
 export interface Feedback {
@@ -17,8 +16,8 @@ export interface Feedback {
     feedback: string;
     rating: number;
     url: string;
-    file: string;
     senderImg: string;
     feedbackImg: string;
     date: string;
+    postDate: string;
 }

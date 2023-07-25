@@ -1,5 +1,4 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { resolve } from 'path';
 import { getUserFromCookies } from 'helpers/user_cookies';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 
@@ -20,9 +19,7 @@ export class UserService {
                 const { name, avatar, date, generalName } = newUserBody;
 
                 const isUserExsist = await this.databaseUtilsService.findUser({ name, url, date }, '' )
-                if (!isUserExsist) {
-                    await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName)
-                }
+                if (!isUserExsist) await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName)
             }
             else {
                 throw new HttpException('Invalid headers', 404)
@@ -42,9 +39,7 @@ export class UserService {
 
             const currentMeeting = meeting?.meetings.some(curr => curr['date'] == date);
 
-            if (!meeting || !currentMeeting) {
-                return res.sendFile(resolve('views/notfound.html'))
-            }
+            if (!meeting || !currentMeeting) return res.status(404).render('notfound')
 
             const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges')
             let users = []
@@ -83,7 +78,7 @@ export class UserService {
             return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users', profileName: userPayload.name, isAuth: true }
         }
         catch (e) {
-            return res.sendFile(resolve('views/notfound.html'))
+            return res.status(404).render('notfound')
         }
     }
 }

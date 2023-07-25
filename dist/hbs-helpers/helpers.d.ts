@@ -1,5 +1,5 @@
 export declare let helpers: {
-    convert(str: any): any;
+    badgeToImage(badge: any): string;
     average(rate: any): string | 0;
     mult(e: any, coef: any): number;
     formatDate(date: any): string;

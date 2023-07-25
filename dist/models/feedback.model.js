@@ -23,9 +23,6 @@ exports.FeedbackSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    file: {
-        type: String
-    },
     senderImg: {
         type: String,
         required: true

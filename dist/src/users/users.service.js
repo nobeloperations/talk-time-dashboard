@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
-const path_1 = require("path");
 const user_cookies_1 = require("../../helpers/user_cookies");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
 let UserService = class UserService {
@@ -29,9 +28,8 @@ let UserService = class UserService {
                 const { url } = params;
                 const { name, avatar, date, generalName } = newUserBody;
                 const isUserExsist = await this.databaseUtilsService.findUser({ name, url, date }, '');
-                if (!isUserExsist) {
+                if (!isUserExsist)
                     await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName);
-                }
             }
             else {
                 throw new common_1.HttpException('Invalid headers', 404);
@@ -49,9 +47,8 @@ let UserService = class UserService {
             const { url, date } = params;
             let meeting = await this.databaseUtilsService.findMeeting({ name: generalName }, '');
             const currentMeeting = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.some(curr => curr['date'] == date);
-            if (!meeting || !currentMeeting) {
-                return res.sendFile((0, path_1.resolve)('views/notfound.html'));
-            }
+            if (!meeting || !currentMeeting)
+                return res.status(404).render('notfound');
             const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges');
             let users = [];
             for (const user of dbUsers) {
@@ -82,7 +79,7 @@ let UserService = class UserService {
             return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users', profileName: userPayload.name, isAuth: true };
         }
         catch (e) {
-            return res.sendFile((0, path_1.resolve)('views/notfound.html'));
+            return res.status(404).render('notfound');
         }
     }
 };

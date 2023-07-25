@@ -32,6 +32,10 @@ export const UserSchema = new mongoose.Schema({
     generalName: {
         type: String,
         required: true
+    },
+    rating: {
+        type: Array,
+        required: true
     }
 })
 

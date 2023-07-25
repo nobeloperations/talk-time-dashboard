@@ -21,9 +21,6 @@ export const FeedbackSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    file: {
-        type: String
-    },
     senderImg: {
         type: String,
         required: true
@@ -47,8 +44,8 @@ export interface Feedback {
     feedback: string,
     rating: number,
     url: string,
-    file: string,
     senderImg: string,
     feedbackImg: string,
     date: string,
+    postDate: string
 }

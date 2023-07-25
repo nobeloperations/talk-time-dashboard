@@ -35,6 +35,12 @@ let DatabaseUtilsService = class DatabaseUtilsService {
     async findUser(filter, fields) {
         return await this.userModel.findOne(filter).select(fields);
     }
+    async updateUser(filter, update) {
+        await this.userModel.updateOne(filter, update);
+    }
+    async updateUsers(filter, update) {
+        await this.userModel.updateMany(filter, update);
+    }
     async findFeedbacks(filter, fields) {
         return await this.feedbackModel.find(filter).select(fields);
     }
@@ -94,7 +100,8 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             url,
             percents: '',
             date,
-            generalName
+            generalName,
+            rating: 0
         });
         await newUser.save();
     }

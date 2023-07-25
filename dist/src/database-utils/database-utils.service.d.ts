@@ -13,6 +13,8 @@ export declare class DatabaseUtilsService {
     updateUserPercents(name: string, url: string, date: string, percent: string): Promise<void>;
     findUsers(filter: object, fields: string): Promise<any>;
     findUser(filter: object, fields: string): Promise<any>;
+    updateUser(filter: object, update: any): Promise<void>;
+    updateUsers(filter: object, update: any): Promise<void>;
     findFeedbacks(filter: object, fields: string): Promise<any>;
     findNotes(filter: object, fields: string): Promise<any>;
     deleteNote(filter: object): Promise<void>;

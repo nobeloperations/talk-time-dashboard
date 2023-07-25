@@ -3,6 +3,7 @@ export declare const UserSchema: mongoose.Schema<any, mongoose.Model<any, any, a
     name: string;
     date: string;
     count: number;
+    rating: any[];
     url: string;
     avatar: string;
     badges: any[];

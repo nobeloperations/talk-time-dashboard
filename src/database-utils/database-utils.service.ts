@@ -29,6 +29,14 @@ export class DatabaseUtilsService {
         return await this.userModel.findOne(filter).select(fields)
     }
 
+    async updateUser(filter: object, update) {
+        await this.userModel.updateOne(filter, update)
+    }
+
+    async updateUsers(filter: object, update) {
+        await this.userModel.updateMany(filter, update)
+    }
+
     async findFeedbacks(filter: object, fields: string): Promise<any> {
         return await this.feedbackModel.find(filter).select(fields)
     }
@@ -100,7 +108,8 @@ export class DatabaseUtilsService {
             url,
             percents: '',
             date,
-            generalName
+            generalName,
+            rating: 0
         })
 
         await newUser.save()

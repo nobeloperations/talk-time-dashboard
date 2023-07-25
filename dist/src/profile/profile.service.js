@@ -16,7 +16,6 @@ exports.ProfileService = void 0;
 const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
-const path_1 = require("path");
 let ProfileService = class ProfileService {
     constructor(userModel, feedbackModel, meetingModel) {
         this.userModel = userModel;
@@ -34,8 +33,7 @@ let ProfileService = class ProfileService {
                 await this.userModel.findOne({ name })
             ]);
             if (!currentUsers.length) {
-                res.sendFile((0, path_1.resolve)('views/notfound.html'));
-                return;
+                return res.status(404).render('notfound');
             }
             const avgRating = feedbacksReceived.length
                 ? Math.floor(feedbacksReceived.reduce((total, feedback) => total + feedback.rating, 0) / feedbacksReceived.length)

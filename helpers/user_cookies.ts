@@ -12,7 +12,7 @@ export const getUserFromCookies = (req) => {
         else {
             return 'no user'
         }
+        return userPayload
     }
 
-    return userPayload
 }
