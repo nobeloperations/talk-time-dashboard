@@ -57,12 +57,8 @@ export class UserService {
 
                 user.badges.forEach(badge => {
                     const badgeName = badge.badge;
-                    if (!uniqueBadges.includes(badgeName)) {
-                        uniqueBadges.push(badgeName);
-                    }
-                    if (!badgeCounts[badgeName]) {
-                        badgeCounts[badgeName] = 0;
-                    }
+                    if (!uniqueBadges.includes(badgeName)) uniqueBadges.push(badgeName);
+                    if (!badgeCounts[badgeName]) badgeCounts[badgeName] = 0;
                     badgeCounts[badgeName]++;
                 });
 

@@ -5,7 +5,8 @@ export const getUserFromCookies = (req) => {
         if (cookies.length) {
             cookies.forEach(cookie => {
                 if (cookie.startsWith('user={')) {
-                    userPayload = JSON.parse(cookie.split('=').at(-1))
+                    const index = cookie.indexOf('=')
+                    userPayload = JSON.parse(cookie.substring(index + 1))
                 }
             })
         }

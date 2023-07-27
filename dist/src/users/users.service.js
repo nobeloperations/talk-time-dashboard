@@ -62,12 +62,10 @@ let UserService = class UserService {
                 const badgeCounts = {};
                 user.badges.forEach(badge => {
                     const badgeName = badge.badge;
-                    if (!uniqueBadges.includes(badgeName)) {
+                    if (!uniqueBadges.includes(badgeName))
                         uniqueBadges.push(badgeName);
-                    }
-                    if (!badgeCounts[badgeName]) {
+                    if (!badgeCounts[badgeName])
                         badgeCounts[badgeName] = 0;
-                    }
                     badgeCounts[badgeName]++;
                 });
                 const updatedBadges = uniqueBadges.map(badgeName => ({
