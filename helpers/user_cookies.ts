@@ -15,5 +15,4 @@ export const getUserFromCookies = (req) => {
         }
         return userPayload
     }
-
 }

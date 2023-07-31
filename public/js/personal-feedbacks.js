@@ -20,7 +20,6 @@ window.onload = function () {
     let _averageRating = document.querySelector('.average__rating')
     let _feedbacksCounter = document.querySelector('.feedbacks__counter')
     let _leaveFeedbackLink = document.querySelector('.leave__feedback__link')
-    console.log(_leaveFeedbackLink)
     const LOW_RATING = 'LOW'
     const HIGH_RATING = 'HIGH'
 
@@ -29,6 +28,7 @@ window.onload = function () {
         let _user = {};
         _cookies.forEach(_cookie => {
             if(_cookie.startsWith('user={')) {
+                console.log(_cookie)
                 _user = JSON.parse(_cookie.split('=').at(-1))
             }
         })
@@ -36,6 +36,7 @@ window.onload = function () {
     }
 
     const _currentUser = _getUserFromCookies()
+    console.log(_currentUser)
     
     if(_leaveFeedback) _leaveFeedback.style.display = _pathName.includes(_currentUser.name) ? 'none' : 'flex'
     if(_leaveFeedbackLink) _leaveFeedbackLink.style.display = _pathName.includes(_currentUser.name) ? 'none' : 'flex'

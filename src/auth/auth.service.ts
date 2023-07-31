@@ -9,6 +9,7 @@ export class AuthService {
         if (!req.user) {
           return 'No user from google'
         }
+        
         const { email, picture, firstName, lastName } = req.user;
         return { email, picture, firstName, lastName, cssFileName: 'redirect' }
       }

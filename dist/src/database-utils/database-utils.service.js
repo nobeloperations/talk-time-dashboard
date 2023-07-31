@@ -78,7 +78,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             url,
             senderImg,
             feedbackImg,
-            postDate: new Date().toLocaleDateString(),
+            postDate: new Date().toLocaleDateString().replaceAll('.', '/'),
             date
         });
         await newFeedback.save();

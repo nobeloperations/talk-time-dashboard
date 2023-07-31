@@ -13,7 +13,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
         super({
             clientID: process.env.AUTH_CLIENT_ID,
             clientSecret: process.env.AUTH_CLIENT_SECRET,
-            callbackURL: 'https://nobeltt.com/auth/redirect',
+            callbackURL: 'http://localhost:3001/auth/redirect',
             scope: ['email', 'profile'],
         });
     }
