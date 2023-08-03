@@ -4,7 +4,7 @@
     <div class="form__wrapper">
         {{>navigate}}
         <div class="form__content">
-            <form action="/feedbacks/create/{{generalName}}/{{url}}/{{name}}/{{date}}" method="POST"
+            <form action="/feedbacks/create/{{generalName}}/{{url}}/{{receiver}}/{{date}}" method="POST"
                 enctype="multipart/form-data">
                 <label for="">Your feedback</label>
                 <textarea class="send__feedback__text" name="feedback" placeholder="Enter feedback here"></textarea>

@@ -45,7 +45,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getPersonalFeedbacks", null);
 __decorate([
-    (0, common_1.Get)('/create/:url/:name/:date'),
+    (0, common_1.Get)('/create/:url/:receiver/:date'),
     (0, common_1.Render)('new-feedback'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
@@ -57,7 +57,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], FeedbacksController.prototype, "getNewFeedback", null);
 __decorate([
-    (0, common_1.Post)('/create/:generalName/:url/:name/:date'),
+    (0, common_1.Post)('/create/:generalName/:url/:receiver/:date'),
     (0, common_1.HttpCode)(200),
     (0, common_1.UseInterceptors)((0, platform_express_1.FilesInterceptor)('file', 20, {
         storage: (0, multer_1.diskStorage)({

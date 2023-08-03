@@ -1,4 +1,4 @@
-import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete, Res, Query, Req } from '@nestjs/common';
+import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete, Res, Query, Req, Patch } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { Request, Response } from 'express';
 
@@ -32,4 +32,10 @@ export class DashboardController {
     deleteNote(@Body() deleteNoteBody: Object) {
         return this.dashboardService.deleteNote(deleteNoteBody)
     } 
+
+    @Patch('/updatenote')
+    @HttpCode(200)
+    updateNote(@Body() updateNoteBody: Object) {
+        return this.dashboardService.updateNote(updateNoteBody)
+    }
 }

@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
+const badges_filter_1 = require("../../helpers/badges_filter");
 const user_cookies_1 = require("../../helpers/user_cookies");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
 let UserService = class UserService {
@@ -50,30 +51,7 @@ let UserService = class UserService {
             if (!meeting || !currentMeeting)
                 return res.status(404).render('notfound');
             const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges');
-            let users = [];
-            for (const user of dbUsers) {
-                const existingUser = users.find(u => u.name === user.name);
-                if (!existingUser) {
-                    users.push(user.toObject());
-                }
-            }
-            users = users.map(user => {
-                const uniqueBadges = [];
-                const badgeCounts = {};
-                user.badges.forEach(badge => {
-                    const badgeName = badge.badge;
-                    if (!uniqueBadges.includes(badgeName))
-                        uniqueBadges.push(badgeName);
-                    if (!badgeCounts[badgeName])
-                        badgeCounts[badgeName] = 0;
-                    badgeCounts[badgeName]++;
-                });
-                const updatedBadges = uniqueBadges.map(badgeName => ({
-                    badge: badgeName,
-                    count: badgeCounts[badgeName]
-                }));
-                return Object.assign(Object.assign({}, user), { badges: updatedBadges });
-            });
+            let users = (0, badges_filter_1.filterBadges)(dbUsers);
             return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users', profileName: userPayload.name, isAuth: true };
         }
         catch (e) {

@@ -6,4 +6,5 @@ export declare class DashboardService {
     updatePercents(params: any, postPercentsBody: any): Promise<string>;
     newNote(params: any, createNoteBody: any): Promise<string>;
     deleteNote(deleteNoteBody: any): Promise<string>;
+    updateNote(updateNoteBody: any): Promise<void>;
 }

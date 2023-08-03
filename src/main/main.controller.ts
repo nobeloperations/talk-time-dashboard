@@ -26,4 +26,11 @@ export class MainController {
     getFAQ() {
         return this.mainService.getFAQ()
     }
+
+    @Get('/currentversion')
+    getCurrentVersion() {
+        return {
+            version: '3.11'
+        }
+    }
 }

@@ -5,5 +5,4 @@ export declare let helpers: {
     formatDate(date: any): string;
     badgesLevel(e: any): "Knowlege level" | "Apprentice level" | "Mastery level" | "Leadership level";
     moreThan(str: any, n: any): boolean;
-    emailCheck(str: any): any;
 };

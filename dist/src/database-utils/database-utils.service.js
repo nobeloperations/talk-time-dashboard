@@ -50,6 +50,9 @@ let DatabaseUtilsService = class DatabaseUtilsService {
     async deleteNote(filter) {
         await this.noteModel.deleteOne(filter);
     }
+    async updateNote(filter, update) {
+        await this.noteModel.updateOne(filter, update);
+    }
     async findMeetingsByNameIncluding(generalNames) {
         return await this.meetingModel.find({ name: { $in: generalNames } });
     }
@@ -83,12 +86,15 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         });
         await newFeedback.save();
     }
-    async createNewNote(url, date, text, tags) {
+    async createNewNote(url, date, text, tags, sender) {
+        const sendUser = await this.findUser({ name: sender }, 'avatar');
         const newNote = new this.noteModel({
             text,
             url,
             tags,
-            date
+            date,
+            sender,
+            avatar: sendUser ? sendUser['avatar'] : 'https://cdn-icons-png.flaticon.com/128/1144/1144760.png'
         });
         await newNote.save();
         return JSON.stringify(newNote);

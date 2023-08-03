@@ -45,9 +45,10 @@ export class DashboardService {
 
     async newNote(params, createNoteBody) {
         try {
-            const { url, date } = params;
-            const { text, tags } = createNoteBody
-            const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags)
+            let { url, date } = params;
+            let { text, tags, sender } = createNoteBody
+            if(!sender) sender = 'Talk time user'
+            const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags, sender)
             return newNote
         }
         catch (e) {
@@ -64,6 +65,11 @@ export class DashboardService {
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
+    }
+
+    async updateNote(updateNoteBody) {
+        const { id, text } = updateNoteBody;
+        await this.databaseUtilsService.updateNote({_id: id}, { text })
     }
 
 }

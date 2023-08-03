@@ -1,5 +1,4 @@
 <div class="redirect__container">
-    {{#if (emailCheck email)}}
     <div class="user__info">
         <img class="user__avatar" src="{{picture}}" alt="">
         <div class="username__wrapper">
@@ -11,9 +10,5 @@
         <a href="/"><button class="redirect__button continue__button">Continue</button></a>
         <a href="/auth"><button class="redirect__button switch__account__button">Switch account</button></a>
     </div>
-    {{else}}
-    <span class="invalid__email__text">Email should be @nobelcoacing.com, plese, switch your account</span>
-    <a href="/auth"><button class="redirect__button switch__account__button">Switch account</button></a>
-    {{/if}}
 </div>
 <script src="/js/redirect.js"></script>

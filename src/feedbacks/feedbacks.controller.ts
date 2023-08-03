@@ -17,14 +17,14 @@ export class FeedbacksController {
         return this.feedbacksService.getPersonalFeedbacks(params, res, generalName, req)
     }
 
-    @Get('/create/:url/:name/:date')
+    @Get('/create/:url/:receiver/:date')
     @Render('new-feedback')
     @HttpCode(200)
     getNewFeedback(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string, @Req() req: Request) {
         return this.feedbacksService.getNewFeedback(params, res, generalName, req)
     }
 
-    @Post('/create/:generalName/:url/:name/:date')
+    @Post('/create/:generalName/:url/:receiver/:date')
     @HttpCode(200)
     @UseInterceptors(
         FilesInterceptor('file', 20, {

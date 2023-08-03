@@ -66,9 +66,9 @@
                         <div class="user__rating">
                             <span>{{average rating}}</span>
                         </div>
-                       <a href="/feedbacks/{{../url}}/{{name}}/{{../date}}?q={{../generalName}}">
-                         <button class="view__feedbacks__button">View feedbacks</button>
-                       </a>
+                        <a href="/feedbacks/{{../url}}/{{name}}/{{../date}}?q={{../generalName}}">
+                            <button class="view__feedbacks__button">View feedbacks</button>
+                        </a>
                     </div>
                     {{/each}}
                 </div>
@@ -77,33 +77,22 @@
                         <input placeholder="Add new note" class="notes__input" type="text">
                         <button class="add__note">Add Note</button>
                     </div>
-                    {{!-- <div class="tags__input__wrapper">
-                        <input class="tags__input" type="text" placeholder="Add new tag">
-                        <div class="open__tags">
-                            <div class="tags">
-                                <div class="tag" data-tag="statictag">
-                                    <span>No tags here...</span>
-                                </div>
-                            </div>
-                            <img class="view__tags" data-open="false" src="/img/tag.png" alt="">
-                        </div>
-                        <button class="add__tag">Add tag</button>
-                    </div> --}}
                     <div class="notes">
                         {{#each notes}}
                         <div class="note">
-                            <span class="note__text">{{text}}</span>
+                            <div class="note__sender">
+                                <img class="note__avatar" src="{{avatar}}" alt="">
+                                <span class="note__sender__name">{{sender}}</span>
+                            </div>
+                            <div class="note__text__wrapper">
+                                <span class="note__text">{{text}}</span>
+                            </div>
+                            <textarea class="edit__note__text">{{text}}</textarea>
                             <div class="note__options">
+                                <button class="delete__note">Delete</button>
+                                <button class="edit__note">Edit</button>
                                 <span style="display: none;" class="note__id">{{_id}}</span>
-                                <img class="delete__note" src="/img/trash.png" alt="">
-                                {{!-- {{#if tags}}
-                                <img class="open__tags__note" data-tagsactive="" src="/img/tag.png" alt="">
-                                <div class="notes__tags">
-                                    {{#each tags}}
-                                        <span class="notes__tag">{{this}}</span>
-                                    {{/each}}
-                                </div>
-                                {{/if}} --}}
+                                <button class="save__note">Save</button>
                             </div>
                         </div>
                         {{/each}}

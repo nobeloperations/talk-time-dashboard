@@ -18,11 +18,12 @@ export declare class DatabaseUtilsService {
     findFeedbacks(filter: object, fields: string): Promise<any>;
     findNotes(filter: object, fields: string): Promise<any>;
     deleteNote(filter: object): Promise<void>;
+    updateNote(filter: any, update: any): Promise<void>;
     findMeetingsByNameIncluding(generalNames: string[]): Promise<any>;
     findMeeting(filter: object, fields: string): Promise<any>;
     updateMeetingByName(name: string, url: string, date: string): Promise<void>;
     createNewMeeting(name: string, url: string, date: string): Promise<void>;
     createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string): Promise<void>;
-    createNewNote(url: string, date: string, text: string, tags: string[]): Promise<string>;
+    createNewNote(url: string, date: string, text: string, tags: string[], sender: string): Promise<string>;
     createNewUser(name: string, avatar: string, url: string, date: string, generalName: string): Promise<void>;
 }

@@ -7,4 +7,5 @@ export declare class DashboardController {
     postPercents(params: Object, updatePercentsBody: Object): Promise<string>;
     newConclusion(params: Object, createNoteBody: Object): Promise<string>;
     deleteNote(deleteNoteBody: Object): Promise<string>;
+    updateNote(updateNoteBody: Object): Promise<void>;
 }

@@ -28,6 +28,11 @@ let MainController = class MainController {
     getFAQ() {
         return this.mainService.getFAQ();
     }
+    getCurrentVersion() {
+        return {
+            version: '3.11'
+        };
+    }
 };
 __decorate([
     (0, common_1.Get)('/'),
@@ -55,6 +60,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getFAQ", null);
+__decorate([
+    (0, common_1.Get)('/currentversion'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], MainController.prototype, "getCurrentVersion", null);
 MainController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [main_service_1.MainService])

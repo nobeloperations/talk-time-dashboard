@@ -35,14 +35,14 @@ export class FeedbacksService {
         try {
             const userPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
-            const { url, name, date } = params;
-            const currentUser = await this.databaseUtilsService.findUser({name, url, date}, '')
+            const { url, receiver, date } = params;
+            const currentUser = await this.databaseUtilsService.findUser({receiver, url, date}, '')
 
             if (!currentUser) {
                 return res.status(404).render('notfound')
             }
 
-            return { cssFileName: 'new-feedback', name, currentUser, url, date, generalName, pageName: "Leave feedback", profileName: userPayload.name, isAuth: true }
+            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, pageName: "Leave feedback", profileName: userPayload.name, isAuth: true }
         }
         catch (e) {
             return res.status(404).render('notfound')
@@ -54,12 +54,12 @@ export class FeedbacksService {
             const userPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
             let { rating, feedback, badge } = createFeedbackBody;
-            let { url, name, date, generalName } = params;
+            let { url, receiver, date, generalName } = params;
             let sendUser = await this.databaseUtilsService.findUser({name: userPayload.name}, '')
-            await this.databaseUtilsService.updateUser({name, url, date}, {$push: { rating }});
+            await this.databaseUtilsService.updateUser({name: receiver, url, date}, {$push: { rating }});
 
-            if (badge !== DEFAULT_BADGE) await this.databaseUtilsService.updateUserBadges(name, badge)
-            await this.databaseUtilsService.createNewFeedback(userPayload.name, name, feedback, rating, url, sendUser.avatar, files[0]?.filename, date)
+            if (badge !== DEFAULT_BADGE) await this.databaseUtilsService.updateUserBadges(receiver, badge)
+            await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, files[0]?.filename, date)
             res.redirect(`/dashboard/${url}/${date}?q=${generalName}`)
         }
         catch (e) {

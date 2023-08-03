@@ -1,4 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
+import { filterBadges } from 'helpers/badges_filter';
 import { getUserFromCookies } from 'helpers/user_cookies';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 
@@ -42,34 +43,7 @@ export class UserService {
             if (!meeting || !currentMeeting) return res.status(404).render('notfound')
 
             const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges')
-            let users = []
-
-            for (const user of dbUsers) {
-                const existingUser = users.find(u => u.name === user.name)
-                if (!existingUser) {
-                    users.push(user.toObject())
-                }
-            }
-
-            users = users.map(user => {
-                const uniqueBadges = [];
-                const badgeCounts = {};
-
-                user.badges.forEach(badge => {
-                    const badgeName = badge.badge;
-                    if (!uniqueBadges.includes(badgeName)) uniqueBadges.push(badgeName);
-                    if (!badgeCounts[badgeName]) badgeCounts[badgeName] = 0;
-                    badgeCounts[badgeName]++;
-                });
-
-                const updatedBadges = uniqueBadges.map(badgeName => ({
-                    badge: badgeName,
-                    count: badgeCounts[badgeName]
-                }));
-
-                return { ...user, badges: updatedBadges };
-            });
-
+            let users = filterBadges(dbUsers)
 
             return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users', profileName: userPayload.name, isAuth: true }
         }

@@ -49,6 +49,10 @@ export class DatabaseUtilsService {
         await this.noteModel.deleteOne(filter)
     }
 
+    async updateNote(filter, update) {
+        await this.noteModel.updateOne(filter, update)
+    }
+
     async findMeetingsByNameIncluding(generalNames: string[]): Promise<any> {
         return await this.meetingModel.find({name: {$in: generalNames}})
     }
@@ -89,12 +93,15 @@ export class DatabaseUtilsService {
         await newFeedback.save()
     }
 
-    async createNewNote(url: string, date: string, text: string, tags: string[]): Promise<string> {
+    async createNewNote(url: string, date: string, text: string, tags: string[], sender: string): Promise<string> {
+        const sendUser = await this.findUser({name: sender}, 'avatar')
         const newNote = new this.noteModel({
             text,
             url,
             tags,
-            date
+            date,
+            sender,
+            avatar: sendUser ? sendUser['avatar'] : 'https://cdn-icons-png.flaticon.com/128/1144/1144760.png'
         })
 
         await newNote.save()

@@ -18,6 +18,14 @@ exports.NoteSchema = new mongoose.Schema({
     date: {
         type: String,
         required: true
+    },
+    sender: {
+        type: String,
+        required: true
+    },
+    avatar: {
+        type: String,
+        required: true
     }
 });
 //# sourceMappingURL=note.model.js.map

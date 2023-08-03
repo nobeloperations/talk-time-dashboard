@@ -8,4 +8,7 @@ export declare class MainController {
     getFAQ(): {
         cssFileName: string;
     };
+    getCurrentVersion(): {
+        version: string;
+    };
 }

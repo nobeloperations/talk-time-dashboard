@@ -31,6 +31,9 @@ let DashboardController = class DashboardController {
     deleteNote(deleteNoteBody) {
         return this.dashboardService.deleteNote(deleteNoteBody);
     }
+    updateNote(updateNoteBody) {
+        return this.dashboardService.updateNote(updateNoteBody);
+    }
 };
 __decorate([
     (0, common_1.Get)('dashboard/:url/:date'),
@@ -70,6 +73,14 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], DashboardController.prototype, "deleteNote", null);
+__decorate([
+    (0, common_1.Patch)('/updatenote'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], DashboardController.prototype, "updateNote", null);
 DashboardController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [dashboard_service_1.DashboardService])
