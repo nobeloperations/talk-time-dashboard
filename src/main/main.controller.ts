@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Render, Body, HttpCode, Req, Res } from '@nestjs/common';
+import { Controller, Get, Post, Render, Body, HttpCode, Req, Res, Param } from '@nestjs/common';
 import { MainService } from './main.service';
 import { Request } from 'express';
 
@@ -30,7 +30,7 @@ export class MainController {
     @Get('/currentversion')
     getCurrentVersion() {
         return {
-            version: '3.11'
+            version: '3.13'
         }
     }
 }

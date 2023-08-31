@@ -43,7 +43,6 @@ let MainService = class MainService {
             return { cssFileName: 'main', generals: filteredGenerals, profileName: userPayload.name, isAuth: true };
         }
         catch (e) {
-            console.log(e);
             return res.status(404).render('notfound');
         }
     }

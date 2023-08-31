@@ -50,59 +50,156 @@
                         <div style="width: 120px">Average rating</div>
                         <div style="width: 120px">Feedbacks</div>
                     </div>
-                    {{#each users}}
-                    <div class="dashboard__user" data-name="{{name}}">
-                        <div class="user__info">
-                            <img class="user__avatar" src="{{avatar}}">
-                            <span class="username">{{name}}</span>
-                        </div>
-                        <div class="user__percents">
-                            {{#if percents}}
-                            <span>{{percents}}</span>
-                            {{else}}
-                            <span>0%</span>
-                            {{/if}}
-                        </div>
-                        <div class="user__rating">
-                            <span>{{average rating}}</span>
-                        </div>
-                        <a href="/feedbacks/{{../url}}/{{name}}/{{../date}}?q={{../generalName}}">
-                            <button class="view__feedbacks__button">View feedbacks</button>
-                        </a>
-                    </div>
-                    {{/each}}
-                </div>
-                <div class="dashboard__notes">
-                    <div class="notes__input__wrapper">
-                        <input placeholder="Add new note" class="notes__input" type="text">
-                        <button class="add__note">Add Note</button>
-                    </div>
-                    <div class="notes">
-                        {{#each notes}}
-                        <div class="note">
-                            <div class="note__sender">
-                                <img class="note__avatar" src="{{avatar}}" alt="">
-                                <span class="note__sender__name">{{sender}}</span>
+                    <div class="dashboard__users__list">
+                        {{#each users}}
+                        <div class="dashboard__user" data-name="{{name}}">
+                            <div class="user__info">
+                                <img class="user__avatar" src="{{avatar}}">
+                                <span class="username">{{name}}</span>
                             </div>
-                            <div class="note__text__wrapper">
-                                <span class="note__text">{{text}}</span>
+                            <div class="user__percents">
+                                {{#if percents}}
+                                <span>{{percents}}</span>
+                                {{else}}
+                                <span>0%</span>
+                                {{/if}}
                             </div>
-                            <textarea class="edit__note__text">{{text}}</textarea>
-                            <div class="note__options">
-                                <button class="delete__note">Delete</button>
-                                <button class="edit__note">Edit</button>
-                                <span style="display: none;" class="note__id">{{_id}}</span>
-                                <button class="save__note">Save</button>
+                            <div class="user__rating">
+                                <span>{{average rating}}</span>
                             </div>
+                            <a href="/feedbacks/{{../url}}/{{name}}/{{../date}}?q={{../generalName}}">
+                                <button class="view__feedbacks__button">View feedbacks</button>
+                            </a>
                         </div>
                         {{/each}}
-                        <span class="no__notes">You`ve not added notes yet...</span>
+                    </div>
+                </div>
+                <div class="notes__transcription">
+                    <div class="dashboard__notes">
+                        <div class="transcription__switch">
+                            <span>Switch to transcription →</span>
+                        </div>
+                        <div class="notes__input__wrapper">
+                            <input placeholder="Add new note" class="notes__input" type="text">
+                            <button class="add__note">Add Note</button>
+                        </div>
+                        <div class="notes">
+                            {{#each notes}}
+                            <div class="note">
+                                <div class="note__sender">
+                                    <img class="note__avatar" src="{{avatar}}" alt="">
+                                    <span class="note__sender__name">{{sender}}</span>
+                                </div>
+                                <div class="note__text__wrapper">
+                                    <span class="note__text">{{text}}</span>
+                                </div>
+                                <textarea class="edit__note__text">{{text}}</textarea>
+                                <div class="note__options">
+                                    <button class="delete__note">Delete</button>
+                                    <button class="edit__note">Edit</button>
+                                    <span style="display: none;" class="note__id">{{_id}}</span>
+                                    <button class="save__note">Save</button>
+                                </div>
+                            </div>
+                            {{/each}}
+                            <span class="no__notes">You`ve not added notes yet...</span>
+                        </div>
+                    </div>
+                    <div class="dashboard__transcription">
+                        <div class="notes__switch">
+                            <span>Switch to notes →</span>
+                        </div>
+                        <div class="transcription__item">
+                            <div class="transcription__header">
+                                <img class="transcription__avatar" src="./ava.jpg" alt="">
+                                <span>Danylo Burmei • 01:48</span>
+                            </div>
+                            <div class="transcription__text">
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
+                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
+                                    obcaecati a
+                                    quasi! Porro natus a sunt minima.</span>
+                            </div>
+                        </div>
+                        <div class="transcription__item">
+                            <div class="transcription__header">
+                                <img class="transcription__avatar" src="./ava.jpg" alt="">
+                                <span>Danylo Burmei • 01:48</span>
+                            </div>
+                            <div class="transcription__text">
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
+                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
+                                    obcaecati a
+                                    quasi! Porro natus a sunt minima.</span>
+                            </div>
+                        </div>
+                        <div class="transcription__item">
+                            <div class="transcription__header">
+                                <img class="transcription__avatar" src="./ava.jpg" alt="">
+                                <span>Danylo Burmei • 01:48</span>
+                            </div>
+                            <div class="transcription__text">
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
+                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
+                                    obcaecati a
+                                    quasi! Porro natus a sunt minima.</span>
+                            </div>
+                        </div>
+                        <div class="transcription__item">
+                            <div class="transcription__header">
+                                <img class="transcription__avatar" src="./ava.jpg" alt="">
+                                <span>Danylo Burmei • 01:48</span>
+                            </div>
+                            <div class="transcription__text">
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
+                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
+                                    obcaecati a
+                                    quasi! Porro natus a sunt minima.</span>
+                            </div>
+                        </div>
+                        <div class="transcription__item">
+                            <div class="transcription__header">
+                                <img class="transcription__avatar" src="./ava.jpg" alt="">
+                                <span>Danylo Burmei • 01:48</span>
+                            </div>
+                            <div class="transcription__text">
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
+                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
+                                    obcaecati a
+                                    quasi! Porro natus a sunt minima.</span>
+                            </div>
+                        </div>
+                        <div class="transcription__item">
+                            <div class="transcription__header">
+                                <img class="transcription__avatar" src="./ava.jpg" alt="">
+                                <span>Danylo Burmei • 01:48</span>
+                            </div>
+                            <div class="transcription__text">
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
+                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
+                                    obcaecati a
+                                    quasi! Porro natus a sunt minima.</span>
+                            </div>
+                        </div>
+                        <div class="transcription__item">
+                            <div class="transcription__header">
+                                <img class="transcription__avatar" src="./ava.jpg" alt="">
+                                <span>Danylo Burmei • 01:48</span>
+                            </div>
+                            <div class="transcription__text">
+                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
+                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
+                                    obcaecati a
+                                    quasi! Porro natus a sunt minima.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <script src="/js/dashboard.js"></script>
 <script src="/js/helpers/search.js"></script>

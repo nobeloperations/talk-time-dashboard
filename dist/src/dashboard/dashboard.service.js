@@ -28,9 +28,8 @@ let DashboardService = class DashboardService {
                 await this.databaseUtilsService.findNotes({ url, date }, ''),
                 await this.databaseUtilsService.findFeedbacks({ url, date }, '')
             ]);
-            if (!users.length) {
+            if (!users.length)
                 return res.status(404).render('notfound');
-            }
             return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true };
         }
         catch (e) {

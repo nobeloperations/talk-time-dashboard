@@ -114,14 +114,20 @@ body {
     height: fit-content;
     padding: 10px 30px 10px 30px;
     display: flex;
+    justify-content: space-between;
 }
 
 .dashboard__users {
-    width: calc(50% - 15px);
-    height: fit-content;
-    margin-right: 30px;
+    width: calc(50% - 8px);
+    height: calc(100vh - 265px);
+    padding-right: 5px;
 }
-
+.dashboard__users__list {
+    overflow-y: scroll;
+    height: calc(100vh - 295px);
+    width: 100%;
+    padding-right: 5px;
+}
 .dashboard__users__names {
     width: 100%;
     height: 30px;
@@ -138,7 +144,7 @@ body {
 
 .dashboard__user {
     width: 100%;
-    height: 60px;
+    height: 55px;
     background: white;
     margin-bottom: 5px;
     border-radius: 5px;
@@ -180,9 +186,12 @@ body {
     border-radius: 100px;
     font-size: 12px;
 }
+
 .dashboard__notes {
-    width: calc(50% - 15px);
+    width: 100%;
     height: fit-content;
+    transition: .2s all ease;
+
 }
 
 .notes__input__wrapper {
@@ -214,10 +223,10 @@ body {
 
 .notes {
     width: 100%;
-    height: 100%;
+    height: calc(100vh - 340px);
     display: flex;
     flex-wrap: wrap;
-    overflow-y: scroll;
+    align-content: flex-start;
 }
 
 .note {
@@ -230,13 +239,16 @@ body {
     border-radius: 5px;
     margin-bottom: 10px;
 }
+
 .note:nth-child(odd) {
     margin-right: 10px;
 }
+
 .note__text {
     color: black;
     font-size: 14px;
 }
+
 .no__notes {
     margin-left: 15px;
     display: none;
@@ -252,6 +264,7 @@ body {
     color: #ED7304;
     cursor: pointer;
 }
+
 .note__sender {
     width: 100%;
     display: flex;
@@ -259,10 +272,14 @@ body {
     height: 30px;
     padding: 0 0 5px 0;
 }
+
 .note__sender__name {
     font-size: 14px;
 }
-.delete__note, .edit__note, .save__note {
+
+.delete__note,
+.edit__note,
+.save__note {
     width: 70px;
     height: 25px;
     border-radius: 5px;
@@ -274,32 +291,39 @@ body {
     border: none;
     outline: none;
 }
+
 .edit__note {
     background: #FFD4AC;
     color: #ED7304;
 }
+
 .delete__note {
     background: rgb(255, 201, 191);
     margin-right: 5px;
     color: tomato;
 }
+
 .save__note {
     background: #B1FDD1;
     color: #00D03E;
     display: none;
 }
+
 .edit__note {
     margin-right: 5px;
 }
+
 .note__options {
     display: flex;
     height: fit-content;
 }
+
 .note__avatar {
     width: 24px;
     border-radius: 100px;
     margin-right: 5px;
 }
+
 .note__text__wrapper {
     width: 100%;
     height: 55px;
@@ -312,6 +336,7 @@ button:disabled {
     color: gray;
     cursor: not-allowed;
 }
+
 .edit__note__text {
     width: 95%;
     height: 55px;
@@ -322,4 +347,58 @@ button:disabled {
     margin-bottom: 10px;
     padding: 8px;
     border-radius: 5px;
+}
+
+.dashboard__transcription {
+    height: calc(100vh - 265px);
+    overflow-y: scroll;
+    width: 100%;
+    transition: .2s all ease;
+    display: none;
+}
+.notes__transcription {
+    width: calc(50% - 15px);
+    height: calc(100vh - 265px);
+    overflow-y: scroll;
+}
+.transcription__item {
+    margin-bottom: 20px;
+}
+
+.transcription__wrapper {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgb(224, 224, 224);
+    padding: 10px;
+}
+
+.transcription__avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 100px;
+    margin-right: 5px;
+}
+
+.transcription__header {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.transcription__text {
+    font-size: 12px;
+}
+
+.transcription__time {
+    color: rgb(79, 79, 79);
+}
+.transcription__switch, .notes__switch {
+    height: 30px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    color: gray;
+    cursor: pointer;
 }

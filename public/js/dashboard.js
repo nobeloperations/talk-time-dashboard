@@ -5,11 +5,25 @@ window.onload = function () {
     const DATE = window.location.href.split('/').at(-1);
     const _usersList = document.querySelectorAll('.dashboard__user')
     const _searchUsersInput = document.querySelector('.dashboard__search')
+    const _dashboardNotes = document.querySelector('.dashboard__notes')
     const _addNote = document.querySelector('.add__note')
     const _addNoteInput = document.querySelector('.notes__input')
     const _notes = document.querySelector('.notes')
     const _noNotes = document.querySelector('.no__notes')
     const _notesList = document.querySelectorAll('.note')
+    const _transcriptionSwitch = document.querySelector('.transcription__switch')
+    const _dashboardTranscription = document.querySelector('.dashboard__transcription')
+    const _notesSwitch = document.querySelector('.notes__switch')
+
+    _transcriptionSwitch.onclick = function() {
+        _dashboardNotes.style.display = 'none'
+        _dashboardTranscription.style.display = 'block'
+    }
+    _notesSwitch.onclick = function() {
+        _dashboardTranscription.style.display = 'none'
+        _dashboardNotes.style.display = 'block'
+
+    }
 
     _notesList.forEach(_note => {
         const _noteSender = _note.querySelector('.note__sender__name').textContent;

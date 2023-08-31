@@ -1,20 +1,22 @@
-import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete, Res, Query, Req, Patch } from '@nestjs/common';
+import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete, Res, Query, Req, Patch, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { Request, Response } from 'express';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Configuration, OpenAIApi } from 'openai';
 
 @Controller('')
 export class DashboardController {
 
-    constructor(private dashboardService: DashboardService){}
+    constructor(private dashboardService: DashboardService) { }
 
     @Get('dashboard/:url/:date')
     @Render('dashboard')
     @HttpCode(200)
     getDashboard(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string, @Req() req: Request) {
-        return this.dashboardService.getDashboard(params, res, generalName, req)   
-         
-    }   
-    
+        return this.dashboardService.getDashboard(params, res, generalName, req)
+
+    }
+
     @Post('/percentage/:url/:date')
     @HttpCode(200)
     postPercents(@Param() params: Object, @Body() updatePercentsBody: Object) {
@@ -31,7 +33,7 @@ export class DashboardController {
     @HttpCode(200)
     deleteNote(@Body() deleteNoteBody: Object) {
         return this.dashboardService.deleteNote(deleteNoteBody)
-    } 
+    }
 
     @Patch('/updatenote')
     @HttpCode(200)

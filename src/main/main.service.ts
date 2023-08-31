@@ -39,7 +39,6 @@ export class MainService {
             return {cssFileName: 'main', generals: filteredGenerals, profileName: userPayload.name, isAuth: true }
         }
         catch(e) {
-            console.log(e)
             return res.status(404).render('notfound')
         }
     }
@@ -55,7 +54,6 @@ export class MainService {
         catch(e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
-
     }
 
     getFAQ() {
