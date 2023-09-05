@@ -19,12 +19,14 @@ export class DashboardService {
                 await this.databaseUtilsService.findFeedbacks({ url, date }, '')
             ])
 
-            if(!users.length) return res.status(404).render('notfound')
+            if(!users.length) {
+                return res.status(404).render('notfound')
+            }
 
             return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true }
         }
         catch (e) {
-            return res.status(404).render('notfound')
+            throw new Error(`THIS IS ERROR ${e}`)
         }
 
     }

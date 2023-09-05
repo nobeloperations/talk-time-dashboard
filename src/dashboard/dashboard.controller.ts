@@ -1,8 +1,6 @@
-import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete, Res, Query, Req, Patch, UploadedFile, UseInterceptors } from '@nestjs/common';
+import { Controller, Get, Render, HttpCode, Param, Post, Body, Delete, Res, Query, Req, Patch } from '@nestjs/common';
 import { DashboardService } from './dashboard.service';
 import { Request, Response } from 'express';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { Configuration, OpenAIApi } from 'openai';
 
 @Controller('')
 export class DashboardController {
