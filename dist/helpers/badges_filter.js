@@ -6,12 +6,12 @@ function filterBadges(dbUsers) {
     for (const user of dbUsers) {
         const existingUser = users.find(u => u.name === user.name);
         if (!existingUser)
-            users.push(user.toObject());
+            users.push(Object.assign({}, user._doc));
     }
     users = users.map(user => {
         const uniqueBadges = [];
         const badgeCounts = {};
-        user.badges.forEach(badge => {
+        user.badges.forEach((badge) => {
             const badgeName = badge.badge;
             if (!uniqueBadges.includes(badgeName))
                 uniqueBadges.push(badgeName);

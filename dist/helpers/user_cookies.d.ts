@@ -1,1 +1,2 @@
-export declare const getUserFromCookies: (req: any) => any;
+import { Request } from "express";
+export declare const getUserFromCookies: (req: Request) => any;

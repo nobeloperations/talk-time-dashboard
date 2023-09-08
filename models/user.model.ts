@@ -39,11 +39,16 @@ export const UserSchema = new mongoose.Schema({
     }
 })
 
+interface Badge {
+    badge: string;
+}
+
 export interface User {
     name: string,
     url: string,
     avatar: string,
-    badges: string,
+    badges: Badge[],
     percents: string,
-    generalName: string
+    generalName: string,
+    rating: string[];
 }

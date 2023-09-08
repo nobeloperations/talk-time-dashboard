@@ -74,7 +74,7 @@ __decorate([
     __param(4, (0, common_1.Req)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Array, Object, Object, Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], FeedbacksController.prototype, "createFeedback", null);
 FeedbacksController = __decorate([
     (0, common_1.Controller)('feedbacks'),

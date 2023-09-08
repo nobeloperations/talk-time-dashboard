@@ -13,7 +13,7 @@ exports.AuthService = void 0;
 const common_1 = require("@nestjs/common");
 let AuthService = class AuthService {
     constructor() { }
-    googleLogin(req, res) {
+    googleLogin(req) {
         if (!req.user) {
             return 'No user from google';
         }

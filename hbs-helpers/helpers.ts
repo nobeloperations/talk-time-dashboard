@@ -1,27 +1,27 @@
 export let helpers = {
-    badgeToImage(badge) {
+    badgeToImage(badge: string): string {
         badge = badge.toLowerCase().split(' ').join('_')
         return `${badge}.png`
     },
-    average(rate) {
+    average(rate: []): string | number {
         if (!rate.length) return 0;
         let sum = rate.reduce((a, b) => +a + +b, 0);
         return (sum / rate.length).toFixed(1);
     },
-    mult(e, coef) {
+    mult(e: number, coef: number): number {
         return e * coef
     },
-    formatDate(date) {
+    formatDate(date: string): string {
         const parts = date.split('/')
         const day = parts[0]
         const month = parts[1]
         const year = parts[2]
         return `${month}/${day}/${year}`
     }, 
-    badgesLevel(e) {
+    badgesLevel(e: number): string {
         return e === 1 ? 'Knowlege level' : e === 2 ? 'Apprentice level' : e === 3 ? 'Mastery level' : 'Leadership level'
     },
-    moreThan(str, n) {
+    moreThan(str: string, n: number): boolean {
         return str.length > n
     },
 }

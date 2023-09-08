@@ -1,11 +1,13 @@
-export const getUserFromCookies = (req) => {
-    let userPayload;
+import { Request } from "express";
+
+export const getUserFromCookies = (req: Request): any => {
+    let userPayload: any;
     if (req.headers.cookie) {
-        const cookies = req.headers.cookie.split(';');
+        const cookies: string[] = req.headers.cookie.split(';');
         if (cookies.length) {
-            cookies.forEach(cookie => {
+            cookies.forEach((cookie: string) => {
                 if (cookie.startsWith('user={')) {
-                    const index = cookie.indexOf('=')
+                    const index: number = cookie.indexOf('=')
                     userPayload = JSON.parse(cookie.substring(index + 1))
                 }
             })

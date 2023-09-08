@@ -26,7 +26,7 @@ let MainController = class MainController {
         return this.mainService.addMeeting(addGeneralBody);
     }
     getFAQ() {
-        return this.mainService.getFAQ();
+        return { cssFileName: 'faq' };
     }
     getCurrentVersion() {
         return {
@@ -42,7 +42,7 @@ __decorate([
     __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MainController.prototype, "getMain", null);
 __decorate([
     (0, common_1.Post)('/main/addmeeting'),
@@ -50,7 +50,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], MainController.prototype, "addGeneral", null);
 __decorate([
     (0, common_1.Get)('/faq'),
@@ -58,13 +58,13 @@ __decorate([
     (0, common_1.HttpCode)(200),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Object)
 ], MainController.prototype, "getFAQ", null);
 __decorate([
     (0, common_1.Get)('/currentversion'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Object)
 ], MainController.prototype, "getCurrentVersion", null);
 MainController = __decorate([
     (0, common_1.Controller)(''),

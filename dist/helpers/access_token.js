@@ -9,6 +9,7 @@ async function getAccessToken(refresh_token, client_id, client_secret) {
         client_secret: client_secret,
         grant_type: 'refresh_token',
     });
+    console.log(typeof response);
     return response.data.access_token;
 }
 exports.getAccessToken = getAccessToken;

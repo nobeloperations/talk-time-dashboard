@@ -4,6 +4,7 @@ import { extname } from 'path';
 import { diskStorage } from 'multer';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { Request, Response } from 'express';
+import { CreateFeedbackBody, CreateNewFeedbackParams, FeedbackImage, GetNewFeedbackParams, GetPersonalFeedbacksParams } from 'types/types';
 
 @Controller('feedbacks')
 export class FeedbacksController {
@@ -13,14 +14,14 @@ export class FeedbacksController {
     @Get('/:url/:name/:date')
     @Render('personal-feedbacks')
     @HttpCode(200)
-    getPersonalFeedbacks(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string, @Req() req: Request) {
+    getPersonalFeedbacks(@Param() params: GetPersonalFeedbacksParams, @Res() res: Response, @Query('q') generalName: string, @Req() req: Request) {
         return this.feedbacksService.getPersonalFeedbacks(params, res, generalName, req)
     }
 
     @Get('/create/:url/:receiver/:date')
     @Render('new-feedback')
     @HttpCode(200)
-    getNewFeedback(@Param() params: Object, @Res() res: Response, @Query('q') generalName: string, @Req() req: Request) {
+    getNewFeedback(@Param() params: GetNewFeedbackParams, @Res() res: Response, @Query('q') generalName: string, @Req() req: Request) {
         return this.feedbacksService.getNewFeedback(params, res, generalName, req)
     }
 
@@ -36,7 +37,7 @@ export class FeedbacksController {
           }),
         }),
       )
-      createFeedback(@UploadedFiles() files: Object[], @Body() createFeedbackBody: Object, @Param() params: Object, @Res() res: Response, @Req() req: Request) {
+      createFeedback(@UploadedFiles() files: FeedbackImage[], @Body() createFeedbackBody: CreateFeedbackBody, @Param() params: CreateNewFeedbackParams, @Res() res: Response, @Req() req: Request): Promise<void | string> {
         return this.feedbacksService.createFeedback(files, createFeedbackBody, params, res, req)
       }
 }

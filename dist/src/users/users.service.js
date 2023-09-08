@@ -30,7 +30,7 @@ let UserService = class UserService {
                 const { name, avatar, date, generalName } = newUserBody;
                 const isUserExsist = await this.databaseUtilsService.findUser({ name, url, date }, '');
                 if (!isUserExsist)
-                    await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName);
+                    return await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName);
             }
             else {
                 throw new common_1.HttpException('Invalid headers', 404);
@@ -52,7 +52,7 @@ let UserService = class UserService {
                 return res.status(404).render('notfound');
             const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges');
             let users = (0, badges_filter_1.filterBadges)(dbUsers);
-            return { cssFileName: 'users', users, url, date, generalName, pageName: 'Users', profileName: userPayload.name, isAuth: true };
+            return { cssFileName: 'users', users, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" };
         }
         catch (e) {
             return res.status(404).render('notfound');

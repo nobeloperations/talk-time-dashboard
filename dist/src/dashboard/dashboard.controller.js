@@ -25,7 +25,7 @@ let DashboardController = class DashboardController {
     postPercents(params, updatePercentsBody) {
         return this.dashboardService.updatePercents(params, updatePercentsBody);
     }
-    newConclusion(params, createNoteBody) {
+    newNote(params, createNoteBody) {
         return this.dashboardService.newNote(params, createNoteBody);
     }
     deleteNote(deleteNoteBody) {
@@ -54,7 +54,7 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], DashboardController.prototype, "postPercents", null);
 __decorate([
     (0, common_1.Post)('/newconclusion/:url/:date'),
@@ -63,15 +63,15 @@ __decorate([
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object]),
-    __metadata("design:returntype", void 0)
-], DashboardController.prototype, "newConclusion", null);
+    __metadata("design:returntype", Promise)
+], DashboardController.prototype, "newNote", null);
 __decorate([
     (0, common_1.Delete)('/deleteconclusion'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], DashboardController.prototype, "deleteNote", null);
 __decorate([
     (0, common_1.Patch)('/updatenote'),
@@ -79,7 +79,7 @@ __decorate([
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], DashboardController.prototype, "updateNote", null);
 DashboardController = __decorate([
     (0, common_1.Controller)(''),

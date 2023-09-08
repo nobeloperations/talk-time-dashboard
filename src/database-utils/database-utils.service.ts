@@ -4,7 +4,7 @@ import { Feedback } from 'models/feedback.model';
 import { Meeting } from 'models/meeting.model';
 import { Note } from 'models/note.model';
 import { User } from 'models/user.model';
-import { Model } from 'mongoose';
+import { Document, Model, UpdateWriteOpResult } from 'mongoose';
 
 @Injectable()
 export class DatabaseUtilsService {
@@ -13,12 +13,12 @@ export class DatabaseUtilsService {
                 @InjectModel('Note') private readonly noteModel: Model<Note>,
                 @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>) {}
 
-    async updateUserBadges(name: string, badge: string) {
-        await this.userModel.updateMany({ name }, { $push: { badges: {badge} } })
+    async updateUserBadges(name: string, badge: string): Promise<UpdateWriteOpResult> {
+        return await this.userModel.updateMany({ name }, { $push: { badges: {badge} } })
     }
 
-    async updateUserPercents(name: string, url: string, date: string, percent: string) {
-        await this.userModel.findOneAndUpdate({ name, url, date }, { percents: percent })
+    async updateUserPercents(filter: object, update: object): Promise<string | void> {
+        return await this.userModel.findOneAndUpdate(filter, update)
     }
 
     async findUsers(filter: object, fields: string): Promise<any> {
@@ -29,12 +29,12 @@ export class DatabaseUtilsService {
         return await this.userModel.findOne(filter).select(fields)
     }
 
-    async updateUser(filter: object, update) {
-        await this.userModel.updateOne(filter, update)
+    async updateUser(filter: object, update): Promise<UpdateWriteOpResult> {
+        return await this.userModel.updateOne(filter, update)
     }
 
-    async updateUsers(filter: object, update) {
-        await this.userModel.updateMany(filter, update)
+    async updateUsers(filter: object, update): Promise<UpdateWriteOpResult> {
+        return await this.userModel.updateMany(filter, update)
     }
 
     async findFeedbacks(filter: object, fields: string): Promise<any> {
@@ -45,27 +45,27 @@ export class DatabaseUtilsService {
         return await this.noteModel.find(filter).select(fields)
     }
 
-    async deleteNote(filter: object) {
-        await this.noteModel.deleteOne(filter)
+    async deleteNote(filter: object): Promise<any> {
+        return await this.noteModel.deleteOne(filter)
     }
 
-    async updateNote(filter, update) {
-        await this.noteModel.updateOne(filter, update)
+    async updateNote(filter: Object, update: Object): Promise<any> {
+        return await this.noteModel.updateOne(filter, update)
     }
 
     async findMeetingsByNameIncluding(generalNames: string[]): Promise<any> {
         return await this.meetingModel.find({name: {$in: generalNames}})
     }
 
-    async findMeeting(filter: object, fields: string): Promise<any> {
+    async findMeeting(filter: Object, fields: string): Promise<any> {
         return await this.meetingModel.findOne(filter).select(fields)
     }
 
-    async updateMeetingByName(name: string, url: string, date: string) {
-        await this.meetingModel.updateOne({name}, {$push: { meetings: { url, date } }})
+    async updateMeetingByName(name: string, url: string, date: string): Promise<any> {
+        return await this.meetingModel.updateOne({name}, {$push: { meetings: { url, date } }})
     }
 
-    async createNewMeeting(name: string, url: string, date: string) {
+    async createNewMeeting(name: string, url: string, date: string): Promise<any> {
         const newMeeting = new this.meetingModel({
             name,
             meetings: [{
@@ -74,10 +74,10 @@ export class DatabaseUtilsService {
             }]
         })
         
-        await newMeeting.save()
+        return await newMeeting.save()
     }
 
-    async createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string) {
+    async createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string): Promise<any> {
         let newFeedback = new this.feedbackModel({
             sender,
             receiver,
@@ -90,7 +90,7 @@ export class DatabaseUtilsService {
             date
         })
 
-        await newFeedback.save()
+        return await newFeedback.save()
     }
 
     async createNewNote(url: string, date: string, text: string, tags: string[], sender: string): Promise<string> {
@@ -108,7 +108,7 @@ export class DatabaseUtilsService {
         return JSON.stringify(newNote)
     }
 
-    async createNewUser(name: string, avatar: string, url: string, date: string, generalName: string) {
+    async createNewUser(name: string, avatar: string, url: string, date: string, generalName: string): Promise<any> {
         const newUser = new this.userModel({
             name,
             avatar,
@@ -119,7 +119,7 @@ export class DatabaseUtilsService {
             rating: 0
         })
 
-        await newUser.save()
+        return await newUser.save()
     }
 
 }

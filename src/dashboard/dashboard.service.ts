@@ -1,6 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { getUserFromCookies } from 'helpers/user_cookies';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
+import { Response, Request } from 'express';
+import { CreateNoteBody, CreateNoteParams, DeleteNoteBody, GetDashboardParams, GetDashboardReturn, UpdateNoteBody, UpdatePercentageBody, UpdatePercentageParams } from 'types/types';
+import { Note } from 'models/note.model';
 
 
 @Injectable()
@@ -8,7 +11,7 @@ export class DashboardService {
 
     constructor(private readonly databaseUtilsService: DatabaseUtilsService) { }
 
-    async getDashboard(params, res, generalName, req) {
+    async getDashboard(params: GetDashboardParams, res: Response, generalName: string, req: Request): Promise<GetDashboardReturn | void> {
         try {
             const userPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
@@ -23,7 +26,7 @@ export class DashboardService {
                 return res.status(404).render('notfound')
             }
 
-            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true }
+            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, date, generalName, profileName: userPayload.name, isAuth: true, title: "Dashboard" }
         }
         catch (e) {
             throw new Error(`THIS IS ERROR ${e}`)
@@ -31,23 +34,26 @@ export class DashboardService {
 
     }
 
-    async updatePercents(params, postPercentsBody) {
+    async updatePercents(params: UpdatePercentageParams, postPercentsBody: UpdatePercentageBody): Promise<void | string> {
         try {
             const { percents } = postPercentsBody
             const { url, date } = params
-            const { name, percent } = percents
-            await this.databaseUtilsService.updateUserPercents(name, url, date, percent)
+            percents.forEach(async percentage => {
+                const { name , percent } = percentage;
+                if(name.trim() && percent.trim()) {
+                    return await this.databaseUtilsService.updateUserPercents({name, url, date}, {percents: percent})
+                }
+            })
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
     }
 
-    async newNote(params, createNoteBody) {
+    async newNote(params: CreateNoteParams, createNoteBody: CreateNoteBody): Promise<Note | string> {
         try {
             let { url, date } = params;
             let { text, tags, sender } = createNoteBody
-            if(!sender) sender = 'Talk time user'
             const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags, sender)
             return newNote
         }
@@ -57,19 +63,19 @@ export class DashboardService {
 
     }
 
-    async deleteNote(deleteNoteBody) {
+    async deleteNote(deleteNoteBody: DeleteNoteBody): Promise<void | string> {
         try {
             const { id } = deleteNoteBody;
-            await this.databaseUtilsService.deleteNote({ _id: id })
+            return await this.databaseUtilsService.deleteNote({ _id: id })
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
     }
 
-    async updateNote(updateNoteBody) {
+    async updateNote(updateNoteBody: UpdateNoteBody): Promise<void> {
         const { id, text } = updateNoteBody;
-        await this.databaseUtilsService.updateNote({_id: id}, { text })
+        return await this.databaseUtilsService.updateNote({_id: id}, { text })
     }
 
 }

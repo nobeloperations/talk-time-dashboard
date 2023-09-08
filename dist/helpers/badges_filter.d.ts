@@ -1,1 +1,2 @@
-export declare function filterBadges(dbUsers: any): any[];
+import { BadgeUser } from "types/types";
+export declare function filterBadges(dbUsers: BadgeUser[]): {} | [];

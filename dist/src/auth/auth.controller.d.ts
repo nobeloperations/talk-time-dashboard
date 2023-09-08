@@ -1,15 +1,9 @@
 import { AuthService } from './auth.service';
-import { Response } from 'express';
+import { Response, Request } from 'express';
 export declare class AuthController {
     private readonly authService;
     constructor(authService: AuthService);
-    googleAuth(req: any): Promise<void>;
-    googleAuthRedirect(req: any, res: Response): "No user from google" | {
-        email: any;
-        picture: any;
-        firstName: any;
-        lastName: any;
-        cssFileName: string;
-    };
-    logout(res: any): void;
+    googleAuth(req: Request): Promise<void>;
+    googleAuthRedirect(req: Request): string | import("../../types/types").GoogleLoginReturn;
+    logout(res: Response): void;
 }

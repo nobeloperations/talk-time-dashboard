@@ -24,10 +24,10 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         this.meetingModel = meetingModel;
     }
     async updateUserBadges(name, badge) {
-        await this.userModel.updateMany({ name }, { $push: { badges: { badge } } });
+        return await this.userModel.updateMany({ name }, { $push: { badges: { badge } } });
     }
-    async updateUserPercents(name, url, date, percent) {
-        await this.userModel.findOneAndUpdate({ name, url, date }, { percents: percent });
+    async updateUserPercents(filter, update) {
+        return await this.userModel.findOneAndUpdate(filter, update);
     }
     async findUsers(filter, fields) {
         return await this.userModel.find(filter).select(fields);
@@ -36,10 +36,10 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         return await this.userModel.findOne(filter).select(fields);
     }
     async updateUser(filter, update) {
-        await this.userModel.updateOne(filter, update);
+        return await this.userModel.updateOne(filter, update);
     }
     async updateUsers(filter, update) {
-        await this.userModel.updateMany(filter, update);
+        return await this.userModel.updateMany(filter, update);
     }
     async findFeedbacks(filter, fields) {
         return await this.feedbackModel.find(filter).select(fields);
@@ -48,10 +48,10 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         return await this.noteModel.find(filter).select(fields);
     }
     async deleteNote(filter) {
-        await this.noteModel.deleteOne(filter);
+        return await this.noteModel.deleteOne(filter);
     }
     async updateNote(filter, update) {
-        await this.noteModel.updateOne(filter, update);
+        return await this.noteModel.updateOne(filter, update);
     }
     async findMeetingsByNameIncluding(generalNames) {
         return await this.meetingModel.find({ name: { $in: generalNames } });
@@ -60,7 +60,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         return await this.meetingModel.findOne(filter).select(fields);
     }
     async updateMeetingByName(name, url, date) {
-        await this.meetingModel.updateOne({ name }, { $push: { meetings: { url, date } } });
+        return await this.meetingModel.updateOne({ name }, { $push: { meetings: { url, date } } });
     }
     async createNewMeeting(name, url, date) {
         const newMeeting = new this.meetingModel({
@@ -70,7 +70,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
                     date
                 }]
         });
-        await newMeeting.save();
+        return await newMeeting.save();
     }
     async createNewFeedback(sender, receiver, feedback, rating, url, senderImg, feedbackImg, date) {
         let newFeedback = new this.feedbackModel({
@@ -84,7 +84,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             postDate: new Date().toLocaleDateString().replaceAll('.', '/'),
             date
         });
-        await newFeedback.save();
+        return await newFeedback.save();
     }
     async createNewNote(url, date, text, tags, sender) {
         const sendUser = await this.findUser({ name: sender }, 'avatar');
@@ -109,7 +109,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             generalName,
             rating: 0
         });
-        await newUser.save();
+        return await newUser.save();
     }
 };
 DatabaseUtilsService = __decorate([

@@ -21,8 +21,8 @@ let AuthController = class AuthController {
         this.authService = authService;
     }
     async googleAuth(req) { }
-    googleAuthRedirect(req, res) {
-        return this.authService.googleLogin(req, res);
+    googleAuthRedirect(req) {
+        return this.authService.googleLogin(req);
     }
     logout(res) {
         this.authService.logOut(res);
@@ -41,9 +41,8 @@ __decorate([
     (0, common_1.UseGuards)((0, passport_1.AuthGuard)('google')),
     (0, common_1.Render)('redirect'),
     __param(0, (0, common_1.Req)()),
-    __param(1, (0, common_1.Res)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, Object]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], AuthController.prototype, "googleAuthRedirect", null);
 __decorate([

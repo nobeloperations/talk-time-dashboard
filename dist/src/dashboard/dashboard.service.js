@@ -31,7 +31,7 @@ let DashboardService = class DashboardService {
             if (!users.length) {
                 return res.status(404).render('notfound');
             }
-            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, date, generalName, pageName: 'Dashboard', profileName: userPayload.name, isAuth: true };
+            return { cssFileName: 'dashboard', url, users, notes, usersLength: users.length, feedbacksLength: feedbacks.length, date, generalName, profileName: userPayload.name, isAuth: true, title: "Dashboard" };
         }
         catch (e) {
             throw new Error(`THIS IS ERROR ${e}`);
@@ -41,8 +41,12 @@ let DashboardService = class DashboardService {
         try {
             const { percents } = postPercentsBody;
             const { url, date } = params;
-            const { name, percent } = percents;
-            await this.databaseUtilsService.updateUserPercents(name, url, date, percent);
+            percents.forEach(async (percentage) => {
+                const { name, percent } = percentage;
+                if (name.trim() && percent.trim()) {
+                    return await this.databaseUtilsService.updateUserPercents({ name, url, date }, { percents: percent });
+                }
+            });
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
@@ -52,8 +56,6 @@ let DashboardService = class DashboardService {
         try {
             let { url, date } = params;
             let { text, tags, sender } = createNoteBody;
-            if (!sender)
-                sender = 'Talk time user';
             const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags, sender);
             return newNote;
         }
@@ -64,7 +66,7 @@ let DashboardService = class DashboardService {
     async deleteNote(deleteNoteBody) {
         try {
             const { id } = deleteNoteBody;
-            await this.databaseUtilsService.deleteNote({ _id: id });
+            return await this.databaseUtilsService.deleteNote({ _id: id });
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
@@ -72,7 +74,7 @@ let DashboardService = class DashboardService {
     }
     async updateNote(updateNoteBody) {
         const { id, text } = updateNoteBody;
-        await this.databaseUtilsService.updateNote({ _id: id }, { text });
+        return await this.databaseUtilsService.updateNote({ _id: id }, { text });
     }
 };
 DashboardService = __decorate([

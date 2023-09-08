@@ -1,11 +1,13 @@
 import { Injectable } from '@nestjs/common';
+import { GoogleLoginReturn } from 'types/types';
+import { Response } from 'express'
 
 @Injectable()
 export class AuthService {
 
     constructor() { }
 
-    googleLogin(req, res) {
+    googleLogin(req: any): GoogleLoginReturn | string {
         if (!req.user) {
           return 'No user from google'
         }
@@ -14,7 +16,7 @@ export class AuthService {
         return { email, picture, firstName, lastName, cssFileName: 'redirect' }
       }
 
-    logOut(res) {
+    logOut(res: Response) {
       res.clearCookie('user')
     }
 }

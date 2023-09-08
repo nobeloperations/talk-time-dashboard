@@ -31,6 +31,7 @@ export interface Note {
     text: string,
     url: string,
     tags: string[],
+    date: string,
     sender: string,
     avatar: string
 }

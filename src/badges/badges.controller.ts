@@ -1,5 +1,6 @@
 import { Controller, Post, Param, HttpCode, Body } from '@nestjs/common';
 import { BadgesService } from './badges.service';
+import { NewBadgeBody, NewBadgeParams } from 'types/types';
 
 @Controller('badges')
 export class BadgesController {
@@ -8,7 +9,7 @@ export class BadgesController {
 
     @Post('/givebadge/:url/:name/:date')
     @HttpCode(200)
-    newBadge(@Param() params: Object, @Body() newBadgeBody: Object) {
+    newBadge(@Param() params: NewBadgeParams, @Body() newBadgeBody: NewBadgeBody): Promise<void | string> {
         return this.badgesService.newBadge(params, newBadgeBody)
     }
 }

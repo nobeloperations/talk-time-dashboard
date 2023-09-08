@@ -45,7 +45,7 @@ __decorate([
     __param(2, (0, common_1.Headers)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object, Object, Object]),
-    __metadata("design:returntype", void 0)
+    __metadata("design:returntype", Promise)
 ], UsersController.prototype, "newUser", null);
 __decorate([
     (0, common_1.Get)('/:url/:date'),

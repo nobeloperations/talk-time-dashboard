@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { getUserFromCookies } from 'helpers/user_cookies';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
+import { Response, Request } from 'express';
+import { CreateFeedbackBody, CreateNewFeedbackParams, FeedbackImage, GetNewFeedbackParams, GetNewFeedbackReturn, GetPersonalFeedbacksParams, GetPersonalFeedbacksReturn } from 'types/types';
 
 const DEFAULT_BADGE = 'Choose the Badge (not necessarily)'
 
@@ -9,7 +11,7 @@ export class FeedbacksService {
 
     constructor(private readonly databaseUtilsService: DatabaseUtilsService) { }
 
-    async getPersonalFeedbacks(params, res, generalName, req) {
+    async getPersonalFeedbacks(params: GetPersonalFeedbacksParams, res: Response, generalName: string, req: Request): Promise<GetPersonalFeedbacksReturn | void> {
         try {
             const userPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
@@ -23,7 +25,7 @@ export class FeedbacksService {
                 return res.status(404).render('notfound')
             }
 
-            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks`, profileName: userPayload.name, isAuth: true }
+            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, profileName: userPayload.name, isAuth: true, title: `${name}'s feedbacks` }
         }
 
         catch (e) {
@@ -31,7 +33,7 @@ export class FeedbacksService {
         }
     }
 
-    async getNewFeedback(params, res, generalName, req) {
+    async getNewFeedback(params: GetNewFeedbackParams, res: Response, generalName: string, req: Request): Promise<GetNewFeedbackReturn | void> {
         try {
             const userPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
@@ -42,14 +44,14 @@ export class FeedbacksService {
                 return res.status(404).render('notfound')
             }
 
-            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, pageName: "Leave feedback", profileName: userPayload.name, isAuth: true }
+            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "New feedback" }
         }
         catch (e) {
             return res.status(404).render('notfound')
         }
     }
 
-    async createFeedback(files, createFeedbackBody, params, res, req) {
+    async createFeedback(files: FeedbackImage[], createFeedbackBody: CreateFeedbackBody, params: CreateNewFeedbackParams, res: Response, req: Request): Promise<void | string> {
         try {
             const userPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
@@ -60,7 +62,7 @@ export class FeedbacksService {
 
             if (badge !== DEFAULT_BADGE) await this.databaseUtilsService.updateUserBadges(receiver, badge)
             await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, files[0]?.filename, date)
-            res.redirect(`/dashboard/${url}/${date}?q=${generalName}`)
+            return res.redirect(`/dashboard/${url}/${date}?q=${generalName}`)
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })

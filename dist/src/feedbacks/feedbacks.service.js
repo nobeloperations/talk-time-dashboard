@@ -31,7 +31,7 @@ let FeedbacksService = class FeedbacksService {
             if (!currentUser) {
                 return res.status(404).render('notfound');
             }
-            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, pageName: `${name}'s feedbacks`, profileName: userPayload.name, isAuth: true };
+            return { cssFileName: 'personal-feedbacks', name, currentUser, feedbacks, url, date, generalName, profileName: userPayload.name, isAuth: true, title: `${name}'s feedbacks` };
         }
         catch (e) {
             return res.status(404).render('notfound');
@@ -47,7 +47,7 @@ let FeedbacksService = class FeedbacksService {
             if (!currentUser) {
                 return res.status(404).render('notfound');
             }
-            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, pageName: "Leave feedback", profileName: userPayload.name, isAuth: true };
+            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "New feedback" };
         }
         catch (e) {
             return res.status(404).render('notfound');
@@ -66,7 +66,7 @@ let FeedbacksService = class FeedbacksService {
             if (badge !== DEFAULT_BADGE)
                 await this.databaseUtilsService.updateUserBadges(receiver, badge);
             await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename, date);
-            res.redirect(`/dashboard/${url}/${date}?q=${generalName}`);
+            return res.redirect(`/dashboard/${url}/${date}?q=${generalName}`);
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });

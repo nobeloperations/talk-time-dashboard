@@ -40,7 +40,7 @@ let MainService = class MainService {
                 name: general.name,
                 meetings: filterMeetings(general.meetings, usersMeetings),
             }));
-            return { cssFileName: 'main', generals: filteredGenerals, profileName: userPayload.name, isAuth: true };
+            return { cssFileName: 'main', generals: filteredGenerals, title: "Main", profileName: userPayload.name, isAuth: true };
         }
         catch (e) {
             return res.status(404).render('notfound');
@@ -54,14 +54,11 @@ let MainService = class MainService {
                 return await this.databaseUtilsService.createNewMeeting(name, url, date);
             let meetPresented = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length;
             if (!meetPresented)
-                await this.databaseUtilsService.updateMeetingByName(name, url, date);
+                return await this.databaseUtilsService.updateMeetingByName(name, url, date);
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
-    }
-    getFAQ() {
-        return { cssFileName: 'faq' };
     }
 };
 MainService = __decorate([
