@@ -1,5 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { filterBadges } from 'helpers/badges_filter';
+import { filterUsers } from 'helpers/badges_filter';
 import { getUserFromCookies } from 'helpers/user_cookies';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 import { GetUserAvatarParams, GetUsersParams, GetUsersReturn, NewUserBody, NewUserParams } from 'types/types';
@@ -23,6 +23,9 @@ export class UserService {
 
                 const isUserExsist = await this.databaseUtilsService.findUser({ name, url, date }, '' )
                 if (!isUserExsist) return await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName)
+
+                const badgeUser = await this.databaseUtilsService.findBadgeUserByName({name})
+                if(!badgeUser) await this.databaseUtilsService.createBadgesUser(name)
             }
             else {
                 throw new HttpException('Invalid headers', 404)
@@ -33,7 +36,7 @@ export class UserService {
         }
     }
 
-    async getUsers(params: GetUsersParams, res: Response, generalName: string, req: Request): Promise<GetUsersReturn | void> {
+    async getUsers(params: GetUsersParams, res: Response, generalName: string, req: Request): Promise<any | void> {
         try {
             const userPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
@@ -44,8 +47,14 @@ export class UserService {
 
             if (!meeting || !currentMeeting) return res.status(404).render('notfound')
 
-            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges')
-            let users = filterBadges(dbUsers)
+            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count')
+            const badgeUsers = await this.databaseUtilsService.findAllBadgeUser()
+            let users = filterUsers(dbUsers)
+
+            users.forEach(user => {
+                let usersBadges = badgeUsers.find(badgeUser => user.name == badgeUser.name)
+                if(usersBadges) user.badges = usersBadges.badges
+            })
 
             return { cssFileName: 'users', users, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" }
         }

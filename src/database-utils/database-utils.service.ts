@@ -11,7 +11,42 @@ export class DatabaseUtilsService {
     constructor(@InjectModel('User') private readonly userModel: Model<User>,
                 @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>,
                 @InjectModel('Note') private readonly noteModel: Model<Note>,
-                @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>) {}
+                @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>,
+                @InjectModel('Badge') private readonly BadgeModel: Model<any>) {}
+
+    async findBadgeUserByName(filter: { name: string }) {
+        const badgeUser = await this.BadgeModel.findOne(filter)
+        return badgeUser
+    }
+
+    async updateBadge(badge, name) {
+        await this.BadgeModel.updateOne({name}, {
+            $inc: {
+              [`badges.${badge}.count`]: 1,
+            },
+          })
+    }
+
+    async findAllBadgeUser() {
+        const badgeUsers = await this.BadgeModel.find({})
+        return badgeUsers
+    }
+
+    async createBadgesUser(name) {
+        const u = new this.BadgeModel({
+            name,
+            badges: {
+                Fun: { count: 0 },
+                Encourage: { count: 0 },
+                BeeBrief: { count: 0 },
+                BePresent: { count: 0 },
+                ZenEnviroment: { count: 0 },
+                OnTime: { count: 0 },
+                Help: { count: 0 },
+            }
+        })
+        await u.save()
+    }
 
     async updateUserBadges(name: string, badge: string): Promise<UpdateWriteOpResult> {
         return await this.userModel.updateMany({ name }, { $push: { badges: {badge} } })

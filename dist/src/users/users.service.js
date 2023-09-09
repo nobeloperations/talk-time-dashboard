@@ -31,6 +31,9 @@ let UserService = class UserService {
                 const isUserExsist = await this.databaseUtilsService.findUser({ name, url, date }, '');
                 if (!isUserExsist)
                     return await this.databaseUtilsService.createNewUser(name, avatar, url, date, generalName);
+                const badgeUser = await this.databaseUtilsService.findBadgeUserByName({ name });
+                if (!badgeUser)
+                    await this.databaseUtilsService.createBadgesUser(name);
             }
             else {
                 throw new common_1.HttpException('Invalid headers', 404);
@@ -50,8 +53,14 @@ let UserService = class UserService {
             const currentMeeting = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.some(curr => curr['date'] == date);
             if (!meeting || !currentMeeting)
                 return res.status(404).render('notfound');
-            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count badges');
-            let users = (0, badges_filter_1.filterBadges)(dbUsers);
+            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count');
+            const badgeUsers = await this.databaseUtilsService.findAllBadgeUser();
+            let users = (0, badges_filter_1.filterUsers)(dbUsers);
+            users.forEach(user => {
+                let usersBadges = badgeUsers.find(badgeUser => user.name == badgeUser.name);
+                if (usersBadges)
+                    user.badges = usersBadges.badges;
+            });
             return { cssFileName: 'users', users, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" };
         }
         catch (e) {

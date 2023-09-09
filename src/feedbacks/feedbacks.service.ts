@@ -14,11 +14,11 @@ export class FeedbacksService {
     async getPersonalFeedbacks(params: GetPersonalFeedbacksParams, res: Response, generalName: string, req: Request): Promise<GetPersonalFeedbacksReturn | void> {
         try {
             const userPayload = getUserFromCookies(req)
-            if(!userPayload) return res.redirect('/')
+            if (!userPayload) return res.redirect('/')
             const { url, name, date } = params;
             const [feedbacks, currentUser] = await Promise.all([
-                await this.databaseUtilsService.findFeedbacks({receiver: name, url, date}, '' ),
-                await this.databaseUtilsService.findUser({name, url, date}, '')
+                await this.databaseUtilsService.findFeedbacks({ receiver: name, url, date }, ''),
+                await this.databaseUtilsService.findUser({ name, url, date }, '')
             ])
 
             if (!currentUser) {
@@ -36,9 +36,9 @@ export class FeedbacksService {
     async getNewFeedback(params: GetNewFeedbackParams, res: Response, generalName: string, req: Request): Promise<GetNewFeedbackReturn | void> {
         try {
             const userPayload = getUserFromCookies(req)
-            if(!userPayload) return res.redirect('/')
+            if (!userPayload) return res.redirect('/')
             const { url, receiver, date } = params;
-            const currentUser = await this.databaseUtilsService.findUser({receiver, url, date}, '')
+            const currentUser = await this.databaseUtilsService.findUser({ receiver, url, date }, '')
 
             if (!currentUser) {
                 return res.status(404).render('notfound')
@@ -54,13 +54,17 @@ export class FeedbacksService {
     async createFeedback(files: FeedbackImage[], createFeedbackBody: CreateFeedbackBody, params: CreateNewFeedbackParams, res: Response, req: Request): Promise<void | string> {
         try {
             const userPayload = getUserFromCookies(req)
-            if(!userPayload) return res.redirect('/')
+            if (!userPayload) return res.redirect('/')
             let { rating, feedback, badge } = createFeedbackBody;
             let { url, receiver, date, generalName } = params;
-            let sendUser = await this.databaseUtilsService.findUser({name: userPayload.name}, '')
-            await this.databaseUtilsService.updateUser({name: receiver, url, date}, {$push: { rating }});
+            let sendUser = await this.databaseUtilsService.findUser({ name: userPayload.name }, '')
+            await this.databaseUtilsService.updateUser({ name: receiver, url, date }, { $push: { rating } });
 
-            if (badge !== DEFAULT_BADGE) await this.databaseUtilsService.updateUserBadges(receiver, badge)
+            if (badge !== DEFAULT_BADGE) {
+                await this.databaseUtilsService.updateBadge(badge, receiver)
+            }
+            
+
             await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, files[0]?.filename, date)
             return res.redirect(`/dashboard/${url}/${date}?q=${generalName}`)
         }

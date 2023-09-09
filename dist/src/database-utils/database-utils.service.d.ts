@@ -8,7 +8,14 @@ export declare class DatabaseUtilsService {
     private readonly feedbackModel;
     private readonly noteModel;
     private readonly meetingModel;
-    constructor(userModel: Model<User>, feedbackModel: Model<Feedback>, noteModel: Model<Note>, meetingModel: Model<Meeting>);
+    private readonly BadgeModel;
+    constructor(userModel: Model<User>, feedbackModel: Model<Feedback>, noteModel: Model<Note>, meetingModel: Model<Meeting>, BadgeModel: Model<any>);
+    findBadgeUserByName(filter: {
+        name: string;
+    }): Promise<any>;
+    updateBadge(badge: any, name: any): Promise<void>;
+    findAllBadgeUser(): Promise<any[]>;
+    createBadgesUser(name: any): Promise<void>;
     updateUserBadges(name: string, badge: string): Promise<UpdateWriteOpResult>;
     updateUserPercents(filter: object, update: object): Promise<string | void>;
     findUsers(filter: object, fields: string): Promise<any>;

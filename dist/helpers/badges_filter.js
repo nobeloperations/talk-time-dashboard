@@ -1,31 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.filterBadges = void 0;
-function filterBadges(dbUsers) {
+exports.filterUsers = void 0;
+function filterUsers(dbUsers) {
     let users = [];
     for (const user of dbUsers) {
         const existingUser = users.find(u => u.name === user.name);
         if (!existingUser)
             users.push(Object.assign({}, user._doc));
     }
-    users = users.map(user => {
-        const uniqueBadges = [];
-        const badgeCounts = {};
-        user.badges.forEach((badge) => {
-            const badgeName = badge.badge;
-            if (!uniqueBadges.includes(badgeName))
-                uniqueBadges.push(badgeName);
-            if (!badgeCounts[badgeName])
-                badgeCounts[badgeName] = 0;
-            badgeCounts[badgeName]++;
-        });
-        const updatedBadges = uniqueBadges.map(badgeName => ({
-            badge: badgeName,
-            count: badgeCounts[badgeName]
-        }));
-        return Object.assign(Object.assign({}, user), { badges: updatedBadges });
-    });
     return users;
 }
-exports.filterBadges = filterBadges;
+exports.filterUsers = filterUsers;
 //# sourceMappingURL=badges_filter.js.map

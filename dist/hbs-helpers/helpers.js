@@ -3,8 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.helpers = void 0;
 exports.helpers = {
     badgeToImage(badge) {
-        badge = badge.toLowerCase().split(' ').join('_');
+        badge = badge.split(/(?=[A-Z])/).join('_').toLowerCase();
         return `${badge}.png`;
+    },
+    formatBadgeName(badge) {
+        return badge.split(/(?=[A-Z])/).join(' ');
     },
     average(rate) {
         if (!rate.length)
@@ -28,5 +31,15 @@ exports.helpers = {
     moreThan(str, n) {
         return str.length > n;
     },
+    badgesExist(badges) {
+        if (badges) {
+            let badgesExist = false;
+            let values = Object.values(badges);
+            values = values.filter(value => !!value['count']);
+            if (values.length)
+                badgesExist = true;
+            return badgesExist;
+        }
+    }
 };
 //# sourceMappingURL=helpers.js.map

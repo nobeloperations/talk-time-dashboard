@@ -17,16 +17,18 @@
                 </div>
                 <div class="user__badges__modal">
                     <div class="users__badges">
-                        {{#if badges}}
-                        {{#each badges}}
-                        <div class="users__badge">
-                            <div class="badge__info">
-                                <img class="badge__image" src="/img/{{badgeToImage badge}}" alt="">
-                                <span class="badge__name">{{badge}}</span>
-                            </div>
-                            <div class="badge__count">{{count}}</div>
-                        </div>
-                        {{/each}}
+                        {{#if (badgesExist badges)}}
+                            {{#each badges}}
+                                {{#if this.count}}
+                                <div class="users__badge">
+                                    <div class="badge__info">
+                                        <img class="badge__image" src="/img/{{badgeToImage @key}}" alt="">
+                                        <span class="badge__name">{{formatBadgeName @key}}</span>
+                                    </div>
+                                    <div class="badge__count">{{this.count}}</div>
+                                </div>
+                                {{/if}}
+                            {{/each}}
                         {{else}}
                         <div class="no__badges">
                             <img class="no__badges__image" src="/img/empty.png" />

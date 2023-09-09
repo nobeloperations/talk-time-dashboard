@@ -8,5 +8,5 @@ export declare class UsersController {
         avatar: string;
     }>;
     newUser(params: NewUserParams, newUserBody: NewUserBody, headers: Object): Promise<void | string>;
-    getUsers(params: GetUsersParams, res: Response, generalName: string, req: Request): Promise<void | import("types/types").GetUsersReturn>;
+    getUsers(params: GetUsersParams, res: Response, generalName: string, req: Request): Promise<any>;
 }

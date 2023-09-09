@@ -17,11 +17,42 @@ const common_1 = require("@nestjs/common");
 const mongoose_1 = require("@nestjs/mongoose");
 const mongoose_2 = require("mongoose");
 let DatabaseUtilsService = class DatabaseUtilsService {
-    constructor(userModel, feedbackModel, noteModel, meetingModel) {
+    constructor(userModel, feedbackModel, noteModel, meetingModel, BadgeModel) {
         this.userModel = userModel;
         this.feedbackModel = feedbackModel;
         this.noteModel = noteModel;
         this.meetingModel = meetingModel;
+        this.BadgeModel = BadgeModel;
+    }
+    async findBadgeUserByName(filter) {
+        const badgeUser = await this.BadgeModel.findOne(filter);
+        return badgeUser;
+    }
+    async updateBadge(badge, name) {
+        await this.BadgeModel.updateOne({ name }, {
+            $inc: {
+                [`badges.${badge}.count`]: 1,
+            },
+        });
+    }
+    async findAllBadgeUser() {
+        const badgeUsers = await this.BadgeModel.find({});
+        return badgeUsers;
+    }
+    async createBadgesUser(name) {
+        const u = new this.BadgeModel({
+            name,
+            badges: {
+                Fun: { count: 0 },
+                Encourage: { count: 0 },
+                BeeBrief: { count: 0 },
+                BePresent: { count: 0 },
+                ZenEnviroment: { count: 0 },
+                OnTime: { count: 0 },
+                Help: { count: 0 },
+            }
+        });
+        await u.save();
     }
     async updateUserBadges(name, badge) {
         return await this.userModel.updateMany({ name }, { $push: { badges: { badge } } });
@@ -118,7 +149,9 @@ DatabaseUtilsService = __decorate([
     __param(1, (0, mongoose_1.InjectModel)('Feedback')),
     __param(2, (0, mongoose_1.InjectModel)('Note')),
     __param(3, (0, mongoose_1.InjectModel)('Meeting')),
+    __param(4, (0, mongoose_1.InjectModel)('Badge')),
     __metadata("design:paramtypes", [mongoose_2.Model,
+        mongoose_2.Model,
         mongoose_2.Model,
         mongoose_2.Model,
         mongoose_2.Model])

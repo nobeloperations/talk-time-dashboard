@@ -10,8 +10,18 @@ export class BadgesService {
     async newBadge(params: NewBadgeParams, newBadgeBody: NewBadgeBody): Promise<string | void> {
         try {
             const { name } = params;
-            const { badge } = newBadgeBody;
-            await this.databaseUtilsService.updateUserBadges(name, badge)
+            let { badge } = newBadgeBody;
+            badge = badge.replaceAll(' ', '')
+            const currentBadgeUser = await this.databaseUtilsService.findBadgeUserByName({ name })
+            if(currentBadgeUser) {
+                await this.databaseUtilsService.updateBadge(badge, name)
+            }
+            else {
+                await this.databaseUtilsService.createBadgesUser(name)
+                .then(async () => {
+                    await this.databaseUtilsService.updateBadge(badge, name)
+                })
+            }
         }
         catch(e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
