@@ -13,7 +13,7 @@ export declare class DatabaseUtilsService {
     findBadgeUserByName(filter: {
         name: string;
     }): Promise<any>;
-    updateBadge(badge: any, name: any): Promise<void>;
+    updateBadge(badge: string, name: string): Promise<void>;
     findAllBadgeUser(): Promise<any[]>;
     createBadgesUser(name: any): Promise<void>;
     updateUserBadges(name: string, badge: string): Promise<UpdateWriteOpResult>;

@@ -59,11 +59,10 @@ export class FeedbacksService {
             let { url, receiver, date, generalName } = params;
             let sendUser = await this.databaseUtilsService.findUser({ name: userPayload.name }, '')
             await this.databaseUtilsService.updateUser({ name: receiver, url, date }, { $push: { rating } });
-
             if (badge !== DEFAULT_BADGE) {
-                await this.databaseUtilsService.updateBadge(badge, receiver)
+                await this.databaseUtilsService.updateBadge(badge.replaceAll(' ', ''), receiver)
             }
-            
+
 
             await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, files[0]?.filename, date)
             return res.redirect(`/dashboard/${url}/${date}?q=${generalName}`)

@@ -30,7 +30,7 @@ let MainController = class MainController {
     }
     getCurrentVersion() {
         return {
-            version: '3.13'
+            version: '3.15'
         };
     }
 };

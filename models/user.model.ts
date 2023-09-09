@@ -13,10 +13,6 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    badges: {
-        type: Array,
-        default: []
-    },
     percents: {
         type: String,
         default: ''
@@ -39,15 +35,10 @@ export const UserSchema = new mongoose.Schema({
     }
 })
 
-interface Badge {
-    badge: string;
-}
-
 export interface User {
     name: string,
     url: string,
     avatar: string,
-    badges: Badge[],
     percents: string,
     generalName: string,
     rating: string[];

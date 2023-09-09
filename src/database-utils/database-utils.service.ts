@@ -19,7 +19,7 @@ export class DatabaseUtilsService {
         return badgeUser
     }
 
-    async updateBadge(badge, name) {
+    async updateBadge(badge: string, name: string) {
         await this.BadgeModel.updateOne({name}, {
             $inc: {
               [`badges.${badge}.count`]: 1,

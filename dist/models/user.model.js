@@ -15,10 +15,6 @@ exports.UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    badges: {
-        type: Array,
-        default: []
-    },
     percents: {
         type: String,
         default: ''
