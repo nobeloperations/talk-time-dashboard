@@ -1,7 +1,7 @@
 import * as mongoose from 'mongoose';
 export declare const UserSchema: mongoose.Schema<any, mongoose.Model<any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
-    count: number;
     date: string;
+    count: number;
     name: string;
     rating: any[];
     url: string;
@@ -16,4 +16,5 @@ export interface User {
     percents: string;
     generalName: string;
     rating: string[];
+    date: string;
 }

@@ -11,6 +11,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { DatabaseUtilsModule } from './database-utils/database-utils.module';
 import { AuthModule } from './auth/auth.module';
+import { ProfileModule } from './profile/profile.module';
 
 
 @Module({
@@ -26,7 +27,8 @@ import { AuthModule } from './auth/auth.module';
     UsersModule,
     BadgesModule,
     DatabaseUtilsModule,
-    AuthModule
+    AuthModule,
+    ProfileModule
   ],
   providers: [
     {

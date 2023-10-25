@@ -14,7 +14,7 @@ const user_model_1 = require("../../models/user.model");
 const meeting_model_1 = require("../../models/meeting.model");
 const note_model_1 = require("../../models/note.model");
 const feedback_model_1 = require("../../models/feedback.model");
-const ubadge_model_1 = require("../../models/ubadge.model");
+const badge_model_1 = require("../../models/badge.model");
 let DatabaseUtilsModule = class DatabaseUtilsModule {
 };
 DatabaseUtilsModule = __decorate([
@@ -24,7 +24,7 @@ DatabaseUtilsModule = __decorate([
                 { name: "Meeting", schema: meeting_model_1.MeetingSchema },
                 { name: "Note", schema: note_model_1.NoteSchema },
                 { name: "Feedback", schema: feedback_model_1.FeedbackSchema },
-                { name: "Badge", schema: ubadge_model_1.BadgeSchema }
+                { name: "Badge", schema: badge_model_1.BadgeSchema }
             ])],
         providers: [database_utils_service_1.DatabaseUtilsService],
         exports: [database_utils_service_1.DatabaseUtilsService]

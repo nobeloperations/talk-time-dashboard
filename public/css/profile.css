@@ -1,210 +1,120 @@
 .profile__container {
-    width: 100%;
+    width: 100vw;
     height: 100vh;
     display: flex;
+    overflow-y: hidden;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
 }
 
-.profile {
-    width: 850px;
-    height: 410px;
-    background: white;
-    border-radius: 10px;
-    padding: 20px;
-}
-.profile__top {
+.profile__container>.navigate {
     width: 100%;
-    height: 110px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid rgb(224, 224, 224);
-    padding-bottom: 10px;
-    margin-bottom: 5px;
 }
 
-.profile__user {
-    width: fit-content;
-    height: fit-content;
+.profile__banner {
+    width: 100%;
+    height: 200px;
+    padding: 30px;
     display: flex;
     align-items: center;
+    background: url('https://img.freepik.com/free-vector/gradient-grainy-gradient-background_23-2149903371.jpg?size=626&ext=jpg&ga=GA1.1.436933427.1697803731&semt=ais');
+    background-size: 100%;
+    background-attachment: cover;
 }
 
-.profile__avatar {
-    width: 96px;
+.profile__banner__avatar {
+    width: 100px;
     border-radius: 100px;
     margin-right: 10px;
+    border: 2px solid white;
 }
 
-.profile__rating {
-    display: none;
-}
-
-.profile__top__info {
+.profile__user__info {
     width: fit-content;
     height: fit-content;
     display: flex;
     flex-direction: column;
+    color: white;
 }
 
-.profile__name {
-    font-size: 24px;
+.profile__banner__username {
+    font-size: 22px;
 }
 
-.profile__meetings__counter {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: fit-content;
-    height: fit-content;
-    padding: 10px 15px 10px 15px;
-    color: #0070B8;
-    border-radius: 10px;
-    background: #99D6FF;
-}
-
-.profile__rating__wrapper {
-    display: flex;
-    align-items: center;
-}
-.profile__stars {
-    display: flex;
-}
-.profile__star {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-image: url(https://cdn-icons-png.flaticon.com/128/1828/1828884.png);
-    background-size: cover;
-    background-position: 0 -16px;
-    margin-right: 3px;
-}
-
-.profile__star.hidden {
-    display: none;
-}
 .profile__content {
+    height: calc(100vh - 260px);
     width: 100%;
-    height: calc(100% - 110px);
     display: flex;
 }
-.profile__menu {
-    width: 280px;
-    height: fit-content;
+
+.profile__content__menu {
+    width: 350px;
+    height: 100%;
+    padding-left: 30px;
+    border-right: 1px solid #E0E0E0;
+    padding-right: 10px;
 }
-.profile__menu__item {
+
+.profile__content__menu__item {
     width: 100%;
-    height: 60px;
+    height: 73px;
+    border-bottom: 1px solid #E0E0E0;
     display: flex;
     align-items: center;
-    color: #0070B8;
-    transition: .2s ease all;
-    padding: 0 0 0 10px;
     cursor: pointer;
-    border-radius: 5px;
-    margin-bottom: 5px;
+    position: relative;
 }
-.profile__menu__item:hover {
-    background: #99D6FF;
-}
-.profile__menu__img {
-    width: 24px;
+
+.profile__content__menu__icon {
+    width: 28px;
     margin-right: 10px;
-    filter: invert(26%) sepia(92%) saturate(1522%) hue-rotate(182deg) brightness(96%) contrast(101%);
+}
+
+.profile__content__menu__item::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 100%;
+    bottom: 0;
+    background-color: #6da7ff;
+    height: 2px;
+    transition: right 0.5s ease;
+    transform: scaleX(0);
+    transform-origin: right;
+}
+
+.profile__content__menu__item:hover .profile__content__menu__icon {
+    filter: invert(62%) sepia(96%) saturate(1608%) hue-rotate(190deg) brightness(99%) contrast(104%);
+    transition: .3s ease all;
+}
+
+.profile__content__menu__item:hover {
+    color: #6da7ff;
+    transition: .3s ease all;
+}
+
+.profile__content__menu__item:hover::after {
+    right: 0;
+    transform: scaleX(1);
 }
 .profile__tabs {
-    width: calc(100% - 280px);
+    width: calc(100vw - 350px);
     height: 100%;
 }
-.profile__tab {
+.profile__meetings {
+    height: 100%;
     width: 100%;
-    transition: .6s ease opacity;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    padding: 0 0 0 10px;
-    height: 100%;
 }
-.profile__tab:not(.meeting__tab) {
-    height: 0;
-    visibility: hidden;
-    opacity: 0;
-}
-.profile__menu__item.profile__menu__item__active {
-    background: #99D6FF;
-}
-.profile__feedback {
-    width: calc(100% - 5px);
-    height: fit-content;
-    margin-bottom: 5px;
-    padding: 10px;
-    border-bottom: 1px solid rgb(233, 233, 233);
-}
-.profile__feedback__sender {
+.profile__meeting, .profile__feedback, .profile__note {
     width: 100%;
     height: fit-content;
     display: flex;
     align-items: center;
-    margin-bottom: 5px;
-}
-.profile__feedback__sender__img {
-    width: 24px;
-    height: 24px;
-    border-radius: 100px;
-    margin-right: 5px;
-}
-.profile__feedback__feedback {
-    margin-bottom: 10px;
-}
-.profile__feedback__view__received__feedback, .profile__feedback__view__sent__feedback {
-    padding: 5px 10px 5px 10px;
-    border-radius: 5px;
-    background: #FFD4AC;
-    color: #fd8a1e;
-}
-.hidden {
-    display: none;
-}
-.profile__badges {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    padding-right: 5px;
-}
-.profile__badge {
-    width: calc(50% - 3px) ;
-    height: fit-content;
-    display: flex;
-    color: #3683BF;
-    align-items: center;
-    border-radius: 5px;
-    margin-bottom: 5px;
-    padding: 5px;
-    background: #99D6FF;
-}
-.profile__badge:nth-child(odd) {
-    margin-right: 5px;
-}
-.profile__badge__img {
-    width: 32px;
-    height: 32px;
-    border-radius: 100px;
-    margin-right: 5px;
-}
-.profile__meeting {
-    width: calc(100% - 5px);
-    height: fit-content;
-    padding: 10px;
-    background: white;
-    margin-bottom: 5px;
-    display: flex;
     justify-content: space-between;
-    align-items: center;
-    /* border: 1px solid rgb(224, 224, 224); */
-    border-bottom: 1px solid rgb(233, 233, 233);
+    border-bottom: 1px solid #E0E0E0;
+    padding-bottom: 10px;
+}
+.profile__meeting:not(:last-child), .profile__feedback:not(:last-child), .profile__note:not(:last-child) {
+    margin-bottom: 20px;
 }
 .profile__meeting__info {
     width: fit-content;
@@ -212,34 +122,86 @@
     display: flex;
     flex-direction: column;
 }
-.profile__meeting__link {
-    width: 100px;
+.profile__tab {
+    padding: 20px;
+    display: none;
+    overflow-y: scroll;
+    height: calc(100vh - 260px);
+}
+.profile__tab__active {
+    display: block;
+}
+.profile__meeting__name {
+    margin-bottom: 3px;
+}
+.profile__meeting__date {
+    font-size: 14px;
+    color: rgb(131, 131, 131);
+}
+.profile__meeting__visit {
+    width: 130px;
     height: 35px;
-    border-radius: 5px;
-    background: #B1FDD1;
     border: none;
     outline: none;
-    color: #00D03E;
+    border-radius: 5px;
+    background: #89ABED;
+    color: white;
     cursor: pointer;
 }
-.profile__badge__info {
+.profile__note__user {
+    width: fit-content;
     display: flex;
-    flex-direction: column;
-    font-size: 14px;
-}
-.profile__empty {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
     align-items: center;
-    flex-direction: column;
-}
-.empty__img {
-    width: 128px;
     margin-bottom: 10px;
-    filter: invert(74%) sepia(28%) saturate(702%) hue-rotate(178deg) brightness(104%) contrast(101%);
 }
-.empty__message {
-    color: #99D6FF;
+.profile__note__avatar {
+    width: 28px;
+    border-radius: 100px;
+    margin-right: 5px;
+}
+.profile__note__sender b, .profile__feedback__sender b {
+    color: rgb(121, 121, 121);
+    font-weight: lighter;
+}
+.profile__badge {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #E0E0E0;
+    padding: 0 0 20px 0;
+}
+.profile__badge:not(:last-child) {
+    margin-bottom: 20px;
+
+}
+.profile__badge__info {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+}
+.profile__badge__image {
+    width: 32px;
+    border-radius: 100px;
+    margin-right: 5px;
+}
+.profile__badges__collected {
+    background: #89ABED;
+    color: white;
+    border-radius: 7px;
+    padding: 10px 15px 10px 15px;
+}
+.profile__feedback__avatar {
+    width: 32px;
+    border-radius: 100px;
+    margin-right: 5px;
+}
+.profile__feedback__user {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }

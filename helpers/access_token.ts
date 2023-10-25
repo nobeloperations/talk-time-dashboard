@@ -8,7 +8,6 @@ export async function getAccessToken(refresh_token: string, client_id: string, c
         grant_type: 'refresh_token',
     });
 
-    console.log(typeof response)
 
     return response.data.access_token;
 }

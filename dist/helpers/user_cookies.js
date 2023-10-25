@@ -7,7 +7,7 @@ const getUserFromCookies = (req) => {
         const cookies = req.headers.cookie.split(';');
         if (cookies.length) {
             cookies.forEach((cookie) => {
-                if (cookie.startsWith('user={')) {
+                if (cookie.trim().startsWith('user={')) {
                     const index = cookie.indexOf('=');
                     userPayload = JSON.parse(cookie.substring(index + 1));
                 }

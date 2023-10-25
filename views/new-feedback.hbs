@@ -4,6 +4,9 @@
     <div class="form__wrapper">
         {{>navigate}}
         <div class="form__content">
+            <div class="new__feedback__title__wrapper">
+                <h1 class="new__feedback__title">New feedback about {{receiver}}</h1>
+            </div>
             <form action="/feedbacks/create/{{generalName}}/{{url}}/{{receiver}}/{{date}}" method="POST"
                 enctype="multipart/form-data">
                 <label for="">Your feedback</label>

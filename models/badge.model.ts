@@ -50,3 +50,21 @@ export const BadgeSchema = new mongoose.Schema({
         }
     }
 })
+
+interface BadgeCount {
+    count: number
+}
+
+export interface BadgeModel {
+    name: string,
+    badges: {
+        Fun: BadgeCount,
+        Encourage: BadgeCount,
+        BeeBrief: BadgeCount,
+        ZenEnviroment: BadgeCount,
+        Help: BadgeCount,
+        OnTime: BadgeCount,
+        BePresent: BadgeCount
+    }[]
+
+}

@@ -52,4 +52,4 @@ exports.BadgeSchema = new mongoose.Schema({
         }
     }
 });
-//# sourceMappingURL=ubadge.model.js.map
+//# sourceMappingURL=badge.model.js.map

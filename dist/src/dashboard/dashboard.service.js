@@ -37,9 +37,9 @@ let DashboardService = class DashboardService {
             throw new Error(`THIS IS ERROR ${e}`);
         }
     }
-    async updatePercents(params, postPercentsBody) {
+    async updatePercents(params, updatePercentageBody) {
         try {
-            const { percents } = postPercentsBody;
+            const { percents } = updatePercentageBody;
             const { url, date } = params;
             percents.forEach(async (percentage) => {
                 const { name, percent } = percentage;
@@ -56,8 +56,8 @@ let DashboardService = class DashboardService {
         try {
             let { url, date } = params;
             let { text, tags, sender } = createNoteBody;
-            const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags, sender);
-            return newNote;
+            const newNote = await this.databaseUtilsService.createNewNote(url, date, text, tags, sender);
+            return JSON.stringify(newNote);
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });

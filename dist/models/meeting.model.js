@@ -6,9 +6,6 @@ exports.MeetingSchema = new mongoose.Schema({
     name: {
         type: String
     },
-    meetings: {
-        type: Array,
-        required: true
-    }
+    meetings: Array,
 });
 //# sourceMappingURL=meeting.model.js.map

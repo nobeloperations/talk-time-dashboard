@@ -22,8 +22,8 @@ let DashboardController = class DashboardController {
     getDashboard(params, res, generalName, req) {
         return this.dashboardService.getDashboard(params, res, generalName, req);
     }
-    postPercents(params, updatePercentsBody) {
-        return this.dashboardService.updatePercents(params, updatePercentsBody);
+    postPercents(params, updatePercentageBody) {
+        return this.dashboardService.updatePercents(params, updatePercentageBody);
     }
     newNote(params, createNoteBody) {
         return this.dashboardService.newNote(params, createNoteBody);

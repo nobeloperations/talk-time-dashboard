@@ -1,18 +1,22 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { BadgeModel } from 'models/badge.model';
 import { Feedback } from 'models/feedback.model';
 import { Meeting } from 'models/meeting.model';
 import { Note } from 'models/note.model';
 import { User } from 'models/user.model';
-import { Document, Model, UpdateWriteOpResult } from 'mongoose';
+import { Model, UpdateWriteOpResult } from 'mongoose';
 
 @Injectable()
 export class DatabaseUtilsService {
+
+    static userModel: Model<User>;
+    
     constructor(@InjectModel('User') private readonly userModel: Model<User>,
                 @InjectModel('Feedback') private readonly feedbackModel: Model<Feedback>,
                 @InjectModel('Note') private readonly noteModel: Model<Note>,
                 @InjectModel('Meeting') private readonly meetingModel: Model<Meeting>,
-                @InjectModel('Badge') private readonly BadgeModel: Model<any>) {}
+                @InjectModel('Badge') private readonly BadgeModel: Model<BadgeModel>) {}
 
     async findBadgeUserByName(filter: { name: string }) {
         const badgeUser = await this.BadgeModel.findOne(filter)
@@ -33,7 +37,7 @@ export class DatabaseUtilsService {
     }
 
     async createBadgesUser(name) {
-        const u = new this.BadgeModel({
+        const badge = new this.BadgeModel({
             name,
             badges: {
                 Fun: { count: 0 },
@@ -45,7 +49,7 @@ export class DatabaseUtilsService {
                 Help: { count: 0 },
             }
         })
-        await u.save()
+        await badge.save()
     }
 
     async updateUserBadges(name: string, badge: string): Promise<UpdateWriteOpResult> {
@@ -92,6 +96,10 @@ export class DatabaseUtilsService {
         return await this.meetingModel.find({name: {$in: generalNames}})
     }
 
+    async findMeetingsByNameAndDateIncluding(filter: {url: string, date: string}) {
+        return await this.meetingModel.findOne({ 'meetings.url': filter.url, 'meetings.date': filter.date })
+    }
+
     async findMeeting(filter: Object, fields: string): Promise<any> {
         return await this.meetingModel.findOne(filter).select(fields)
     }
@@ -128,7 +136,7 @@ export class DatabaseUtilsService {
         return await newFeedback.save()
     }
 
-    async createNewNote(url: string, date: string, text: string, tags: string[], sender: string): Promise<string> {
+    async createNewNote(url: string, date: string, text: string, tags: string[], sender: string): Promise<Note> {
         const sendUser = await this.findUser({name: sender}, 'avatar')
         const newNote = new this.noteModel({
             text,
@@ -140,7 +148,7 @@ export class DatabaseUtilsService {
         })
 
         await newNote.save()
-        return JSON.stringify(newNote)
+        return newNote
     }
 
     async createNewUser(name: string, avatar: string, url: string, date: string, generalName: string): Promise<any> {

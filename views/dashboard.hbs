@@ -3,7 +3,6 @@
     <div class="dashboard">
         {{>navigate}}
         <div class="dashboard__content">
-            <input type="text" placeholder="Search meeting participants" class="dashboard__search" />
             <div class="dashboard__meeting__info__wrapper">
                 <div class="dashboard__meeting__info">
                     <div class="dashboard__meeting__info__icon dashboard__meeting__info__icon__blue">
@@ -44,6 +43,7 @@
             </div>
             <div class="dashboard__users__notes">
                 <div class="dashboard__users">
+                    <input type="text" placeholder="🔎︎ Search meeting participants" class="dashboard__search" />
                     <div class="dashboard__users__names">
                         <div style="width: 200px; padding-left: 10px;">Participants</div>
                         <div style="width: 120px">Talking time</div>
@@ -76,9 +76,6 @@
                 </div>
                 <div class="notes__transcription">
                     <div class="dashboard__notes">
-                        {{!-- <div class="transcription__switch">
-                            <span>Switch to transcription →</span>
-                        </div> --}}
                         <div class="notes__input__wrapper">
                             <input placeholder="Add new note" class="notes__input" type="text">
                             <button class="add__note">Add Note</button>
@@ -105,95 +102,6 @@
                             <span class="no__notes">You`ve not added notes yet...</span>
                         </div>
                     </div>
-                    {{!-- <div class="dashboard__transcription">
-                        <div class="notes__switch">
-                            <span>Switch to notes →</span>
-                        </div>
-                        <div class="transcription__item">
-                            <div class="transcription__header">
-                                <img class="transcription__avatar" src="./ava.jpg" alt="">
-                                <span>Danylo Burmei • 01:48</span>
-                            </div>
-                            <div class="transcription__text">
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
-                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
-                                    obcaecati a
-                                    quasi! Porro natus a sunt minima.</span>
-                            </div>
-                        </div>
-                        <div class="transcription__item">
-                            <div class="transcription__header">
-                                <img class="transcription__avatar" src="./ava.jpg" alt="">
-                                <span>Danylo Burmei • 01:48</span>
-                            </div>
-                            <div class="transcription__text">
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
-                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
-                                    obcaecati a
-                                    quasi! Porro natus a sunt minima.</span>
-                            </div>
-                        </div>
-                        <div class="transcription__item">
-                            <div class="transcription__header">
-                                <img class="transcription__avatar" src="./ava.jpg" alt="">
-                                <span>Danylo Burmei • 01:48</span>
-                            </div>
-                            <div class="transcription__text">
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
-                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
-                                    obcaecati a
-                                    quasi! Porro natus a sunt minima.</span>
-                            </div>
-                        </div>
-                        <div class="transcription__item">
-                            <div class="transcription__header">
-                                <img class="transcription__avatar" src="./ava.jpg" alt="">
-                                <span>Danylo Burmei • 01:48</span>
-                            </div>
-                            <div class="transcription__text">
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
-                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
-                                    obcaecati a
-                                    quasi! Porro natus a sunt minima.</span>
-                            </div>
-                        </div>
-                        <div class="transcription__item">
-                            <div class="transcription__header">
-                                <img class="transcription__avatar" src="./ava.jpg" alt="">
-                                <span>Danylo Burmei • 01:48</span>
-                            </div>
-                            <div class="transcription__text">
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
-                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
-                                    obcaecati a
-                                    quasi! Porro natus a sunt minima.</span>
-                            </div>
-                        </div>
-                        <div class="transcription__item">
-                            <div class="transcription__header">
-                                <img class="transcription__avatar" src="./ava.jpg" alt="">
-                                <span>Danylo Burmei • 01:48</span>
-                            </div>
-                            <div class="transcription__text">
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
-                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
-                                    obcaecati a
-                                    quasi! Porro natus a sunt minima.</span>
-                            </div>
-                        </div>
-                        <div class="transcription__item">
-                            <div class="transcription__header">
-                                <img class="transcription__avatar" src="./ava.jpg" alt="">
-                                <span>Danylo Burmei • 01:48</span>
-                            </div>
-                            <div class="transcription__text">
-                                <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta sit doloribus
-                                    consequuntur atque quia et ducimus tempore nemo, omnis blanditiis totam cum
-                                    obcaecati a
-                                    quasi! Porro natus a sunt minima.</span>
-                            </div>
-                        </div>
-                    </div> --}}
                 </div>
             </div>
         </div>

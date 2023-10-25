@@ -53,10 +53,10 @@ let UserService = class UserService {
             const currentMeeting = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.some(curr => curr['date'] == date);
             if (!meeting || !currentMeeting)
                 return res.status(404).render('notfound');
-            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar count');
+            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar');
             const badgeUsers = await this.databaseUtilsService.findAllBadgeUser();
             let users = (0, badges_filter_1.filterUsers)(dbUsers);
-            users.forEach(user => {
+            users.forEach((user) => {
                 let usersBadges = badgeUsers.find(badgeUser => user.name == badgeUser.name);
                 if (usersBadges)
                     user.badges = usersBadges.badges;

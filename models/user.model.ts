@@ -41,5 +41,6 @@ export interface User {
     avatar: string,
     percents: string,
     generalName: string,
-    rating: string[];
+    rating: string[],
+    date: string
 }

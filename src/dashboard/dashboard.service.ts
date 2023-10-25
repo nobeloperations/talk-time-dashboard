@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { getUserFromCookies } from 'helpers/user_cookies';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 import { Response, Request } from 'express';
-import { CreateNoteBody, CreateNoteParams, DeleteNoteBody, GetDashboardParams, GetDashboardReturn, UpdateNoteBody, UpdatePercentageBody, UpdatePercentageParams } from 'types/types';
+import { CreateNoteBody, CreateNoteParams, DeleteNoteBody, GetDashboardParams, GetDashboardReturn, Percent, UpdateNoteBody, UpdatePercentageBody, UpdatePercentageParams, UserPayload } from 'types/types';
 import { Note } from 'models/note.model';
+import { User } from 'models/user.model';
+import { Feedback } from 'models/feedback.model';
 
 
 @Injectable()
@@ -13,10 +15,10 @@ export class DashboardService {
 
     async getDashboard(params: GetDashboardParams, res: Response, generalName: string, req: Request): Promise<GetDashboardReturn | void> {
         try {
-            const userPayload = getUserFromCookies(req)
+            const userPayload: UserPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
-            const { url, date } = params;
-            const [users, notes, feedbacks] = await Promise.all([
+            const { url, date }: GetDashboardParams = params;
+            const [users, notes, feedbacks]: [User[], Note[], Feedback[]] = await Promise.all([
                 await this.databaseUtilsService.findUsers({ url, date }, ''),
                 await this.databaseUtilsService.findNotes({ url, date }, ''),
                 await this.databaseUtilsService.findFeedbacks({ url, date }, '')
@@ -34,12 +36,12 @@ export class DashboardService {
 
     }
 
-    async updatePercents(params: UpdatePercentageParams, postPercentsBody: UpdatePercentageBody): Promise<void | string> {
+    async updatePercents(params: UpdatePercentageParams, updatePercentageBody: UpdatePercentageBody): Promise<void | string> {
         try {
-            const { percents } = postPercentsBody
-            const { url, date } = params
-            percents.forEach(async percentage => {
-                const { name , percent } = percentage;
+            const { percents }: UpdatePercentageBody = updatePercentageBody
+            const { url, date }: UpdatePercentageParams = params
+            percents.forEach(async (percentage: Percent) => {
+                const { name , percent }: Percent = percentage;
                 if(name.trim() && percent.trim()) {
                     return await this.databaseUtilsService.updateUserPercents({name, url, date}, {percents: percent})
                 }
@@ -52,10 +54,10 @@ export class DashboardService {
 
     async newNote(params: CreateNoteParams, createNoteBody: CreateNoteBody): Promise<Note | string> {
         try {
-            let { url, date } = params;
-            let { text, tags, sender } = createNoteBody
-            const newNote = this.databaseUtilsService.createNewNote(url, date, text, tags, sender)
-            return newNote
+            let { url, date }: CreateNoteParams = params;
+            let { text, tags, sender }: CreateNoteBody = createNoteBody
+            const newNote: Note = await this.databaseUtilsService.createNewNote(url, date, text, tags, sender)
+            return JSON.stringify(newNote)
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
@@ -65,7 +67,7 @@ export class DashboardService {
 
     async deleteNote(deleteNoteBody: DeleteNoteBody): Promise<void | string> {
         try {
-            const { id } = deleteNoteBody;
+            const { id }: DeleteNoteBody = deleteNoteBody;
             return await this.databaseUtilsService.deleteNote({ _id: id })
         }
         catch (e) {
@@ -74,7 +76,7 @@ export class DashboardService {
     }
 
     async updateNote(updateNoteBody: UpdateNoteBody): Promise<void> {
-        const { id, text } = updateNoteBody;
+        const { id, text }: UpdateNoteBody = updateNoteBody;
         return await this.databaseUtilsService.updateNote({_id: id}, { text })
     }
 

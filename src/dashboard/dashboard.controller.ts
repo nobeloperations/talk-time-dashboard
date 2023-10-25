@@ -19,8 +19,8 @@ export class DashboardController {
 
     @Post('/percentage/:url/:date')
     @HttpCode(200)
-    postPercents(@Param() params: UpdatePercentageParams, @Body() updatePercentsBody: UpdatePercentageBody): Promise<void | string> {
-        return this.dashboardService.updatePercents(params, updatePercentsBody)
+    postPercents(@Param() params: UpdatePercentageParams, @Body() updatePercentageBody: UpdatePercentageBody): Promise<void | string> {
+        return this.dashboardService.updatePercents(params, updatePercentageBody)
     }
 
     @Post('/newconclusion/:url/:date')

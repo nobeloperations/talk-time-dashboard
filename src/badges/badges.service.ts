@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
+import { BadgeModel } from 'models/badge.model';
+import { Document, ObjectId } from 'mongoose';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
-import { NewBadgeBody, NewBadgeParams } from 'types/types';
+import { Badge, NewBadgeBody, NewBadgeParams } from 'types/types';
 
 @Injectable()
 export class BadgesService {
@@ -9,8 +11,8 @@ export class BadgesService {
 
     async newBadge(params: NewBadgeParams, newBadgeBody: NewBadgeBody): Promise<string | void> {
         try {
-            const { name } = params;
-            let { badge } = newBadgeBody;
+            const { name }: NewBadgeParams = params;
+            let { badge }: NewBadgeBody = newBadgeBody;
             badge = badge.replaceAll(' ', '')
             const currentBadgeUser = await this.databaseUtilsService.findBadgeUserByName({ name })
             if(currentBadgeUser) {

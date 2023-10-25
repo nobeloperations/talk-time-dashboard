@@ -24,14 +24,20 @@ export class MainController {
     @Get('/faq')
     @Render('faq')
     @HttpCode(200)
-    getFAQ(): { cssFileName: string } {
-        return { cssFileName: 'faq' }
+    getFAQ(@Req() req: Request) {
+        return this.mainService.getFAQ(req)
     }
 
     @Get('/currentversion')
+    @HttpCode(200)
     getCurrentVersion(): {version: string} {
         return {
             version: '3.15'
         }
     }
+
+    @Get("/policy")
+    @HttpCode(200)
+    @Render("policy")
+    getPolicy() {}
 }

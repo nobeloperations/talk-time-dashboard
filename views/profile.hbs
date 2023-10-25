@@ -1,116 +1,111 @@
 <div class="profile__container">
-    <div class="profile">
-        <div class="profile__top">
-            <div class="profile__user">
-                <img src="{{avatar}}" alt="" class="profile__avatar">
-                <div class="profile__top__info">
-                    <span class="profile__name">{{name}}</span>
-                    <span>Participated in 13 meetings</span>
-                </div>
+    {{>navigate}}
+    <div class="profile__banner">
+        <img class="profile__banner__avatar" src="{{profileAvatar}}" alt="">
+        <div class="profile__user__info">
+            <span class="profile__banner__username">{{profileName}}</span>
+            <span class="profile__banner__useremail">{{profileEmail}}</span>
+        </div>
+    </div>
+    <div class="profile__content">
+        <div class="profile__content__menu">
+            <div class="profile__content__menu__item" data-profileTab="profile__meetings">
+                <img class="profile__content__menu__icon" src="https://cdn-icons-png.flaticon.com/128/2985/2985013.png"
+                    alt="">
+                <span class="profile__content__menu__text">Meetings visited</span>
+            </div>
+            <div class="profile__content__menu__item" data-profileTab="profile__feedbacks__received">
+                <img class="profile__content__menu__icon" src="https://cdn-icons-png.flaticon.com/128/855/855555.png"
+                    alt="">
+                <span class="profile__content__menu__text">Feedbacks received</span>
+            </div>
+            <div class="profile__content__menu__item" data-profileTab="profile__feedbacks__sent">
+                <img class="profile__content__menu__icon" src="https://cdn-icons-png.flaticon.com/128/813/813419.png"
+                    alt="">
+                <span class="profile__content__menu__text">Feedbacks sent</span>
+            </div>
+            <div class="profile__content__menu__item" data-profileTab="profile__badges">
+                <img class="profile__content__menu__icon"
+                    src="https://cdn-icons-png.flaticon.com/128/12355/12355966.png" alt="">
+                <span class="profile__content__menu__text">Your badges</span>
+            </div>
+            <div class="profile__content__menu__item" data-profileTab="profile__notes">
+                <img class="profile__content__menu__icon" src="https://cdn-icons-png.flaticon.com/128/3209/3209238.png"
+                    alt="">
+                <span class="profile__content__menu__text">Your meeting notes</span>
+            </div>
+            <div class="profile__content__menu__item profile__logout">
+                <img class="profile__content__menu__icon" src="https://cdn-icons-png.flaticon.com/128/2734/2734817.png"
+                    alt="">
+                <span class="profile__content__menu__text">Log Out</span>
             </div>
         </div>
-        <div class="profile__content">
-            <div class="profile__menu">
-                <div class="profile__menu__item">
-                    <img class="profile__menu__img" src="/img/meeting-profile.png" alt="">
-                    <span class="profile__menu__text">Meetings</span>
+        <div class="profile__tabs">
+            <div class="profile__meetings profile__tab profile__tab__active">
+                {{#each usersMeetings}}
+                <div class="profile__meeting">
+                    <div class="profile__meeting__info">
+                        <span class="profile__meeting__name">{{generalName}}</span>
+                        <span class="profile__meeting__date">{{date}}</span>
+                    </div>
+                    <a href="/dashboard/{{url}}/{{date}}?q={{generalName}}">
+                        <button class="profile__meeting__visit">Dashboard</button>
+                    </a>
                 </div>
-                <div class="profile__menu__item">
-                    <img class="profile__menu__img" src="/img/feedback-profile.png" alt="">
-                    <span class="profile__menu__text">Feedbacks received</span>
-                </div>
-                <div class="profile__menu__item">
-                    <img class="profile__menu__img" src="/img/feedback-sent.png" alt="">
-                    <span class="profile__menu__text">Feedbacks sent</span>
-                </div>
-                <div class="profile__menu__item">
-                    <img class="profile__menu__img" src="/img/badge-profile.png" alt="">
-                    <span class="profile__menu__text">Badges</span>
-                </div>
+                {{/each}}
             </div>
+            <div class="profile__tab profile__feedbacks__received">
+                {{#each feedbacksReceived}}
+                <div class="profile__feedback">
+                    <div class="profile__feedback__content">
+                        <div class="profile__feedback__user">
+                            <img class="profile__feedback__avatar" src="{{senderImg}}" />
+                            <span class="profile__feedback__sender">{{sender}} • <b>{{date}}</b></span>
+                        </div>
+                        <span class="profile__feedback__text">{{feedback}}</span>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="profile__tab profile__feedbacks__sent">
+                {{#each feedbacksSent}}
+                <div class="profile__feedback">
+                    <div class="profile__feedback__content">
+                        <div class="profile__feedback__user">
+                            <img class="profile__feedback__avatar" src="{{senderImg}}" />
+                            <span class="profile__feedback__sender">{{sender}} • <b>{{date}}</b></span>
+                        </div>
+                        <span class="profile__feedback__text">{{feedback}}</span>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+            <div class="profile__tab profile__badges">
+                {{#each badges}}
+                    <div class="profile__badge">
+                        <div class="profile__badge__info">
+                            <img src="/img/{{badgeToImage badge}}" class="profile__badge__image" alt="">
+                            <span class="profile__badge__name">{{formatBadgeName badge}}</span>
+                        </div>
+                        <span class="profile__badges__collected">You have collected {{count}} {{formatBadgeName badge}} badges</span>
+                    </div>
+                {{/each}}
+            </div>
+            <div class="profile__tab profile__notes">
+                {{#each notes}}
+                <div class="profile__note">
+                    <div class="profile__note__content">
+                        <div class="profile__note__user">
+                            <img class="profile__note__avatar" src="{{../profileAvatar}}" />
+                            <span class="profile__note__sender">{{sender}} • <b>{{date}}</b></span>
+                        </div>
+                        <span class="profile__note__text">{{text}}</span>
+                    </div>
+                </div>
+                {{/each}}
+            </div>
+        </div>
 
-            <div class="profile__tabs">
-                <div class="profile__tab meeting__tab" data-tabname="Meetings">
-                    {{#if meetings}}
-                    {{#each meetings}}
-                    <div class="profile__meeting">
-                        <div class="profile__meeting__info">
-                            <span class="profile__meeting__url">{{url}}</span>
-                            <span class="profile__meeting__date">{{date}}</span>
-                        </div>
-                        <a href="/dashboard/{{url}}/{{date}}?q={{../generalName}}"><button
-                                class="profile__meeting__link">Dashboard</button></a>
-                    </div>
-                    {{/each}}
-                    {{else}}
-                    <div class="profile__empty">
-                        <img class="empty__img" src="/img/empty.png" alt="">
-                        <span class="empty__message">There are no meetings yet...</span>
-                    </div>
-                    {{/if}}
-                </div>
-                <div class="profile__tab" data-tabname="Feedbacks received">
-                    {{#if feedbacksReceived}}
-                    {{#each feedbacksReceived}}
-                    <div class="profile__feedback">
-                        <div class="profile__feedback__sender">
-                            <img class="profile__feedback__sender__img" src="{{senderImg}}" alt="">
-                            <span class="profile__feedback__sender__name">{{sender}}</span>
-                        </div>
-                        <div class="profile__feedback__feedback">{{feedback}}</div>
-                        <a href="/feedbacks/{{url}}/{{../name}}/{{date}}?q={{../generalName}}"
-                            class="profile__feedback__view__received__feedback">View Feedback</a>
-                    </div>
-                    {{/each}}
-                    {{else}}
-                    <div class="profile__empty">
-                        <img class="empty__img" src="/img/empty.png" alt="">
-                        <span class="empty__message">There are no feedbacks yet...</span>
-                    </div>
-                    {{/if}}
-                </div>
-                <div class="profile__tab" data-tabname="Feedbacks sent">
-                    {{#if feedbacksSent}}
-                    {{#each feedbacksSent}}
-                    <div class="profile__feedback">
-                        <div class="profile__feedback__sender">
-                            <img class="profile__feedback__sender__img" src="{{senderImg}}" alt="">
-                            <span class="profile__feedback__sender__name">{{sender}}</span>
-                        </div>
-                        <div class="profile__feedback__feedback">{{feedback}}</div>
-                        <a href="/feedbacks/{{url}}/{{receiver}}/{{date}}?q={{../generalName}}"
-                            class="profile__feedback__view__sent__feedback">View Feedback</a>
-                    </div>
-                    {{/each}}
-                    {{else}}
-                    <div class="profile__empty">
-                        <img class="empty__img" src="/img/empty.png" alt="">
-                        <span class="empty__message">There are no feedbacks yet...</span>
-                    </div>
-                    {{/if}}
-                </div>
-                <div class="profile__tab" data-tabname="Badges">
-                    <div class="profile__badges">
-                        {{#if usersBadges}}
-                        {{#each usersBadges}}
-                        <div class="profile__badge" data-level="{{this}}">
-                            <img class="profile__badge__img" src="/img/{{@key}}" alt="">
-                            <div class="profile__badge__info">
-                                <span class="profile__badge__name">{{convert @key}}</span>
-                                <span>{{badgesLevel this}}</span>
-                            </div>
-                        </div>
-                        {{/each}}
-                        {{else}}
-                        <div class="profile__empty">
-                            <img class="empty__img" src="/img/empty.png" alt="">
-                            <span class="empty__message">There are no badges yet...</span>
-                        </div>
-                        {{/if}}
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <script src="/js/profile.js"></script>

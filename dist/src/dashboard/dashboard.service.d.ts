@@ -6,7 +6,7 @@ export declare class DashboardService {
     private readonly databaseUtilsService;
     constructor(databaseUtilsService: DatabaseUtilsService);
     getDashboard(params: GetDashboardParams, res: Response, generalName: string, req: Request): Promise<GetDashboardReturn | void>;
-    updatePercents(params: UpdatePercentageParams, postPercentsBody: UpdatePercentageBody): Promise<void | string>;
+    updatePercents(params: UpdatePercentageParams, updatePercentageBody: UpdatePercentageBody): Promise<void | string>;
     newNote(params: CreateNoteParams, createNoteBody: CreateNoteBody): Promise<Note | string>;
     deleteNote(deleteNoteBody: DeleteNoteBody): Promise<void | string>;
     updateNote(updateNoteBody: UpdateNoteBody): Promise<void>;

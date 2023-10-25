@@ -1,3 +1,4 @@
+{{>profile-information}}
 <div class="main__wrapper">
     <h1 class="main__title">Analyse, discover and <b>develop</b><br /> </h1>
     <span class="main__subtitle">Make your meetings more convinient and get as much beneifits as you can <br>All
@@ -10,29 +11,29 @@
         <input class="search__generals" placeholder="Name of your meeting" type="text">
         <div class=" {{#if generals}} list__of__meetings {{else}} empty__list__of__meetings {{/if}}">
             {{#if generals}}
-            {{#each generals}}
-            <div class="general__wrapper" data-name="{{name}}">
-                <div class="general">
-                    <span class="general__name">{{name}}</span>
-                    <hr>
-                    <button class="select__general" data-active="">
-                        <img src="/img/down-arrow.png" alt="">
-                    </button>
-                </div>
-                <div class="meetings__content">
-                    {{#each meetings}}
-                    <div class="meeting">
-                        <div class="meeting__info">
-                            <span>{{url}}</span>
-                            <span class="main__meeting__date">🕙 {{date}}</span>
-                        </div>
-                        <a href="/dashboard/{{url}}/{{date}}?q={{../name}}"><button
-                                class="dashboard__button">Dashboard</button></a>
+                {{#each generals}}
+                <div class="general__wrapper" data-name="{{_doc.name}}">
+                    <div class="general">
+                        <span class="general__name">{{_doc.name}}</span>
+                        <hr>
+                        <button class="select__general" data-active="">
+                            <img src="/img/down-arrow.png" alt="">
+                        </button>
                     </div>
-                    {{/each}}
+                    <div class="meetings__content">
+                        {{#each meetings}}
+                        <div class="meeting">
+                            <div class="meeting__info">
+                                <span>{{url}}</span>
+                                <span class="main__meeting__date">🕙 {{date}}</span>
+                            </div>
+                            <a href="/dashboard/{{url}}/{{date}}?q={{../_doc.name}}"><button
+                                    class="dashboard__button">Dashboard</button></a>
+                        </div>
+                        {{/each}}
+                    </div>
                 </div>
-            </div>
-            {{/each}}
+                {{/each}}
             {{else}}
             <img class="empty__meetings__img" src="/img/empty.png" alt="">
             <span class="empty__meetings__text">{{#if isAuth}}You don`t have any meetings{{else}}Authenticate to see
@@ -40,7 +41,6 @@
             {{/if}}
         </div>
     </div>
-    {{>profile-information}}
 </div>
 <script src="/js/main.js"></script>
 <script src="/js/helpers/search.js"></script>

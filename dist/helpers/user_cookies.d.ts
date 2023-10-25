@@ -1,2 +1,3 @@
 import { Request } from "express";
-export declare const getUserFromCookies: (req: Request) => any;
+import { UserPayload } from "types/types";
+export declare const getUserFromCookies: (req: Request) => UserPayload | any;

@@ -25,21 +25,25 @@ let MainService = class MainService {
             let usersMeetings = [];
             let generalNames = [];
             let currentUsers = await this.databaseUtilsService.findUsers({ name: userPayload.name }, "url date generalName");
-            currentUsers.forEach(currentUser => {
+            currentUsers.forEach(({ url, date, generalName }) => {
                 usersMeetings.push({
-                    url: currentUser.url,
-                    date: currentUser['date']
+                    url,
+                    date
                 });
-                generalNames.push(currentUser.generalName);
+                generalNames.push(generalName);
             });
             let generals = await this.databaseUtilsService.findMeetingsByNameIncluding(generalNames);
-            function filterMeetings(meetings, usersMeetings) {
-                return meetings.filter((meeting) => usersMeetings.some((userMeeting) => userMeeting.date === meeting.date && userMeeting.url === meeting.url));
-            }
-            const filteredGenerals = generals.map((general) => ({
-                name: general.name,
-                meetings: filterMeetings(general.meetings, usersMeetings),
-            }));
+            const filteredGenerals = generals.map((general) => {
+                const filteredMeetings = [];
+                for (const meeting of general.meetings) {
+                    usersMeetings.forEach((userMeeting) => {
+                        if (userMeeting.url == meeting['url'] && userMeeting.date == meeting['date']) {
+                            filteredMeetings.push(meeting);
+                        }
+                    });
+                }
+                return Object.assign(Object.assign({}, general), { meetings: filteredMeetings });
+            });
             return { cssFileName: 'main', generals: filteredGenerals, title: "Main", profileName: userPayload.name, isAuth: true };
         }
         catch (e) {
@@ -55,6 +59,17 @@ let MainService = class MainService {
             let meetPresented = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.filter(meeting => meeting['date'] === date && meeting['url'] === url).length;
             if (!meetPresented)
                 return await this.databaseUtilsService.updateMeetingByName(name, url, date);
+        }
+        catch (e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e });
+        }
+    }
+    async getFAQ(req) {
+        try {
+            let userPayload = (0, user_cookies_1.getUserFromCookies)(req);
+            if (!userPayload)
+                return { cssFileName: 'main', isAuth: false };
+            return { cssFileName: 'faq', title: "FAQ", isAuth: true, profileName: userPayload.name };
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });

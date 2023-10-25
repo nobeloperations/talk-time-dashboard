@@ -14,10 +14,11 @@ const common_1 = require("@nestjs/common");
 let AuthService = class AuthService {
     constructor() { }
     googleLogin(req) {
-        if (!req.user) {
+        const currentUser = req.user;
+        if (!currentUser) {
             return 'No user from google';
         }
-        const { email, picture, firstName, lastName } = req.user;
+        const { email, picture, firstName, lastName } = currentUser;
         return { email, picture, firstName, lastName, cssFileName: 'redirect' };
     }
     logOut(res) {

@@ -5,7 +5,7 @@ import { UserSchema } from 'models/user.model';
 import { MeetingSchema } from 'models/meeting.model';
 import { NoteSchema } from 'models/note.model';
 import { FeedbackSchema } from 'models/feedback.model';
-import { BadgeSchema } from 'models/ubadge.model';
+import { BadgeSchema } from 'models/badge.model';
 
 @Module({
   imports: [MongooseModule.forFeature([

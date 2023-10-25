@@ -2,6 +2,31 @@ import { Feedback } from "models/feedback.model";
 import { Meeting } from "models/meeting.model";
 import { Note } from "models/note.model";
 import { User } from "models/user.model";
+export interface FilteredUser {
+    name: string;
+    avatar: string;
+    badges: Badge[];
+}
+export interface notAuthenticated {
+    cssFileName: string;
+    isAuth: boolean;
+}
+interface GoogleNames {
+    familyName: string;
+    givenName: string;
+}
+interface GoogleEmails {
+    value: string;
+    verified: boolean;
+}
+interface GooglePhotos {
+    value: string;
+}
+export interface GoogleProfile {
+    name: GoogleNames;
+    emails: GoogleEmails[];
+    photos: GooglePhotos[];
+}
 export interface GoogleLogin {
     email: string;
     firstName: string;
@@ -10,6 +35,10 @@ export interface GoogleLogin {
 }
 export interface AuthUser extends GoogleLogin {
     accessToken: string;
+}
+export interface UserPayload {
+    name: string;
+    email: string;
 }
 export interface Badge {
     badge: string;
@@ -22,21 +51,29 @@ export interface BadgeUser {
     count: number;
     _doc: {};
 }
-export interface BadgeCounts {
-    [key: string]: number;
+export interface BadgeValues {
+    count: number;
+}
+export interface Badges {
+    Fun: BadgeValues;
+    Encourage: BadgeValues;
+    ZenEnviroment: BadgeValues;
+    OnTime: BadgeValues;
+    Help: BadgeValues;
+    BePresent: BadgeValues;
+    BeeBrief: BadgeValues;
 }
 export interface CreateNoteBody {
     sender: string;
     tags: string[];
     text: string;
 }
+export interface Percent {
+    name: string;
+    percent: string;
+}
 export interface UpdatePercentageBody {
-    percents: [
-        {
-            percent: string;
-            name: string;
-        }
-    ];
+    percents: Percent[];
 }
 export interface DeleteNoteBody {
     id: string;
@@ -66,6 +103,12 @@ export interface UpdatePercentageParams extends UrlAndDateParams {
 export interface CreateNoteParams extends UrlAndDateParams {
 }
 export interface GetPersonalFeedbacksParams extends UrlAndDateAndNameParams {
+}
+export interface UsersMeeting extends UrlAndDateParams {
+}
+export interface FilteredMeeting extends UrlAndDateParams {
+}
+export interface GetProfileParams extends UrlAndDateParams {
 }
 export interface GetNewFeedbackParams extends UrlAndDateParams {
     receiver: string;

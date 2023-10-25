@@ -16,6 +16,17 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
+}
+.new__feedback__title__wrapper {
+    width: 500px;
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+.new__feedback__title {
+    font-size: 24px;
+    color: #838383;
 }
 form {
     width: 500px;

@@ -1,9 +1,13 @@
-const _logOut = document.querySelector('.logout')
+const _profileInformationButton = document.querySelector('.profile__information')
+const _username = document.querySelector('.profile__username').textContent.trim();
+const _profileOptions = document.querySelector('.profile__options')
+const _userAvatarImage = document.querySelector('.profile__user__avatar')
 
-function _deleteCookie(_cookieName, _callback) {
-    document.cookie = _cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    _callback()
-}
+fetch(`/users/${_username}`)
+.then(res => res.json())
+.then(response => {
+    _userAvatarImage.src = response.avatar;
+})
 
 function _parseCookieString(_cookieString) {
     let _cookies = {};
@@ -20,19 +24,6 @@ function _parseCookieString(_cookieString) {
         }
     }
     return _cookies;
-}
-
-if (_logOut) {
-    _logOut.onclick = function () {
-        fetch('/auth/logout')
-            .then(() => {
-                document.cookie = 'user=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-                window.location.href = '/';
-            })
-            .catch((error) => {
-                console.error('Logout failed:', error);
-            });
-    }
 }
 
 const _pathName = new URL(window.location.href).pathname;

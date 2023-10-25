@@ -9,10 +9,19 @@ export declare class MainController {
         isAuth: boolean;
     } | void>;
     addGeneral(addGeneralBody: AddGeneralBody): Promise<void | string>;
-    getFAQ(): {
+    getFAQ(req: Request): Promise<string | {
         cssFileName: string;
-    };
+        isAuth: boolean;
+        title?: undefined;
+        profileName?: undefined;
+    } | {
+        cssFileName: string;
+        title: string;
+        isAuth: boolean;
+        profileName: string;
+    }>;
     getCurrentVersion(): {
         version: string;
     };
+    getPolicy(): void;
 }

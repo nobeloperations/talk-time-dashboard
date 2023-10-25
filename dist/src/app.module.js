@@ -20,6 +20,7 @@ const core_1 = require("@nestjs/core");
 const http_exception_filter_1 = require("./filters/http-exception.filter");
 const database_utils_module_1 = require("./database-utils/database-utils.module");
 const auth_module_1 = require("./auth/auth.module");
+const profile_module_1 = require("./profile/profile.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -36,7 +37,8 @@ AppModule = __decorate([
             users_module_1.UsersModule,
             badges_module_1.BadgesModule,
             database_utils_module_1.DatabaseUtilsModule,
-            auth_module_1.AuthModule
+            auth_module_1.AuthModule,
+            profile_module_1.ProfileModule
         ],
         providers: [
             {

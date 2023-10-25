@@ -25,14 +25,15 @@ let MainController = class MainController {
     addGeneral(addGeneralBody) {
         return this.mainService.addMeeting(addGeneralBody);
     }
-    getFAQ() {
-        return { cssFileName: 'faq' };
+    getFAQ(req) {
+        return this.mainService.getFAQ(req);
     }
     getCurrentVersion() {
         return {
             version: '3.15'
         };
     }
+    getPolicy() { }
 };
 __decorate([
     (0, common_1.Get)('/'),
@@ -56,16 +57,26 @@ __decorate([
     (0, common_1.Get)('/faq'),
     (0, common_1.Render)('faq'),
     (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Req)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Object)
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
 ], MainController.prototype, "getFAQ", null);
 __decorate([
     (0, common_1.Get)('/currentversion'),
+    (0, common_1.HttpCode)(200),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", Object)
 ], MainController.prototype, "getCurrentVersion", null);
+__decorate([
+    (0, common_1.Get)("/policy"),
+    (0, common_1.HttpCode)(200),
+    (0, common_1.Render)("policy"),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], MainController.prototype, "getPolicy", null);
 MainController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [main_service_1.MainService])

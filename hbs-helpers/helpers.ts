@@ -1,3 +1,5 @@
+import { BadgeValues, Badges } from "types/types";
+
 export let helpers = {
     badgeToImage(badge: string): string {
         badge = badge.split(/(?=[A-Z])/).join('_').toLowerCase()
@@ -6,19 +8,19 @@ export let helpers = {
     formatBadgeName(badge: string): string {
         return badge.split(/(?=[A-Z])/).join(' ')
     },
-    average(rate: []): string | number {
+    average(rate: number[]): string | number {
         if (!rate.length) return 0;
-        let sum = rate.reduce((a, b) => +a + +b, 0);
+        let sum: number = rate.reduce((a, b) => +a + +b, 0);
         return (sum / rate.length).toFixed(1);
     },
     mult(e: number, coef: number): number {
         return e * coef
     },
     formatDate(date: string): string {
-        const parts = date.split('/')
-        const day = parts[0]
-        const month = parts[1]
-        const year = parts[2]
+        const parts: string[] = date.split('/')
+        const day: string = parts[0]
+        const month: string = parts[1]
+        const year: string = parts[2]
         return `${month}/${day}/${year}`
     },
     badgesLevel(e: number): string {
@@ -27,10 +29,10 @@ export let helpers = {
     moreThan(str: string, n: number): boolean {
         return str.length > n
     },
-    badgesExist(badges) {
+    badgesExist(badges: Badges): boolean {
         if (badges) {
-            let badgesExist = false;
-            let values = Object.values(badges)
+            let badgesExist: boolean = false;
+            let values: BadgeValues[] = Object.values(badges)
             values = values.filter(value => !!value['count'])
             if (values.length) badgesExist = true
 

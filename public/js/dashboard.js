@@ -102,7 +102,6 @@ window.onload = function () {
         })
             .then(response => response.json())
             .then(res => {
-                console.log(_note)
                 _note.querySelector('.note__id').innerHTML += res._id
             })
         _addNoteInput.value = ''

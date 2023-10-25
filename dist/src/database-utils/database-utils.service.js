@@ -40,7 +40,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         return badgeUsers;
     }
     async createBadgesUser(name) {
-        const u = new this.BadgeModel({
+        const badge = new this.BadgeModel({
             name,
             badges: {
                 Fun: { count: 0 },
@@ -52,7 +52,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
                 Help: { count: 0 },
             }
         });
-        await u.save();
+        await badge.save();
     }
     async updateUserBadges(name, badge) {
         return await this.userModel.updateMany({ name }, { $push: { badges: { badge } } });
@@ -86,6 +86,9 @@ let DatabaseUtilsService = class DatabaseUtilsService {
     }
     async findMeetingsByNameIncluding(generalNames) {
         return await this.meetingModel.find({ name: { $in: generalNames } });
+    }
+    async findMeetingsByNameAndDateIncluding(filter) {
+        return await this.meetingModel.findOne({ 'meetings.url': filter.url, 'meetings.date': filter.date });
     }
     async findMeeting(filter, fields) {
         return await this.meetingModel.findOne(filter).select(fields);
@@ -128,7 +131,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             avatar: sendUser ? sendUser['avatar'] : 'https://cdn-icons-png.flaticon.com/128/1144/1144760.png'
         });
         await newNote.save();
-        return JSON.stringify(newNote);
+        return newNote;
     }
     async createNewUser(name, avatar, url, date, generalName) {
         const newUser = new this.userModel({

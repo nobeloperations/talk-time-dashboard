@@ -28,7 +28,6 @@ window.onload = function () {
         let _user = {};
         _cookies.forEach(_cookie => {
             if(_cookie.startsWith('user={')) {
-                console.log(_cookie)
                 _user = JSON.parse(_cookie.split('=').at(-1))
             }
         })
@@ -36,7 +35,6 @@ window.onload = function () {
     }
 
     const _currentUser = _getUserFromCookies()
-    console.log(_currentUser)
     
     if(_leaveFeedback) _leaveFeedback.style.display = _pathName.includes(_currentUser.name) ? 'none' : 'flex'
     if(_leaveFeedbackLink) _leaveFeedbackLink.style.display = _pathName.includes(_currentUser.name) ? 'none' : 'flex'
@@ -239,7 +237,6 @@ window.onload = function () {
     _viewImageButtons.forEach(_viewImageButton => {
         _viewImageButton.onclick = function () {
             let _currentImage = this.parentElement.parentElement.parentElement.nextElementSibling
-            console.log(_currentImage)
             _currentImage.style.visibility = 'visible'
             _currentImage.style.opacity = '1'
             _container.className = 'container open__modal'

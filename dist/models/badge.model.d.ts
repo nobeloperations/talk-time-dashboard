@@ -8,9 +8,6 @@ export declare const BadgeSchema: mongoose.Schema<any, mongoose.Model<any, any, 
         Encourage?: {
             count: number;
         };
-        BeeBrief?: {
-            count: number;
-        };
         ZenEnviroment?: {
             count: number;
         };
@@ -23,5 +20,24 @@ export declare const BadgeSchema: mongoose.Schema<any, mongoose.Model<any, any, 
         BePresent?: {
             count: number;
         };
+        BeeBrief?: {
+            count: number;
+        };
     };
 }>;
+interface BadgeCount {
+    count: number;
+}
+export interface BadgeModel {
+    name: string;
+    badges: {
+        Fun: BadgeCount;
+        Encourage: BadgeCount;
+        BeeBrief: BadgeCount;
+        ZenEnviroment: BadgeCount;
+        Help: BadgeCount;
+        OnTime: BadgeCount;
+        BePresent: BadgeCount;
+    }[];
+}
+export {};
