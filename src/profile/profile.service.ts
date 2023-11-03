@@ -26,11 +26,13 @@ export class ProfileService {
             const { url, date } = user;
             const meeting = await this.databaseUtilsService.findMeetingsByNameAndDateIncluding({ url, date });
     
-            meeting.meetings.forEach(meet => {
-                if (meet.url === url && meet.date === date) {
-                    usersMeetings.push({generalName: meeting.name, ...meet});
-                }
-            });
+            if(meeting?.meetings.length) {
+                meeting.meetings.forEach(meet => {
+                    if (meet.url === url && meet.date === date) {
+                        usersMeetings.push({generalName: meeting.name, ...meet});
+                    }
+                });
+            }
         }));
     
         return usersMeetings;

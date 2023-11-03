@@ -30,11 +30,13 @@ let ProfileService = class ProfileService {
         await Promise.all(allUsers.map(async (user) => {
             const { url, date } = user;
             const meeting = await this.databaseUtilsService.findMeetingsByNameAndDateIncluding({ url, date });
-            meeting.meetings.forEach(meet => {
-                if (meet.url === url && meet.date === date) {
-                    usersMeetings.push(Object.assign({ generalName: meeting.name }, meet));
-                }
-            });
+            if (meeting === null || meeting === void 0 ? void 0 : meeting.meetings.length) {
+                meeting.meetings.forEach(meet => {
+                    if (meet.url === url && meet.date === date) {
+                        usersMeetings.push(Object.assign({ generalName: meeting.name }, meet));
+                    }
+                });
+            }
         }));
         return usersMeetings;
     }
