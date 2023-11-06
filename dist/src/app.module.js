@@ -21,7 +21,6 @@ const http_exception_filter_1 = require("./filters/http-exception.filter");
 const database_utils_module_1 = require("./database-utils/database-utils.module");
 const auth_module_1 = require("./auth/auth.module");
 const profile_module_1 = require("./profile/profile.module");
-const messages_module_1 = require("./messages/messages.module");
 let AppModule = class AppModule {
 };
 AppModule = __decorate([
@@ -40,7 +39,6 @@ AppModule = __decorate([
             database_utils_module_1.DatabaseUtilsModule,
             auth_module_1.AuthModule,
             profile_module_1.ProfileModule,
-            messages_module_1.MessageModule,
         ],
         providers: [
             {

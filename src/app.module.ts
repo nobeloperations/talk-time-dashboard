@@ -12,7 +12,6 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { DatabaseUtilsModule } from './database-utils/database-utils.module';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
-import { MessageModule } from './messages/messages.module';
 
 
 @Module({
@@ -30,7 +29,6 @@ import { MessageModule } from './messages/messages.module';
     DatabaseUtilsModule,
     AuthModule,
     ProfileModule,
-    MessageModule,
   ],
   providers: [
     {
