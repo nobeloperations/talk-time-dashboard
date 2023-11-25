@@ -24,4 +24,5 @@ export declare class MainController {
         version: string;
     };
     getPolicy(): void;
+    validateGoogleMeetLink(req: Request): Promise<string | import("axios").AxiosResponse<any, any>>;
 }

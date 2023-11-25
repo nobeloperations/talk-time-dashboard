@@ -36,6 +36,26 @@ let BadgesService = class BadgesService {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
+    async getBadgesLevel(params) {
+        try {
+            let badgesLevels = [];
+            const { username } = params;
+            const badgesUser = await this.databaseUtilsService.findBadgeUserByName({ name: username });
+            let entries = Object.entries(badgesUser.badges);
+            entries.forEach(([key, value]) => {
+                badgesLevels.push({ [key]: value['count'] });
+            });
+            const badgeCounts = badgesLevels.map(badgeLevel => Object.values(badgeLevel)[0]);
+            const badgesMin = Math.min(...badgeCounts);
+            if (badgesMin < 3) {
+                badgesLevels = badgesLevels.filter(badgesLevel => +Object.values(badgesLevel)[0] >= 3);
+            }
+            console.log(badgesLevels);
+        }
+        catch (e) {
+            return JSON.stringify({ message: 'Something went wrong...', error: e });
+        }
+    }
 };
 BadgesService = __decorate([
     (0, common_1.Injectable)(),

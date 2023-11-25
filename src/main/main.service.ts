@@ -5,6 +5,7 @@ import { Meeting } from 'models/meeting.model';
 import { User } from 'models/user.model';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 import { AddGeneralBody, FilteredMeeting, MainReturn, UserPayload, UsersMeeting, notAuthenticated } from 'types/types';
+import axios from 'axios'
 
 @Injectable()
 export class MainService {
@@ -69,6 +70,13 @@ export class MainService {
         } catch(e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
         }
+    }
+
+    async validateGoogleMeetLink(req) {
+        const { code } = req.params;
+        const meeting = await axios.get(`http://3.67.185.26:5000/api/class-events/link/${code}`)
+        
+        return meeting ? JSON.stringify(meeting.data) : meeting
     }
 
 }

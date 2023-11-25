@@ -13,7 +13,6 @@ exports.FeedbacksService = void 0;
 const common_1 = require("@nestjs/common");
 const user_cookies_1 = require("../../helpers/user_cookies");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
-const DEFAULT_BADGE = 'Choose the Badge (not necessarily)';
 let FeedbacksService = class FeedbacksService {
     constructor(databaseUtilsService) {
         this.databaseUtilsService = databaseUtilsService;
@@ -59,13 +58,10 @@ let FeedbacksService = class FeedbacksService {
             const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
             if (!userPayload)
                 return res.redirect('/');
-            let { rating, feedback, badge } = createFeedbackBody;
+            let { rating, feedback } = createFeedbackBody;
             let { url, receiver, date, generalName } = params;
             let sendUser = await this.databaseUtilsService.findUser({ name: userPayload.name }, '');
             await this.databaseUtilsService.updateUser({ name: receiver, url, date }, { $push: { rating } });
-            if (badge !== DEFAULT_BADGE) {
-                await this.databaseUtilsService.updateBadge(badge.replaceAll(' ', ''), receiver);
-            }
             await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename, date);
             return res.redirect(`/dashboard/${url}/${date}?q=${generalName}`);
         }

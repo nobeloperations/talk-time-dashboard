@@ -13,6 +13,7 @@ exports.MainService = void 0;
 const common_1 = require("@nestjs/common");
 const user_cookies_1 = require("../../helpers/user_cookies");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
+const axios_1 = require("axios");
 let MainService = class MainService {
     constructor(databaseUtilsService) {
         this.databaseUtilsService = databaseUtilsService;
@@ -74,6 +75,11 @@ let MainService = class MainService {
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
+    }
+    async validateGoogleMeetLink(req) {
+        const { code } = req.params;
+        const meeting = await axios_1.default.get(`http://3.67.185.26:5000/api/class-events/link/${code}`);
+        return meeting ? JSON.stringify(meeting.data) : meeting;
     }
 };
 MainService = __decorate([

@@ -6,8 +6,6 @@ import { CreateFeedbackBody, CreateNewFeedbackParams, FeedbackImage, GetNewFeedb
 import { User } from 'models/user.model';
 import { Feedback } from 'models/feedback.model';
 
-const DEFAULT_BADGE = 'Choose the Badge (not necessarily)'
-
 @Injectable()
 export class FeedbacksService {
 
@@ -57,14 +55,10 @@ export class FeedbacksService {
         try {
             const userPayload: UserPayload = getUserFromCookies(req)
             if (!userPayload) return res.redirect('/')
-            let { rating, feedback, badge }: CreateFeedbackBody = createFeedbackBody;
+            let { rating, feedback }: CreateFeedbackBody = createFeedbackBody;
             let { url, receiver, date, generalName }: CreateNewFeedbackParams = params;
             let sendUser: User = await this.databaseUtilsService.findUser({ name: userPayload.name }, '')
             await this.databaseUtilsService.updateUser({ name: receiver, url, date }, { $push: { rating } });
-            if (badge !== DEFAULT_BADGE) {
-                await this.databaseUtilsService.updateBadge(badge.replaceAll(' ', ''), receiver)
-            }
-
 
             await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, files[0]?.filename, date)
             return res.redirect(`/dashboard/${url}/${date}?q=${generalName}`)

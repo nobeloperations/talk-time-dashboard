@@ -40,4 +40,12 @@ export class MainController {
     @HttpCode(200)
     @Render("policy")
     getPolicy() {}
+
+
+    @Get('/checkevent/:code')
+    @HttpCode(200)
+    validateGoogleMeetLink(@Req() req: Request) {
+        return this.mainService.validateGoogleMeetLink(req)
+    }
+
 }

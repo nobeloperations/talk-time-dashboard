@@ -17,4 +17,5 @@ export declare class MainService {
         isAuth: boolean;
         profileName: string;
     }>;
+    validateGoogleMeetLink(req: any): Promise<string | import("axios").AxiosResponse<any, any>>;
 }
