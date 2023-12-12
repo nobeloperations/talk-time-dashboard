@@ -4,5 +4,5 @@ export declare class BadgesService {
     private readonly databaseUtilsService;
     constructor(databaseUtilsService: DatabaseUtilsService);
     newBadge(params: NewBadgeParams, newBadgeBody: NewBadgeBody): Promise<string | void>;
-    getBadgesLevel(params: any): Promise<string>;
+    calculateBadgeLevel(params: any): Promise<string[]>;
 }

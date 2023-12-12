@@ -22,8 +22,8 @@ let BadgesController = class BadgesController {
     newBadge(params, newBadgeBody) {
         return this.badgesService.newBadge(params, newBadgeBody);
     }
-    getBadgesLevel(params) {
-        return this.badgesService.getBadgesLevel(params);
+    calculateBadgesLevel(params) {
+        return this.badgesService.calculateBadgeLevel(params);
     }
 };
 __decorate([
@@ -36,13 +36,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], BadgesController.prototype, "newBadge", null);
 __decorate([
-    (0, common_1.Get)('/level/:username'),
+    (0, common_1.Get)("/:name"),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], BadgesController.prototype, "getBadgesLevel", null);
+], BadgesController.prototype, "calculateBadgesLevel", null);
 BadgesController = __decorate([
     (0, common_1.Controller)('badges'),
     __metadata("design:paramtypes", [badges_service_1.BadgesService])

@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BadgesService = void 0;
 const common_1 = require("@nestjs/common");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
+const badges_level_js_1 = require("../../helpers/badges_level.js");
 let BadgesService = class BadgesService {
     constructor(databaseUtilsService) {
         this.databaseUtilsService = databaseUtilsService;
@@ -36,25 +37,15 @@ let BadgesService = class BadgesService {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async getBadgesLevel(params) {
-        try {
-            let badgesLevels = [];
-            const { username } = params;
-            const badgesUser = await this.databaseUtilsService.findBadgeUserByName({ name: username });
-            let entries = Object.entries(badgesUser.badges);
-            entries.forEach(([key, value]) => {
-                badgesLevels.push({ [key]: value['count'] });
-            });
-            const badgeCounts = badgesLevels.map(badgeLevel => Object.values(badgeLevel)[0]);
-            const badgesMin = Math.min(...badgeCounts);
-            if (badgesMin < 3) {
-                badgesLevels = badgesLevels.filter(badgesLevel => +Object.values(badgesLevel)[0] >= 3);
-            }
-            console.log(badgesLevels);
-        }
-        catch (e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e });
-        }
+    async calculateBadgeLevel(params) {
+        const { name } = params;
+        const badgeUser = await this.databaseUtilsService.findBadgeUserByName({ name });
+        const badges = badgeUser.badges;
+        const formattedBadges = Object.entries(badges).map(([key, value]) => ({ [key]: value['count'] }));
+        let maxBadgesCount = Math.max(...Object.values(badges).map(badge => badge['count']));
+        maxBadgesCount = Math.min(9, Math.max(3, maxBadgesCount));
+        const filteredBadges = (0, badges_level_js_1.filterBadges)(formattedBadges, maxBadgesCount);
+        return filteredBadges;
     }
 };
 BadgesService = __decorate([

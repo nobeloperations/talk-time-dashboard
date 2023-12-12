@@ -57,6 +57,7 @@ export class DashboardService {
             let { url, date }: CreateNoteParams = params;
             let { text, tags, sender }: CreateNoteBody = createNoteBody
             const newNote: Note = await this.databaseUtilsService.createNewNote(url, date, text, tags, sender)
+            
             return JSON.stringify(newNote)
         }
         catch (e) {

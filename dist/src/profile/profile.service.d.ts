@@ -1,11 +1,12 @@
 import { Request, Response } from 'express';
+import { User } from 'models/user.model';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 import { GetProfileParams } from 'types/types';
 export declare class ProfileService {
     private readonly databaseUtilsService;
     constructor(databaseUtilsService: DatabaseUtilsService);
     formatBadges(badgesObject: any): any[];
-    getUsersMeetings(allUsers: any): Promise<any[]>;
+    getUsersMeetings(allUsers: User[]): Promise<any[]>;
     getProfile(req: Request, res: Response, params: GetProfileParams, generalName: string): Promise<void | {
         cssFileName: string;
         url: string;

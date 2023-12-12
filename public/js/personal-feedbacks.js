@@ -3,7 +3,7 @@ window.onload = function () {
     let _closeImageButtons = document.querySelectorAll('.personal__feedback__close__img');
     let _viewImageButtons = document.querySelectorAll('.personal__feedback__view__image');
     let _container = document.querySelector('.container');
-    let _feedbacks = document.querySelectorAll('.personal__feedback')
+    let _personalFeedbacks = document.querySelectorAll('.personal__feedback')
     let _feedbacksTexts = document.querySelectorAll('.personal__feedback__text')
     let _feedbacksFilterWrapper = document.querySelector('.personal__feedbacks__filters__wrapper')
     let _lowRatingButton = document.querySelector('.personal__feedbacks__low__filter')
@@ -20,6 +20,7 @@ window.onload = function () {
     let _averageRating = document.querySelector('.average__rating')
     let _feedbacksCounter = document.querySelector('.feedbacks__counter')
     let _leaveFeedbackLink = document.querySelector('.leave__feedback__link')
+
     const LOW_RATING = 'LOW'
     const HIGH_RATING = 'HIGH'
 
@@ -72,7 +73,7 @@ window.onload = function () {
 
     function _filtersOptions() {
         let _counter = 0;
-        _feedbacks.forEach((_feedback) => {
+        _personalFeedbacks.forEach((_feedback) => {
             const _showFeedback =
                 (!_filters.image || _feedback.dataset.image) &&
                 (!_filters.rating ||
@@ -150,15 +151,16 @@ window.onload = function () {
             const _feedback = this.parentElement.parentElement.parentElement
             const _viewImage = _feedback.querySelector('.personal__feedback__view__image')
 
-            const h = _feedback.scrollHeight;
-            const w = _feedback.scrollWidth;
-            const bh = document.body.scrollHeight;
-            const bw = document.body.scrollWidth - 20;
+            const _h = _feedback.scrollHeight;
+            const _w = _feedback.scrollWidth;
+            const _bh = document.body.scrollHeight;
+            const _bw = document.body.scrollWidth - 20;
 
             _feedback.style.position = 'absolute'
-            _feedback.style.left = ((bw - w) / 2) + "px"
-            _feedback.style.top = ((bh - h) / 2) + "px"
+            _feedback.style.left = ((_bw - _w) / 2) + "px"
+            _feedback.style.top = ((_bh - _h) / 2) + "px"
             _feedback.style.zIndex = '4'
+            
             if (_viewImage) _viewImage.style.display = 'none'
 
             _feedbackText.style.display = 'inline'
@@ -205,7 +207,7 @@ window.onload = function () {
 
     let _ratingSum = 0
 
-    _feedbacks.forEach(_feedback => {
+    _personalFeedbacks.forEach(_feedback => {
         const _rating = _feedback.dataset.rating;
         _ratingSum += +_rating
         const _ratingElements = _feedback.querySelectorAll(`.rating:nth-child(-n + ${_rating})`)
@@ -232,7 +234,7 @@ window.onload = function () {
     })
 
     _averageRating.innerHTML = `<b style="color: #F1C40F;">★</b> ${(_ratingSum / _ratingCounter).toFixed(1)}`
-    _feedbacksCounter.textContent = `(${_feedbacks.length} feedbacks)`
+    _feedbacksCounter.textContent = `(${_personalFeedbacks.length} feedbacks)`
 
     _viewImageButtons.forEach(_viewImageButton => {
         _viewImageButton.onclick = function () {

@@ -1,8 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { Request, Response } from 'express';
 import { getUserFromCookies } from 'helpers/user_cookies';
+import { BadgeModel } from 'models/badge.model';
+import { Feedback } from 'models/feedback.model';
+import { Meeting } from 'models/meeting.model';
+import { Note } from 'models/note.model';
+import { User } from 'models/user.model';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
-import { GetProfileParams, UserPayload } from 'types/types';
+import { Badge, BadgeUser, GetProfileParams, UserPayload } from 'types/types';
 
 @Injectable()
 export class ProfileService {
@@ -19,12 +24,12 @@ export class ProfileService {
         return formattedBadges
     }
 
-    async getUsersMeetings(allUsers) {
+    async getUsersMeetings(allUsers: User[]) {
         const usersMeetings = [];
     
-        await Promise.all(allUsers.map(async user => {
+        await Promise.all(allUsers.map(async ( user: User ) => {
             const { url, date } = user;
-            const meeting = await this.databaseUtilsService.findMeetingsByNameAndDateIncluding({ url, date });
+            const meeting: Meeting = await this.databaseUtilsService.findMeetingsByNameAndDateIncluding({ url, date });
     
             if(meeting?.meetings.length) {
                 meeting.meetings.forEach(meet => {
@@ -56,6 +61,7 @@ export class ProfileService {
 
         const usersMeetings = await this.getUsersMeetings(allUsers)
         const formattedBadges = this.formatBadges(badges)
+        
         return { cssFileName: "profile", url, date, generalName, isAuth: true, notes, profileName: name, badges: formattedBadges, feedbacksReceived, feedbacksSent, profileEmail: email, profileAvatar: usersAvatar.avatar, usersMeetings, meetingsCount: allUsers.length, title: `${name}'s profile`}
         
     }

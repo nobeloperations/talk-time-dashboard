@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { BadgeModel } from 'models/badge.model';
-import { Document, ObjectId } from 'mongoose';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
-import { Badge, NewBadgeBody, NewBadgeParams } from 'types/types';
+import { Badges, NewBadgeBody, NewBadgeParams } from 'types/types';
+import { filterBadges } from '../../helpers/badges_level.js';
+import { BadgeModel } from 'models/badge.model.js';
+
 
 @Injectable()
 export class BadgesService {
@@ -14,7 +15,7 @@ export class BadgesService {
             const { name }: NewBadgeParams = params;
             let { badge }: NewBadgeBody = newBadgeBody;
             badge = badge.replaceAll(' ', '')
-            const currentBadgeUser = await this.databaseUtilsService.findBadgeUserByName({ name })
+            const currentBadgeUser: BadgeModel = await this.databaseUtilsService.findBadgeUserByName({ name })
             if(currentBadgeUser) {
                 await this.databaseUtilsService.updateBadge(badge, name)
             }
@@ -30,24 +31,18 @@ export class BadgesService {
         }
     }
 
-    async getBadgesLevel(params) {
-        try {
-            let badgesLevels = [];
-            const { username } = params;
-            const badgesUser = await this.databaseUtilsService.findBadgeUserByName({name: username })
-            let entries = Object.entries(badgesUser.badges)
-            entries.forEach(([key, value]) => {
-                badgesLevels.push({[key]: value['count']})
-            })
-            const badgeCounts: any = badgesLevels.map(badgeLevel => Object.values(badgeLevel)[0]);
-            const badgesMin = Math.min(...badgeCounts);
-            
-            if (badgesMin < 3) {
-                badgesLevels = badgesLevels.filter(badgesLevel => +Object.values(badgesLevel)[0] >= 3)
-            }
-            console.log(badgesLevels)
-        } catch(e) {
-            return JSON.stringify({ message: 'Something went wrong...', error: e })
-        }
+    async calculateBadgeLevel(params) {
+        const { name } = params;
+        const badgeUser: BadgeModel = await this.databaseUtilsService.findBadgeUserByName({ name });
+        const badges: Badges[] = badgeUser.badges;
+        
+        const formattedBadges = Object.entries(badges).map(([key, value]) => ({ [key]: value['count'] }));
+        
+        let maxBadgesCount: number = Math.max(...Object.values(badges).map(badge => badge['count']));
+        maxBadgesCount = Math.min(9, Math.max(3, maxBadgesCount));
+        
+        const filteredBadges: string[] = filterBadges(formattedBadges, maxBadgesCount);
+    
+        return filteredBadges;
     }
 }

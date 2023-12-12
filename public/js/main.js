@@ -4,6 +4,8 @@ window.onload = function () {
     const _generalWrappers = document.querySelectorAll('.general__wrapper')
     const _arrowDown = document.querySelector('.main__button')
     const _profileInfo = document.querySelector('.profile__information')
+
+    
     const _profileInfoWidth = _profileInfo.offsetWidth;
     _profileInfo.style.left = `calc(100% - ${_profileInfoWidth + 15}px)`
 

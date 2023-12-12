@@ -13,9 +13,9 @@ export class BadgesController {
         return this.badgesService.newBadge(params, newBadgeBody)
     }
 
-    @Get('/level/:username')
+    @Get("/:name")
     @HttpCode(200)
-    getBadgesLevel(@Param() params) {
-        return this.badgesService.getBadgesLevel(params)
+    calculateBadgesLevel(@Param() params) {
+        return this.badgesService.calculateBadgeLevel(params)
     }
 }

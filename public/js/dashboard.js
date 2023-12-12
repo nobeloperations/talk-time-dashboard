@@ -5,41 +5,28 @@ window.onload = function () {
     const DATE = window.location.href.split('/').at(-1);
     const _usersList = document.querySelectorAll('.dashboard__user')
     const _searchUsersInput = document.querySelector('.dashboard__search')
-    // const _dashboardNotes = document.querySelector('.dashboard__notes')
-    const _addNote = document.querySelector('.add__note')
+    const _addNoteButton = document.querySelector('.add__note')
     const _addNoteInput = document.querySelector('.notes__input')
     const _notes = document.querySelector('.notes')
-    const _noNotes = document.querySelector('.no__notes')
+    const _noNotesText = document.querySelector('.no__notes')
     const _notesList = document.querySelectorAll('.note')
-    // const _dashboardTranscription = document.querySelector('.dashboard__transcription')
-    // const _notesSwitch = document.querySelector('.notes__switch')
-
-    // _transcriptionSwitch.onclick = function() {
-    //     _dashboardNotes.style.display = 'none'
-    //     _dashboardTranscription.style.display = 'block'
-    // }
-    // _notesSwitch.onclick = function() {
-    //     _dashboardTranscription.style.display = 'none'
-    //     _dashboardNotes.style.display = 'block'
-
-    // }
 
     _notesList.forEach(_note => {
         const _noteSender = _note.querySelector('.note__sender__name').textContent;
-        const _deleteNote = _note.querySelector('.delete__note')
-        const _editNote = _note.querySelector('.edit__note')
+        const _deleteNoteButton = _note.querySelector('.delete__note')
+        const _editNoteButton = _note.querySelector('.edit__note')
         if (_noteSender !== _currentUsername) {
-            _deleteNote.disabled = true;
-            _editNote.disabled = true;
+            _deleteNoteButton.disabled = true;
+            _editNoteButton.disabled = true;
         }
     })
 
-    if (_notes.children.length === 1) _noNotes.style.display = 'inline'
+    if (_notes.children.length === 1) _noNotesText.style.display = 'inline'
 
     async function _deleteNote(_curr, _noteId) {
         _notes.removeChild(_curr.parentElement.parentElement)
-        if (_notes.children.length === 1) _noNotes.style.display = 'inline'
-        fetch('/deleteconclusion', {
+        if (_notes.children.length === 1) _noNotesText.style.display = 'inline'
+        fetch('/deletenote', {
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json'
@@ -50,15 +37,12 @@ window.onload = function () {
         })
     }
 
-    async function _getUsersAvatar() {
+    (async function _getUsersAvatar() {
         let response = await fetch(`/users/${_currentUsername}`);
-        let data = await response.json();
-        return data.avatar;
-    }
-
-    _getUsersAvatar().then(avatar => {
-        _userAvatar = avatar;
-    })
+        let user = await response.json();
+        _userAvatar = user.avatar;
+        return _userAvatar;
+    })();
 
     const _noteTemplate = (_noteValue) => {
         if (_noteValue.trim()) {
@@ -88,7 +72,7 @@ window.onload = function () {
 
 
     const _newNoteRequest = async (_noteValue, _note) => {
-        await fetch(`/newconclusion/${URL}/${DATE}`, {
+        await fetch(`/newnote/${URL}/${DATE}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -105,27 +89,27 @@ window.onload = function () {
                 _note.querySelector('.note__id').innerHTML += res._id
             })
         _addNoteInput.value = ''
-        _noNotes.style.display = 'none'
+        _noNotesText.style.display = 'none'
 
     }
 
     const _updateNote = (_note, _curr) => {
         const _noteText = _note.querySelector('.note__text__wrapper')
-        const _noteEditable = _note.querySelector('.edit__note__text')
+        const _noteEditableText = _note.querySelector('.edit__note__text')
         const _saveNote = _note.querySelector('.save__note')
         _noteText.style.display = 'none'
-        _noteEditable.style.display = 'block'
+        _noteEditableText.style.display = 'block'
         _curr.disabled = true;
         _saveNote.style.display = 'flex'
     }
 
     const _saveNote = (_note, _curr) => {
         const _noteId = _curr.previousElementSibling.textContent;
-        const _noteEditable = _note.querySelector('.edit__note__text')
+        const _noteEditableText = _note.querySelector('.edit__note__text')
         const _noteText = _note.querySelector('.note__text')
         const _noteTextWrapper = _note.querySelector('.note__text__wrapper')
         const _editNote = _note.querySelector('.edit__note')
-        const _newNote = _noteEditable.value.trim()
+        const _newNote = _noteEditableText.value.trim()
         if (!_newNote) return;
         fetch('/updatenote', {
             method: 'PATCH',
@@ -137,15 +121,15 @@ window.onload = function () {
                 text: _newNote
             })
         })
-        _noteEditable.value = _newNote
-        _noteEditable.style.display = 'none'
+        _noteEditableText.value = _newNote
+        _noteEditableText.style.display = 'none'
         _noteText.innerHTML = _newNote
         _noteTextWrapper.style.display = 'flex'
         _curr.style.display = 'none'
         _editNote.disabled = ''
     }
 
-    _addNote.onclick = async function () {
+    _addNoteButton.onclick = async function () {
         let _noteValue = _addNoteInput.value;
         const _note = _noteTemplate(_noteValue)
         if (_note) _newNoteRequest(_noteValue, _note)
@@ -155,18 +139,13 @@ window.onload = function () {
         let _curr = e.target;
         const _note = _curr.parentElement.parentElement;
 
-        if (_curr.className == 'delete__note') {
-            const _noteId = _curr.nextElementSibling.nextElementSibling.textContent
-            _deleteNote(_curr, _noteId)
+        const _noteFunctions = {
+            'delete__note': () => { _deleteNote(_curr, _noteId) },
+            'edit__note': () => { _updateNote(_note, _curr) },
+            'save__note': () => { _saveNote(_note, _curr) },
         }
 
-        if (_curr.className == 'edit__note') {
-            _updateNote(_note, _curr)
-        }
-
-        if (_curr.className == 'save__note') {
-            _saveNote(_note, _curr)
-        }
+        _noteFunctions[_curr.className]();
     }
 
     _search(_searchUsersInput, _usersList)

@@ -23,13 +23,13 @@ export class DashboardController {
         return this.dashboardService.updatePercents(params, updatePercentageBody)
     }
 
-    @Post('/newconclusion/:url/:date')
+    @Post('/newnote/:url/:date')
     @HttpCode(200)
     newNote(@Param() params: CreateNoteParams, @Body() createNoteBody: CreateNoteBody): Promise<Note | string> {
         return this.dashboardService.newNote(params, createNoteBody)
     }
 
-    @Delete('/deleteconclusion')
+    @Delete('/deletenote')
     @HttpCode(200)
     deleteNote(@Body() deleteNoteBody: DeleteNoteBody): Promise<void | string> {
         return this.dashboardService.deleteNote(deleteNoteBody)
