@@ -13,9 +13,6 @@ export let helpers = {
         let sum: number = rate.reduce((a, b) => +a + +b, 0);
         return (sum / rate.length).toFixed(1);
     },
-    mult(e: number, coef: number): number {
-        return e * coef
-    },
     formatDate(date: string): string {
         const parts: string[] = date.split('/')
         const day: string = parts[0]
@@ -23,20 +20,34 @@ export let helpers = {
         const year: string = parts[2]
         return `${month}/${day}/${year}`
     },
-    badgesLevel(e: number): string {
-        return e === 1 ? 'Knowlege level' : e === 2 ? 'Apprentice level' : e === 3 ? 'Mastery level' : 'Leadership level'
-    },
     moreThan(str: string, n: number): boolean {
         return str.length > n
     },
     badgesExist(badges: Badges): boolean {
         if (badges) {
             let badgesExist: boolean = false;
-            let values: BadgeValues[] = Object.values(badges)
-            values = values.filter(value => !!value['count'])
+            let values: BadgeValues[] = Object.values(badges).filter(value => !!value['count'])
             if (values.length) badgesExist = true
 
             return badgesExist
         }
+    },
+    lessThan(a: number, b: number): boolean {
+        return a < b
+    },
+    getKeysFromBadgesConfig(badges, index) {
+        const keys = Object.keys(badges);
+        return keys[index]
+    },
+    getValuesFromBadgesConfig(badges, index: number) {
+        const values = Object.values(badges);
+        return values[index]
+    },
+    getNextBadgeLevel(level: string) {
+        return {
+            'knowlege': 'apprentice',
+            'apprentice': 'mastery',
+            'mastery': 'leadership'
+        }[level]
     }
 }

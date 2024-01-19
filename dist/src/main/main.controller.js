@@ -37,6 +37,9 @@ let MainController = class MainController {
     validateGoogleMeetLink(req) {
         return this.mainService.validateGoogleMeetLink(req);
     }
+    getHallOfFame(req, res, generalName) {
+        return this.mainService.getHallOfFame(req, res, generalName);
+    }
 };
 __decorate([
     (0, common_1.Get)('/'),
@@ -88,6 +91,17 @@ __decorate([
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "validateGoogleMeetLink", null);
+__decorate([
+    (0, common_1.Get)('/hall-of-fame/:url/:date'),
+    (0, common_1.HttpCode)(200),
+    (0, common_1.Render)('hall-of-fame'),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('q')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:returntype", void 0)
+], MainController.prototype, "getHallOfFame", null);
 MainController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [main_service_1.MainService])

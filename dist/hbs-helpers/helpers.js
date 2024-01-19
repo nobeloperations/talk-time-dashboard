@@ -15,9 +15,6 @@ exports.helpers = {
         let sum = rate.reduce((a, b) => +a + +b, 0);
         return (sum / rate.length).toFixed(1);
     },
-    mult(e, coef) {
-        return e * coef;
-    },
     formatDate(date) {
         const parts = date.split('/');
         const day = parts[0];
@@ -25,21 +22,35 @@ exports.helpers = {
         const year = parts[2];
         return `${month}/${day}/${year}`;
     },
-    badgesLevel(e) {
-        return e === 1 ? 'Knowlege level' : e === 2 ? 'Apprentice level' : e === 3 ? 'Mastery level' : 'Leadership level';
-    },
     moreThan(str, n) {
         return str.length > n;
     },
     badgesExist(badges) {
         if (badges) {
             let badgesExist = false;
-            let values = Object.values(badges);
-            values = values.filter(value => !!value['count']);
+            let values = Object.values(badges).filter(value => !!value['count']);
             if (values.length)
                 badgesExist = true;
             return badgesExist;
         }
+    },
+    lessThan(a, b) {
+        return a < b;
+    },
+    getKeysFromBadgesConfig(badges, index) {
+        const keys = Object.keys(badges);
+        return keys[index];
+    },
+    getValuesFromBadgesConfig(badges, index) {
+        const values = Object.values(badges);
+        return values[index];
+    },
+    getNextBadgeLevel(level) {
+        return {
+            'knowlege': 'apprentice',
+            'apprentice': 'mastery',
+            'mastery': 'leadership'
+        }[level];
     }
 };
 //# sourceMappingURL=helpers.js.map

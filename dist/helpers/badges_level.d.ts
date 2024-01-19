@@ -1,1 +1,1 @@
-export declare function filterBadges(badges: any, maxBadgesCount: number): any;
+export declare const checkBadgesLevels: (badgesLevels: number[]) => boolean;

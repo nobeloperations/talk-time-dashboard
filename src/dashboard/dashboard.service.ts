@@ -38,8 +38,9 @@ export class DashboardService {
 
     async updatePercents(params: UpdatePercentageParams, updatePercentageBody: UpdatePercentageBody): Promise<void | string> {
         try {
-            const { percents }: UpdatePercentageBody = updatePercentageBody
-            const { url, date }: UpdatePercentageParams = params
+            const { percents }: UpdatePercentageBody = updatePercentageBody;
+            const { url, date }: UpdatePercentageParams = params;
+            console.log(percents)
             percents.forEach(async (percentage: Percent) => {
                 const { name , percent }: Percent = percentage;
                 if(name.trim() && percent.trim()) {

@@ -41,8 +41,11 @@ export declare class DatabaseUtilsService {
     }): Promise<import("mongoose").Document<unknown, any, BadgeModel> & Omit<BadgeModel & {
         _id: import("mongoose").Types.ObjectId;
     }, never>>;
+    updateUserBadgesSent(filter: {
+        name: string;
+    }): Promise<UpdateWriteOpResult>;
     updateBadge(badge: string, name: string): Promise<void>;
-    findAllBadgeUser(): Promise<(import("mongoose").Document<unknown, any, BadgeModel> & Omit<BadgeModel & {
+    findAllBadgesUsers(): Promise<(import("mongoose").Document<unknown, any, BadgeModel> & Omit<BadgeModel & {
         _id: import("mongoose").Types.ObjectId;
     }, never>)[]>;
     createBadgesUser(name: any): Promise<void>;

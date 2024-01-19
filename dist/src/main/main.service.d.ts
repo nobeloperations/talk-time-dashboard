@@ -17,5 +17,15 @@ export declare class MainService {
         isAuth: boolean;
         profileName: string;
     }>;
-    validateGoogleMeetLink(req: any): Promise<string | import("axios").AxiosResponse<any, any>>;
+    validateGoogleMeetLink(req: Request): Promise<string | import("axios").AxiosResponse<any, any>>;
+    getHallOfFame(req: Request, res: Response, generalName: string): Promise<void | {
+        cssFileName: string;
+        title: string;
+        isAuth: boolean;
+        url: string;
+        date: string;
+        generalName: string;
+        profileName: string;
+        usersWithTheMostBadges: any[];
+    }>;
 }

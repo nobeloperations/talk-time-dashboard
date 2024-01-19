@@ -32,6 +32,10 @@ export const UserSchema = new mongoose.Schema({
     rating: {
         type: Array,
         required: true
+    },
+    badgesSent: {
+        type: Number,
+        required: true
     }
 })
 

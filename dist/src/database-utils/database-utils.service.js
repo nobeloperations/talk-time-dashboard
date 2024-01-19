@@ -28,6 +28,9 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         const badgeUser = await this.BadgeModel.findOne(filter);
         return badgeUser;
     }
+    async updateUserBadgesSent(filter) {
+        return await this.userModel.updateMany(filter, { $inc: { badgesSent: 1 } });
+    }
     async updateBadge(badge, name) {
         await this.BadgeModel.updateOne({ name }, {
             $inc: {
@@ -35,7 +38,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             },
         });
     }
-    async findAllBadgeUser() {
+    async findAllBadgesUsers() {
         const badgeUsers = await this.BadgeModel.find({});
         return badgeUsers;
     }
@@ -141,7 +144,8 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             percents: '',
             date,
             generalName,
-            rating: 0
+            rating: 0,
+            badgesSent: 0
         });
         return await newUser.save();
     }

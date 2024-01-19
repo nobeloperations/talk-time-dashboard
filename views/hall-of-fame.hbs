@@ -1,0 +1,22 @@
+<div class="hall-of-fame__container">
+    {{>menu}}
+    <div class="hall-of-fame__wrapper">
+        {{>navigate}}
+        <div class="hall-of-fame">
+            {{#each usersWithTheMostBadges}}
+            <div class="hall-of-fame__user">
+                <div class="hall-of-fame__avatar-name__wrapper">
+                    <div class="hall-of-fame__avatar__wrapper">
+                        <img class="hall-of-fame__avatar" src="{{avatar}}" alt="">
+                    </div>
+                    <div class="hall-of-fame__name__wrapper">
+                        <span class="hall-of-fame__name">{{name}}</span>
+                        <span class="hall-of-fame__meet__count">Participated in {{meetCount}} meetings</span>
+                    </div>
+                </div>
+                <span class="hall-of-fame__badges">{{count}} {{formatBadgeName badge}} badges</span>
+            </div>
+            {{/each}}
+        </div>
+    </div>
+</div>

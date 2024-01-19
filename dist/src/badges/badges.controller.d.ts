@@ -4,5 +4,8 @@ export declare class BadgesController {
     private badgesService;
     constructor(badgesService: BadgesService);
     newBadge(params: NewBadgeParams, newBadgeBody: NewBadgeBody): Promise<void | string>;
-    calculateBadgesLevel(params: any): Promise<string[]>;
+    calculateBadgesLevel(params: any): Promise<{
+        allBadgesStats: any;
+        allowedBadges: any;
+    }>;
 }

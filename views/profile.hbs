@@ -81,15 +81,36 @@
                 {{/each}}
             </div>
             <div class="profile__tab profile__badges">
-                {{#each badges}}
-                    <div class="profile__badge">
-                        <div class="profile__badge__info">
-                            <img src="/img/{{badgeToImage badge}}" class="profile__badge__image" alt="">
-                            <span class="profile__badge__name">{{formatBadgeName badge}}</span>
-                        </div>
-                        <span class="profile__badges__collected">You have collected {{count}} {{formatBadgeName badge}} badges</span>
+                <div class="profile__sent__badges">You sent {{badgesSent}} badge(s) in total</div>
+            {{#each badges}}
+                <div class="profile__badge">
+                    <div class="profile__badge__info">
+                        <img src="" class="profile__badge__image" alt="">
+                        <span class="profile__badge__name">{{formatBadgeName (getKeysFromBadgesConfig this 0)}}</span>
                     </div>
-                {{/each}}
+                    <div class="profile__badges__information">
+                        <div class="profile__badges__level__popup">
+                            <ul>
+                                {{#if (getValuesFromBadgesConfig this 1)}}
+                                    <li class="sent__badges__not__enough">Send {{getValuesFromBadgesConfig this 1}} badge(s) to achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
+                                {{else}}
+                                    <li class="sent__badges__enough">You sent enough badges to achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
+                                {{/if}}
+                                {{#if (getValuesFromBadgesConfig this 2)}}
+                                    <li class="received__badges__not__enough">Receive {{getValuesFromBadgesConfig this 2}} badge(s) to achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
+                                {{else}}
+                                    <li class="received__badges__enough">You sent enough badges to achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
+                                {{/if}}
+                            </ul>
+                        </div>
+                        <div>
+                            <span class="profile__badges__level">{{getValuesFromBadgesConfig this 3}}</span>
+                        </div>
+                        <div class="profile__badges__sent__collected">
+                        <span class="profile__received__badges">You collected&nbsp;<bclass="profile__received__badges__count">{{getValuesFromBadgesConfig this 0}}</b>&nbsp;{{getKeysFromBadgesConfig this 0}} badge(s)</span></div>
+                    </div>
+                </div>
+            {{/each}}
             </div>
             <div class="profile__tab profile__notes">
                 {{#each notes}}

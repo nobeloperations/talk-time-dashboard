@@ -23,6 +23,10 @@ export class DatabaseUtilsService {
         return badgeUser
     }
 
+    async updateUserBadgesSent(filter: { name: string }): Promise<UpdateWriteOpResult> {
+        return await this.userModel.updateMany(filter, { $inc: { badgesSent: 1 } })
+    }
+
     async updateBadge(badge: string, name: string) {
         await this.BadgeModel.updateOne({name}, {
             $inc: {
@@ -31,7 +35,7 @@ export class DatabaseUtilsService {
           })
     }
 
-    async findAllBadgeUser() {
+    async findAllBadgesUsers() {
         const badgeUsers = await this.BadgeModel.find({})
         return badgeUsers
     }
@@ -159,7 +163,8 @@ export class DatabaseUtilsService {
             percents: '',
             date,
             generalName,
-            rating: 0
+            rating: 0,
+            badgesSent: 0
         })
 
         return await newUser.save()

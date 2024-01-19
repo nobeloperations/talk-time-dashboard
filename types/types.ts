@@ -103,6 +103,7 @@ export interface UpdateNoteBody {
 
 export interface NewBadgeBody {
     badge: string;
+    from: string;
 }
 
 interface UrlAndDateParams {

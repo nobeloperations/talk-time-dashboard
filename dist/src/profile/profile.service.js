@@ -18,12 +18,16 @@ let ProfileService = class ProfileService {
         this.databaseUtilsService = databaseUtilsService;
     }
     formatBadges(badgesObject) {
-        const { badges } = badgesObject;
-        const formattedBadges = [];
-        Object.keys(badges).forEach(badge => {
-            formattedBadges.push({ badge, count: badges[badge].count });
-        });
-        return formattedBadges;
+        if (badgesObject) {
+            const { badges } = badgesObject;
+            const formattedBadges = [];
+            Object.keys(badges).forEach(badge => {
+                formattedBadges.push({ [badge]: badges[badge].count });
+            });
+            return formattedBadges;
+        }
+        else
+            return [];
     }
     async getUsersMeetings(allUsers) {
         const usersMeetings = [];
@@ -46,17 +50,33 @@ let ProfileService = class ProfileService {
             return res.redirect('/');
         const { name, email } = userPayload;
         const { url, date } = params;
-        const [usersAvatar, allUsers, badges, feedbacksReceived, feedbacksSent, notes] = await Promise.all([
-            await this.databaseUtilsService.findUser({ name }, 'avatar'),
+        const [currentUser, allUsers, badges, feedbacksReceived, feedbacksSent, notes] = await Promise.all([
+            await this.databaseUtilsService.findUser({ name }, ''),
             await this.databaseUtilsService.findUsers({ name }, ''),
             await this.databaseUtilsService.findBadgeUserByName({ name }),
             await this.databaseUtilsService.findFeedbacks({ receiver: name }, ''),
             await this.databaseUtilsService.findFeedbacks({ sender: name }, ''),
             await this.databaseUtilsService.findNotes({ sender: name }, '')
         ]);
+        const badgesSent = currentUser === null || currentUser === void 0 ? void 0 : currentUser.badgesSent;
         const usersMeetings = await this.getUsersMeetings(allUsers);
         const formattedBadges = this.formatBadges(badges);
-        return { cssFileName: "profile", url, date, generalName, isAuth: true, notes, profileName: name, badges: formattedBadges, feedbacksReceived, feedbacksSent, profileEmail: email, profileAvatar: usersAvatar.avatar, usersMeetings, meetingsCount: allUsers.length, title: `${name}'s profile` };
+        formattedBadges.forEach(formattedBadge => {
+            const numberOfBadges = Object.values(formattedBadge)[0];
+            const badgeLevel = numberOfBadges < 3 ? 3 : numberOfBadges < 5 ? 5 : numberOfBadges < 10 ? 10 : 20;
+            formattedBadge.badgesSentDiff = Math.max(badgeLevel - badgesSent, 0);
+            formattedBadge.badgesReceivedDiff = Math.max(badgeLevel - numberOfBadges, 0);
+            if (numberOfBadges < 3 || badgesSent < 3) {
+                formattedBadge.level = 'knowledge';
+            }
+            else if (numberOfBadges < 5 || badgesSent < 5) {
+                formattedBadge.level = 'apprentice';
+            }
+            else {
+                formattedBadge.level = 'mastery & leadership';
+            }
+        });
+        return { cssFileName: "profile", url, date, generalName, isAuth: true, notes, profileName: name, badges: formattedBadges, feedbacksReceived, feedbacksSent, profileEmail: email, profileAvatar: currentUser === null || currentUser === void 0 ? void 0 : currentUser.avatar, badgesSent: currentUser === null || currentUser === void 0 ? void 0 : currentUser.badgesSent, usersMeetings, meetingsCount: allUsers.length, title: `${name}'s profile` };
     }
 };
 ProfileService = __decorate([

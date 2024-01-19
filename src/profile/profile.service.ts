@@ -15,13 +15,15 @@ export class ProfileService {
     constructor(private readonly databaseUtilsService: DatabaseUtilsService) {}
 
     formatBadges(badgesObject) {
-        const { badges } = badgesObject;
-        const formattedBadges = []
-        Object.keys(badges).forEach(badge => {
-            formattedBadges.push({badge, count: badges[badge].count})
-        })
+        if (badgesObject) {
+            const { badges } = badgesObject;
+            const formattedBadges = []
+            Object.keys(badges).forEach(badge => {
+                formattedBadges.push({[badge]: badges[badge].count})
+            })
 
-        return formattedBadges
+            return formattedBadges
+        } else return []
     }
 
     async getUsersMeetings(allUsers: User[]) {
@@ -48,9 +50,9 @@ export class ProfileService {
         if (!userPayload) return res.redirect('/')
         const { name, email }: UserPayload = userPayload;
         const { url, date } = params;
-        const [ usersAvatar, allUsers, badges, feedbacksReceived, feedbacksSent, notes ] = await Promise.all(
+        const [ currentUser, allUsers, badges, feedbacksReceived, feedbacksSent, notes ] = await Promise.all(
             [
-                await this.databaseUtilsService.findUser({name}, 'avatar'),
+                await this.databaseUtilsService.findUser({name}, ''),
                 await this.databaseUtilsService.findUsers({name}, ''),
                 await this.databaseUtilsService.findBadgeUserByName({name}),
                 await this.databaseUtilsService.findFeedbacks({receiver: name}, ''),
@@ -59,10 +61,27 @@ export class ProfileService {
             ]
         )
 
+        const badgesSent = currentUser?.badgesSent;
         const usersMeetings = await this.getUsersMeetings(allUsers)
         const formattedBadges = this.formatBadges(badges)
+          
+        formattedBadges.forEach(formattedBadge => {
+            const numberOfBadges: any = Object.values(formattedBadge)[0];
+            const badgeLevel = numberOfBadges < 3 ? 3 : numberOfBadges < 5 ? 5 : numberOfBadges < 10 ? 10 : 20;
+
+            formattedBadge.badgesSentDiff = Math.max(badgeLevel - badgesSent, 0);
+            formattedBadge.badgesReceivedDiff = Math.max(badgeLevel - numberOfBadges, 0);
+
+            if (numberOfBadges < 3 || badgesSent < 3) {
+                formattedBadge.level = 'knowledge';
+            } else if (numberOfBadges < 5 || badgesSent < 5) {
+                formattedBadge.level = 'apprentice';
+            } else {
+                formattedBadge.level = 'mastery & leadership';
+            }
+        });
         
-        return { cssFileName: "profile", url, date, generalName, isAuth: true, notes, profileName: name, badges: formattedBadges, feedbacksReceived, feedbacksSent, profileEmail: email, profileAvatar: usersAvatar.avatar, usersMeetings, meetingsCount: allUsers.length, title: `${name}'s profile`}
+        return { cssFileName: "profile", url, date, generalName, isAuth: true, notes, profileName: name, badges: formattedBadges, feedbacksReceived, feedbacksSent, profileEmail: email, profileAvatar: currentUser?.avatar, badgesSent: currentUser?.badgesSent, usersMeetings, meetingsCount: allUsers.length, title: `${name}'s profile`}
         
     }
 }

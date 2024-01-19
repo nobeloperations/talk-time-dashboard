@@ -12,15 +12,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.BadgesService = void 0;
 const common_1 = require("@nestjs/common");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
-const badges_level_js_1 = require("../../helpers/badges_level.js");
+const badges_level_1 = require("../../helpers/badges_level");
 let BadgesService = class BadgesService {
     constructor(databaseUtilsService) {
         this.databaseUtilsService = databaseUtilsService;
     }
+    getBadgesLevelInNumbers(badgeCount) {
+        return badgeCount < 3 ? 3 : badgeCount < 5 ? 5 : badgeCount < 10 ? 10 : 20;
+    }
+    getBadgesLevelName(badgeCount) {
+        return badgeCount < 3 ? 'Knowlege' : badgeCount < 5 ? 'Apprentice' : badgeCount < 10 ? 'Mastery' : 'Leadership';
+    }
+    splitByUpperCase(object) {
+        return Object.keys(object)[0].split(/(?=[A-Z])/).join(' ');
+    }
     async newBadge(params, newBadgeBody) {
         try {
             const { name } = params;
-            let { badge } = newBadgeBody;
+            let { badge, from } = newBadgeBody;
             badge = badge.replaceAll(' ', '');
             const currentBadgeUser = await this.databaseUtilsService.findBadgeUserByName({ name });
             if (currentBadgeUser) {
@@ -32,20 +41,42 @@ let BadgesService = class BadgesService {
                     await this.databaseUtilsService.updateBadge(badge, name);
                 });
             }
+            await this.databaseUtilsService.updateUserBadgesSent({ name: from });
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e });
         }
     }
-    async calculateBadgeLevel(params) {
-        const { name } = params;
+    async calculateBadgeLevel({ name }) {
         const badgeUser = await this.databaseUtilsService.findBadgeUserByName({ name });
         const badges = badgeUser.badges;
         const formattedBadges = Object.entries(badges).map(([key, value]) => ({ [key]: value['count'] }));
-        let maxBadgesCount = Math.max(...Object.values(badges).map(badge => badge['count']));
-        maxBadgesCount = Math.min(9, Math.max(3, maxBadgesCount));
-        const filteredBadges = (0, badges_level_js_1.filterBadges)(formattedBadges, maxBadgesCount);
-        return filteredBadges;
+        const onlyLevels = formattedBadges.map(formattedBadge => Object.values(formattedBadge)[0]);
+        const highestBadge = Math.max(...onlyLevels);
+        const levelOfHighestBadge = this.getBadgesLevelInNumbers(highestBadge);
+        const previousLevel = levelOfHighestBadge === 3 ? 3 : levelOfHighestBadge === 5 ? 3 : levelOfHighestBadge === 10 ? 5 : 10;
+        const isBadgesLevelsSame = (0, badges_level_1.checkBadgesLevels)(onlyLevels);
+        let allowedBadges;
+        if (!isBadgesLevelsSame) {
+            allowedBadges = formattedBadges.reduce((result, formattedBadge) => {
+                const value = Object.values(formattedBadge)[0];
+                const name = this.splitByUpperCase(formattedBadge);
+                if (!(value <= levelOfHighestBadge && value >= previousLevel)) {
+                    result.push(name);
+                }
+                return result;
+            }, []);
+        }
+        else {
+            allowedBadges = formattedBadges.map(formattedBadge => this.splitByUpperCase(formattedBadge));
+        }
+        const allBadgesStats = formattedBadges.map((formattedBadge) => {
+            const badgesCount = Object.values(formattedBadge)[0];
+            const level = this.getBadgesLevelName(badgesCount);
+            const name = this.splitByUpperCase(formattedBadge);
+            return { level, name, count: badgesCount };
+        });
+        return { allowedBadges, allBadgesStats };
     }
 };
 BadgesService = __decorate([

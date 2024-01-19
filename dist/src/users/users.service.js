@@ -54,7 +54,7 @@ let UserService = class UserService {
             if (!meeting || !currentMeeting)
                 return res.status(404).render('notfound');
             const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar');
-            const badgeUsers = await this.databaseUtilsService.findAllBadgeUser();
+            const badgeUsers = await this.databaseUtilsService.findAllBadgesUsers();
             let users = (0, badges_filter_1.filterUsers)(dbUsers);
             users.forEach((user) => {
                 let usersBadges = badgeUsers.find(badgeUser => user.name == badgeUser.name);

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Render, Body, HttpCode, Req, Res, Param } from '@nestjs/common';
+import { Controller, Get, Post, Render, Body, HttpCode, Req, Res, Param, Query } from '@nestjs/common';
 import { MainService } from './main.service';
 import { Request, Response } from 'express';
 import { AddGeneralBody, MainReturn } from 'types/types';
@@ -46,6 +46,13 @@ export class MainController {
     @HttpCode(200)
     validateGoogleMeetLink(@Req() req: Request) {
         return this.mainService.validateGoogleMeetLink(req)
+    }
+
+    @Get('/hall-of-fame/:url/:date')
+    @HttpCode(200)
+    @Render('hall-of-fame')
+    getHallOfFame(@Req() req: Request, @Res() res: Response, @Query('q') generalName: string) {
+        return this.mainService.getHallOfFame(req, res, generalName)
     }
 
 }

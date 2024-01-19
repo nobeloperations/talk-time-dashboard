@@ -4,6 +4,7 @@
     display: flex;
     overflow-y: hidden;
     flex-direction: column;
+    z-index: 0;
 }
 
 .profile__container>.navigate {
@@ -19,6 +20,7 @@
     background: url('https://img.freepik.com/free-vector/gradient-grainy-gradient-background_23-2149903371.jpg?size=626&ext=jpg&ga=GA1.1.436933427.1697803731&semt=ais');
     background-size: 100%;
     background-attachment: cover;
+    z-index: -1;
 }
 
 .profile__banner__avatar {
@@ -123,7 +125,7 @@
     flex-direction: column;
 }
 .profile__tab {
-    padding: 20px;
+    padding: 20px 20px 5px 20px;
     display: none;
     overflow-y: scroll;
     height: calc(100vh - 260px);
@@ -165,7 +167,7 @@
 }
 .profile__badge {
     width: 100%;
-    height: fit-content;
+    height: 55px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -187,11 +189,40 @@
     border-radius: 100px;
     margin-right: 5px;
 }
-.profile__badges__collected {
+.profile__badges__sent__collected {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: #89ABED;
     color: white;
     border-radius: 7px;
+    height: 40px;
+    padding: 0 10px 0 10px;
+    width: fit-content;
+}
+.profile__received__badges {
+    display: inline-flex;
+    align-items: center;
+}
+.profile__badges__information {
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    align-items: center;
+}
+.profile__badges__level {
     padding: 10px 15px 10px 15px;
+    border-radius: 7px;
+    border: 1px solid #db7876;
+    color: #db7876;
+    margin-right: 5px;
+    position: relative;
+}
+.profile__badges__level:hover {
+    transition: .3s ease;
+    background: #db7876;
+    color: white;
+    cursor: pointer;
 }
 .profile__feedback__avatar {
     width: 32px;
@@ -204,4 +235,57 @@
     display: flex;
     align-items: center;
     margin-bottom: 10px;
+}
+.profile__sent__badges {
+    padding: 8px 12px 8px 12px;
+    background: #6381be;
+    color: white;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 16px;
+}
+.profile__badges__level__info {
+    width: fit-content;
+    height: fit-content;
+    background: green;
+    position: relative;
+    top: -15px;
+}
+.profile__received__badges__info {
+    color: rgb(161, 161, 161);
+    font-size: 12px;
+}
+.profile__badge__estimate {
+    width: 300px;
+    background: green;
+    height: fit-content;
+    margin-right: 10px;
+}
+.profile__badges__level__popup {
+    width: fit-content;
+    height: 55px;
+    position: relative;
+    left: -20px;
+    visibility: hidden;
+    opacity: 0;
+    transition: .3s ease all;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.profile__badges__level__popup ul {
+    font-size: 14px;
+}
+.profile__badges__level__popup ul li {
+    padding-left: 5px;
+}
+.sent__badges__enough::marker, .received__badges__enough::marker {
+    content: '✔';
+    color: rgb(17, 212, 17);
+}
+
+.sent__badges__not__enough::marker, .received__badges__not__enough::marker {
+    content: '✕';
+    color: tomato;
 }

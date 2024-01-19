@@ -50,7 +50,7 @@ export class UserService {
             if (!meeting || !currentMeeting) return res.status(404).render('notfound')
 
             const dbUsers: BadgeUser[] = await this.databaseUtilsService.findUsers({}, 'name avatar')
-            const badgeUsers = await this.databaseUtilsService.findAllBadgeUser()
+            const badgeUsers = await this.databaseUtilsService.findAllBadgesUsers()
             let users = filterUsers(dbUsers)
 
             users.forEach((user: {badges: {}, name: string}) => {

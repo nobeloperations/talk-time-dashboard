@@ -34,6 +34,10 @@ exports.UserSchema = new mongoose.Schema({
     rating: {
         type: Array,
         required: true
+    },
+    badgesSent: {
+        type: Number,
+        required: true
     }
 });
 //# sourceMappingURL=user.model.js.map

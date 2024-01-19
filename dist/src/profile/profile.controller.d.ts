@@ -17,6 +17,7 @@ export declare class ProfileController {
         feedbacksSent: any;
         profileEmail: string;
         profileAvatar: any;
+        badgesSent: any;
         usersMeetings: any[];
         meetingsCount: any;
         title: string;

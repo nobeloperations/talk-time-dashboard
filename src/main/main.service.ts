@@ -6,6 +6,7 @@ import { User } from 'models/user.model';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
 import { AddGeneralBody, FilteredMeeting, MainReturn, UserPayload, UsersMeeting, notAuthenticated } from 'types/types';
 import axios from 'axios'
+import { calculateUserWithMostBadges } from 'helpers/hall-of-fame';
 
 @Injectable()
 export class MainService {
@@ -72,11 +73,30 @@ export class MainService {
         }
     }
 
-    async validateGoogleMeetLink(req) {
+    async validateGoogleMeetLink(req: Request) {
         const { code } = req.params;
         const meeting = await axios.get(`http://3.67.185.26:5000/api/class-events/link/${code}`)
         
         return meeting ? JSON.stringify(meeting.data) : meeting
+    }
+
+    async getHallOfFame(req: Request, res: Response, generalName: string) {
+        const { url, date } = req.params;
+        const userPayload: UserPayload = getUserFromCookies(req)
+        if(!userPayload) return res.redirect('/')
+
+        const badgesUsers = await this.databaseUtilsService.findAllBadgesUsers();
+        let usersWithTheMostBadges = calculateUserWithMostBadges(badgesUsers);
+        
+        usersWithTheMostBadges = await Promise.all(usersWithTheMostBadges.map(async user => {
+            const { avatar } = await this.databaseUtilsService.findUser({ name: user.name }, 'avatar');
+            const meetCount = await this.databaseUtilsService.findUsers({ name: user.name }, 'name');
+            user.meetCount = meetCount.length
+            user.avatar = avatar;
+            return user;
+        }));
+        
+        return { cssFileName: 'hall-of-fame', title: 'Hall of Fame', isAuth: true, url, date, generalName, profileName: userPayload.name, usersWithTheMostBadges }
     }
 
 }

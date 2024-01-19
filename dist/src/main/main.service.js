@@ -14,6 +14,7 @@ const common_1 = require("@nestjs/common");
 const user_cookies_1 = require("../../helpers/user_cookies");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
 const axios_1 = require("axios");
+const hall_of_fame_1 = require("../../helpers/hall-of-fame");
 let MainService = class MainService {
     constructor(databaseUtilsService) {
         this.databaseUtilsService = databaseUtilsService;
@@ -80,6 +81,22 @@ let MainService = class MainService {
         const { code } = req.params;
         const meeting = await axios_1.default.get(`http://3.67.185.26:5000/api/class-events/link/${code}`);
         return meeting ? JSON.stringify(meeting.data) : meeting;
+    }
+    async getHallOfFame(req, res, generalName) {
+        const { url, date } = req.params;
+        const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
+        if (!userPayload)
+            return res.redirect('/');
+        const badgesUsers = await this.databaseUtilsService.findAllBadgesUsers();
+        let usersWithTheMostBadges = (0, hall_of_fame_1.calculateUserWithMostBadges)(badgesUsers);
+        usersWithTheMostBadges = await Promise.all(usersWithTheMostBadges.map(async (user) => {
+            const { avatar } = await this.databaseUtilsService.findUser({ name: user.name }, 'avatar');
+            const meetCount = await this.databaseUtilsService.findUsers({ name: user.name }, 'name');
+            user.meetCount = meetCount.length;
+            user.avatar = avatar;
+            return user;
+        }));
+        return { cssFileName: 'hall-of-fame', title: 'Hall of Fame', isAuth: true, url, date, generalName, profileName: userPayload.name, usersWithTheMostBadges };
     }
 };
 MainService = __decorate([
