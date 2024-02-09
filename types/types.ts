@@ -79,8 +79,8 @@ export interface Badges {
 
 export interface CreateNoteBody {
     sender: string;
-    tags: string[];
     text: string;
+    generalName: string;
 }
 
 export interface Percent {
@@ -106,6 +106,12 @@ export interface NewBadgeBody {
     from: string;
 }
 
+export interface MeetingType {
+    url: string;
+    date: string;
+    startTime: string;
+}
+
 interface UrlAndDateParams {
     date: string;
     url: string;
@@ -129,8 +135,6 @@ export interface CreateNoteParams extends UrlAndDateParams {}
 export interface GetPersonalFeedbacksParams extends UrlAndDateAndNameParams {}
 
 export interface UsersMeeting extends UrlAndDateParams {}
-
-export interface FilteredMeeting extends UrlAndDateParams {}
 
 export interface GetProfileParams extends UrlAndDateParams {}
 

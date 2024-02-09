@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { BadgeModel } from 'models/badge.model';
+import { BadgeModel, BadgeSchema } from 'models/badge.model';
 import { Feedback } from 'models/feedback.model';
 import { Meeting } from 'models/meeting.model';
 import { Note } from 'models/note.model';
@@ -36,8 +36,23 @@ export class DatabaseUtilsService {
     }
 
     async findAllBadgesUsers() {
-        const badgeUsers = await this.BadgeModel.find({})
-        return badgeUsers
+        return await this.BadgeModel.find({}).select('name badges')
+    }
+
+    async findBadgesUsersByNameIncluding(names: string[]) {
+        return await this.BadgeModel.find({ name: { $in: names } })
+    }
+
+    async getCountOfBadgesUsers() {
+        const count = await this.BadgeModel.countDocuments({});
+        return count
+    }
+
+    async findBadgesUsersInRange(page: number, limit: number) {
+        const skip = (page - 1) * limit;
+        let badgeUsers: any = await this.BadgeModel.find({}).skip(skip).limit(limit);
+
+        return badgeUsers;
     }
 
     async createBadgesUser(name) {
@@ -62,6 +77,10 @@ export class DatabaseUtilsService {
 
     async updateUserPercents(filter: object, update: object): Promise<string | void> {
         return await this.userModel.findOneAndUpdate(filter, update)
+    }
+
+    async findUsersByUrlIncluded(urls: string[]): Promise<any> {
+        return await this.userModel.find({ url: { $in: urls } });
     }
 
     async findUsers(filter: object, fields: string): Promise<any> {
@@ -109,7 +128,7 @@ export class DatabaseUtilsService {
     }
 
     async updateMeetingByName(name: string, url: string, date: string): Promise<any> {
-        return await this.meetingModel.updateOne({name}, {$push: { meetings: { url, date } }})
+        return await this.meetingModel.updateOne({name}, {$push: { meetings: { url, date, startTime: new Date().toISOString().toString() } }})
     }
 
     async createNewMeeting(name: string, url: string, date: string): Promise<any> {
@@ -117,14 +136,15 @@ export class DatabaseUtilsService {
             name,
             meetings: [{
                 url,
-                date
+                date,
+                startTime: new Date().toISOString().toString()
             }]
         })
         
         return await newMeeting.save()
     }
 
-    async createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string): Promise<any> {
+    async createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string, generalName: string): Promise<any> {
         let newFeedback = new this.feedbackModel({
             sender,
             receiver,
@@ -134,24 +154,26 @@ export class DatabaseUtilsService {
             senderImg,
             feedbackImg,
             postDate: new Date().toLocaleDateString().replaceAll('.', '/'),
-            date
+            date,
+            generalName
         })
 
         return await newFeedback.save()
     }
 
-    async createNewNote(url: string, date: string, text: string, tags: string[], sender: string): Promise<Note> {
+    async createNewNote(url: string, date: string, text: string, sender: string, generalName: string): Promise<Note> {
         const sendUser = await this.findUser({name: sender}, 'avatar')
         const newNote = new this.noteModel({
             text,
             url,
-            tags,
             date,
             sender,
-            avatar: sendUser ? sendUser['avatar'] : 'https://cdn-icons-png.flaticon.com/128/1144/1144760.png'
+            avatar: sendUser ? sendUser['avatar'] : 'https://cdn-icons-png.flaticon.com/128/1144/1144760.png',
+            generalName
         })
 
         await newNote.save()
+        
         return newNote
     }
 

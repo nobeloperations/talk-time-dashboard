@@ -9,10 +9,6 @@ export const NoteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    tags: {
-        type: Array,
-        default: []
-    },
     date: {
         type: String,
         required: true
@@ -24,6 +20,10 @@ export const NoteSchema = new mongoose.Schema({
     avatar: {
         type: String,
         required: true
+    },
+    generalName: {
+        type: String,
+        required: true
     }
 })
 
@@ -33,5 +33,6 @@ export interface Note {
     tags: string[],
     date: string,
     sender: string,
-    avatar: string
+    avatar: string,
+    generalName: String
 }

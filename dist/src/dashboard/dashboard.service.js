@@ -56,8 +56,8 @@ let DashboardService = class DashboardService {
     async newNote(params, createNoteBody) {
         try {
             let { url, date } = params;
-            let { text, tags, sender } = createNoteBody;
-            const newNote = await this.databaseUtilsService.createNewNote(url, date, text, tags, sender);
+            let { text, sender, generalName } = createNoteBody;
+            const newNote = await this.databaseUtilsService.createNewNote(url, date, text, sender, generalName);
             return JSON.stringify(newNote);
         }
         catch (e) {

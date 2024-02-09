@@ -45,40 +45,60 @@
                 {{#each usersMeetings}}
                 <div class="profile__meeting">
                     <div class="profile__meeting__info">
-                        <span class="profile__meeting__name">{{generalName}}</span>
+                        <span class="profile__meeting__name">{{generalName}} • <b>{{url}}</b></span>
                         <span class="profile__meeting__date">{{date}}</span>
                     </div>
                     <a href="/dashboard/{{url}}/{{date}}?q={{generalName}}">
-                        <button class="profile__meeting__visit">Dashboard</button>
+                        <button class="profile__meeting__visit">Visit Dashboard</button>
                     </a>
                 </div>
                 {{/each}}
             </div>
             <div class="profile__tab profile__feedbacks__received">
-                {{#each feedbacksReceived}}
-                <div class="profile__feedback">
-                    <div class="profile__feedback__content">
-                        <div class="profile__feedback__user">
-                            <img class="profile__feedback__avatar" src="{{senderImg}}" />
-                            <span class="profile__feedback__sender">{{sender}} • <b>{{date}}</b></span>
+                {{#if feedbacksReceived}}
+                    {{#each feedbacksReceived}}
+                    <div class="profile__feedback">
+                        <div class="profile__feedback__content">
+                            <div class="profile__feedback__user">
+                                <img class="profile__feedback__avatar" src="{{senderImg}}" />
+                                <span class="profile__feedback__sender">{{sender}} • <b>{{postDate}}</b></span>
+                            </div>
+                            <span class="profile__feedback__text">{{feedback}}</span>
                         </div>
-                        <span class="profile__feedback__text">{{feedback}}</span>
+                        <a href="/feedbacks/{{url}}/{{receiver}}/{{date}}?q={{generalName}}">
+                            <button class="profile__view__feedback">View Feedback</button>
+                        </a>
                     </div>
-                </div>
-                {{/each}}
+                    {{/each}}
+                {{else}}
+                    <div class="profile__content__empty">
+                        <img class="profile__content__empty__image" src="/img/empty.png" alt="">
+                        <span class="profile__content__empty__message">No feedbacks received</span>
+                    </div>
+                {{/if}}
             </div>
             <div class="profile__tab profile__feedbacks__sent">
-                {{#each feedbacksSent}}
-                <div class="profile__feedback">
-                    <div class="profile__feedback__content">
-                        <div class="profile__feedback__user">
-                            <img class="profile__feedback__avatar" src="{{senderImg}}" />
-                            <span class="profile__feedback__sender">{{sender}} • <b>{{date}}</b></span>
+                {{#if feedbacksSent}}
+                    {{#each feedbacksSent}}
+                        <div class="profile__feedback">
+                            <div class="profile__feedback__content">
+                                <div class="profile__feedback__user">
+                                    <img class="profile__feedback__avatar" src="{{senderImg}}" />
+                                    <span class="profile__feedback__sender">{{sender}} • <b>{{postDate}}</b></span>
+                                </div>
+                                <span class="profile__feedback__text">{{feedback}}</span>
+                            </div>
+                            <a href="/feedbacks/{{url}}/{{receiver}}/{{date}}?q={{generalName}}">
+                                <button class="profile__view__feedback">View Feedback</button>
+                            </a>
                         </div>
-                        <span class="profile__feedback__text">{{feedback}}</span>
+                    {{/each}}
+                {{else}}
+                    <div class="profile__content__empty">
+                        <img class="profile__content__empty__image" src="/img/empty.png" alt="">
+                        <span class="profile__content__empty__message">No feedbacks sent</span>
                     </div>
-                </div>
-                {{/each}}
+                {{/if}}
             </div>
             <div class="profile__tab profile__badges">
                 <div class="profile__sent__badges">You sent {{badgesSent}} badge(s) in total</div>
@@ -104,26 +124,36 @@
                             </ul>
                         </div>
                         <div>
-                            <span class="profile__badges__level">{{getValuesFromBadgesConfig this 3}}</span>
+                            <span class="profile__badges__level">{{getValuesFromBadgesConfig this 3}} level</span>
                         </div>
                         <div class="profile__badges__sent__collected">
-                        <span class="profile__received__badges">You collected&nbsp;<bclass="profile__received__badges__count">{{getValuesFromBadgesConfig this 0}}</b>&nbsp;{{getKeysFromBadgesConfig this 0}} badge(s)</span></div>
+                        <span class="profile__received__badges">You collected&nbsp;<bclass="profile__received__badges__count">{{getValuesFromBadgesConfig this 0}}</b>&nbsp;{{formatBadgeName (getKeysFromBadgesConfig this 0)}} badge(s)</span></div>
                     </div>
                 </div>
             {{/each}}
             </div>
             <div class="profile__tab profile__notes">
-                {{#each notes}}
-                <div class="profile__note">
-                    <div class="profile__note__content">
-                        <div class="profile__note__user">
-                            <img class="profile__note__avatar" src="{{../profileAvatar}}" />
-                            <span class="profile__note__sender">{{sender}} • <b>{{date}}</b></span>
+                {{#if notes}}
+                    {{#each notes}}
+                    <div class="profile__note">
+                        <div class="profile__note__content">
+                            <div class="profile__note__user">
+                                <img class="profile__note__avatar" src="{{../profileAvatar}}" />
+                                <span class="profile__note__sender">{{sender}} • <b>{{date}}</b></span>
+                            </div>
+                            <span class="profile__note__text">{{text}}</span>
                         </div>
-                        <span class="profile__note__text">{{text}}</span>
+                        <a href="/dashboard/{{url}}/{{date}}?q={{generalName}}">
+                            <button class="profile__view__note">View at Dashboard</button>
+                        </a>
                     </div>
-                </div>
-                {{/each}}
+                    {{/each}}
+                {{else}}   
+                    <div class="profile__content__empty">
+                        <img class="profile__content__empty__image" src="/img/empty.png" alt="">
+                        <span class="profile__content__empty__message">No notes sent</span>
+                    </div>
+                {{/if}}
             </div>
         </div>
 

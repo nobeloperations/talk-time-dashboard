@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose'
-import { FilteredMeeting } from 'types/types'
+import { MeetingType } from 'types/types'
 
 export const MeetingSchema = new mongoose.Schema({
     name: {
@@ -10,5 +10,5 @@ export const MeetingSchema = new mongoose.Schema({
 
 export interface Meeting {
     name: string,
-    meetings: FilteredMeeting[],
+    meetings: MeetingType[],
 }

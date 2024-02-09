@@ -14,7 +14,7 @@ export class BadgesService {
     }
 
     getBadgesLevelName(badgeCount: number): string {
-        return badgeCount < 3 ? 'Knowlege' : badgeCount < 5 ? 'Apprentice' : badgeCount < 10 ? 'Mastery' : 'Leadership'
+        return badgeCount < 3 ? 'Knowlege' : badgeCount < 5 ? 'Apprentice' : badgeCount >= 5 ? 'Mastery' : 'Mastery'
     }
 
     splitByUpperCase(object: {}) {
@@ -58,21 +58,24 @@ export class BadgesService {
     
         const isBadgesLevelsSame = checkBadgesLevels(onlyLevels);
     
-        let allowedBadges;
+        let allowedBadges = [];
     
         if (!isBadgesLevelsSame) {
             allowedBadges = formattedBadges.reduce((result: string[], formattedBadge: any) => {
                 const value: number | any = Object.values(formattedBadge)[0];
                 const name: string = this.splitByUpperCase(formattedBadge);
-    
-                if (!(value <= levelOfHighestBadge && value >= previousLevel)) {
+                if (!(value <= levelOfHighestBadge && value >= previousLevel) && value < 5) {
                     result.push(name);
                 }
     
                 return result;
             }, []);
         } else {
-            allowedBadges = formattedBadges.map(formattedBadge => this.splitByUpperCase(formattedBadge));
+            formattedBadges.forEach(formattedBadge => {
+                const badgeCount = Object.values(formattedBadge)[0];
+
+                if (badgeCount < 5) allowedBadges.push(this.splitByUpperCase(formattedBadge)) 
+            })
         }
     
         const allBadgesStats = formattedBadges.map((formattedBadge: any) => {

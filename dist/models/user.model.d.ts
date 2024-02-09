@@ -5,9 +5,9 @@ export declare const UserSchema: mongoose.Schema<any, mongoose.Model<any, any, a
     name: string;
     rating: any[];
     url: string;
+    generalName: string;
     avatar: string;
     percents: string;
-    generalName: string;
     badgesSent: number;
 }>;
 export interface User {

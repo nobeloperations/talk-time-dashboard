@@ -37,6 +37,10 @@ exports.FeedbackSchema = new mongoose.Schema({
     date: {
         type: String,
         required: true
+    },
+    generalName: {
+        type: String,
+        required: true
     }
 });
 //# sourceMappingURL=feedback.model.js.map

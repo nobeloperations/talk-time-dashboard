@@ -1,0 +1,126 @@
+.meeting-stats__container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    overflow-y: hidden;
+}
+.meeting-stats__wrapper {
+    width: calc(100vw - 230px);
+    height: calc(100vh - 60px);
+}
+.meeting-stats {
+    width: 100%;
+    height: calc(100vh - 165px);
+    display: flex;
+    justify-content: center;
+    padding: 10px 25px 10px 25px;
+    overflow-y: scroll;
+}
+.meeting-stats__users {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    gap: 15px;
+}
+.meeting-stats__user {
+    width: calc(50% - 10px);
+    height: fit-content;
+    border: 1px solid rgb(163, 163, 163);
+    border-radius: 10px;
+}
+.meeting-stats__user__info {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    background: rgb(240, 240, 240);
+    border-radius: 10px 10px 0 0;
+}
+.meeting-stats__badges {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    justify-content: center;
+    padding: 10px;
+    gap: 5px;
+}
+.meeting-stats__badge {
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    width: 49%;
+    padding: 5px 10px 5px 10px;
+    border-radius: 5px;
+    border: 1px solid rgb(177, 177, 177);
+}
+.meeting-stats__badge:nth-child(7) {
+    width: 99%;
+    margin-bottom: 5px;
+}
+.meeting-stats__badge__image {
+    width: 28px;
+    margin-right: 5px;
+}
+.meeting-stats__search {
+    width: calc(100% - 50px);
+    height: 40px;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid lightgray;
+    margin-left: 25px;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+.meeting-stats__wrapper > .navigate {
+    margin-bottom: 10px;
+}
+.meeting-stats__badge__info {
+    font-size: 16px;
+}
+.meeting-stats__total__badges {
+    font-size: 14px;
+    color: gray;
+    align-self: flex-start;
+}
+.meeting-stats__total__badges__wrapper {
+    width: 98%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+.meeting-stats__filter__wrapper {
+    width: calc(100% - 50px);
+    margin-left: 25px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+.meeting-stats__filter {
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 10px 5px 10px;
+    margin-right: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background: #99D6FF;
+    color: #0070B8;
+    cursor: pointer;
+    position: fixed;
+}
+.ascending__total__badges__filter {
+    left: 440px;
+}
+.meeting-stats__filter:disabled {
+    background: lightgray;
+    color: gray;
+    cursor: auto;
+}

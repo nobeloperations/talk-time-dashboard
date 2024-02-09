@@ -67,13 +67,16 @@ let ProfileService = class ProfileService {
             formattedBadge.badgesSentDiff = Math.max(badgeLevel - badgesSent, 0);
             formattedBadge.badgesReceivedDiff = Math.max(badgeLevel - numberOfBadges, 0);
             if (numberOfBadges < 3 || badgesSent < 3) {
-                formattedBadge.level = 'knowledge';
+                formattedBadge.level = 'Knowledge';
             }
             else if (numberOfBadges < 5 || badgesSent < 5) {
-                formattedBadge.level = 'apprentice';
+                formattedBadge.level = 'Apprentice';
+            }
+            else if (numberOfBadges < 10 || badgesSent < 10) {
+                formattedBadge.level = 'Mastery';
             }
             else {
-                formattedBadge.level = 'mastery & leadership';
+                formattedBadge.level = "Leadership";
             }
         });
         return { cssFileName: "profile", url, date, generalName, isAuth: true, notes, profileName: name, badges: formattedBadges, feedbacksReceived, feedbacksSent, profileEmail: email, profileAvatar: currentUser === null || currentUser === void 0 ? void 0 : currentUser.avatar, badgesSent: currentUser === null || currentUser === void 0 ? void 0 : currentUser.badgesSent, usersMeetings, meetingsCount: allUsers.length, title: `${name}'s profile` };

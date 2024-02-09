@@ -4,6 +4,14 @@ const _logOut = document.querySelector('.profile__logout')
 const _badgesCount = document.querySelectorAll('.profile__received__badges__count')
 const _badgesLevels = document.querySelectorAll('.profile__badges__level')
 const _badgeImages = document.querySelectorAll('.profile__badge__image')
+const _profileBadgeLevels = document.querySelectorAll('.profile__badges__level');
+
+_profileBadgeLevels.forEach(_profileBadgeLevel => {    
+    if (_profileBadgeLevel.textContent === "Mastery level") {
+        _profileBadgeLevel.style.background = "#db7876";
+        _profileBadgeLevel.style.color = 'white'
+    }
+})
 
 function _calculateBadgesLevel(count) {
     return count < 3 ? 'Knowlege' : count >= 3 && count < 5 ? 'Apprentice' : count > 5 && count < 10 ? 'Mastery' : 'Leadership';
@@ -31,13 +39,17 @@ _menuItems.forEach(_menuItem => {
 
 _badgesLevels.forEach(_badgesLevel => {
     const _badgesLevelPopup = _badgesLevel.parentElement.previousElementSibling;
-    _badgesLevel.onmouseover = () => {
-        _badgesLevelPopup.style.visibility = 'visible'
-        _badgesLevelPopup.style.opacity = '1'
-    }
-    _badgesLevel.onmouseout = () => {
-        _badgesLevelPopup.style.visibility = 'hidden'
-        _badgesLevelPopup.style.opacity = '0'
+    const _level = _badgesLevel.textContent;
+
+    if (_level !== "Mastery level") {
+        _badgesLevel.onmouseover = () => {
+            _badgesLevelPopup.style.visibility = 'visible'
+            _badgesLevelPopup.style.opacity = '1'
+        }
+        _badgesLevel.onmouseout = () => {
+            _badgesLevelPopup.style.visibility = 'hidden'
+            _badgesLevelPopup.style.opacity = '0'
+        }
     }
 })
 

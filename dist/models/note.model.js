@@ -11,10 +11,6 @@ exports.NoteSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    tags: {
-        type: Array,
-        default: []
-    },
     date: {
         type: String,
         required: true
@@ -24,6 +20,10 @@ exports.NoteSchema = new mongoose.Schema({
         required: true
     },
     avatar: {
+        type: String,
+        required: true
+    },
+    generalName: {
         type: String,
         required: true
     }

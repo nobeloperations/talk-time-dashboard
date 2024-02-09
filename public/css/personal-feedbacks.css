@@ -250,7 +250,7 @@ button:disabled {
     cursor: pointer;
 }
 .empty__feedbacks, .no__feedbacks {
-    color: #99D6FF;
+    color: #D3D3D3;
     justify-content: center;
     align-items: center;
     flex-direction: column;
@@ -260,11 +260,15 @@ button:disabled {
 .no__feedbacks {
     display: flex;
 }
+.no__feedbacks .leave__feedback__button {
+    background: #99D6FF;
+    color: #0070B8;
+}
 .empty__feedbacks {
     display: none;
 }
 .empty__feedbacks__img {
-    filter: invert(81%) sepia(4%) saturate(5704%) hue-rotate(178deg) brightness(99%) contrast(107%);
+    filter: invert(87%) sepia(1%) saturate(3395%) hue-rotate(313deg) brightness(128%) contrast(65%);
     width: 128px;
     margin-bottom: 10px;
 }
@@ -274,6 +278,7 @@ button:disabled {
 }
 .empty__title {
     font-size: 20px;
+    margin-bottom: 10px;
 }
 .empty__text {
     font-size: 16px;

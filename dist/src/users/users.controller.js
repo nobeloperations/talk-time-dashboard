@@ -28,9 +28,15 @@ let UsersController = class UsersController {
     getUsers(params, res, generalName, req) {
         return this.usersService.getUsers(params, res, generalName, req);
     }
+    getUsersInRange(page, limit, res) {
+        return this.usersService.getUsersInRange(page, limit, res);
+    }
+    getMeetingUsersStats(generalName, res, req) {
+        return this.usersService.getMeetingUsersStats(generalName, res, req);
+    }
 };
 __decorate([
-    (0, common_1.Get)('/:name'),
+    (0, common_1.Get)('/users/:name'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
@@ -38,7 +44,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsersAvatar", null);
 __decorate([
-    (0, common_1.Post)('/create/:url/:date'),
+    (0, common_1.Post)('/users/create/:url/:date'),
     (0, common_1.HttpCode)(200),
     __param(0, (0, common_1.Param)()),
     __param(1, (0, common_1.Body)()),
@@ -48,7 +54,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UsersController.prototype, "newUser", null);
 __decorate([
-    (0, common_1.Get)('/:url/:date'),
+    (0, common_1.Get)('/users/:url/:date'),
     (0, common_1.HttpCode)(200),
     (0, common_1.Render)('users'),
     __param(0, (0, common_1.Param)()),
@@ -59,8 +65,29 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, String, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getUsers", null);
+__decorate([
+    (0, common_1.Get)('/load/range'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Query)('page')),
+    __param(1, (0, common_1.Query)('limit')),
+    __param(2, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, Number, Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getUsersInRange", null);
+__decorate([
+    (0, common_1.Get)('/users/meetingstats/:url/:date'),
+    (0, common_1.Render)('meeting-stats'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Query)('q')),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Req)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object, Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getMeetingUsersStats", null);
 UsersController = __decorate([
-    (0, common_1.Controller)('users'),
+    (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [users_service_1.UserService])
 ], UsersController);
 exports.UsersController = UsersController;

@@ -4,7 +4,7 @@ export declare const NoteSchema: mongoose.Schema<any, mongoose.Model<any, any, a
     date: string;
     text: string;
     url: string;
-    tags: any[];
+    generalName: string;
     avatar: string;
 }>;
 export interface Note {
@@ -14,4 +14,5 @@ export interface Note {
     date: string;
     sender: string;
     avatar: string;
+    generalName: String;
 }

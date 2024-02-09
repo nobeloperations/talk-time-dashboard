@@ -3,6 +3,7 @@ window.onload = function () {
     let _userAvatar;
     const URL = window.location.href.split('/').at(-2);
     const DATE = window.location.href.split('/').at(-1);
+    const _generalName = new URLSearchParams(window.location.href.split('?')[1]).get('q')
     const _usersList = document.querySelectorAll('.dashboard__user')
     const _searchUsersInput = document.querySelector('.dashboard__search')
     const _addNoteButton = document.querySelector('.add__note')
@@ -80,8 +81,8 @@ window.onload = function () {
             body: JSON.stringify({
                 text: _noteValue,
                 URL,
-                tags: [],
-                sender: _currentUsername
+                sender: _currentUsername,
+                generalName: _generalName
             })
         })
             .then(response => response.json())

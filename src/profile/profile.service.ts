@@ -73,11 +73,13 @@ export class ProfileService {
             formattedBadge.badgesReceivedDiff = Math.max(badgeLevel - numberOfBadges, 0);
 
             if (numberOfBadges < 3 || badgesSent < 3) {
-                formattedBadge.level = 'knowledge';
+                formattedBadge.level = 'Knowledge';
             } else if (numberOfBadges < 5 || badgesSent < 5) {
-                formattedBadge.level = 'apprentice';
+                formattedBadge.level = 'Apprentice';
+            } else if(numberOfBadges < 10 || badgesSent < 10) {
+                formattedBadge.level = 'Mastery';
             } else {
-                formattedBadge.level = 'mastery & leadership';
+                formattedBadge.level = "Leadership"
             }
         });
         

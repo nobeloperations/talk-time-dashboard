@@ -45,9 +45,9 @@ export let helpers = {
     },
     getNextBadgeLevel(level: string) {
         return {
-            'knowlege': 'apprentice',
-            'apprentice': 'mastery',
-            'mastery': 'leadership'
+            'Knowlege': 'Apprentice',
+            'Apprentice': 'Mastery',
+            // 'Mastery': 'Leadership'
         }[level]
     }
 }

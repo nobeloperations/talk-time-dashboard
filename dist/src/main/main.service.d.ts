@@ -28,4 +28,5 @@ export declare class MainService {
         profileName: string;
         usersWithTheMostBadges: any[];
     }>;
+    getMeetingStartTime(req: Request, res: Response, generalName: string): Promise<Response<any, Record<string, any>>>;
 }

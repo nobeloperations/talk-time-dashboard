@@ -4,9 +4,9 @@ const _profileOptions = document.querySelector('.profile__options')
 const _userAvatarImage = document.querySelector('.profile__user__avatar')
 
 fetch(`/users/${_username}`)
-.then(res => res.json())
-.then(response => {
-    _userAvatarImage.src = response.avatar;
+.then(_res => _res.json())
+.then(_response => {
+    _userAvatarImage.src = _response.avatar;
 })
 
 function _parseCookieString(_cookieString) {

@@ -134,7 +134,7 @@ window.onload = function () {
                     _filters.endDate = '';
                     _startDate.value = '';
                     _endDate.value = '';
-                    _leaveFeedback.style.display = 'flex'
+                    if (!_pathName.includes(_currentUser.name)) _leaveFeedback.style.display = 'flex';
                 }
             }
 

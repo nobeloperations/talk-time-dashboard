@@ -79,7 +79,7 @@ let MainService = class MainService {
     }
     async validateGoogleMeetLink(req) {
         const { code } = req.params;
-        const meeting = await axios_1.default.get(`http://3.67.185.26:5000/api/class-events/link/${code}`);
+        const meeting = await axios_1.default.get(`http://52.57.170.54:5000/api/class-events/link/${code}`);
         return meeting ? JSON.stringify(meeting.data) : meeting;
     }
     async getHallOfFame(req, res, generalName) {
@@ -97,6 +97,19 @@ let MainService = class MainService {
             return user;
         }));
         return { cssFileName: 'hall-of-fame', title: 'Hall of Fame', isAuth: true, url, date, generalName, profileName: userPayload.name, usersWithTheMostBadges };
+    }
+    async getMeetingStartTime(req, res, generalName) {
+        const { url, date } = req.params;
+        const now = new Date();
+        let meetingStartTime;
+        const { meetings } = await this.databaseUtilsService.findMeeting({ name: generalName }, 'meetings');
+        meetings.forEach(meeting => {
+            if (meeting.url === url && meeting.date === date)
+                meetingStartTime = new Date(meeting.startTime);
+        });
+        const diffInDates = Math.abs(now - meetingStartTime);
+        const diffInHours = diffInDates / (1000 * 60 * 60);
+        return res.status(200).json({ diffInHours }).end();
     }
 };
 MainService = __decorate([

@@ -48,9 +48,15 @@ export declare class DatabaseUtilsService {
     findAllBadgesUsers(): Promise<(import("mongoose").Document<unknown, any, BadgeModel> & Omit<BadgeModel & {
         _id: import("mongoose").Types.ObjectId;
     }, never>)[]>;
+    findBadgesUsersByNameIncluding(names: string[]): Promise<(import("mongoose").Document<unknown, any, BadgeModel> & Omit<BadgeModel & {
+        _id: import("mongoose").Types.ObjectId;
+    }, never>)[]>;
+    getCountOfBadgesUsers(): Promise<number>;
+    findBadgesUsersInRange(page: number, limit: number): Promise<any>;
     createBadgesUser(name: any): Promise<void>;
     updateUserBadges(name: string, badge: string): Promise<UpdateWriteOpResult>;
     updateUserPercents(filter: object, update: object): Promise<string | void>;
+    findUsersByUrlIncluded(urls: string[]): Promise<any>;
     findUsers(filter: object, fields: string): Promise<any>;
     findUser(filter: object, fields: string): Promise<any>;
     updateUser(filter: object, update: any): Promise<UpdateWriteOpResult>;
@@ -69,7 +75,7 @@ export declare class DatabaseUtilsService {
     findMeeting(filter: Object, fields: string): Promise<any>;
     updateMeetingByName(name: string, url: string, date: string): Promise<any>;
     createNewMeeting(name: string, url: string, date: string): Promise<any>;
-    createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string): Promise<any>;
-    createNewNote(url: string, date: string, text: string, tags: string[], sender: string): Promise<Note>;
+    createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string, generalName: string): Promise<any>;
+    createNewNote(url: string, date: string, text: string, sender: string, generalName: string): Promise<Note>;
     createNewUser(name: string, avatar: string, url: string, date: string, generalName: string): Promise<any>;
 }

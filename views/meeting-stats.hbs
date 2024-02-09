@@ -1,0 +1,34 @@
+<div class="meeting-stats__container">
+    {{>menu}}
+    <div class="meeting-stats__wrapper">
+        {{>navigate}}
+        <input type="text" class="meeting-stats__search" placeholder="🔎︎ Seach meeting participants">
+        <div class="meeting-stats__filter__wrapper">
+            <button class="meeting-stats__filter descending__total__badges__filter" data-applied="">Descending total badges</button>
+            <button class="meeting-stats__filter ascending__total__badges__filter" data-applied="">Ascending total badges</button>
+        </div>
+        <div class="meeting-stats">
+            <div class="meeting-stats__users">
+                {{#each badgesUsers}}
+                    <div class="meeting-stats__user" data-index="{{@index}}">
+                        <div class="meeting-stats__user__info">
+                            <span>{{name}} • {{badgesSent}} badges sent</span>
+                        </div>
+                        <div class="meeting-stats__badges">
+                            {{#each badges}}
+                                <div class="meeting-stats__badge">
+                                    <img class="meeting-stats__badge__image" src="/img/{{badgeToImage @key}}" alt="">
+                                    <span class="meeting-stats__badge__info">{{this.count}} {{formatBadgeName @key}} badge(s)</span>
+                                </div>
+                            {{/each}}
+                            <div class="meeting-stats__total__badges__wrapper">
+                                <span class="meeting-stats__total__badges"><b class="total__badges__number">{{totalBadges}}</b> badges collected in total</span>
+                            </div>
+                        </div>
+                    </div>
+                {{/each}}
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/js/meeting-stats.js"></script>

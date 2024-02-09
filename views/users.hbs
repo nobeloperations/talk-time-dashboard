@@ -3,42 +3,9 @@
     <div class="users__list">
         {{>navigate}}
         <div class="users__content">
+            <span class="users__instructions">* Please note that users are loaded as you scroll the page, so if you want to see the full list, scroll down the page a bit.</span>
             <input type="text" class="users__search" placeholder="🔎︎ Seach users">
             <div class="users">
-                {{#each users}}
-                <div class="user" data-name="{{name}}" data-hidden="">
-                    <div class="user__info">
-                        <img class="user__avatar" src="{{avatar}}" alt="">
-                        <div class="username__participated">
-                            <span class="user__name">{{name}}</span>
-                        </div>
-                    </div>
-                    <button class="users__view__badges">View Badges</button>
-                </div>
-                <div class="user__badges__modal">
-                    <div class="users__badges">
-                        {{#if (badgesExist badges)}}
-                            {{#each badges}}
-                                {{#if this.count}}
-                                <div class="users__badge">
-                                    <div class="badge__info">
-                                        <img class="badge__image" src="/img/{{badgeToImage @key}}" alt="">
-                                        <span class="badge__name">{{formatBadgeName @key}}</span>
-                                    </div>
-                                    <div class="badge__count">{{this.count}}</div>
-                                </div>
-                                {{/if}}
-                            {{/each}}
-                        {{else}}
-                        <div class="no__badges">
-                            <img class="no__badges__image" src="/img/empty.png" />
-                            <span class="no__badges__text">No badges yet...</span>
-                        </div>
-                        {{/if}}
-                    </div>
-                    <button class="close__badges__modal">Close</button>
-                </div>
-                {{/each}}
             </div>
         </div>
     </div>

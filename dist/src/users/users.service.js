@@ -11,7 +11,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
-const badges_filter_1 = require("../../helpers/badges_filter");
 const user_cookies_1 = require("../../helpers/user_cookies");
 const database_utils_service_1 = require("../database-utils/database-utils.service");
 let UserService = class UserService {
@@ -49,23 +48,36 @@ let UserService = class UserService {
             if (!userPayload)
                 return res.redirect('/');
             const { url, date } = params;
-            let meeting = await this.databaseUtilsService.findMeeting({ name: generalName }, '');
-            const currentMeeting = meeting === null || meeting === void 0 ? void 0 : meeting.meetings.some(curr => curr['date'] == date);
-            if (!meeting || !currentMeeting)
-                return res.status(404).render('notfound');
-            const dbUsers = await this.databaseUtilsService.findUsers({}, 'name avatar');
-            const badgeUsers = await this.databaseUtilsService.findAllBadgesUsers();
-            let users = (0, badges_filter_1.filterUsers)(dbUsers);
-            users.forEach((user) => {
-                let usersBadges = badgeUsers.find(badgeUser => user.name == badgeUser.name);
-                if (usersBadges)
-                    user.badges = usersBadges.badges;
-            });
-            return { cssFileName: 'users', users, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" };
+            return { cssFileName: 'users', url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" };
         }
         catch (e) {
             return res.status(404).render('notfound');
         }
+    }
+    async getUsersInRange(page, limit, res) {
+        const users = await this.databaseUtilsService.findBadgesUsersInRange(page, limit);
+        return res.status(200).json(users);
+    }
+    async getMeetingUsersStats(generalName, res, req) {
+        const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
+        if (!userPayload)
+            return res.redirect('/');
+        const { url, date } = req.params;
+        const names = new Set();
+        const urls = new Set();
+        const { meetings } = await this.databaseUtilsService.findMeeting({ name: generalName }, '');
+        meetings.forEach(meeting => { urls.add(meeting.url); });
+        const uniqueUrls = Array.from(urls);
+        const users = await this.databaseUtilsService.findUsersByUrlIncluded(uniqueUrls);
+        users.forEach(user => { names.add(user.name); });
+        const uniqueNames = Array.from(names);
+        let badgesUsers = await this.databaseUtilsService.findBadgesUsersByNameIncluding(uniqueNames);
+        badgesUsers = await Promise.all(badgesUsers.map(async (badgesUser) => {
+            const totalBadges = Object.values(badgesUser.badges).reduce((acc, curr) => acc + curr.count, 0);
+            const { badgesSent } = await this.databaseUtilsService.findUser({ name: badgesUser.name }, 'badgesSent');
+            return Object.assign(Object.assign({}, badgesUser._doc), { badgesSent, totalBadges });
+        }));
+        return { url, date, generalName, badgesUsers, profileName: userPayload.name, isAuth: true, title: `${generalName} participants`, cssFileName: 'meeting-stats' };
     }
 };
 UserService = __decorate([

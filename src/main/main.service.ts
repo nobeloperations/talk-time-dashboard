@@ -4,7 +4,7 @@ import { getUserFromCookies } from 'helpers/user_cookies';
 import { Meeting } from 'models/meeting.model';
 import { User } from 'models/user.model';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
-import { AddGeneralBody, FilteredMeeting, MainReturn, UserPayload, UsersMeeting, notAuthenticated } from 'types/types';
+import { AddGeneralBody, MainReturn, UserPayload, UsersMeeting, notAuthenticated, MeetingType } from 'types/types';
 import axios from 'axios'
 import { calculateUserWithMostBadges } from 'helpers/hall-of-fame';
 
@@ -30,7 +30,7 @@ export class MainService {
             let generals: Meeting[] = await this.databaseUtilsService.findMeetingsByNameIncluding(generalNames)
 
             const filteredGenerals = generals.map((general: Meeting) => {
-                const filteredMeetings: FilteredMeeting[] = [];
+                const filteredMeetings: MeetingType[] = [];
 
                 for (const meeting of general.meetings) {
                     usersMeetings.forEach((userMeeting: UsersMeeting) => {
@@ -75,7 +75,7 @@ export class MainService {
 
     async validateGoogleMeetLink(req: Request) {
         const { code } = req.params;
-        const meeting = await axios.get(`http://3.67.185.26:5000/api/class-events/link/${code}`)
+        const meeting = await axios.get(`http://52.57.170.54:5000/api/class-events/link/${code}`)
         
         return meeting ? JSON.stringify(meeting.data) : meeting
     }
@@ -95,8 +95,24 @@ export class MainService {
             user.avatar = avatar;
             return user;
         }));
-        
+
         return { cssFileName: 'hall-of-fame', title: 'Hall of Fame', isAuth: true, url, date, generalName, profileName: userPayload.name, usersWithTheMostBadges }
+    }
+
+    async getMeetingStartTime(req: Request, res: Response, generalName: string) {
+        const { url, date } = req.params;
+        const now: any = new Date();
+        let meetingStartTime;
+
+        const { meetings } = await this.databaseUtilsService.findMeeting({name: generalName}, 'meetings');
+
+        meetings.forEach(meeting => {
+            if (meeting.url === url && meeting.date === date) meetingStartTime = new Date(meeting.startTime)
+        })
+        const diffInDates = Math.abs(now - meetingStartTime);
+        const diffInHours = diffInDates / (1000 * 60 * 60);
+
+        return res.status(200).json({ diffInHours }).end()
     }
 
 }

@@ -39,7 +39,18 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         });
     }
     async findAllBadgesUsers() {
-        const badgeUsers = await this.BadgeModel.find({});
+        return await this.BadgeModel.find({}).select('name badges');
+    }
+    async findBadgesUsersByNameIncluding(names) {
+        return await this.BadgeModel.find({ name: { $in: names } });
+    }
+    async getCountOfBadgesUsers() {
+        const count = await this.BadgeModel.countDocuments({});
+        return count;
+    }
+    async findBadgesUsersInRange(page, limit) {
+        const skip = (page - 1) * limit;
+        let badgeUsers = await this.BadgeModel.find({}).skip(skip).limit(limit);
         return badgeUsers;
     }
     async createBadgesUser(name) {
@@ -62,6 +73,9 @@ let DatabaseUtilsService = class DatabaseUtilsService {
     }
     async updateUserPercents(filter, update) {
         return await this.userModel.findOneAndUpdate(filter, update);
+    }
+    async findUsersByUrlIncluded(urls) {
+        return await this.userModel.find({ url: { $in: urls } });
     }
     async findUsers(filter, fields) {
         return await this.userModel.find(filter).select(fields);
@@ -97,19 +111,20 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         return await this.meetingModel.findOne(filter).select(fields);
     }
     async updateMeetingByName(name, url, date) {
-        return await this.meetingModel.updateOne({ name }, { $push: { meetings: { url, date } } });
+        return await this.meetingModel.updateOne({ name }, { $push: { meetings: { url, date, startTime: new Date().toISOString().toString() } } });
     }
     async createNewMeeting(name, url, date) {
         const newMeeting = new this.meetingModel({
             name,
             meetings: [{
                     url,
-                    date
+                    date,
+                    startTime: new Date().toISOString().toString()
                 }]
         });
         return await newMeeting.save();
     }
-    async createNewFeedback(sender, receiver, feedback, rating, url, senderImg, feedbackImg, date) {
+    async createNewFeedback(sender, receiver, feedback, rating, url, senderImg, feedbackImg, date, generalName) {
         let newFeedback = new this.feedbackModel({
             sender,
             receiver,
@@ -119,19 +134,20 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             senderImg,
             feedbackImg,
             postDate: new Date().toLocaleDateString().replaceAll('.', '/'),
-            date
+            date,
+            generalName
         });
         return await newFeedback.save();
     }
-    async createNewNote(url, date, text, tags, sender) {
+    async createNewNote(url, date, text, sender, generalName) {
         const sendUser = await this.findUser({ name: sender }, 'avatar');
         const newNote = new this.noteModel({
             text,
             url,
-            tags,
             date,
             sender,
-            avatar: sendUser ? sendUser['avatar'] : 'https://cdn-icons-png.flaticon.com/128/1144/1144760.png'
+            avatar: sendUser ? sendUser['avatar'] : 'https://cdn-icons-png.flaticon.com/128/1144/1144760.png',
+            generalName
         });
         await newNote.save();
         return newNote;

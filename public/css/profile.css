@@ -136,11 +136,14 @@
 .profile__meeting__name {
     margin-bottom: 3px;
 }
+.profile__meeting__name b {
+    color: #adadad;
+}
 .profile__meeting__date {
     font-size: 14px;
     color: rgb(131, 131, 131);
 }
-.profile__meeting__visit {
+.profile__meeting__visit, .profile__view__note, .profile__view__feedback {
     width: 130px;
     height: 35px;
     border: none;
@@ -288,4 +291,20 @@
 .sent__badges__not__enough::marker, .received__badges__not__enough::marker {
     content: '✕';
     color: tomato;
+}
+.profile__content__empty {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.profile__content__empty__image {
+    width: 128px;
+    filter: invert(87%) sepia(1%) saturate(3395%) hue-rotate(313deg) brightness(128%) contrast(65%);
+    margin-bottom: 10px;
+}
+.profile__content__empty__message {
+    color: #D3D3D3;
 }

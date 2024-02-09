@@ -4,7 +4,7 @@ exports.checkBadgesLevels = void 0;
 const checkBadgesLevels = (badgesLevels) => {
     let levels = [];
     badgesLevels.forEach((badgesLevel) => {
-        const currentLevel = badgesLevel < 3 ? 3 : badgesLevel < 5 ? 5 : badgesLevel < 10 ? 10 : 20;
+        const currentLevel = badgesLevel < 3 ? 3 : badgesLevel < 5 ? 5 : badgesLevel < 10 ? 10 : 10;
         levels.push(currentLevel);
     });
     return Array.from(new Set(levels)).length === 1;

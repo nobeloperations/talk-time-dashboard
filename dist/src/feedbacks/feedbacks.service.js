@@ -46,7 +46,7 @@ let FeedbacksService = class FeedbacksService {
             if (!currentUser) {
                 return res.status(404).render('notfound');
             }
-            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "New feedback" };
+            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, profileName: userPayload.name, isAuth: true, title: `New feedback about ${receiver}` };
         }
         catch (e) {
             return res.status(404).render('notfound');
@@ -62,7 +62,7 @@ let FeedbacksService = class FeedbacksService {
             let { url, receiver, date, generalName } = params;
             let sendUser = await this.databaseUtilsService.findUser({ name: userPayload.name }, '');
             await this.databaseUtilsService.updateUser({ name: receiver, url, date }, { $push: { rating } });
-            await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename, date);
+            await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, (_a = files[0]) === null || _a === void 0 ? void 0 : _a.filename, date, generalName);
             return res.redirect(`/dashboard/${url}/${date}?q=${generalName}`);
         }
         catch (e) {

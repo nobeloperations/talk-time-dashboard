@@ -21,7 +21,7 @@ let BadgesService = class BadgesService {
         return badgeCount < 3 ? 3 : badgeCount < 5 ? 5 : badgeCount < 10 ? 10 : 20;
     }
     getBadgesLevelName(badgeCount) {
-        return badgeCount < 3 ? 'Knowlege' : badgeCount < 5 ? 'Apprentice' : badgeCount < 10 ? 'Mastery' : 'Leadership';
+        return badgeCount < 3 ? 'Knowlege' : badgeCount < 5 ? 'Apprentice' : badgeCount >= 5 ? 'Mastery' : 'Mastery';
     }
     splitByUpperCase(object) {
         return Object.keys(object)[0].split(/(?=[A-Z])/).join(' ');
@@ -56,19 +56,23 @@ let BadgesService = class BadgesService {
         const levelOfHighestBadge = this.getBadgesLevelInNumbers(highestBadge);
         const previousLevel = levelOfHighestBadge === 3 ? 3 : levelOfHighestBadge === 5 ? 3 : levelOfHighestBadge === 10 ? 5 : 10;
         const isBadgesLevelsSame = (0, badges_level_1.checkBadgesLevels)(onlyLevels);
-        let allowedBadges;
+        let allowedBadges = [];
         if (!isBadgesLevelsSame) {
             allowedBadges = formattedBadges.reduce((result, formattedBadge) => {
                 const value = Object.values(formattedBadge)[0];
                 const name = this.splitByUpperCase(formattedBadge);
-                if (!(value <= levelOfHighestBadge && value >= previousLevel)) {
+                if (!(value <= levelOfHighestBadge && value >= previousLevel) && value < 5) {
                     result.push(name);
                 }
                 return result;
             }, []);
         }
         else {
-            allowedBadges = formattedBadges.map(formattedBadge => this.splitByUpperCase(formattedBadge));
+            formattedBadges.forEach(formattedBadge => {
+                const badgeCount = Object.values(formattedBadge)[0];
+                if (badgeCount < 5)
+                    allowedBadges.push(this.splitByUpperCase(formattedBadge));
+            });
         }
         const allBadgesStats = formattedBadges.map((formattedBadge) => {
             const badgesCount = Object.values(formattedBadge)[0];

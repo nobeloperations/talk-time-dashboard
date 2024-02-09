@@ -55,4 +55,10 @@ export class MainController {
         return this.mainService.getHallOfFame(req, res, generalName)
     }
 
+    @Get('/meeting/start-time/:url/:date')
+    @HttpCode(200)
+    getMeetingStartTime(@Req() req: Request, @Res() res: Response, @Query('q') generalName: string) {
+        return this.mainService.getMeetingStartTime(req, res, generalName)
+    }
+
 }

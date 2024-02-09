@@ -40,6 +40,9 @@ let MainController = class MainController {
     getHallOfFame(req, res, generalName) {
         return this.mainService.getHallOfFame(req, res, generalName);
     }
+    getMeetingStartTime(req, res, generalName) {
+        return this.mainService.getMeetingStartTime(req, res, generalName);
+    }
 };
 __decorate([
     (0, common_1.Get)('/'),
@@ -102,6 +105,16 @@ __decorate([
     __metadata("design:paramtypes", [Object, Object, String]),
     __metadata("design:returntype", void 0)
 ], MainController.prototype, "getHallOfFame", null);
+__decorate([
+    (0, common_1.Get)('/meeting/start-time/:url/:date'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Req)()),
+    __param(1, (0, common_1.Res)()),
+    __param(2, (0, common_1.Query)('q')),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object, Object, String]),
+    __metadata("design:returntype", void 0)
+], MainController.prototype, "getMeetingStartTime", null);
 MainController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [main_service_1.MainService])

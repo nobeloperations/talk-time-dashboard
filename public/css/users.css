@@ -43,15 +43,6 @@
     display: flex;
     flex-direction: column;
 }
-
-.user__avatar {
-    width: 42px;
-    height: 42px;
-    border-radius: 100px;
-    margin-right: 10px;
-    border: 3px solid lightgray;
-}
-
 .user {
     width: calc((100% / 3) - 10px);
     height: 70px;
@@ -63,7 +54,7 @@
     justify-content: space-between;
 }
 
-.user__profile__button, .users__view__badges {
+.users__view__badges {
     width: 100px;
     height: 35px;
     outline: none;
@@ -72,16 +63,6 @@
     background: #B1FDD1;
     color: #00D03E;
     cursor: pointer;
-}
-
-.user__profile__image {
-    width: 16px;
-    filter: invert(1) grayscale(0);
-}
-
-.user__profile__link {
-    width: 100px;
-    height: fit-content;
 }
 
 .users__search {
@@ -96,22 +77,11 @@
     outline: none;
     border: 1px solid rgb(226, 226, 226);
     padding: 15px;
+    margin-top: 10px;
 }
 
 .users__search::placeholder {
     font-size: 14px;
-}
-.users__empty__search {
-    width: fit-content;
-    height: fit-content;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    display: none;
-}
-.empty__users__img {
-    width: 128px;
-    filter: invert(81%) sepia(4%) saturate(5704%) hue-rotate(178deg) brightness(99%) contrast(107%);
 }
 .empty__title {
     color: #99D6FF;
@@ -122,7 +92,7 @@
     align-content: center;
 }
 .user__badges__modal {
-    width: 350px;
+    width: 400px;
     height: 315px;
     justify-content: center;
     flex-direction: column;
@@ -177,15 +147,16 @@
     align-items: center;
 }
 .badge__count {
-    width: 25px;
-    height: 25px;
-    border-radius: 100px;
+    width: fit-content;
+    height: fit-content;
+    border-radius: 10px;
     background: #99D6FF;
     display: flex;
     justify-content: center;
     align-items: center;
     color: #0070B8;
     font-size: 12px;
+    padding: 5px 10px 5px 10px;
 }
 .no__badges__image {
     width: 64px;
@@ -204,4 +175,8 @@
 }
 .no__badges__text {
     color: #d1d1d1;
+}
+.users__instructions {
+    font-size: 12px;
+    color: gray;
 }

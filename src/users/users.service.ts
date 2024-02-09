@@ -1,11 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import { filterUsers } from 'helpers/badges_filter';
 import { getUserFromCookies } from 'helpers/user_cookies';
 import { DatabaseUtilsService } from 'src/database-utils/database-utils.service';
-import { Badge, BadgeUser, FilteredUser, GetUserAvatarParams, GetUsersParams, GetUsersReturn, NewUserBody, NewUserParams, UserPayload } from 'types/types';
+import { BadgeUser, GetUserAvatarParams, GetUsersParams, NewUserBody, NewUserParams, UserPayload } from 'types/types';
 import { Response , Request } from 'express'
 import { User } from 'models/user.model';
-import { Meeting } from 'models/meeting.model';
 
 @Injectable()
 export class UserService {
@@ -43,26 +41,48 @@ export class UserService {
             const userPayload: UserPayload = getUserFromCookies(req)
             if(!userPayload) return res.redirect('/')
             const { url, date }: GetUsersParams = params;
-            let meeting: Meeting = await this.databaseUtilsService.findMeeting({name: generalName}, '')
 
-            const currentMeeting: boolean = meeting?.meetings.some(curr => curr['date'] == date);
-
-            if (!meeting || !currentMeeting) return res.status(404).render('notfound')
-
-            const dbUsers: BadgeUser[] = await this.databaseUtilsService.findUsers({}, 'name avatar')
-            const badgeUsers = await this.databaseUtilsService.findAllBadgesUsers()
-            let users = filterUsers(dbUsers)
-
-            users.forEach((user: {badges: {}, name: string}) => {
-                let usersBadges = badgeUsers.find(badgeUser => user.name == badgeUser.name)
-                if(usersBadges) user.badges = usersBadges.badges
-            })
-
-            return { cssFileName: 'users', users, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" }
+            return { cssFileName: 'users', url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" }
         }
         catch (e) {
             return res.status(404).render('notfound')
         }
+    }
+
+    async getUsersInRange(page: number, limit: number, res: Response) {
+        const users = await this.databaseUtilsService.findBadgesUsersInRange(page, limit);
+
+        return res.status(200).json(users);
+    }
+
+    async getMeetingUsersStats(generalName: string, res: Response, req: Request) {
+        const userPayload: UserPayload = getUserFromCookies(req)
+        if(!userPayload) return res.redirect('/')
+
+        const { url, date } = req.params;
+
+        const names = new Set()
+        const urls = new Set()
+        const { meetings } = await this.databaseUtilsService.findMeeting({name: generalName}, '');
+        
+        meetings.forEach(meeting => { urls.add(meeting.url) })
+
+        const uniqueUrls: any = Array.from(urls)
+        const users = await this.databaseUtilsService.findUsersByUrlIncluded(uniqueUrls)
+        
+        users.forEach(user => { names.add(user.name) })
+        
+        const uniqueNames: any = Array.from(names);
+
+        let badgesUsers: any = await this.databaseUtilsService.findBadgesUsersByNameIncluding(uniqueNames)
+
+        badgesUsers = await Promise.all(badgesUsers.map(async (badgesUser: any) => {
+            const totalBadges = Object.values(badgesUser.badges).reduce((acc: number, curr: any) => acc + curr.count, 0);
+            const { badgesSent } = await this.databaseUtilsService.findUser({name: badgesUser.name}, 'badgesSent');
+            return { ...badgesUser._doc, badgesSent, totalBadges }
+        }))
+
+        return { url, date, generalName, badgesUsers, profileName: userPayload.name, isAuth: true, title: `${generalName} participants`, cssFileName: 'meeting-stats' }
     }
 }
 

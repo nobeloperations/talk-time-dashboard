@@ -44,7 +44,7 @@ export class FeedbacksService {
                 return res.status(404).render('notfound')
             }
 
-            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, profileName: userPayload.name, isAuth: true, title: "New feedback" }
+            return { cssFileName: 'new-feedback', receiver, currentUser, url, date, generalName, profileName: userPayload.name, isAuth: true, title: `New feedback about ${receiver}` }
         }
         catch (e) {
             return res.status(404).render('notfound')
@@ -60,7 +60,7 @@ export class FeedbacksService {
             let sendUser: User = await this.databaseUtilsService.findUser({ name: userPayload.name }, '')
             await this.databaseUtilsService.updateUser({ name: receiver, url, date }, { $push: { rating } });
 
-            await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, files[0]?.filename, date)
+            await this.databaseUtilsService.createNewFeedback(userPayload.name, receiver, feedback, rating, url, sendUser.avatar, files[0]?.filename, date, generalName)
             return res.redirect(`/dashboard/${url}/${date}?q=${generalName}`)
         }
         catch (e) {

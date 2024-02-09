@@ -9,4 +9,15 @@ export declare class UsersController {
     }>;
     newUser(params: NewUserParams, newUserBody: NewUserBody, headers: Object): Promise<void | string>;
     getUsers(params: GetUsersParams, res: Response, generalName: string, req: Request): Promise<any>;
+    getUsersInRange(page: number, limit: number, res: Response): Promise<Response<any, Record<string, any>>>;
+    getMeetingUsersStats(generalName: string, res: Response, req: Request): Promise<void | {
+        url: string;
+        date: string;
+        generalName: string;
+        badgesUsers: any;
+        profileName: string;
+        isAuth: boolean;
+        title: string;
+        cssFileName: string;
+    }>;
 }

@@ -47,9 +47,8 @@ exports.helpers = {
     },
     getNextBadgeLevel(level) {
         return {
-            'knowlege': 'apprentice',
-            'apprentice': 'mastery',
-            'mastery': 'leadership'
+            'Knowlege': 'Apprentice',
+            'Apprentice': 'Mastery',
         }[level];
     }
 };
