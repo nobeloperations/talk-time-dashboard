@@ -48,15 +48,30 @@ let UserService = class UserService {
             if (!userPayload)
                 return res.redirect('/');
             const { url, date } = params;
-            return { cssFileName: 'users', url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" };
+            return { cssFileName: 'users', url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Add Friends" };
         }
         catch (e) {
             return res.status(404).render('notfound');
         }
     }
+    async getUserFriendRequests(params, res) {
+        const { name } = params;
+        const user = await this.databaseUtilsService.findUser({ name }, '');
+        return res.json({ friendRequests: user.friendRequests });
+    }
     async getUsersInRange(page, limit, res) {
-        const users = await this.databaseUtilsService.findBadgesUsersInRange(page, limit);
-        return res.status(200).json(users);
+        try {
+            let users = await this.databaseUtilsService.findBadgesUsersInRange(page, limit);
+            users = await Promise.all(users.map(async (user) => {
+                const { name } = user;
+                const { friendRequests } = await this.databaseUtilsService.findUser({ name }, 'friendRequests');
+                return Object.assign(Object.assign({}, user._doc), { friendRequests });
+            }));
+            return res.status(200).json(users);
+        }
+        catch (error) {
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
     }
     async getMeetingUsersStats(generalName, res, req) {
         const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
@@ -78,6 +93,35 @@ let UserService = class UserService {
             return Object.assign(Object.assign({}, badgesUser._doc), { badgesSent, totalBadges });
         }));
         return { url, date, generalName, badgesUsers, profileName: userPayload.name, isAuth: true, title: `${generalName} participants`, cssFileName: 'meeting-stats' };
+    }
+    async newFriendRequest(params) {
+        let { name, sender } = params;
+        await this.databaseUtilsService.updateUsers({ name }, { $push: { friendRequests: sender } });
+    }
+    async getFriendRequests(params) {
+        const { name } = params;
+        const currentUser = await this.databaseUtilsService.findUser({ name }, 'friendRequests');
+        return JSON.stringify({ friendRequests: currentUser.friendRequests });
+    }
+    async addFriend(params) {
+        const { sender, receiver } = params;
+        await this.databaseUtilsService.updateUsers({ name: receiver }, { $pull: { friendRequests: sender } });
+        await this.databaseUtilsService.updateUsers({ name: sender }, { $push: { friends: receiver } });
+        await this.databaseUtilsService.updateUsers({ name: receiver }, { $push: { friends: sender } });
+    }
+    async getAllFriends(params) {
+        const { name } = params;
+        const currentUser = await this.databaseUtilsService.findUser({ name }, '');
+        const { friends, friendRequests } = currentUser;
+        return JSON.stringify({ friends, friendRequests });
+    }
+    async deleteFriend(params) {
+        const { receiver, sender } = params;
+        await this.databaseUtilsService.updateUsers({ name: receiver }, { $pull: { friends: sender } });
+        await this.databaseUtilsService.updateUsers({ name: sender }, { $pull: { friends: receiver } });
+        await this.databaseUtilsService.updateUsers({ name: receiver }, { $pull: { friendRequests: sender } });
+        await this.databaseUtilsService.updateUsers({ name: sender }, { $pull: { friendRequests: receiver } });
+        return JSON.stringify({ message: "All good" });
     }
 };
 UserService = __decorate([

@@ -4,6 +4,7 @@ import { DatabaseUtilsService } from 'src/database-utils/database-utils.service'
 import { BadgeUser, GetUserAvatarParams, GetUsersParams, NewUserBody, NewUserParams, UserPayload } from 'types/types';
 import { Response , Request } from 'express'
 import { User } from 'models/user.model';
+import mongoose from 'mongoose';
 
 @Injectable()
 export class UserService {
@@ -30,6 +31,7 @@ export class UserService {
             else {
                 throw new HttpException('Invalid headers', 404)
             }
+
         }
         catch (e) {
             return JSON.stringify({ message: 'Something went wrong...', error: e })
@@ -42,17 +44,35 @@ export class UserService {
             if(!userPayload) return res.redirect('/')
             const { url, date }: GetUsersParams = params;
 
-            return { cssFileName: 'users', url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Users" }
+            return { cssFileName: 'users', url, date, generalName, profileName: userPayload.name, isAuth: true, title: "Add Friends" }
         }
         catch (e) {
             return res.status(404).render('notfound')
         }
     }
 
-    async getUsersInRange(page: number, limit: number, res: Response) {
-        const users = await this.databaseUtilsService.findBadgesUsersInRange(page, limit);
+    async getUserFriendRequests(params, res: Response) {
+        const { name } = params;
+        const user = await this.databaseUtilsService.findUser({ name } , '');
 
-        return res.status(200).json(users);
+        return res.json({friendRequests: user.friendRequests})
+    }
+
+    async getUsersInRange(page: number, limit: number, res: Response) {
+        try {
+            let users = await this.databaseUtilsService.findBadgesUsersInRange(page, limit);
+    
+            users = await Promise.all(users.map(async (user: any) => {
+                const { name } = user;
+                const { friendRequests } = await this.databaseUtilsService.findUser({ name }, 'friendRequests');
+
+                return {...user._doc, friendRequests};
+            }));
+    
+            return res.status(200).json(users);
+        } catch (error) {
+            return res.status(500).json({ error: "Internal Server Error" });
+        }
     }
 
     async getMeetingUsersStats(generalName: string, res: Response, req: Request) {
@@ -63,6 +83,7 @@ export class UserService {
 
         const names = new Set()
         const urls = new Set()
+
         const { meetings } = await this.databaseUtilsService.findMeeting({name: generalName}, '');
         
         meetings.forEach(meeting => { urls.add(meeting.url) })
@@ -84,5 +105,52 @@ export class UserService {
 
         return { url, date, generalName, badgesUsers, profileName: userPayload.name, isAuth: true, title: `${generalName} participants`, cssFileName: 'meeting-stats' }
     }
-}
+
+    async newFriendRequest(params) {
+        let { name, sender } = params;
+
+        await this.databaseUtilsService.updateUsers({ name }, { $push: { friendRequests: sender } });
+    }
+
+    async getFriendRequests(params) {
+        const { name } = params;
+
+        const currentUser = await this.databaseUtilsService.findUser({ name }, 'friendRequests');
+
+        return JSON.stringify({ friendRequests: currentUser.friendRequests })
+    } 
+
+    async addFriend(params) {
+        const { sender, receiver } = params;
+
+        await this.databaseUtilsService.updateUsers({ name: receiver }, { $pull: { friendRequests: sender } })
+
+        await this.databaseUtilsService.updateUsers({ name: sender }, { $push: { friends: receiver } })
+
+        await this.databaseUtilsService.updateUsers({ name: receiver }, { $push: { friends: sender } })
+    }   
+
+    async getAllFriends(params) {
+        const { name } = params;
+
+        const currentUser = await this.databaseUtilsService.findUser({ name }, '');
+
+        const { friends, friendRequests } = currentUser;
+
+        return JSON.stringify({ friends, friendRequests })
+    }
+
+    async deleteFriend(params ) {
+        const { receiver, sender } = params;
+
+        await this.databaseUtilsService.updateUsers({ name: receiver }, { $pull: { friends: sender } })
+        await this.databaseUtilsService.updateUsers({ name: sender }, { $pull: { friends: receiver } })
+
+        await this.databaseUtilsService.updateUsers({ name: receiver }, { $pull: { friendRequests: sender } })
+        await this.databaseUtilsService.updateUsers({ name: sender }, { $pull: { friendRequests: receiver } })
+        
+        return JSON.stringify({ message: "All good" })
+
+    }
+}   
 

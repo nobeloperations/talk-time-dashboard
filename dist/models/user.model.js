@@ -38,6 +38,12 @@ exports.UserSchema = new mongoose.Schema({
     badgesSent: {
         type: Number,
         required: true
+    },
+    friendRequests: {
+        type: Array
+    },
+    friends: {
+        type: Array
     }
 });
 //# sourceMappingURL=user.model.js.map

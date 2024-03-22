@@ -1,4 +1,4 @@
-import { Controller, Post, HttpCode, Param, Body, Headers, Get, Render, Res, Query, Req } from '@nestjs/common';
+import { Controller, Post, HttpCode, Param, Body, Headers, Get, Render, Res, Query, Req, Delete } from '@nestjs/common';
 import { UserService } from './users.service';
 import { Request, Response } from 'express';
 import { GetUserAvatarParams, GetUsersParams, NewUserBody, NewUserParams } from 'types/types';
@@ -40,4 +40,41 @@ export class UsersController {
     getMeetingUsersStats(@Query('q') generalName: string, @Res() res: Response, @Req() req: Request) {
         return this.usersService.getMeetingUsersStats(generalName, res, req)
     }
+
+    @Get('/friend-requests/:name')
+    @HttpCode(200)
+    getUserFriendRequests(@Param() name: string, @Res() res: Response) {
+        return this.usersService.getUserFriendRequests(name, res)
+    }
+
+    @Post('/friends/new-friend/:name/:sender')
+    @HttpCode(200)
+    newFriendRequest(@Param() params) {
+        return this.usersService.newFriendRequest(params)
+    }
+
+    @Get('/friends/friend-requests/:name')
+    @HttpCode(200)
+    getFriendRequests(@Param() params) {
+        return this.usersService.getFriendRequests(params)
+    }
+    
+    @Get('/friends/all-friends/:name')
+    @HttpCode(200)
+    getAllFriends(@Param() params) {
+        return this.usersService.getAllFriends(params)
+    }
+
+    @Post('/friends/add-friend/:sender/:receiver')
+    @HttpCode(200)
+    addFriend(@Param() params) {
+        return this.usersService.addFriend(params)
+    }
+
+    @Delete('/friends/delete/:receiver/:sender')
+    @HttpCode(200)
+    deleteFriend(@Param() params) {
+        return this.usersService.deleteFriend(params)
+    }
+
 }

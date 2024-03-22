@@ -4,6 +4,7 @@ import { AddGeneralBody, MainReturn, notAuthenticated } from 'types/types';
 export declare class MainService {
     private readonly databaseUtilsService;
     constructor(databaseUtilsService: DatabaseUtilsService);
+    formatBadges(badgesObject: any): any[];
     getMain(req: Request, res: Response): Promise<MainReturn | string | notAuthenticated | void>;
     addMeeting(addGeneralBody: AddGeneralBody): Promise<void | string>;
     getFAQ(req: Request): Promise<string | {
@@ -18,15 +19,6 @@ export declare class MainService {
         profileName: string;
     }>;
     validateGoogleMeetLink(req: Request): Promise<string | import("axios").AxiosResponse<any, any>>;
-    getHallOfFame(req: Request, res: Response, generalName: string): Promise<void | {
-        cssFileName: string;
-        title: string;
-        isAuth: boolean;
-        url: string;
-        date: string;
-        generalName: string;
-        profileName: string;
-        usersWithTheMostBadges: any[];
-    }>;
+    getHallOfFame(req: Request, res: Response, generalName: string): Promise<any>;
     getMeetingStartTime(req: Request, res: Response, generalName: string): Promise<Response<any, Record<string, any>>>;
 }

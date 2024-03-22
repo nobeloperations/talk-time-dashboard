@@ -5,35 +5,77 @@
         information you need about your meetings is here</span>
     <button class="main__button">Explore</button>
 </div>
+{{#if isAuth}}
+<div class="badges__wrapper">
+    <h1 class="badges__wrapper__title">Your badges</h1>
+    <div class="profile__sent__badges">You sent {{badgesSent}} badge(s) in total</div>
+    {{#each badges}}
+    <div class="profile__badge">
+        <div class="profile__badge__info">
+            <img src="" class="profile__badge__image" alt="">
+            <span class="profile__badge__name">{{formatBadgeName (getKeysFromBadgesConfig this 0)}}</span>
+        </div>
+        <div class="profile__badges__information">
+            <div class="profile__badges__level__popup">
+                <ul>
+                    {{#if (getValuesFromBadgesConfig this 1)}}
+                    <li class="sent__badges__not__enough">Send {{getValuesFromBadgesConfig this 1}} badge(s) to achieve
+                        {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
+                    {{else}}
+                    <li class="sent__badges__enough">You sent enough badges to achieve {{getNextBadgeLevel
+                        (getValuesFromBadgesConfig this 3)}} level</li>
+                    {{/if}}
+                    {{#if (getValuesFromBadgesConfig this 2)}}
+                    <li class="received__badges__not__enough">Receive {{getValuesFromBadgesConfig this 2}} badge(s) to
+                        achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
+                    {{else}}
+                    <li class="received__badges__enough">You sent enough badges to achieve {{getNextBadgeLevel
+                        (getValuesFromBadgesConfig this 3)}} level</li>
+                    {{/if}}
+                </ul>
+            </div>
+            <div>
+                <span class="profile__badges__level">{{getValuesFromBadgesConfig this 3}} level</span>
+            </div>
+            <div class="profile__badges__sent__collected">
+                <span class="profile__received__badges">You collected&nbsp;<bclass="profile__received__badges__count">
+                        {{getValuesFromBadgesConfig this 0}}</b>&nbsp;{{formatBadgeName (getKeysFromBadgesConfig this
+                        0)}} badge(s)</span>
+            </div>
+        </div>
+    </div>
+    {{/each}}
+</div>
+{{/if}}
 <div class="meetings">
     <h1 class="meetings__title">Select your meeting <b>here</b></h1>
     <div class="generals__wrapper">
         <input class="search__generals" placeholder="Name of your meeting" type="text">
         <div class=" {{#if generals}} list__of__meetings {{else}} empty__list__of__meetings {{/if}}">
             {{#if generals}}
-                {{#each generals}}
-                <div class="general__wrapper" data-name="{{_doc.name}}">
-                    <div class="general">
-                        <span class="general__name">{{_doc.name}}</span>
-                        <hr>
-                        <button class="select__general" data-active="">
-                            <img src="/img/down-arrow.png" alt="">
-                        </button>
-                    </div>
-                    <div class="meetings__content">
-                        {{#each meetings}}
-                        <div class="meeting">
-                            <div class="meeting__info">
-                                <span>{{url}}</span>
-                                <span class="main__meeting__date">🕙 {{date}}</span>
-                            </div>
-                            <a href="/dashboard/{{url}}/{{date}}?q={{../_doc.name}}"><button
-                                    class="dashboard__button">Dashboard</button></a>
-                        </div>
-                        {{/each}}
-                    </div>
+            {{#each generals}}
+            <div class="general__wrapper" data-name="{{_doc.name}}">
+                <div class="general">
+                    <span class="general__name">{{_doc.name}}</span>
+                    <hr>
+                    <button class="select__general" data-active="">
+                        <img src="/img/down-arrow.png" alt="">
+                    </button>
                 </div>
-                {{/each}}
+                <div class="meetings__content">
+                    {{#each meetings}}
+                    <div class="meeting">
+                        <div class="meeting__info">
+                            <span>{{url}}</span>
+                            <span class="main__meeting__date">🕙 {{date}}</span>
+                        </div>
+                        <a href="/dashboard/{{url}}/{{date}}?q={{../_doc.name}}"><button
+                                class="dashboard__button">Dashboard</button></a>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+            {{/each}}
             {{else}}
             <img class="empty__meetings__img" src="/img/empty.png" alt="">
             <span class="empty__meetings__text">{{#if isAuth}}You don`t have any meetings{{else}}Authenticate to see

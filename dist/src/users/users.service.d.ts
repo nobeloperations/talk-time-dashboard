@@ -9,6 +9,7 @@ export declare class UserService {
     }>;
     newUser(params: NewUserParams, newUserBody: NewUserBody, headers: Object): Promise<void | string>;
     getUsers(params: GetUsersParams, res: Response, generalName: string, req: Request): Promise<any | void>;
+    getUserFriendRequests(params: any, res: Response): Promise<Response<any, Record<string, any>>>;
     getUsersInRange(page: number, limit: number, res: Response): Promise<Response<any, Record<string, any>>>;
     getMeetingUsersStats(generalName: string, res: Response, req: Request): Promise<void | {
         url: string;
@@ -20,4 +21,9 @@ export declare class UserService {
         title: string;
         cssFileName: string;
     }>;
+    newFriendRequest(params: any): Promise<void>;
+    getFriendRequests(params: any): Promise<string>;
+    addFriend(params: any): Promise<void>;
+    getAllFriends(params: any): Promise<string>;
+    deleteFriend(params: any): Promise<string>;
 }

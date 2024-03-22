@@ -12,7 +12,6 @@ export declare class ProfileController {
         isAuth: boolean;
         notes: any;
         profileName: string;
-        badges: any[];
         feedbacksReceived: any;
         feedbacksSent: any;
         profileEmail: string;

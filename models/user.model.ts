@@ -36,6 +36,12 @@ export const UserSchema = new mongoose.Schema({
     badgesSent: {
         type: Number,
         required: true
+    },
+    friendRequests: {
+        type: Array
+    },
+    friends: {
+        type: Array
     }
 })
 
@@ -46,5 +52,7 @@ export interface User {
     percents: string,
     generalName: string,
     rating: string[],
-    date: string
+    date: string,
+    friendRequests: string[],
+    firends: string[]
 }

@@ -91,92 +91,26 @@
     align-items: center;
     align-content: center;
 }
-.user__badges__modal {
-    width: 400px;
-    height: 315px;
-    justify-content: center;
-    flex-direction: column;
-    visibility: hidden;
-    display: flex;
-    opacity: 0;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: white;
-    border-radius: 5px;
-    z-index: 4;
-    transition: .4s ease all;
-}
-.users__badges {
-    width: 100%;
-    height: 315px;
-    overflow-y: scroll;
-    padding: 0 0 0 10px;
-}
-.close__badges__modal {
-    width: 100%;
-    height: 45px;
-    background: tomato;
-    border-radius: 0 0 3px 3px;
-    border: none;
-    outline: none;
-    color: white;
-    cursor: pointer;
-}
-.users__badge {
-    width: 100%;
-    height: 55px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding-right: 10px;
-    border-bottom: 1px solid rgb(235, 235, 235);
-}
-.badge__image {
-    width: 32px;
-    margin-right: 5px;
-}
-.badge__name {
-    font-size: 14px;
-}
-.badge__info {
-    width: fit-content;
-    height: 100%;
-    display: flex;
-    align-items: center;
-}
-.badge__count {
-    width: fit-content;
-    height: fit-content;
-    border-radius: 10px;
-    background: #99D6FF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #0070B8;
-    font-size: 12px;
-    padding: 5px 10px 5px 10px;
-}
-.no__badges__image {
-    width: 64px;
-}
-.no__badges {
-    width: 100%;
-    height: 260px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-}
-.no__badges__image {
-    margin-bottom: 10px;
-    filter: invert(99%) sepia(1%) saturate(7365%) hue-rotate(249deg) brightness(139%) contrast(84%);
-}
-.no__badges__text {
-    color: #d1d1d1;
-}
 .users__instructions {
     font-size: 12px;
     color: gray;
+}
+
+.user__send__friend__request, .user__you__button {
+    width: 150px;
+    height: 40px;
+    background: rgba(59, 250, 139, 0.4);
+    color: #00D03E;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.user__send__friend__request:disabled, .user__you__button:disabled {
+    background: lightgray;
+    color: gray;
+    cursor: default;
+}
+.user__mongodb__id {
+    display: none;
 }

@@ -19,6 +19,18 @@ let MainService = class MainService {
     constructor(databaseUtilsService) {
         this.databaseUtilsService = databaseUtilsService;
     }
+    formatBadges(badgesObject) {
+        if (badgesObject) {
+            const { badges } = badgesObject;
+            const formattedBadges = [];
+            Object.keys(badges).forEach(badge => {
+                formattedBadges.push({ [badge]: badges[badge].count });
+            });
+            return formattedBadges;
+        }
+        else
+            return [];
+    }
     async getMain(req, res) {
         try {
             let userPayload = (0, user_cookies_1.getUserFromCookies)(req);
@@ -35,6 +47,28 @@ let MainService = class MainService {
                 generalNames.push(generalName);
             });
             let generals = await this.databaseUtilsService.findMeetingsByNameIncluding(generalNames);
+            let currentUser = await this.databaseUtilsService.findUser({ name: userPayload.name }, '');
+            let badges = await this.databaseUtilsService.findBadgeUserByName({ name: currentUser.name });
+            const badgesSent = currentUser === null || currentUser === void 0 ? void 0 : currentUser.badgesSent;
+            const formattedBadges = this.formatBadges(badges);
+            formattedBadges.forEach(formattedBadge => {
+                const numberOfBadges = Object.values(formattedBadge)[0];
+                const badgeLevel = numberOfBadges < 3 ? 3 : numberOfBadges < 5 ? 5 : numberOfBadges < 10 ? 10 : 20;
+                formattedBadge.badgesSentDiff = Math.max(badgeLevel - badgesSent, 0);
+                formattedBadge.badgesReceivedDiff = Math.max(badgeLevel - numberOfBadges, 0);
+                if (numberOfBadges < 3 || badgesSent < 3) {
+                    formattedBadge.level = 'Knowledge';
+                }
+                else if (numberOfBadges < 5 || badgesSent < 5) {
+                    formattedBadge.level = 'Apprentice';
+                }
+                else if (numberOfBadges < 10 || badgesSent < 10) {
+                    formattedBadge.level = 'Mastery';
+                }
+                else {
+                    formattedBadge.level = "Leadership";
+                }
+            });
             const filteredGenerals = generals.map((general) => {
                 const filteredMeetings = [];
                 for (const meeting of general.meetings) {
@@ -46,7 +80,7 @@ let MainService = class MainService {
                 }
                 return Object.assign(Object.assign({}, general), { meetings: filteredMeetings });
             });
-            return { cssFileName: 'main', generals: filteredGenerals, title: "Main", profileName: userPayload.name, isAuth: true };
+            return { cssFileName: 'main', generals: filteredGenerals, badges: formattedBadges, title: "Main", profileName: userPayload.name, isAuth: true, badgesSent };
         }
         catch (e) {
             return res.status(404).render('notfound');
@@ -88,15 +122,8 @@ let MainService = class MainService {
         if (!userPayload)
             return res.redirect('/');
         const badgesUsers = await this.databaseUtilsService.findAllBadgesUsers();
-        let usersWithTheMostBadges = (0, hall_of_fame_1.calculateUserWithMostBadges)(badgesUsers);
-        usersWithTheMostBadges = await Promise.all(usersWithTheMostBadges.map(async (user) => {
-            const { avatar } = await this.databaseUtilsService.findUser({ name: user.name }, 'avatar');
-            const meetCount = await this.databaseUtilsService.findUsers({ name: user.name }, 'name');
-            user.meetCount = meetCount.length;
-            user.avatar = avatar;
-            return user;
-        }));
-        return { cssFileName: 'hall-of-fame', title: 'Hall of Fame', isAuth: true, url, date, generalName, profileName: userPayload.name, usersWithTheMostBadges };
+        const topUsers = (0, hall_of_fame_1.calculateUsersWithMostBadges)(badgesUsers);
+        return { cssFileName: 'hall-of-fame', title: 'Hall of Fame', isAuth: true, url, date, generalName, profileName: userPayload.name, topUsers };
     }
     async getMeetingStartTime(req, res, generalName) {
         const { url, date } = req.params;

@@ -4,20 +4,24 @@
         {{>navigate}}
         <div class="hall-of-fame">
             <div class="hall-of-fame__users__wrapper">
-                {{#each usersWithTheMostBadges}}
-                    <div class="hall-of-fame__user">
-                        <div class="hall-of-fame__badge__title">{{formatBadgeName badge}}</div>
-                        <div class="hall-of-fame__badge__image__wrapper">
-                            <img class="hall-of-fame__badge__image" src="/img/{{badgeToImage badge}}" alt="">
+                {{#each topUsers}}
+                    <div class="hall__of__fame__card">
+                        <div class="hall__of__fame__user__header">
+                            <img class="hall__of__fame__user__header__badge" src="/img/{{badgeToImage @key}}" alt="">
+                            <span>{{@key}}</span>
                         </div>
-                        <div class="hall-of-fame__user__info__wrapper">
-                            <div class="hall-of-fame__user__info">
-                                <img src="{{avatar}}" class="hall-of-fame__user__avatar" alt="" />
-                                <span class="hall-of-fame__username">{{name}}</span>
-                            </div>
-                            <span class="hall-of-fame__user__results">
-                                Collected {{count}} {{formatBadgeName badge}} badges
-                            </span>
+                        <div class="hall__of__fame__user__content">
+                            {{#each this}}
+                                <div class="hall__of__fame__user">
+                                    <div class="hall__of__fame__user__info">
+                                        <img class="user__place__image" src="" alt="">
+                                        <span>{{name}}</span>
+                                    </div>
+                                    <div class="hall__of__fame__badges__count">
+                                        {{count}}
+                                    </div>
+                                </div>
+                            {{/each}}
                         </div>
                     </div>
                 {{/each}}
@@ -25,3 +29,4 @@
         </div>
     </div>
 </div>
+<script src="/js/hall-of-fame.js"></script>

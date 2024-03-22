@@ -24,11 +24,6 @@
                     alt="">
                 <span class="profile__content__menu__text">Feedbacks sent</span>
             </div>
-            <div class="profile__content__menu__item" data-profileTab="profile__badges">
-                <img class="profile__content__menu__icon"
-                    src="https://cdn-icons-png.flaticon.com/128/12355/12355966.png" alt="">
-                <span class="profile__content__menu__text">Your badges</span>
-            </div>
             <div class="profile__content__menu__item" data-profileTab="profile__notes">
                 <img class="profile__content__menu__icon" src="https://cdn-icons-png.flaticon.com/128/3209/3209238.png"
                     alt="">
@@ -100,38 +95,7 @@
                     </div>
                 {{/if}}
             </div>
-            <div class="profile__tab profile__badges">
-                <div class="profile__sent__badges">You sent {{badgesSent}} badge(s) in total</div>
-            {{#each badges}}
-                <div class="profile__badge">
-                    <div class="profile__badge__info">
-                        <img src="" class="profile__badge__image" alt="">
-                        <span class="profile__badge__name">{{formatBadgeName (getKeysFromBadgesConfig this 0)}}</span>
-                    </div>
-                    <div class="profile__badges__information">
-                        <div class="profile__badges__level__popup">
-                            <ul>
-                                {{#if (getValuesFromBadgesConfig this 1)}}
-                                    <li class="sent__badges__not__enough">Send {{getValuesFromBadgesConfig this 1}} badge(s) to achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
-                                {{else}}
-                                    <li class="sent__badges__enough">You sent enough badges to achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
-                                {{/if}}
-                                {{#if (getValuesFromBadgesConfig this 2)}}
-                                    <li class="received__badges__not__enough">Receive {{getValuesFromBadgesConfig this 2}} badge(s) to achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
-                                {{else}}
-                                    <li class="received__badges__enough">You sent enough badges to achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
-                                {{/if}}
-                            </ul>
-                        </div>
-                        <div>
-                            <span class="profile__badges__level">{{getValuesFromBadgesConfig this 3}} level</span>
-                        </div>
-                        <div class="profile__badges__sent__collected">
-                        <span class="profile__received__badges">You collected&nbsp;<bclass="profile__received__badges__count">{{getValuesFromBadgesConfig this 0}}</b>&nbsp;{{formatBadgeName (getKeysFromBadgesConfig this 0)}} badge(s)</span></div>
-                    </div>
-                </div>
-            {{/each}}
-            </div>
+
             <div class="profile__tab profile__notes">
                 {{#if notes}}
                     {{#each notes}}

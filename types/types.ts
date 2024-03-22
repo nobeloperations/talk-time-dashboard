@@ -215,6 +215,8 @@ export interface GetNewFeedbackReturn extends GetPageReturn {
 
 export interface MainReturn extends GetPageReturn {
     generals: Meeting[];
+    badges: {},
+    badgesSent: number
 }
 
 export interface GetUsersReturn extends GetPageReturn {

@@ -6,6 +6,7 @@
     padding: 0;
     box-sizing: border-box;
 }
+
 .container {
     display: flex;
 }
@@ -14,6 +15,7 @@ body {
     overflow-x: hidden;
     background: #F8F8F8;
 }
+
 .navigate {
     width: calc(100vw - 230px);
     height: 50px;
@@ -29,11 +31,13 @@ body {
     font-size: 18px;
     color: #646464;
 }
+
 a {
     text-decoration: none;
 }
+
 .menu {
-    width:  230px;
+    width: 230px;
     height: 100vh;
     background: #00253f;
 }
@@ -44,9 +48,11 @@ a {
     background: #002b49;
     padding: 10px;
 }
+
 .menu__title a {
     color: white;
 }
+
 .menu__items {
     width: 100%;
     height: fit-content;
@@ -74,6 +80,7 @@ a {
     text-decoration: none;
     font-size: 16px;
 }
+
 .invalid__url {
     color: white;
     text-align: center;
@@ -83,14 +90,17 @@ a {
     left: 50%;
     width: 100%;
 }
+
 .container.open__modal .modal__shadow {
     visibility: visible;
     opacity: .6;
 }
+
 .container.close__modal .modal__shadow {
     visibility: hidden;
     opacity: 0;
 }
+
 .modal__shadow {
     width: 100vw;
     height: 100vh;
@@ -99,6 +109,7 @@ a {
     opacity: 0;
     visibility: hidden;
 }
+
 *::-webkit-scrollbar {
     width: 3px;
 }
@@ -113,17 +124,20 @@ a {
     background: gray;
     border-radius: 10px;
 }
+
 i {
     width: 16px;
     height: 16px;
     font-size: 16px;
 }
+
 .profile__information {
     width: fit-content;
     height: fit-content;
     display: flex;
     align-items: center;
 }
+
 .auth__google {
     width: fit-content;
     height: fit-content;
@@ -133,14 +147,17 @@ i {
     padding: 5px 10px 5px 10px;
     cursor: pointer;
 }
+
 .google__logo {
     width: 24px;
     height: 24px;
     margin-right: 10px;
 }
+
 .google__text {
     color: rgb(129, 129, 129);
 }
+
 .profile__user {
     width: fit-content;
     height: 30px;
@@ -149,6 +166,7 @@ i {
     justify-content: space-between;
     align-items: center;
 }
+
 .profile__options {
     position: absolute;
     width: 120px;
@@ -161,6 +179,7 @@ i {
     display: none;
     z-index: 1111;
 }
+
 .profile__options__item {
     width: 100%;
     height: 50%;
@@ -169,20 +188,107 @@ i {
     align-items: center;
     cursor: pointer;
 }
+
 .profile__options__visitprofile {
     border-bottom: 1px solid #f1f1f1;
 }
+
 .profile__arrow__down {
     width: 16px;
 }
+
 .profile__user__avatar {
     width: 32px;
     border-radius: 100px;
     margin-right: 10px;
 }
+
 .profile__link {
     color: black;
 }
+
 .navigate__link {
-    color: rgb(100, 100, 100);
+    color: #646464;
+}
+
+.friends__button {
+    margin-right: 20px;
+    padding: 5px 15px 5px 15px;
+    border: none;
+    outline: none;
+    background: #99D6FF;
+    color: #0070B8;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.friends__button[data-active="true"] {
+    background: #0070B8;
+    color: #99D6FF;
+}
+
+.friends__wrapper {
+    background: white;
+    border-radius: 10px;
+    width: 250px;
+    height: 250px;
+    position: absolute;
+    z-index: 111;
+    top: 50px;
+    transition: .3s ease all;
+    visibility: hidden;
+    opacity: 0;
+    box-shadow: 0 0px 10px rgba(110, 110, 110, 0.2);
+}
+
+.friends__wrapper__header {
+    width: 100%;
+    height: 50px;
+    display: flex;
+}
+.friends__wrapper__icon {
+    width: 20px;
+}
+.friends__wrapper__content {
+    width: 100%;
+    height: 250px;
+    overflow-y: scroll;
+}
+.pending {
+    display: none;
+}
+.friend {
+    width: 100%;
+    height: 50px;
+    border-bottom: 1px solid lightgray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px 0 5px;
+}
+.friend__name__wrapper {
+    width: fit-content;
+    display: flex;
+    align-items: center;
+}
+.friend__name__wrapper span {
+    font-size: 14px;
+}
+.accept__friend__request {
+    width: 80px;
+    height: 30px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    background: #99D6FF;
+    color: #0070B8;
+    cursor: pointer;
+}
+.friend__avatar {
+    width: 32px;
+    border-radius: 100px;
+    margin-right: 5px;
+}
+.accepted__text {
+    font-size: 14px;
 }

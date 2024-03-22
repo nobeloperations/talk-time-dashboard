@@ -25,15 +25,6 @@ export declare class MainController {
     };
     getPolicy(): void;
     validateGoogleMeetLink(req: Request): Promise<string | import("axios").AxiosResponse<any, any>>;
-    getHallOfFame(req: Request, res: Response, generalName: string): Promise<void | {
-        cssFileName: string;
-        title: string;
-        isAuth: boolean;
-        url: string;
-        date: string;
-        generalName: string;
-        profileName: string;
-        usersWithTheMostBadges: any[];
-    }>;
+    getHallOfFame(req: Request, res: Response, generalName: string): Promise<any>;
     getMeetingStartTime(req: Request, res: Response, generalName: string): Promise<Response<any, Record<string, any>>>;
 }

@@ -1,19 +1,29 @@
-export const calculateUserWithMostBadges = users => {
-    const badgeNames = ['Fun', 'Encourage', 'BeeBrief', 'ZenEnviroment', 'OnTime', 'Help', 'BePresent'];
-    let result = [];
+interface User {
+    name: string;
+    badges: { [badge: string]: { count: number } };
+}
 
-    badgeNames.forEach(badgeName => {
-        let maxCount = 0;
-        let maxUser = {};
-        users.forEach(user => {
-            const count = user.badges[badgeName].count;
-            if (count > maxCount) {
-                maxUser = { name: user.name, count, badge: badgeName }
-                maxCount = count
+interface TopUsersByBadge {
+    [badge: string]: { name: string; count: number }[];
+}
+
+export const calculateUsersWithMostBadges = (users: User[]): TopUsersByBadge => {
+    const badgeCounts: { [badge: string]: { name: string; count: number }[] } = {};
+    users.forEach((user) => {
+        Object.entries(user.badges).forEach(([badge, { count }]) => {
+            if (!badgeCounts[badge]) {
+                badgeCounts[badge] = [];
             }
-        })
-        result.push(maxUser)
-    })
+            badgeCounts[badge].push({ name: user.name, count });
+        });
+    });
 
-    return result;
+    const topUsersByBadge: TopUsersByBadge = {};
+    
+    Object.entries(badgeCounts).forEach(([badge, users]) => {
+        users.sort((a, b) => b.count - a.count);
+        topUsersByBadge[badge] = users.slice(0, 10);
+    });
+
+    return topUsersByBadge;
 }

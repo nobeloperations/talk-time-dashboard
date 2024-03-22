@@ -34,6 +34,24 @@ let UsersController = class UsersController {
     getMeetingUsersStats(generalName, res, req) {
         return this.usersService.getMeetingUsersStats(generalName, res, req);
     }
+    getUserFriendRequests(name, res) {
+        return this.usersService.getUserFriendRequests(name, res);
+    }
+    newFriendRequest(params) {
+        return this.usersService.newFriendRequest(params);
+    }
+    getFriendRequests(params) {
+        return this.usersService.getFriendRequests(params);
+    }
+    getAllFriends(params) {
+        return this.usersService.getAllFriends(params);
+    }
+    addFriend(params) {
+        return this.usersService.addFriend(params);
+    }
+    deleteFriend(params) {
+        return this.usersService.deleteFriend(params);
+    }
 };
 __decorate([
     (0, common_1.Get)('/users/:name'),
@@ -86,6 +104,55 @@ __decorate([
     __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "getMeetingUsersStats", null);
+__decorate([
+    (0, common_1.Get)('/friend-requests/:name'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Res)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String, Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getUserFriendRequests", null);
+__decorate([
+    (0, common_1.Post)('/friends/new-friend/:name/:sender'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "newFriendRequest", null);
+__decorate([
+    (0, common_1.Get)('/friends/friend-requests/:name'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getFriendRequests", null);
+__decorate([
+    (0, common_1.Get)('/friends/all-friends/:name'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "getAllFriends", null);
+__decorate([
+    (0, common_1.Post)('/friends/add-friend/:sender/:receiver'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "addFriend", null);
+__decorate([
+    (0, common_1.Delete)('/friends/delete/:receiver/:sender'),
+    (0, common_1.HttpCode)(200),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], UsersController.prototype, "deleteFriend", null);
 UsersController = __decorate([
     (0, common_1.Controller)(''),
     __metadata("design:paramtypes", [users_service_1.UserService])

@@ -20,4 +20,10 @@ export declare class UsersController {
         title: string;
         cssFileName: string;
     }>;
+    getUserFriendRequests(name: string, res: Response): Promise<Response<any, Record<string, any>>>;
+    newFriendRequest(params: any): Promise<void>;
+    getFriendRequests(params: any): Promise<string>;
+    getAllFriends(params: any): Promise<string>;
+    addFriend(params: any): Promise<void>;
+    deleteFriend(params: any): Promise<string>;
 }

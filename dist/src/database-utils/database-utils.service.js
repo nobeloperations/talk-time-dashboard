@@ -161,7 +161,9 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             date,
             generalName,
             rating: 0,
-            badgesSent: 0
+            badgesSent: 0,
+            friendRequest: [],
+            friends: []
         });
         return await newUser.save();
     }

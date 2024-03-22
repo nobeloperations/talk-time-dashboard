@@ -32,7 +32,7 @@ export class MainController {
     @HttpCode(200)
     getCurrentVersion(): {version: string} {
         return {
-            version: '3.16'
+            version: '3.18'
         }
     }
 
