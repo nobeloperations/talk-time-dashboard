@@ -24,9 +24,10 @@ window.onload = function () {
 
     if (_notes.children.length === 1) _noNotesText.style.display = 'inline'
 
-    async function _deleteNote(_curr, _noteId) {
+    async function _deleteNote(_curr) {
         _notes.removeChild(_curr.parentElement.parentElement)
         if (_notes.children.length === 1) _noNotesText.style.display = 'inline'
+        const _noteId = _curr.nextElementSibling.nextElementSibling.textContent;
         fetch('/deletenote', {
             method: 'DELETE',
             headers: {
@@ -141,7 +142,7 @@ window.onload = function () {
         const _note = _curr.parentElement.parentElement;
 
         const _noteFunctions = {
-            'delete__note': () => { _deleteNote(_curr, _noteId) },
+            'delete__note': () => { _deleteNote(_curr) },
             'edit__note': () => { _updateNote(_note, _curr) },
             'save__note': () => { _saveNote(_note, _curr) },
         }
