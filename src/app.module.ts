@@ -12,6 +12,7 @@ import { HttpExceptionFilter } from './filters/http-exception.filter';
 import { DatabaseUtilsModule } from './database-utils/database-utils.module';
 import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
+import { QuizModule } from './quiz/quiz.module';
 
 
 @Module({
@@ -29,6 +30,7 @@ import { ProfileModule } from './profile/profile.module';
     DatabaseUtilsModule,
     AuthModule,
     ProfileModule,
+    QuizModule,
   ],
   providers: [
     {

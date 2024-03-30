@@ -233,8 +233,8 @@ i {
     width: 250px;
     height: 250px;
     position: absolute;
-    z-index: 111;
     top: 50px;
+    z-index: 1;
     transition: .3s ease all;
     visibility: hidden;
     opacity: 0;
@@ -253,6 +253,9 @@ i {
     width: 100%;
     height: 250px;
     overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .pending {
     display: none;
@@ -274,15 +277,32 @@ i {
 .friend__name__wrapper span {
     font-size: 14px;
 }
-.accept__friend__request {
+.accept__friend__request, .reject__friend__request {
+    width: 25px;
+    height: 25px;
+    border: none;
+    outline: none;
+    border-radius: 100px;
+    cursor: pointer;
+}
+.friend__view__badges, .friend__close__badges {
     width: 80px;
     height: 30px;
     border: none;
     outline: none;
     border-radius: 5px;
-    background: #99D6FF;
-    color: #0070B8;
     cursor: pointer;
+}
+.friend__close__badges {
+    display: none;
+}
+.accept__friend__request, .friend__view__badges {
+    background: #B1FDD1;
+    color: #00D03E;
+}
+.reject__friend__request, .friend__close__badges {
+    background: rgb(255, 123, 99);
+    color: rgb(209, 64, 38);
 }
 .friend__avatar {
     width: 32px;
@@ -291,4 +311,44 @@ i {
 }
 .accepted__text {
     font-size: 14px;
+}
+.no__friends__text, .no__friends__image {
+    color: lightgray;
+    display: none;
+}
+.no__friends__image {
+    filter: invert(94%) sepia(0%) saturate(176%) hue-rotate(215deg) brightness(94%) contrast(85%);
+}
+.friend__badges__modal {
+    width: 300px;
+    height: 350px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -300%);
+    background: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    transition: .5s ease all;
+}
+.friend__badge__wrapper {
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px 0 10px;
+    border-bottom: 1px solid lightgray;
+}
+.friend__badge__wrapper > div {
+    display: flex;
+    align-items: center;
+}
+.friend__image__badge {
+    width: 24px;
+    margin-right: 5px;
+}
+.friend__badge__count {
+    /* background: #000; */
 }

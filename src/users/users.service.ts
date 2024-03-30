@@ -130,14 +130,14 @@ export class UserService {
         await this.databaseUtilsService.updateUsers({ name: receiver }, { $push: { friends: sender } })
     }   
 
+    
     async getAllFriends(params) {
         const { name } = params;
 
         const currentUser = await this.databaseUtilsService.findUser({ name }, '');
 
-        const { friends, friendRequests } = currentUser;
-
-        return JSON.stringify({ friends, friendRequests })
+        const badgeUser = await this.databaseUtilsService.findBadgeUserByName({name});
+        return JSON.stringify({ friends: currentUser.friends, friendRequests: currentUser.friendRequests, badges: badgeUser.badges })
     }
 
     async deleteFriend(params ) {

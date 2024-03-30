@@ -30,7 +30,7 @@ let MainController = class MainController {
     }
     getCurrentVersion() {
         return {
-            version: '3.16'
+            version: '3.20'
         };
     }
     getPolicy() { }

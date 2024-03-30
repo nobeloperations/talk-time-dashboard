@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = async function() {
     const body = document.body;
     const usersContainer = document.querySelector('.users')
     const profileName = document.querySelector('.profile__username').textContent;
@@ -6,20 +6,16 @@ window.onload = function() {
     let isLoading = false;
     let page = 1;
 
-    fetch(`/friends/all-friends/${profileName}`).then(res => res.json())
-    .then(response => {
+    const getAllFriends = fetch(`/friends/all-friends/${profileName}`).then(res => res.json());
 
+    getAllFriends.then(response => {
         function addUsersToDOM(newUsers) {
             newUsers.forEach(user => {
                 const userElement = document.createElement('div');
                 userElement.className = 'user'
                 userElement.dataset.name = user.name;
                 userElement.innerHTML = `
-                    <div class="user__info">
-                        <div class="username__participated">
-                            <span class="user__name">${user.name}</span>
-                        </div>
-                    </div>
+                    <span class="user__name">${user.name}</span>
                     <span class="user__mongodb__id">${user._id}</span>
                     ${response.friends.includes(user.name) || user.friendRequests.includes(profileName)  ? '<button disabled class="user__you__button">Friend request sent</button>' : profileName !== user.name ? `<button class="user__send__friend__request">Send Request</button>` : `<button disabled class="user__you__button">It is you</button>`}
                 `;
@@ -51,18 +47,17 @@ window.onload = function() {
         } 
 
         usersContainer.addEventListener('scroll', () => {
-            const scrollHeight = document.documentElement.scrollHeight;
             const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
             const clientHeight = document.documentElement.clientHeight;
         
-            if (scrollTop + clientHeight >= scrollHeight) {
-            loadMoreUsers();
+            if (scrollTop + clientHeight >= 100) {
+                loadMoreUsers();
             }
         });
 
         function getUsersFromServer(page) {
             return new Promise(resolve => {
-            const usersURL = `/load/range?page=${page}&limit=100`;
+            const usersURL = `/load/range?page=${page}&limit=300`;
         
             fetch(usersURL)
                 .then(response => response.json())
