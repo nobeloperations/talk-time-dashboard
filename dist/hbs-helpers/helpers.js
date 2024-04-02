@@ -10,10 +10,10 @@ exports.helpers = {
         return badge.split(/(?=[A-Z])/).join(' ');
     },
     average(rate) {
-        if (!rate.length)
+        if (!rate.length || rate.length === 1)
             return 0;
         let sum = rate.reduce((a, b) => +a + +b, 0);
-        return (sum / rate.length).toFixed(1);
+        return (sum / (rate.length - 1)).toFixed(1);
     },
     formatDate(date) {
         const parts = date.split('/');

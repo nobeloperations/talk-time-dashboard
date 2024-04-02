@@ -81,11 +81,38 @@
     width: fit-content;
     height: 50px;
     background: white;
-    border: 1px solid rgb(224, 224, 224);
+    border-left: 6px solid tomato;
+    border-right: 6px solid tomato;
     border-radius: 5px;
     transform: translate(-50%, -50%);
     position: fixed;
     top: -100px;
     left: 50%;
-    border-left: 6px solid tomato;
+    transition: .3s ease all;
+    padding: 0 10px 0 10px;
+    display: flex;
+    align-items: center;
+    color: rgb(165, 165, 165);
+    font-size: 12px;
+}
+.quiz__results__container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.quiz__results__text {
+    margin: 5px 0 10px 0;
+}
+.quiz__results__return__main {
+    width: 200px;
+    height: 35px;
+    border-radius: 5px;
+    background: #B1FDD1;
+    color: #00D03E;
+    border: none;
+    outline: none;
+    cursor: pointer;
 }

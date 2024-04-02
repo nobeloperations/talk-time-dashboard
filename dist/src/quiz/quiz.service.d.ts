@@ -11,4 +11,12 @@ export declare class QuizService {
         profileName: string;
         title: string;
     }>;
+    getQuizResultsPage(params: any, result: string, generalName: string, username: string): Promise<{
+        url: any;
+        date: any;
+        text: string;
+        title: string;
+        generalName: string;
+    }>;
+    getQuizResultsByName(params: any): Promise<string>;
 }

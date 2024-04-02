@@ -153,6 +153,13 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         return newNote;
     }
     async createNewUser(name, avatar, url, date, generalName) {
+        let previousQuiz = false;
+        const user = await this.userModel.findOne({ name });
+        if (user) {
+            const { quiz } = user;
+            if (quiz)
+                previousQuiz = true;
+        }
         const newUser = new this.userModel({
             name,
             avatar,
@@ -163,9 +170,13 @@ let DatabaseUtilsService = class DatabaseUtilsService {
             rating: 0,
             badgesSent: 0,
             friendRequest: [],
-            friends: []
+            friends: [],
+            quiz: previousQuiz
         });
         return await newUser.save();
+    }
+    async a() {
+        return this.userModel.updateMany({ name: "Danya Burmei" }, { quiz: false });
     }
 };
 DatabaseUtilsService = __decorate([

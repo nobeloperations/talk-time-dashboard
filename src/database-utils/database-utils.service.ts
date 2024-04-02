@@ -178,6 +178,16 @@ export class DatabaseUtilsService {
     }
 
     async createNewUser(name: string, avatar: string, url: string, date: string, generalName: string): Promise<any> {
+
+        let previousQuiz = false;
+        const user: any = await this.userModel.findOne({ name });
+        
+        if (user) {
+            const { quiz } = user;
+
+            if (quiz) previousQuiz = true;
+        }
+
         const newUser = new this.userModel({
             name,
             avatar,
@@ -188,10 +198,15 @@ export class DatabaseUtilsService {
             rating: 0,
             badgesSent: 0,
             friendRequest: [],
-            friends: []
+            friends: [],
+            quiz: previousQuiz
         })
 
         return await newUser.save()
+    }
+
+    async a(): Promise<any> {
+        return this.userModel.updateMany({name: "Danya Burmei"}, {quiz: false})
     }
 
 }

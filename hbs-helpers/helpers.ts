@@ -9,9 +9,9 @@ export let helpers = {
         return badge.split(/(?=[A-Z])/).join(' ')
     },
     average(rate: number[]): string | number {
-        if (!rate.length) return 0;
+        if (!rate.length || rate.length === 1) return 0;
         let sum: number = rate.reduce((a, b) => +a + +b, 0);
-        return (sum / rate.length).toFixed(1);
+        return (sum / (rate.length - 1)).toFixed(1);
     },
     formatDate(date: string): string {
         const parts: string[] = date.split('/')
