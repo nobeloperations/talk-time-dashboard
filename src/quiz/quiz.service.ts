@@ -33,9 +33,9 @@ export class QuizService {
     async getQuizResultsByName(params) {
         const { name } = params;
 
-        const { quiz } = await this.databaseUtilsService.findUser({ name }, 'quiz');
+        const user = await this.databaseUtilsService.findUser({ name }, '');
 
-        return JSON.stringify({ quiz })
+        return user ? JSON.stringify({ quiz: user.quiz }) : null
     }
 }
     
