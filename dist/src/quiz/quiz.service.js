@@ -18,19 +18,19 @@ let QuizService = class QuizService {
         this.databaseUtilsService = databaseUtilsService;
     }
     async getQuiz(params, req, res) {
-        await this.databaseUtilsService.a();
         const userPayload = (0, user_cookies_1.getUserFromCookies)(req);
         if (!userPayload)
             return res.redirect('/');
+        const { quiz } = await this.databaseUtilsService.findUser({ name: userPayload.name }, 'quiz');
         const { url, date } = params;
-        return { url, date, cssFileName: 'quiz', isAuth: true, profileName: userPayload.name, title: "Quiz" };
+        return { url, date, cssFileName: 'quiz', isAuth: true, profileName: userPayload.name, title: "Quiz", isPassed: quiz };
     }
     async getQuizResultsPage(params, result, generalName, username) {
         if (result === "true")
             await this.databaseUtilsService.updateUsers({ name: username }, { quiz: true });
         const { url, date } = params;
         const title = result === "true" ? 'Success!' : 'Ooops!';
-        const text = result === "true" ? 'You have completed knowlege test!' : 'Unfortunately, you have not completed knowlege test!';
+        const text = result === "true" ? 'You have mastered knowlege test!' : 'Unfortunately, you have not completed knowlege test!';
         return { url, date, text, title, generalName };
     }
     async getQuizResultsByName(params) {

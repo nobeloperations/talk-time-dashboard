@@ -78,5 +78,4 @@ export declare class DatabaseUtilsService {
     createNewFeedback(sender: string, receiver: string, feedback: string, rating: number, url: string, senderImg: string, feedbackImg: string, date: string, generalName: string): Promise<any>;
     createNewNote(url: string, date: string, text: string, sender: string, generalName: string): Promise<Note>;
     createNewUser(name: string, avatar: string, url: string, date: string, generalName: string): Promise<any>;
-    a(): Promise<any>;
 }

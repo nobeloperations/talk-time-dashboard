@@ -205,8 +205,8 @@ export class DatabaseUtilsService {
         return await newUser.save()
     }
 
-    async a(): Promise<any> {
-        return this.userModel.updateMany({name: "Danya Burmei"}, {quiz: false})
-    }
+    // async a(): Promise<any> {
+    //     return this.userModel.updateMany({name: "Danya Burmei"}, {quiz: false})
+    // }
 
 }

@@ -9,13 +9,14 @@ export class QuizService {
     constructor(private readonly databaseUtilsService: DatabaseUtilsService) {}
 
     async getQuiz(params, req: Request, res: Response) {
-        await this.databaseUtilsService.a()
         const userPayload: UserPayload = getUserFromCookies(req)
         if (!userPayload) return res.redirect('/')
 
+        const { quiz } = await this.databaseUtilsService.findUser({ name: userPayload.name }, 'quiz')
+
         const { url, date } = params;
 
-        return {url, date, cssFileName: 'quiz', isAuth: true, profileName: userPayload.name, title: "Quiz" }
+        return {url, date, cssFileName: 'quiz', isAuth: true, profileName: userPayload.name, title: "Quiz", isPassed: quiz }
     }
 
     async getQuizResultsPage(params, result: string, generalName: string, username: string) {
@@ -25,7 +26,7 @@ export class QuizService {
         const { url, date } = params;
 
         const title: string = result === "true" ? 'Success!' : 'Ooops!';
-        const text: string = result === "true" ? 'You have completed knowlege test!' : 'Unfortunately, you have not completed knowlege test!';
+        const text: string = result === "true" ? 'You have mastered knowlege test!' : 'Unfortunately, you have not completed knowlege test!';
 
         return { url, date, text, title, generalName };
     }

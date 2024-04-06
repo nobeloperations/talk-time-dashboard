@@ -175,9 +175,6 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         });
         return await newUser.save();
     }
-    async a() {
-        return this.userModel.updateMany({ name: "Danya Burmei" }, { quiz: false });
-    }
 };
 DatabaseUtilsService = __decorate([
     (0, common_1.Injectable)(),

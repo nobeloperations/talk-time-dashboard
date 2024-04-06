@@ -10,6 +10,7 @@ export declare class QuizController {
         isAuth: boolean;
         profileName: string;
         title: string;
+        isPassed: any;
     }>;
     getQuizResults(params: any, result: string, generalName: string, username: string): Promise<{
         url: any;
