@@ -205,8 +205,12 @@ export class DatabaseUtilsService {
         return await newUser.save()
     }
 
-    // async a(): Promise<any> {
-    //     return this.userModel.updateMany({name: "Danya Burmei"}, {quiz: false})
-    // }
+    async a(): Promise<any> {
+        return this.BadgeModel.updateMany({}, { $set: { quizResults: [false, false, false, false, false, false, false] } })
+    }
+
+    async updateQuizResultsByIndex (index: number, name: string): Promise<any> {
+        return this.BadgeModel.updateOne({ name }, { $set: { [`quizResults.${index}`]: true } })
+    }
 
 }

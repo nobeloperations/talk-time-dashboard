@@ -175,6 +175,12 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         });
         return await newUser.save();
     }
+    async a() {
+        return this.BadgeModel.updateMany({}, { $set: { quizResults: [false, false, false, false, false, false, false] } });
+    }
+    async updateQuizResultsByIndex(index, name) {
+        return this.BadgeModel.updateOne({ name }, { $set: { [`quizResults.${index}`]: true } });
+    }
 };
 DatabaseUtilsService = __decorate([
     (0, common_1.Injectable)(),

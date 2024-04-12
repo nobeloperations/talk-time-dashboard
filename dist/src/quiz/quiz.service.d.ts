@@ -12,12 +12,12 @@ export declare class QuizService {
         title: string;
         isPassed: any;
     }>;
-    getQuizResultsPage(params: any, result: string, generalName: string, username: string): Promise<{
+    updateQuizResults(params: any): Promise<void>;
+    getQuizesResults(params: any): Promise<boolean[]>;
+    getFinishQuiz(params: any): Promise<{
+        title: string;
+        text: string;
         url: any;
         date: any;
-        text: string;
-        title: string;
-        generalName: string;
     }>;
-    getQuizResultsByName(params: any): Promise<string>;
 }

@@ -1,59 +1,82 @@
-window.onload = function() {
+window.onload = async function() {
     const _startQuiz = document.querySelector('.quiz__start');
     const _quizWelcomeWrapper = document.querySelector('.quiz__welcome__wrapper');
-    const _finishButton = document.querySelector('.finish__quiz');
-    const _notAllAnswersModal = document.querySelector('.not__all__answers__modal');
-    const _profileName = document.querySelector('.profile__username').textContent;
+    const _quiz = document.querySelector('.quiz');
+    const _quizSwitchs = document.querySelectorAll('.quiz__switch');
+    const _questionWrappers = document.querySelectorAll('.question__wrapper');
+    const _finishQuizButtons = document.querySelectorAll(".finish__quiz");
+    const _profileUsername = document.querySelector('.profile__username').textContent;
+    const _questionWrapperTitle = document.querySelector('.questions__wrapper__title');
+    const _wrongAnswersModal = document.querySelector('.wrong__answers__modal');
 
-    const _URL = new URL(window.location.href);
+    const _pathname = new URL(window.location.href).pathname.split('/');
+    const _date = _pathname.at(-1).trim();
+    const _url = _pathname.at(-2).trim();
+    
+    const _generalName = window.location.href.split('?').at(-1).slice(2);
 
-    const _generalName = _URL.searchParams.get('q')
-    const _params = _URL.pathname.split('/');
-    const _url = _params[2]
-    const _date = _params[3]
+    const _quizResultsFetch = await fetch(`/quiz/get/results/${_profileUsername}`);
+    const _quizResults = await _quizResultsFetch.json();
 
-    let _mistake = false;
+    _quizSwitchs.forEach((_quizSwitch, idx) => {
+        _quizSwitch.onclick = function() {
+            _questionWrapperTitle.style.display = 'none'
+            _questionWrappers.forEach(_questionWrapper => {
+                _questionWrapper.style.display = 'none'
+            })
+
+            _questionWrappers[idx].style.display = 'flex'
+
+            _quizSwitchs.forEach(_elem => { 
+                _elem.style.background = 'white'
+                _elem.style.color = '#0070BA'
+             })
+
+             _quizSwitch.style.color = 'white'
+             _quizSwitch.style.background = '#0070BA'
+        }
+    })
 
     _startQuiz.onclick = function() {
         _quizWelcomeWrapper.style.display = 'none'
+        _quiz.style.display = 'flex'
+
+        _quizSwitchs.forEach((_quizSwitch, _idx) => {
+            if (_quizResults[_idx]) {
+                _quizSwitch.disabled = true;
+                _quizSwitch.textContent = 'Already passed'
+            }
+        })  
     }
 
-    _finishButton.onclick = function() {
-        let _answers = [false, false, false, false, false, false, false, false, false, false, false, false, false, false]
-        const _answersBlocks = document.querySelectorAll('.answers__wrapper');
-
-        _answersBlocks.forEach((_answersBlock, _index) => {
-            let { question } = _answersBlock.dataset;
-
-            question = question.split(',').map(item => +item);
+    _finishQuizButtons.forEach((_finishQuizButton, _finishButtonIndex) => {
+        _finishQuizButton.onclick = function() {
+            const _answers = []
+            const _quizList = this.parentElement;
             
-            const _inputs = _answersBlock.querySelectorAll('input');
+            const _questionInputsWrappers = _quizList.querySelectorAll('.question__inputs');
             
-            _inputs.forEach((_input, _idx) => {
-                if (_input.checked) {
-                    _answers[_index] = true;
-                    question = question.filter(_item => _item !== _idx + 1);
-                }
-            })
+            _questionInputsWrappers.forEach((_questionInputsWrapper) => {
+                const _answer = +_questionInputsWrapper.dataset.answer;
+                const _inputs = _questionInputsWrapper.querySelectorAll('input')
 
-            if (question.length) _mistake = true;
-        })
-        
-        if (_answers.includes(false)) {
-            _notAllAnswersModal.textContent = 'Please, answer these questions: '
-            _answers.forEach((elem, idx) => {
-                if (!elem) {
-                    _notAllAnswersModal.style.top = '30px'
-                    _answersBlocks[idx].parentElement.style.borderColor = 'tomato'
-                    _notAllAnswersModal.textContent += `№${idx + 1}, `
-
-                    setTimeout(() => {
-                        _notAllAnswersModal.style.top = '-100px'
-                    }, 4000)
-                }
+                _inputs.forEach((_input, _inputIndex) => {
+                    if (_input.checked && _inputIndex + 1 === _answer) {
+                        _answers.push(true)
+                    } else if (_input.checked && _inputIndex + 1 !== _answer) _answers.push(false)
+                })
             })
-        } else {
-            window.location.replace(`/quiz/results/${_url}/${_date}?q=${_generalName}&result=${_mistake ? 'false' : 'true'}&name=${_profileName}`)
+            if (_answers.includes(false) || _answers.length !== 3) {
+                window.location.href = `/quiz/finish/${_url}/${_date}/wrong`
+            } else {
+                fetch(`/quiz/update/results/${_profileUsername}/${_finishButtonIndex}?q=${_generalName}`, {
+                    method: 'PUT'
+                }).then(() => {
+                    window.location.href = `/quiz/finish/${_url}/${_date}/passed?q=${_generalName}`
+                })
+            }
         }
-    }
+    })
+
+
 }

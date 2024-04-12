@@ -1,6 +1,7 @@
 import * as mongoose from 'mongoose';
 export declare const BadgeSchema: mongoose.Schema<any, mongoose.Model<any, any, any, any, any>, {}, {}, {}, {}, mongoose.DefaultSchemaOptions, {
     name: string;
+    quizResults: any[];
     badges?: {
         Fun?: {
             count: number;
@@ -39,5 +40,6 @@ export interface BadgeModel {
         OnTime: BadgeCount;
         BePresent: BadgeCount;
     }[];
+    quizResults: boolean[];
 }
 export {};

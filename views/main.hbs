@@ -1,14 +1,8 @@
 {{>profile-information}}
-<div class="main__wrapper">
-    <h1 class="main__title">Analyse, discover and <b>develop</b><br /> </h1>
-    <span class="main__subtitle">Make your meetings more convinient and get as much beneifits as you can <br>All
-        information you need about your meetings is here</span>
-    <button class="main__button">Explore</button>
-</div>
 {{#if isAuth}}
 <div class="badges__wrapper">
-    <h1 class="badges__wrapper__title">Your badges</h1>
-    <div class="profile__sent__badges">You sent {{badgesSent}} badge(s) in total</div>
+    <h1 class="badges__wrapper__title"></h1>
+    <span class="badges__overall__level"></span>
     {{#each badges}}
     <div class="profile__badge">
         <div class="profile__badge__info">
@@ -16,31 +10,9 @@
             <span class="profile__badge__name">{{formatBadgeName (getKeysFromBadgesConfig this 0)}}</span>
         </div>
         <div class="profile__badges__information">
-            <div class="profile__badges__level__popup">
-                <ul>
-                    {{#if (getValuesFromBadgesConfig this 1)}}
-                    <li class="sent__badges__not__enough">Send {{getValuesFromBadgesConfig this 1}} badge(s) to achieve
-                        {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
-                    {{else}}
-                    <li class="sent__badges__enough">You sent enough badges to achieve {{getNextBadgeLevel
-                        (getValuesFromBadgesConfig this 3)}} level</li>
-                    {{/if}}
-                    {{#if (getValuesFromBadgesConfig this 2)}}
-                    <li class="received__badges__not__enough">Receive {{getValuesFromBadgesConfig this 2}} badge(s) to
-                        achieve {{getNextBadgeLevel (getValuesFromBadgesConfig this 3)}} level</li>
-                    {{else}}
-                    <li class="received__badges__enough">You sent enough badges to achieve {{getNextBadgeLevel
-                        (getValuesFromBadgesConfig this 3)}} level</li>
-                    {{/if}}
-                </ul>
-            </div>
-            <div>
-                <span class="profile__badges__level">{{getValuesFromBadgesConfig this 3}} level</span>
-            </div>
             <div class="profile__badges__sent__collected">
-                <span class="profile__received__badges">You collected&nbsp;<bclass="profile__received__badges__count">
-                        {{getValuesFromBadgesConfig this 0}}</b>&nbsp;{{formatBadgeName (getKeysFromBadgesConfig this
-                        0)}} badge(s)</span>
+                <span class="profile__received__badges">You collected&nbsp;<b class="profile__received__badges__count">
+                    {{getValuesFromBadgesConfig this 0}}</b>&nbsp;{{formatBadgeName (getKeysFromBadgesConfig this 0)}} badge(s)</span>
             </div>
         </div>
     </div>

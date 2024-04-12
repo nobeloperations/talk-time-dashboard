@@ -50,6 +50,10 @@ exports.BadgeSchema = new mongoose.Schema({
                 type: Number
             }
         }
+    },
+    quizResults: {
+        type: Array,
+        default: [false, false, false, false, false, false, false]
     }
 });
 //# sourceMappingURL=badge.model.js.map

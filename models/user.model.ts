@@ -58,5 +58,5 @@ export interface User {
     date: string,
     friendRequests: string[],
     firends: string[],
-    quiz: boolean
+    quiz: boolean,
 }

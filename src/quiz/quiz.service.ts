@@ -19,24 +19,29 @@ export class QuizService {
         return {url, date, cssFileName: 'quiz', isAuth: true, profileName: userPayload.name, title: "Quiz", isPassed: quiz }
     }
 
-    async getQuizResultsPage(params, result: string, generalName: string, username: string) {
+    async updateQuizResults(params) {
+        const { name, index } = params;
 
-        if (result === "true") await this.databaseUtilsService.updateUsers({ name: username }, { quiz: true })
-
-        const { url, date } = params;
-
-        const title: string = result === "true" ? 'Success!' : 'Ooops!';
-        const text: string = result === "true" ? 'You have mastered knowlege test!' : 'Unfortunately, you have not completed knowlege test!';
-
-        return { url, date, text, title, generalName };
+        await this.databaseUtilsService.updateQuizResultsByIndex(+index, name);
     }
 
-    async getQuizResultsByName(params) {
+    async getQuizesResults(params) {
         const { name } = params;
 
-        const user = await this.databaseUtilsService.findUser({ name }, '');
+        const badgeUser = await this.databaseUtilsService.findBadgeUserByName({ name });
 
-        return user ? JSON.stringify({ quiz: user.quiz }) : null
+        return badgeUser ? badgeUser.quizResults : null;
+    }
+
+    async getFinishQuiz(params) {
+        const { result, url, date } = params;
+
+        const title = result === "passed" ? "Congratulations!" : "Ooops...";
+        const text = result === "passed" ? "You have successfully mastered the quiz!" : "Unfortunately, you have not mastered the quiz!";
+
+        return { title, text, url, date }
+
+
     }
 }
     

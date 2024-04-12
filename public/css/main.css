@@ -183,7 +183,7 @@ body::-webkit-scrollbar {
 }
 .badges__wrapper {
   width: 100vw;
-  height: fit-content;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -192,7 +192,7 @@ body::-webkit-scrollbar {
 }
 .badges__wrapper__title {
   align-self: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .profile__badge {
   width: 100%;
@@ -213,10 +213,13 @@ body::-webkit-scrollbar {
   display: flex;
   align-items: center;
 }
+.profile__badge__name {
+  font-size: 18px;
+}
 .profile__badge__image {
   width: 32px;
   border-radius: 100px;
-  margin-right: 5px;
+  margin-right: 10px;
 }
 .profile__badges__sent__collected {
   display: flex;
@@ -227,7 +230,7 @@ body::-webkit-scrollbar {
   border-radius: 7px;
   height: 40px;
   padding: 0 10px 0 10px;
-  width: fit-content;
+  width: 400px;
 }
 .profile__received__badges {
   display: inline-flex;
@@ -306,4 +309,9 @@ body::-webkit-scrollbar {
 .sent__badges__not__enough::marker, .received__badges__not__enough::marker {
   content: '✕';
   color: tomato;
+}
+.badges__overall__level {
+  align-self: flex-start;
+  margin-bottom: 15px;
+  font-size: 18px;
 }

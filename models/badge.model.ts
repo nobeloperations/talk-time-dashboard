@@ -48,6 +48,10 @@ export const BadgeSchema = new mongoose.Schema({
                 type: Number
             }
         }
+    },
+    quizResults: {
+        type: Array,
+        default: [false, false, false, false, false, false, false]
     }
 })
 
@@ -65,6 +69,7 @@ export interface BadgeModel {
         Help: BadgeCount,
         OnTime: BadgeCount,
         BePresent: BadgeCount
-    }[]
+    }[],
+    quizResults: boolean[]
 
 }

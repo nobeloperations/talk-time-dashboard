@@ -9,150 +9,193 @@
             </div>
         {{else}}
             <div class="quiz__welcome__wrapper">
-                <h1 class="quiz__title">Knowlege Quiz</h1>
+                <h1 class="quiz__welcome__title">Knowlege Quiz</h1>
                 <span class="quiz__description">Test your knowlege about badges and teamwork in Nobel!</span>
                 <button class="quiz__start">Start quiz</button>
             </div>
             <div class="quiz">
-                <div class="quiz__item">
-                    <h3 class="quiz__question">1. What does it mean to create a "Zen Environment" in class?</h3>
-                    <div class="answers__wrapper" data-question="2">
-                        <label><input type="radio" class="answer" name="answer1">A. Loud and chaotic atmosphere</label>
-                        <label><input type="radio" class="answer" name="answer1">B. Calm and focused atmosphere</label>
-                        <label><input type="radio" class="answer" name="answer1">C. Competitive and stressful atmosphere</label>
-                        <label><input type="radio" class="answer" name="answer1">D. Random and unpredictable atmosphere</label>
+                <div class="quiz__switchers">
+                    <button class="quiz__switch">Fun</button>
+                    <button class="quiz__switch">Bee Brief</button>
+                    <button class="quiz__switch">Be Present</button>
+                    <button class="quiz__switch">Encourage</button>
+                    <button class="quiz__switch">Zen Enviroment</button>
+                    <button class="quiz__switch">Help</button>
+                    <button class="quiz__switch">On Time</button>
+                </div>
+                <div class="questions__wrapper__title">
+                    <h1 style="margin-bottom: 10px;">Please, choose the badge you want to pass the quiz about</h1 style="margin-bottom: 10px;">
+                    <span>Without all passed quizes you will not be able to give upvotes on meetings</span>
+                </div>
+                <div class="questions__wrapper">
+                    <div class="question__wrapper">
+                        <div class="quiz__list">
+                            <div class="question">
+                                <h3>What is the primary goal of the "Fun" badge in the meeting setting?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Promoting a serious and strict learning environment</label><label for=""><input type="radio">Creating an atmosphere that fosters enjoyment and engagement</label><label for=""><input type="radio">Ignoring the importance of student interests and preferences</label><label for=""><input type="radio">Focusing solely on academic achievements without considering enjoyment</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>How can educators integrate "fun" into the learning process?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Avoiding any elements of enjoyment to maintain seriousness</label><label for=""><input type="radio">Incorporating interactive activities and games to enhance learning</label><label for=""><input type="radio">Discouraging student participation in extracurricular activities</label><label for=""><input type="radio">Prioritizing strict discipline over students' happiness</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>Which teaching strategy aligns with the "Fun" badge principles?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Delivering monotonous lectures with no student engagement</label><label for=""><input type="radio">Encouraging collaboration and creativity in the classroom</label><label for=""><input type="radio">Ignoring students' interests and preferences</label><label for=""><input type="radio">Imposing rigid rules and restrictions on students' behavior</label>
+                                </div>
+                            </div>
+                            <button class="finish__quiz">Finish</button>
+                        </div>
+                    </div>
+                    <div class="question__wrapper">
+                        <div class="quiz__list">
+                            <div class="question">
+                                <h3>What is the main emphasis of the "Be Brief" badge?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Providing lengthy and detailed responses</label><label for=""><input type="radio">Communicating thoughts concisely</label><label for=""><input type="radio">Ignoring questions and concerns</label><label for=""><input type="radio">Speaking slowly and elaborately</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>Why is being brief important in communication?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">To confuse the audience</label><label for=""><input type="radio">To save time and convey the message effectively</label><label for=""><input type="radio">To showcase one's knowledge</label><label for=""><input type="radio">To create misunderstandings</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>Azra, a naturally long talker, is incredibly excited about her new internship program team membership.  She loves crafting long, descriptive speeches.  However, the team representative Abinash emphasizes the "Be Brief" badge, explaining that the audience prefers short, impactful pieces. Which badge is Abinash trying to convey?</h3>
+                                <div class="question__inputs" data-answer="1">
+                                    <label><input type="radio">Be Brief</label><label for=""><input type="radio">Fun</label><label for=""><input type="radio">Encourage</label><label for=""><input type="radio">On Time</label>
+                                </div>
+                            </div>
+                            <button class="finish__quiz">Finish</button>
+                        </div>
+                    </div>
+                    <div class="question__wrapper">
+                        <div class="quiz__list">
+                            <div class="question">
+                                <h3>What does it mean to embody the "Be Present" badge in the classroom?</h3>
+                                <div class="question__inputs" data-answer="3">
+                                    <label><input type="radio">Physically being in the classroom without active engagement</label><label for=""><input type="radio">Focusing on multiple tasks simultaneously during class</label><label for=""><input type="radio">Actively participating and engaging in the learning process</label><label for=""><input type="radio">Avoiding any form of participation or interaction</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>How does being present contribute to a positive meeting atmosphere?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Creating a disengaged and indifferent learning environment</label><label for=""><input type="radio">Fostering a sense of community and connectedness among interns</label><label for=""><input type="radio">Ignoring the importance of student-teacher interactions</label><label for=""><input type="radio">Prioritizing personal tasks over active participation in class</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>In the context of the "Be Present" badge, why is active listening considered a crucial element?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Ignoring others' contributions and perspectives</label><label for=""><input type="radio">Demonstrating respect and understanding towards others</label><label for=""><input type="radio">Avoiding any form of communication during class</label><label for=""><input type="radio">Focusing solely on personal thoughts and opinions</label>
+                                </div>
+                            </div>
+                            <button class="finish__quiz">Finish</button>
+                        </div>
+                    </div>
+                    <div class="question__wrapper">
+                        <div class="quiz__list">
+                            <div class="question">
+                                <h3>What role does encouragement play in fostering a positive learning environment?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Discouraging students to challenge their limits</label><label for=""><input type="radio">Motivating and supporting students in their academic journey</label><label for=""><input type="radio">Ignoring students' achievements and progress</label><label for=""><input type="radio">Emphasizing competition over collaboration</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>How can facilitators provide effective encouragement to interns?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Focusing solely on highlighting mistakes and shortcomings</label><label for=""><input type="radio">Offering constructive feedback and recognizing achievements</label><label for=""><input type="radio">Discouraging students from seeking help or support</label><label for=""><input type="radio">Punishing students for taking academic risks</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>In the context of the "Encouragement" badge, what does it mean to cultivate a growth mindset?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Focusing on fixed abilities and discouraging improvement</label><label for=""><input type="radio">Embracing challenges and viewing effort as a path to mastery</label><label for=""><input type="radio">Believing that intelligence is static and cannot be developed</label><label for=""><input type="radio">Avoiding any form of positive reinforcement to maintain humility</label>
+                                </div>
+                            </div>
+                            <button class="finish__quiz">Finish</button>
+                        </div>
+                    </div>
+                    <div class="question__wrapper">
+                        <div class="quiz__list">
+                            <div class="question">
+                                <h3>What does it mean to create a "Zen Environment" in class?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Loud and chaotic atmosphere</label><label for=""><input type="radio">Calm and focused atmosphere</label><label for=""><input type="radio">Competitive and stressful atmosphere</label><label for=""><input type="radio">Random and unpredictable atmosphere</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>Abinash is currently taking the IWD course. Today is his first day and after the class, he and his friends will have a sleepover, so he invited his friends to his house. However, throughout the meeting, Abinash’s friends always keep talking and making noise. What badge should he not receive?</h3>
+                                <div class="question__inputs" data-answer="1">
+                                    <label><input type="radio">Zen Enviroment</label><label for=""><input type="radio">Fun</label><label for=""><input type="radio">Be Brief</label><label for=""><input type="radio">On Time</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>In the context of a Zen Environment, what is discouraged?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Mindful and relaxed behavior</label><label for=""><input type="radio">Unnecessary noise and distractions</label><label for=""><input type="radio">Collaboration and teamwork</label><label for=""><input type="radio">Quick and efficient problem-solving</label>
+                                </div>
+                            </div>
+                            <button class="finish__quiz">Finish</button>
+                        </div>
+                    </div>
+                    <div class="question__wrapper">
+                        <div class="quiz__list">
+                            <div class="question">
+                                <h3>How does the "Help" badge contribute to a collaborative learning environment?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Encouraging students to work in isolation without seeking assistance</label><label for=""><input type="radio">Fostering a culture of support and collaboration among peers</label><label for=""><input type="radio">Discouraging any form of assistance to promote individuality</label><label for=""><input type="radio">Prioritizing competition over mutual aid</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>Abinash and his team are getting ready for the EXPO. Throughout the EXPO preparation, Abinash noticed that one of his teammates is having a hard time understanding the EXPO project. He texted this person, saying that they can ask anything at any time. Which badge Abinash is giving an example of? </h3>
+                                <div class="question__inputs" data-answer="4">
+                                    <label><input type="radio">On Time</label><label for=""><input type="radio">Be Brief</label><label for=""><input type="radio">Be Present</label><label for=""><input type="radio">Help</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>In the context of the "Help" badge, what does it mean to strike a balance between independence and collaboration?</h3>
+                                <div class="question__inputs" data-answer="3">
+                                    <label><input type="radio">Promoting complete independence with no room for collaboration</label><label for=""><input type="radio">Encouraging dependency on others without individual effort</label><label for=""><input type="radio">Fostering independence while recognizing the value of collaboration</label><label for=""><input type="radio">Ignoring the concept of independence and collaboration altogether</label>
+                                </div>
+                            </div>
+                            <button class="finish__quiz">Finish</button>
+                        </div>
+                    </div>
+                    <div class="question__wrapper">
+                        <div class="quiz__list">
+                            <div class="question">
+                                <h3>What does the "On Time" badge encourage?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Being consistently late</label><label for=""><input type="radio">Arriving promptly and meeting deadlines</label><label for=""><input type="radio">Ignoring schedules and timelines</label><label for=""><input type="radio">Procrastinating on tasks</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>How does being on time contribute to a positive learning environment?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">It doesn't have any impact on the learning environment</label><label for=""><input type="radio">Promotes a sense of responsibility and discipline</label><label for=""><input type="radio">Causes chaos and disorganization</label><label for=""><input type="radio">Creates unnecessary stress for everyone</label>
+                                </div>
+                            </div>
+                            <div class="question">
+                                <h3>Azra is joining her first BIT meeting. Due to her first time in this meeting, she is feeling nervous which resulted in her forgetting about the meeting start. Once she calmed down, she noticed that it was already 5 minutes after the first meeting started. Even though she was late, she still joined the meeting. Which badge is this act opposing ?</h3>
+                                <div class="question__inputs" data-answer="2">
+                                    <label><input type="radio">Fun</label><label for=""><input type="radio">On Time</label><label for=""><input type="radio">Encourage</label><label for=""><input type="radio">Bee Brief</label>
+                                </div>
+                            </div>
+                            <button class="finish__quiz">Finish</button>
+                        </div>
                     </div>
                 </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">2. How can students contribute to maintaining a Zen Environment?</h3>
-                    <div class="answers__wrapper" data-question="2">
-                        <label><input type="radio" class="answer" name="answer2">A. Being disruptive and talkative</label>
-                        <label><input type="radio" class="answer" name="answer2">B.Remaining calm and focused</label>
-                        <label><input type="radio" class="answer" name="answer2">C.Ignoring others' needs</label>
-                        <label><input type="radio" class="answer" name="answer2">D.Creating unnecessary stress</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">3. In the context of a Zen Environment, what is discouraged?</h3>
-                    <div class="answers__wrapper" data-question="3">
-                        <label><input type="radio" class="answer" name="answer3">A. Mindful and relaxed behavior</label>
-                        <label><input type="radio" class="answer" name="answer3">B. Collaboration and teamwork</label>
-                        <label><input type="radio" class="answer" name="answer3">C. Unnecessary noise and distractions</label>
-                        <label><input type="radio" class="answer" name="answer3">D. Quick and efficient problem-solving</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">4. What does the "On Time" badge encourage?</h3>
-                    <div class="answers__wrapper" data-question="2">
-                        <label><input type="radio" class="answer" name="answer4">A. Being consistently late</label>
-                        <label><input type="radio" class="answer" name="answer4">B. Arriving promptly and meeting deadlines</label>
-                        <label><input type="radio" class="answer" name="answer4">C. Ignoring schedules and timelines</label>
-                        <label><input type="radio" class="answer" name="answer4">D. Procrastinating on tasks</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">5. How does being on time contribute to a positive learning environment?</h3>
-                    <div class="answers__wrapper" data-question="4">
-                        <label><input type="radio" class="answer" name="answer5">A. It doesn't have any impact on the learning environment</label>
-                        <label><input type="radio" class="answer" name="answer5">B. Creates unnecessary stress for everyone</label>
-                        <label><input type="radio" class="answer" name="answer5">C. Causes chaos and disorganization</label>
-                        <label><input type="radio" class="answer" name="answer5">D. Promotes a sense of responsibility and discipline</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">6. What is the main emphasis of the "Be Brief" badge?</h3>
-                    <div class="answers__wrapper" data-question="2">
-                        <label><input type="radio" class="answer" name="answer6">A. Providing lengthy and detailed responses</label>
-                        <label><input type="radio" class="answer" name="answer6">B. Communicating thoughts concisely</label>
-                        <label><input type="radio" class="answer" name="answer6">C. Ignoring questions and concerns</label>
-                        <label><input type="radio" class="answer" name="answer6">D. Speaking slowly and elaborately</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">7. Which of the following behaviors aligns with the "Be Brief" principle?</h3>
-                    <div class="answers__wrapper" data-question="2">
-                        <label><input type="radio" class="answer" name="answer7">A. Rambling and repeating points</label>
-                        <label><input type="radio" class="answer" name="answer7">B. Using concise and clear language</label>
-                        <label><input type="radio" class="answer" name="answer7">C. Avoiding communication altogether</label>
-                        <label><input type="radio" class="answer" name="answer7">D. Using complex and confusing vocabulary</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">8. How can facilitators integrate "fun" into the learning process?</h3>
-                    <div class="answers__wrapper" data-question="2">
-                        <label><input type="radio" class="answer" name="answer8">A. Avoiding any elements of enjoyment to maintain seriousness</label>
-                        <label><input type="radio" class="answer" name="answer8">B. Incorporating interactive activities and games to enhance learning</label>
-                        <label><input type="radio" class="answer" name="answer8">C. Discouraging student participation in extracurricular activities</label>
-                        <label><input type="radio" class="answer" name="answer8">D. Prioritizing strict discipline over students' happiness</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">9. In the context of the "Be Present" badge, why is active listening considered a crucial element?</h3>
-                    <div class="answers__wrapper" data-question="2">
-                        <label><input type="radio" class="answer" name="answer9">A. Ignoring others' contributions and perspectives</label>
-                        <label><input type="radio" class="answer" name="answer9">B. Demonstrating respect and understanding towards others</label>
-                        <label><input type="radio" class="answer" name="answer9">C. Avoiding any form of communication during class</label>
-                        <label><input type="radio" class="answer" name="answer9">D. Focusing solely on personal thoughts and opinions</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="big__question__title">Read the paragraph and answer the next 5 questions accordingly. </h3>
-                    <span class="big__question__text">Abinash and Danylo are in the Introduction to Web Design meeting. While Danylo is trying to concentrate to the facilitator, answer most of the questions, help his friends out while congratulating them and understand the activities, Abinash keeps unmuting himself and when he talks with permisson he always has so many background noises. Their other friend Azra, is always, at least, 10 minutes late. When she is in the class, she keeps talking for too long. Just like Danylo, Yun is trying to listen, participate and is kind enough to give a helping hand to his other friends when they need. Thankfully, the facilitator, Dilruba, is such a fun soul that she keeps lighting up the mood and cracks jokes.</span>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">10. Which badge(s) does Danylo deserve?</h3>
-                    <div class="answers__wrapper" data-question="1,2,3">
-                        <label><input type="checkbox" class="answer">Encourage</label>
-                        <label><input type="checkbox" class="answer">Be Present</label>
-                        <label><input type="checkbox" class="answer">Help</label>
-                        <label><input type="checkbox" class="answer">Zen Environment</label>
-                        <label><input type="checkbox" class="answer">Fun</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">11. Which badge(s) does Abinash not deserve?</h3>
-                    <div class="answers__wrapper" data-question="1">
-                        <label><input type="checkbox" class="answer">Zen Environment</label>
-                        <label><input type="checkbox" class="answer">Fun</label>
-                        <label><input type="checkbox" class="answer">Encourage</label>
-                        <label><input type="checkbox" class="answer">Be Present</label>
-                        <label><input type="checkbox" class="answer">Help</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">12. Which badge(s) does Azra not deserve?</h3>
-                    <div class="answers__wrapper" data-question="1,2">
-                        <label><input type="checkbox" class="answer">On Time</label>
-                        <label><input type="checkbox" class="answer">Bee Brief</label>
-                        <label><input type="checkbox" class="answer">Fun</label>
-                        <label><input type="checkbox" class="answer">Encourage</label>
-                        <label><input type="checkbox" class="answer">Help</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">13. Which badge(s) does Yun deserve?</h3>
-                    <div class="answers__wrapper" data-question="2,3,5">
-                        <label><input type="checkbox" class="answer">Fun</label>
-                        <label><input type="checkbox" class="answer">Help</label>
-                        <label><input type="checkbox" class="answer">Be Present</label>
-                        <label><input type="checkbox" class="answer">Bee Brief</label>
-                        <label><input type="checkbox" class="answer">Encourage</label>
-                    </div>
-                </div>
-                <div class="quiz__item">
-                    <h3 class="quiz__question">14. Which badge(s) does Dilruba deserve?</h3>
-                    <div class="answers__wrapper" data-question="1">
-                        <label><input type="checkbox" class="answer">Fun</label>
-                        <label><input type="checkbox" class="answer">Bee Brief</label>
-                        <label><input type="checkbox" class="answer">Help</label>
-                        <label><input type="checkbox" class="answer">Be Present</label>
-                        <label><input type="checkbox" class="answer">Encourage</label>
-                    </div>
-                </div>
-                <button class="finish__quiz">Finish</button>
             </div>
         {{/if}}
     </div>
-    <div class="not__all__answers__modal"></div>
+    <div class="wrong__answers__modal">
+        <img src="https://cdn-icons-png.flaticon.com/32/12324/12324286.png" alt="">
+        <span>Unfortunately, you have not passed quiz</span>
+    </div>
 </div>
 <script src="/js/quiz.js"></script>

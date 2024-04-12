@@ -22,11 +22,14 @@ let QuizController = class QuizController {
     getQuiz(params, req, res) {
         return this.quizService.getQuiz(params, req, res);
     }
-    getQuizResults(params, result, generalName, username) {
-        return this.quizService.getQuizResultsPage(params, result, generalName, username);
+    updateQuizResults(params) {
+        return this.quizService.updateQuizResults(params);
     }
-    getQuizResultsByName(params) {
-        return this.quizService.getQuizResultsByName(params);
+    getQuizesResults(params) {
+        return this.quizService.getQuizesResults(params);
+    }
+    getFinishQuiz(params) {
+        return this.quizService.getFinishQuiz(params);
     }
 };
 __decorate([
@@ -40,17 +43,13 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], QuizController.prototype, "getQuiz", null);
 __decorate([
-    (0, common_1.Get)('/results/:url/:date'),
+    (0, common_1.Put)('/update/results/:name/:index'),
     (0, common_1.HttpCode)(200),
-    (0, common_1.Render)('quiz-results'),
     __param(0, (0, common_1.Param)()),
-    __param(1, (0, common_1.Query)('result')),
-    __param(2, (0, common_1.Query)('q')),
-    __param(3, (0, common_1.Query)('name')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String, String, String]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], QuizController.prototype, "getQuizResults", null);
+], QuizController.prototype, "updateQuizResults", null);
 __decorate([
     (0, common_1.Get)('/get/results/:name'),
     (0, common_1.HttpCode)(200),
@@ -58,7 +57,16 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", void 0)
-], QuizController.prototype, "getQuizResultsByName", null);
+], QuizController.prototype, "getQuizesResults", null);
+__decorate([
+    (0, common_1.Get)('/finish/:url/:date/:result'),
+    (0, common_1.HttpCode)(200),
+    (0, common_1.Render)('quiz-results'),
+    __param(0, (0, common_1.Param)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Object]),
+    __metadata("design:returntype", void 0)
+], QuizController.prototype, "getFinishQuiz", null);
 QuizController = __decorate([
     (0, common_1.Controller)('quiz'),
     __metadata("design:paramtypes", [quiz_service_1.QuizService])
