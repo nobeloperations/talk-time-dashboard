@@ -44,9 +44,6 @@ exports.UserSchema = new mongoose.Schema({
     },
     friends: {
         type: Array
-    },
-    quiz: {
-        type: Boolean
     }
 });
 //# sourceMappingURL=user.model.js.map

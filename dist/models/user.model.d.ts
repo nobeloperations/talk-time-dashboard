@@ -11,7 +11,6 @@ export declare const UserSchema: mongoose.Schema<any, mongoose.Model<any, any, a
     badgesSent: number;
     friendRequests: any[];
     friends: any[];
-    quiz?: boolean;
 }>;
 export interface User {
     name: string;
@@ -23,5 +22,4 @@ export interface User {
     date: string;
     friendRequests: string[];
     firends: string[];
-    quiz: boolean;
 }

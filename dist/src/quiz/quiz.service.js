@@ -34,11 +34,11 @@ let QuizService = class QuizService {
         const badgeUser = await this.databaseUtilsService.findBadgeUserByName({ name });
         return badgeUser ? badgeUser.quizResults : null;
     }
-    async getFinishQuiz(params) {
+    async getFinishQuiz(params, generalName) {
         const { result, url, date } = params;
         const title = result === "passed" ? "Congratulations!" : "Ooops...";
         const text = result === "passed" ? "You have successfully mastered the quiz!" : "Unfortunately, you have not mastered the quiz!";
-        return { title, text, url, date };
+        return { title, text, url, date, generalName };
     }
 };
 QuizService = __decorate([

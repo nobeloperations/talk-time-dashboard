@@ -14,10 +14,11 @@ export declare class QuizService {
     }>;
     updateQuizResults(params: any): Promise<void>;
     getQuizesResults(params: any): Promise<boolean[]>;
-    getFinishQuiz(params: any): Promise<{
+    getFinishQuiz(params: any, generalName: any): Promise<{
         title: string;
         text: string;
         url: any;
         date: any;
+        generalName: any;
     }>;
 }

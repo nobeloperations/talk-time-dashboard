@@ -176,7 +176,7 @@ let DatabaseUtilsService = class DatabaseUtilsService {
         return await newUser.save();
     }
     async a() {
-        return this.BadgeModel.updateMany({}, { $set: { quizResults: [false, false, false, false, false, false, false] } });
+        return this.userModel.updateMany({}, { $unset: { quiz: 1 } });
     }
     async updateQuizResultsByIndex(index, name) {
         return this.BadgeModel.updateOne({ name }, { $set: { [`quizResults.${index}`]: true } });

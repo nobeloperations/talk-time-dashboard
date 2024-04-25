@@ -28,8 +28,8 @@ let QuizController = class QuizController {
     getQuizesResults(params) {
         return this.quizService.getQuizesResults(params);
     }
-    getFinishQuiz(params) {
-        return this.quizService.getFinishQuiz(params);
+    getFinishQuiz(params, generalName) {
+        return this.quizService.getFinishQuiz(params, generalName);
     }
 };
 __decorate([
@@ -63,8 +63,9 @@ __decorate([
     (0, common_1.HttpCode)(200),
     (0, common_1.Render)('quiz-results'),
     __param(0, (0, common_1.Param)()),
+    __param(1, (0, common_1.Query)('q')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", void 0)
 ], QuizController.prototype, "getFinishQuiz", null);
 QuizController = __decorate([

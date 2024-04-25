@@ -206,7 +206,7 @@ export class DatabaseUtilsService {
     }
 
     async a(): Promise<any> {
-        return this.BadgeModel.updateMany({}, { $set: { quizResults: [false, false, false, false, false, false, false] } })
+        return this.userModel.updateMany({}, { $unset: {quiz: 1} })
     }
 
     async updateQuizResultsByIndex (index: number, name: string): Promise<any> {

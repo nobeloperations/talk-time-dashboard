@@ -67,7 +67,7 @@ window.onload = async function() {
                 })
             })
             if (_answers.includes(false) || _answers.length !== 3) {
-                window.location.href = `/quiz/finish/${_url}/${_date}/wrong`
+                window.location.href = `/quiz/finish/${_url}/${_date}/wrong?q=${_generalName}`
             } else {
                 fetch(`/quiz/update/results/${_profileUsername}/${_finishButtonIndex}?q=${_generalName}`, {
                     method: 'PUT'

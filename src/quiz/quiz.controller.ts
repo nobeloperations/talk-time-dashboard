@@ -30,8 +30,8 @@ export class QuizController {
     @Get('/finish/:url/:date/:result')
     @HttpCode(200)
     @Render('quiz-results')
-    getFinishQuiz(@Param() params) {
-        return this.quizService.getFinishQuiz(params)
+    getFinishQuiz(@Param() params, @Query('q') generalName: string) {
+        return this.quizService.getFinishQuiz(params, generalName)
     }
     
 }

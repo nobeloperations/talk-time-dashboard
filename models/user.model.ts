@@ -42,9 +42,6 @@ export const UserSchema = new mongoose.Schema({
     },
     friends: {
         type: Array
-    },
-    quiz: {
-        type: Boolean
     }
 })
 
@@ -58,5 +55,4 @@ export interface User {
     date: string,
     friendRequests: string[],
     firends: string[],
-    quiz: boolean,
 }

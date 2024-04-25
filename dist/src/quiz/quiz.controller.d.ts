@@ -14,10 +14,11 @@ export declare class QuizController {
     }>;
     updateQuizResults(params: any): Promise<void>;
     getQuizesResults(params: any): Promise<boolean[]>;
-    getFinishQuiz(params: any): Promise<{
+    getFinishQuiz(params: any, generalName: string): Promise<{
         title: string;
         text: string;
         url: any;
         date: any;
+        generalName: any;
     }>;
 }
